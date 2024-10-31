@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
-public class Movement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField]
@@ -40,7 +40,11 @@ public class Movement : MonoBehaviour
 
     void OnTriggerEnter2D (Collider2D col) {
 		// Add the GameObject collided with to the list.
-		currentCollisions.Add(col.gameObject);
+        if(col.gameObject.tag == "Enemy")
+        {
+            currentCollisions.Add(col.gameObject);
+        }
+		
 		
 	}
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Grapple : MonoBehaviour
+public class PlayerGrapple : MonoBehaviour
 {
     [SerializeField]
     private InputActionReference grapple, pointerPos, movement;
