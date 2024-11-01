@@ -733,4 +733,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackType: {fileID: 826137643833996335, guid: 01e77312c9dc8824a8e3075b15e9a77a, type: 3}
-  attackCooldown: 3
+  windupTime: 1
+  activeTime: 0.5
+  cooldownTime: 3
+  Size: 2.5
+  StartingTelegaphPercentSize: 0.7

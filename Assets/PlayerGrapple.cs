@@ -16,14 +16,12 @@ public class PlayerGrapple : MonoBehaviour
     private bool grappling = false;
     private Vector2 grappleLocation;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(grappling)
@@ -90,7 +88,6 @@ public class PlayerGrapple : MonoBehaviour
         rb.velocity = (grappleLocation - rb.position).normalized * initialGrappleSpeed;
         rb.drag = 0;
         
-
         while (grappling)
         {
             // Temp fix for bug where movement does not get disabled if a move input is pressed while being disabled
@@ -109,6 +106,7 @@ public class PlayerGrapple : MonoBehaviour
         movement.action.Enable();
     }
 
+    // Shows where the grapple hook went
     IEnumerator PerformMissedGrapple()
     {
         grappling = true;

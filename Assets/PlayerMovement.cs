@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
         currentCollisions = new List <GameObject> ();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(movement.action.enabled) 
@@ -32,25 +31,23 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-
     private void OnEnable()
     {
         dash.action.performed += Dash;
     }
 
-    void OnTriggerEnter2D (Collider2D col) {
-		// Add the GameObject collided with to the list.
+    void OnTriggerEnter2D (Collider2D col) 
+    {
+
+		// You can only reflect dash off of enemies
         if(col.gameObject.tag == "Enemy")
         {
             currentCollisions.Add(col.gameObject);
         }
-		
-		
 	}
 
-	void OnTriggerExit2D (Collider2D col) {
-
-		// Remove the GameObject collided with from the list.
+	void OnTriggerExit2D (Collider2D col) 
+    {
 		currentCollisions.Remove(col.gameObject);
 	}
 

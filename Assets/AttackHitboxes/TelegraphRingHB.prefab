@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6774492387761333352}
   - component: {fileID: 7986924986845304983}
   - component: {fileID: 1329549134871387341}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TelegraphRingHB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,14 +27,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826137643833996335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.2524, y: -0.5884, z: -0.2574422}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1674370724486878903}
   - {fileID: 7225424844104464868}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &6774492387761333352
 CircleCollider2D:
@@ -145,7 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1674370724486878903}
   - component: {fileID: 8968797313105985618}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sprite Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,9 +228,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7225424844104464868}
   - component: {fileID: 3089258712230175842}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: TelegraphSprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
