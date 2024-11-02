@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +15,7 @@ public class PlayerGrapple : MonoBehaviour
     private float maxGrappleDistance = 6;
     private float initialGrappleSpeed = 1.5f;
     private float grappleAcceleration = 1.5f;
+    private int grappleFrames = 120;
     private bool grappling = false;
     private Vector2 grappleLocation;
 
@@ -26,22 +29,19 @@ public class PlayerGrapple : MonoBehaviour
     {
         if(grappling)
         {
+            // animate the grapple hook while actively grappling
             Vector3 start = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,0);
 
-            lineRenderer.enabled = true;
-            lineRenderer.SetPosition(0,start);
+            //lineRenderer.enabled = true;
+            lineRenderer.SetPosition(0, start);
             lineRenderer.SetPosition(1, grappleLocation);
 
+            // Stop grappling when player reaches target
             if(Vector2.Distance(rb.position, grappleLocation) <= 0.5)
             {
                 grappling = false;
             }
         }
-        else
-        {
-            lineRenderer.enabled = false;
-        }
-        
     }
 
      private void OnEnable()
@@ -51,8 +51,6 @@ public class PlayerGrapple : MonoBehaviour
 
     private void StartGrapple(InputAction.CallbackContext context)
     {
-        movement.action.Disable();
-
         Vector2 grappleDirection = GetGrappleDirection();
 
         // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
@@ -83,11 +81,15 @@ public class PlayerGrapple : MonoBehaviour
 
     IEnumerator PerformGrapple()
     {
-        grappling = true;
+        yield return StartCoroutine(AnimateGrappleShot());
 
+        movement.action.Disable();
+        grapple.action.Disable();
+        grappling = true;
+        
         rb.velocity = (grappleLocation - rb.position).normalized * initialGrappleSpeed;
         rb.drag = 0;
-        
+
         while (grappling)
         {
             // Temp fix for bug where movement does not get disabled if a move input is pressed while being disabled
@@ -104,15 +106,46 @@ public class PlayerGrapple : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.drag = 3;
         movement.action.Enable();
+        grapple.action.Enable();
+        lineRenderer.enabled = false;
     }
 
     // Shows where the grapple hook went
     IEnumerator PerformMissedGrapple()
     {
-        grappling = true;
+        yield return StartCoroutine(AnimateGrappleShot());
 
+        grappling = true;
+        grapple.action.Disable();
+        
         yield return new WaitForSeconds(0.5f);
 
         grappling = false;
+        lineRenderer.enabled = false;
+        grapple.action.Enable();
+    }
+
+    IEnumerator AnimateGrappleShot()
+    {
+        lineRenderer.enabled = true;
+        float grappleAnimationFramesElapsed = 0;
+        float interpolationRatio;
+
+        do
+        {
+            Vector3 start = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,0);
+
+            interpolationRatio = grappleAnimationFramesElapsed / grappleFrames;
+
+            Vector3 interpolatedPos = Vector3.Lerp(start, grappleLocation, interpolationRatio);
+
+            lineRenderer.SetPosition(0, start);
+            lineRenderer.SetPosition(1, interpolatedPos);
+
+            grappleAnimationFramesElapsed = (grappleAnimationFramesElapsed + 1) % (grappleFrames + 1);  // reset elapsedFrames to zero after it reached (interpolationFramesCount + 1)
+            yield return null; // wait for the end of frame
+        }
+        while (interpolationRatio < 1);
+        
     }
 }
