@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - TelegraphSprite
+  - Hurtbox
   layers:
   - Default
   - TransparentFX

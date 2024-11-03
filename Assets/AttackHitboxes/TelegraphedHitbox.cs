@@ -12,6 +12,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
     public float CooldownTime { get; set;}
     public float WindupTimer { get; set;} = 0f;
     public float CooldownTimer { get; set;} = 0f;
+    public int Damage { get; set;}
 
     public float Size { get; set;}
     public float StartingTelegaphPercentSize { get; set;} // is a percent of max size
@@ -20,13 +21,15 @@ public abstract class TelegraphedHitbox : MonoBehaviour
 
     GameObject telegraphSprite; 
 
-    public void Init(float windupTime, float activeTime, float cooldownTime, float size, float startingTelegaphPercentSize = 0f)
+    public void Init(float windupTime, float activeTime, float cooldownTime, float size, int damage, float startingTelegaphPercentSize = 0f)
     {
         WindupTime = windupTime;
         ActiveTime = activeTime;
         CooldownTime = cooldownTime;
         Size = size;
+        Damage = damage;
         StartingTelegaphPercentSize = startingTelegaphPercentSize;
+        
         
         // The sprite that fills up the hitbox to show the player when the attack will come
         telegraphSprite = FindGameObjectInChildWithTag(gameObject, "TelegraphSprite");
@@ -37,12 +40,20 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         transform.localScale = new Vector3(Size, Size, 0);
         telegraphSprite.transform.localScale = new Vector3(startingTelegaphPercentSize, startingTelegaphPercentSize,0);
 
+        SetAllCollidersStatus(false);
+
         Setup();
 
         StartCoroutine(StartCooldown());
     }
 
     public abstract void Setup();
+
+    public void SetAllCollidersStatus (bool isActive) {
+        foreach(Collider2D c in GetComponentsInChildren<Collider2D>()) {
+            c.enabled = isActive;
+    }
+}
 
     public void Update()
     {
