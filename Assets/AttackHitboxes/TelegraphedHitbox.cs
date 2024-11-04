@@ -72,7 +72,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
                 attackStarted = false;
                 WindupTimer = 0f;
 
-                StartCoroutine(ActiveAttackTime());
+                StartCoroutine(StartActiveAttackFrames());
             }
         }
     }
@@ -97,9 +97,14 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         StartCoroutine(StartCooldown());
     }
 
-    public virtual IEnumerator ActiveAttackTime()
+    //TODO: make active time use frames instead?
+    public virtual IEnumerator StartActiveAttackFrames()
     {
+        SetAllCollidersStatus(true);
+
         yield return new WaitForSeconds(ActiveTime);
+        
+        SetAllCollidersStatus(false);
         EndAttack();
     }
 

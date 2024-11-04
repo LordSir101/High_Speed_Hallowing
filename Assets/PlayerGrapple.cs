@@ -15,7 +15,7 @@ public class PlayerGrapple : MonoBehaviour
     private float maxGrappleDistance = 6;
     private float initialGrappleSpeed = 1.5f;
     private float grappleAcceleration = 1.5f;
-    private int grappleFrames = 120;
+    private float grappleAnimationTime = 0.3f;
     private bool grappling = false;
     private Vector2 grappleLocation;
 
@@ -128,21 +128,21 @@ public class PlayerGrapple : MonoBehaviour
     IEnumerator AnimateGrappleShot()
     {
         lineRenderer.enabled = true;
-        float grappleAnimationFramesElapsed = 0;
+        float grappleAnimationTimer = 0;
         float interpolationRatio;
 
         do
         {
             Vector3 start = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,0);
 
-            interpolationRatio = grappleAnimationFramesElapsed / grappleFrames;
+            interpolationRatio = grappleAnimationTimer / grappleAnimationTime;
 
             Vector3 interpolatedPos = Vector3.Lerp(start, grappleLocation, interpolationRatio);
 
             lineRenderer.SetPosition(0, start);
             lineRenderer.SetPosition(1, interpolatedPos);
 
-            grappleAnimationFramesElapsed = (grappleAnimationFramesElapsed + 1) % (grappleFrames + 1);  // reset elapsedFrames to zero after it reached (interpolationFramesCount + 1)
+            grappleAnimationTimer += Time.deltaTime;
             yield return null; // wait for the end of frame
         }
         while (interpolationRatio < 1);

@@ -13,16 +13,6 @@ public class TH_Ring : TelegraphedHitbox
         gameObject.transform.GetChild(0).localScale = new Vector3(StartingTelegaphPercentSize, StartingTelegaphPercentSize, 0);
     }
 
-    public override IEnumerator ActiveAttackTime()
-    {
-        SetAllCollidersStatus(true);
-
-        yield return new WaitForSeconds(ActiveTime);
-        
-        SetAllCollidersStatus(false);
-        EndAttack();
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Player")
