@@ -14,7 +14,6 @@ public class RingEnemyBehaviour : MonoBehaviour
     [SerializeField]
     RingEnemyAttack ringAttackInfo;
 
-    [SerializeField]
     GameObject player;
 
     private float maxAttackRange;
@@ -23,6 +22,8 @@ public class RingEnemyBehaviour : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
         // Size is the local scale of ring attack. divide by 2 for radius
         maxAttackRange = ringAttackInfo.Size / 2;
         minAttackRange = maxAttackRange * ringAttackInfo.StartingTelegaphPercentSize;
