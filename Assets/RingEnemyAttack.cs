@@ -14,6 +14,9 @@ public class RingEnemyAttack : MonoBehaviour
     [SerializeField]
     public float windupTime, activeTime, cooldownTime, Size, StartingTelegaphPercentSize;
 
+    [SerializeField]
+    public int ringAttackDamage = 10;
+
     void Start()
     {
         GameObject attack = Instantiate(attackType);
@@ -22,7 +25,7 @@ public class RingEnemyAttack : MonoBehaviour
         attack.transform.parent = gameObject.transform;
 
         // the telegraph starts at 70% of the total hitbox since the hitbox is a ring.
-        attack.GetComponent<TH_Ring>().Init(windupTime, activeTime, cooldownTime, Size, StartingTelegaphPercentSize);
+        attack.GetComponent<TH_Ring>().Init(windupTime, activeTime, cooldownTime, Size, ringAttackDamage, StartingTelegaphPercentSize);
     }
 
     void Update()
