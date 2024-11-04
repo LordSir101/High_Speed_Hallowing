@@ -59,7 +59,7 @@ public class PlayerGrapple : MonoBehaviour
         if(hitTarget)
         {
             grappleLocation = hitTarget.point;
-            StartCoroutine(PerformGrapple());
+            StartCoroutine(PerformGrapple(hitTarget.collider.gameObject));
         }
         else 
         {
@@ -79,13 +79,15 @@ public class PlayerGrapple : MonoBehaviour
         return direction.normalized;
     }
 
-    IEnumerator PerformGrapple()
+    IEnumerator PerformGrapple(GameObject target)
     {
         yield return StartCoroutine(AnimateGrappleShot());
 
         movement.action.Disable();
         grapple.action.Disable();
         grappling = true;
+
+        grappleLocation = target.transform.position;
         
         rb.velocity = (grappleLocation - rb.position).normalized * initialGrappleSpeed;
         rb.drag = 0;

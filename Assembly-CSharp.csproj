@@ -70,6 +70,7 @@
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\PlayerGrapple.cs" />
     <Compile Include="Assets\RingEnemyBehaviour.cs" />
+    <Compile Include="Assets\SpawnEnemy.cs" />
     <Compile Include="Assets\AttackHitboxes\TelegraphedHitbox.cs" />
     <Compile Include="Assets\PlayerHealth.cs" />
   </ItemGroup>

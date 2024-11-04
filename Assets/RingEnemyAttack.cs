@@ -23,13 +23,9 @@ public class RingEnemyAttack : MonoBehaviour
         
         attack.transform.position  = transform.position;
         attack.transform.parent = gameObject.transform;
+        attack.transform.parent = transform; // make the attack a child of enemy 
 
         // the telegraph starts at 70% of the total hitbox since the hitbox is a ring.
         attack.GetComponent<TH_Ring>().Init(windupTime, activeTime, cooldownTime, Size, ringAttackDamage, StartingTelegaphPercentSize);
-    }
-
-    void Update()
-    {
-
     }
 }

@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     List<GameObject> currentCollisions;
 
     private float dashSpeed = 50f;
+    private float moveSpeed = 1;
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         if(movement.action.enabled) 
         {
             Vector2 movementInput = movement.action.ReadValue<Vector2>();
-            rb.velocity = movementInput;
+            rb.velocity = movementInput * moveSpeed;
         }
 
     }

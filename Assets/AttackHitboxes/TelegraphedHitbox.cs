@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public abstract class TelegraphedHitbox : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
 
     public bool attackStarted { get; set;} = false;
 
-    GameObject telegraphSprite; 
+    GameObject telegraphSprite;
 
     public void Init(float windupTime, float activeTime, float cooldownTime, float size, int damage, float startingTelegaphPercentSize = 0f)
     {
@@ -57,6 +58,8 @@ public abstract class TelegraphedHitbox : MonoBehaviour
 
     public void Update()
     {
+        transform.position = transform.parent.transform.position;
+
         if(attackStarted)
         {
             WindupTimer += Time.deltaTime;
