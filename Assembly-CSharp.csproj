@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Assets\AttackHitboxes\TH_Ring.cs" />
     <Compile Include="Assets\RingEnemyAttack.cs" />
+    <Compile Include="Assets\UI\HealthBar.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\PlayerGrapple.cs" />
     <Compile Include="Assets\RingEnemyBehaviour.cs" />
