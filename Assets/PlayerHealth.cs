@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerHealth: MonoBehaviour
 {
+    public HealthBar healthBar;
     private int health = 100;
+    public int MaxHealth { get; set; } = 100;
     public void TakeDamage(int damageTaken)
     {
         health -= damageTaken;
-        //Debug.Log(health);
+        healthBar.SetHealth(health);   
     }
     
 }
