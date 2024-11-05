@@ -12,17 +12,24 @@ public class PlayerGrapple : MonoBehaviour
     private LineRenderer lineRenderer;
     Rigidbody2D rb;
 
+    PlayerMovement playerMovement;
+    PlayerImpact playerImpact;
+
     private float maxGrappleDistance = 6;
     private float initialGrappleSpeed = 1.5f;
     private float grappleAcceleration = 1.5f;
     private float grappleAnimationTime = 0.3f;
     private bool grappling = false;
+
+    
     private Vector2 grappleLocation;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerImpact = GetComponent<PlayerImpact>();
     }
 
     void Update()
@@ -84,12 +91,13 @@ public class PlayerGrapple : MonoBehaviour
         yield return StartCoroutine(AnimateGrappleShot());
 
         movement.action.Disable();
+        playerMovement.SetMovementAbility(false);
         grapple.action.Disable();
         grappling = true;
 
         grappleLocation = target.transform.position;
         
-        rb.velocity = (grappleLocation - rb.position).normalized * initialGrappleSpeed;
+        rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
         rb.drag = 0;
 
         while (grappling)
@@ -105,13 +113,36 @@ public class PlayerGrapple : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        rb.velocity = Vector2.zero;
-        rb.drag = 3;
+        
         movement.action.Enable();
         grapple.action.Enable();
+        rb.drag = 3;
         lineRenderer.enabled = false;
+        //rb.velocity = Vector2.zero;
+        playerMovement.SetMovementAbility(true);
+
+        
+
+        //yield return new WaitForSeconds(0.2f);
+
+        
+
+        
+        //rb.drag = 3;
+        //movement.action.Enable();
+        
+        // lineRenderer.enabled = false;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "Enemy")
+        {
+           grappling = false;
+        }
+    }
+
+    
     // Shows where the grapple hook went
     IEnumerator PerformMissedGrapple()
     {

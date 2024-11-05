@@ -29,12 +29,12 @@ public class EnemyHealth : MonoBehaviour
     {
         currHealth -= damage;
 
-        ModifyLightHealthBar();
+        // ModifyLightHealthBar();
 
-        if(currHealth <= 0)
-        {
-            Destroy(gameObject);
-        }
+        // if(currHealth <= 0)
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 
     private void ModifyLightHealthBar()
