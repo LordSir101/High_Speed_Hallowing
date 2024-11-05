@@ -21,6 +21,4 @@ public class TH_Ring : TelegraphedHitbox
         }
     }
 
-   
-
 }

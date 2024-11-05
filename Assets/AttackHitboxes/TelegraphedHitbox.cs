@@ -126,16 +126,4 @@ public abstract class TelegraphedHitbox : MonoBehaviour
 			
 		return null;
 	}
-
-    
-
-    
-
-    
-
-   
-
-    
-
-    
 }
