@@ -185,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: -7715835082281109425, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
   dash: {fileID: -8372040125090280120, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
+  arrowPrefab: {fileID: 7726366628347379214, guid: 1991e4dd1b08ee04795a9dc3bafd3588, type: 3}
 --- !u!212 &140164696
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -713,46 +714,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb52ada54a1b7314ca784e8783325f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 0.2
   curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0.0025917292
       value: 0.0003976263
-      inSlope: 0.57538533
-      outSlope: 0.57538533
+      inSlope: 4.9385023
+      outSlope: 4.9385023
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.20870858
-      value: 0.118994236
-      inSlope: 0.24075723
-      outSlope: 0.24075723
+      time: 0.035928965
+      value: 0.16503364
+      inSlope: 2.0193152
+      outSlope: 2.0193152
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5615183
-      value: 0.085875675
-      inSlope: -0.14546734
-      outSlope: -0.14546734
+      time: 0.21401983
+      value: 0.00477466
+      inSlope: -0.89987195
+      outSlope: -0.89987195
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.9904175
-      value: 0.0013551712
-      inSlope: -0.1970638
-      outSlope: -0.1970638
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

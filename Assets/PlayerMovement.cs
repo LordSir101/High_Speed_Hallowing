@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private InputActionReference movement, dash;
 
+    [SerializeField] private GameObject arrowPrefab;
+    private GameObject reflectDashArrow = null;
+
     Rigidbody2D rb;
     List<GameObject> currentCollisions;
     PlayerImpact playerImpact;
@@ -36,6 +39,16 @@ public class PlayerMovement : MonoBehaviour
 
             // move using current speed, with a minimum of base move speed
             rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
+        }
+
+        if(reflectDashArrow)
+        {
+            Vector2 dir = movement.action.ReadValue<Vector2>();
+            float radvalue = Mathf.Atan2(dir.y, dir.x);
+            float angle= radvalue * (180/Mathf.PI);
+            reflectDashArrow.transform.localRotation = Quaternion.Euler(0,0,angle -90);
+
+            reflectDashArrow.transform.position = transform.position;
         }
 
     }
@@ -67,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
 
         if(currentCollisions.Count > 0)
         {
-            dash.action.canceled += ReflectDash;
             ReflectDashSetup();
             //ReflectDash(direction);
         }
@@ -75,20 +87,16 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(direction * (dashSpeed + rb.velocity.magnitude), ForceMode2D.Impulse);
         }
-
-        // if(currentCollisions.Count < 0)
-        // {
-        //     rb.AddForce(direction * (dashSpeed + rb.velocity.magnitude), ForceMode2D.Impulse);
-        // }
-
-        //StartCoroutine(DisableMovement());
     }
 
     private void ReflectDashSetup()
     {
+        dash.action.canceled += ReflectDash;
         SetMovementAbility(false);
+
         Vector2 direction = movement.action.ReadValue<Vector2>();
         GameObject closestEnemy = null;
+
         float closestEnemyDistance = float.MaxValue;
 
         foreach(GameObject col in currentCollisions)
@@ -107,6 +115,8 @@ public class PlayerMovement : MonoBehaviour
         // Teleport the player to the enemy center
         Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
         rb.position = teleportLocation;
+
+        reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
     }
 
     // TODO: Add visual indicator for dash direction
@@ -123,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
 
         dash.action.canceled -= ReflectDash;
         SetMovementAbility(true);
+
+        Destroy(reflectDashArrow);
     }
 
 

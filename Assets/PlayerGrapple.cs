@@ -13,7 +13,7 @@ public class PlayerGrapple : MonoBehaviour
     Rigidbody2D rb;
 
     PlayerMovement playerMovement;
-    PlayerImpact playerImpact;
+    //PlayerImpact playerImpact;
 
     private float maxGrappleDistance = 6;
     private float initialGrappleSpeed = 1.5f;
@@ -29,7 +29,7 @@ public class PlayerGrapple : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
-        playerImpact = GetComponent<PlayerImpact>();
+        //playerImpact = GetComponent<PlayerImpact>();
     }
 
     void Update()
@@ -112,28 +112,15 @@ public class PlayerGrapple : MonoBehaviour
             rb.velocity = rb.velocity.magnitude * grappleAcceleration * rb.velocity.normalized;
             yield return new WaitForSeconds(0.1f);
         }
-
         
         movement.action.Enable();
         grapple.action.Enable();
         rb.drag = 3;
         lineRenderer.enabled = false;
-        //rb.velocity = Vector2.zero;
         playerMovement.SetMovementAbility(true);
-
-        
-
-        //yield return new WaitForSeconds(0.2f);
-
-        
-
-        
-        //rb.drag = 3;
-        //movement.action.Enable();
-        
-        // lineRenderer.enabled = false;
     }
 
+    // end grapple early if hit an enemy
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Enemy")
@@ -142,8 +129,7 @@ public class PlayerGrapple : MonoBehaviour
         }
     }
 
-    
-    // Shows where the grapple hook went
+    // To show where the grapple hook went
     IEnumerator PerformMissedGrapple()
     {
         yield return StartCoroutine(AnimateGrappleShot());
