@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int MaxHealth { get; set; } = 15;
+    [SerializeField] private int maxHealth;
     private int currHealth;
 
     [SerializeField] private float maxOuterLightRad, minOuterLightRad;
@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currHealth = MaxHealth;
+        currHealth = maxHealth;
 
         maxOuterLightRad = healthLight.pointLightOuterRadius;
     }
@@ -29,17 +29,17 @@ public class EnemyHealth : MonoBehaviour
     {
         currHealth -= damage;
 
-        // ModifyLightHealthBar();
+        ModifyLightHealthBar();
 
-        // if(currHealth <= 0)
-        // {
-        //     Destroy(gameObject);
-        // }
+        if(currHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void ModifyLightHealthBar()
     {
-        float healthRatio = (float) currHealth / (float) MaxHealth;
+        float healthRatio = (float) currHealth / (float) maxHealth;
         float diff = maxOuterLightRad - minOuterLightRad;
 
         // Decrease the light radius based on the missing health.

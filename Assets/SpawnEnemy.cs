@@ -9,7 +9,7 @@ public class SpawnEnemy : MonoBehaviour
     [SerializeField] private GameObject ringEnemyPrefab;
     void Start()
     {
-        //SpawnEnemies(numInitialEmemies);
+        SpawnEnemies(numInitialEmemies);
     }
 
     private void SpawnEnemies(int num)

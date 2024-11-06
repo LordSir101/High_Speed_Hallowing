@@ -30,22 +30,22 @@ public class RingEnemyBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
+    //TODO: add a bit of a lag so enemies are not as responsive.
     void Update()
     {
-        // Vector3 distanceToPlayer =  player.transform.position - transform.position;
+        Vector3 distanceToPlayer =  player.transform.position - transform.position;
 
-        // if(distanceToPlayer.magnitude > maxAttackRange)
-        // {
-        //     enemyRb.velocity = distanceToPlayer.normalized * speed;
-        // }
-        // else if(distanceToPlayer.magnitude < minAttackRange)
-        // {
-        //     enemyRb.velocity = distanceToPlayer.normalized * speed * -1;
-        // }
-        // else
-        // {
-        //     enemyRb.velocity = Vector3.zero;
-        // }
-        
+        if(distanceToPlayer.magnitude > maxAttackRange)
+        {
+            enemyRb.velocity = distanceToPlayer.normalized * speed;
+        }
+        else if(distanceToPlayer.magnitude < minAttackRange)
+        {
+            enemyRb.velocity = distanceToPlayer.normalized * speed * -1;
+        }
+        else
+        {
+            enemyRb.velocity = Vector3.zero;
+        }
     }
 }

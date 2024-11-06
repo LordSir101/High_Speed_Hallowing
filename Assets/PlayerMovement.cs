@@ -64,15 +64,19 @@ public class PlayerMovement : MonoBehaviour
     {
 
 		// You can only reflect dash off of enemies
-        if(col.gameObject.tag == "Enemy")
+        if(col.gameObject.tag == "Buffer")
         {
-            currentCollisions.Add(col.gameObject);
+            currentCollisions.Add(col.gameObject.transform.parent.gameObject);
         }
 	}
 
 	void OnTriggerExit2D (Collider2D col) 
     {
-		currentCollisions.Remove(col.gameObject);
+        if(col.gameObject.tag == "Buffer")
+        {
+            currentCollisions.Remove(col.gameObject.transform.parent.gameObject);
+        }
+		
 	}
 
     private void Dash(InputAction.CallbackContext context)
@@ -102,12 +106,21 @@ public class PlayerMovement : MonoBehaviour
 
         foreach(GameObject col in currentCollisions)
         {
-            float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
-            if(distance < closestEnemyDistance)
+            if(col.gameObject != null)
             {
-                closestEnemyDistance = distance;
-                closestEnemy = col;
+                float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
+                if(distance < closestEnemyDistance)
+                {
+                    closestEnemyDistance = distance;
+                    closestEnemy = col;
+                }
             }
+            else
+            {
+                // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
+                currentCollisions.Remove(col.gameObject.transform.parent.gameObject);
+            }
+            
         };
 
         // get direction vector relative to enemy
@@ -134,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
             GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
             animation.transform.SetParent(transform, false);
         }
-        
+
         float reboundDashSpeed = dashSpeed * 2 + playerImpact.ImpactSpeed;
         rb.AddForce(direction * reboundDashSpeed, ForceMode2D.Impulse);
 
