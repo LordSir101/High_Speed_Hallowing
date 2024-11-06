@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody2D rb;
     List<GameObject> currentCollisions;
+    List<GameObject> removalQueue;
     PlayerImpact playerImpact;
 
     Vector3 enemyPos;
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         currentCollisions = new List <GameObject> ();
+        removalQueue = new List<GameObject> ();
         playerImpact= GetComponent<PlayerImpact> ();
     }
 
@@ -52,6 +54,17 @@ public class PlayerMovement : MonoBehaviour
             reflectDashArrow.transform.position = transform.position;
         }
 
+        RemoveNullCollisions();
+
+    }
+
+    private void RemoveNullCollisions()
+    {
+        foreach(GameObject obj in removalQueue)
+        {
+            currentCollisions.Remove(obj);
+        }
+        removalQueue.Clear();
     }
 
     private void OnEnable()
@@ -118,7 +131,8 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
-                currentCollisions.Remove(col.gameObject.transform.parent.gameObject);
+                removalQueue.Add(col);
+                
             }
             
         };

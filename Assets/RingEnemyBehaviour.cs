@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
 public class RingEnemyBehaviour : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class RingEnemyBehaviour : MonoBehaviour
     private float maxAttackRange;
     private float minAttackRange;
 
-
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -27,25 +27,31 @@ public class RingEnemyBehaviour : MonoBehaviour
         // Size is the local scale of ring attack. divide by 2 for radius
         maxAttackRange = ringAttackInfo.Size / 2;
         minAttackRange = maxAttackRange * ringAttackInfo.StartingTelegaphPercentSize;
+
+        StartCoroutine(Move());
     }
 
-    // Update is called once per frame
-    //TODO: add a bit of a lag so enemies are not as responsive.
-    void Update()
+    IEnumerator Move()
     {
-        Vector3 distanceToPlayer =  player.transform.position - transform.position;
+        while (true)
+        {
+            Vector3 distanceToPlayer =  player.transform.position - transform.position;
 
-        if(distanceToPlayer.magnitude > maxAttackRange)
-        {
-            enemyRb.velocity = distanceToPlayer.normalized * speed;
-        }
-        else if(distanceToPlayer.magnitude < minAttackRange)
-        {
-            enemyRb.velocity = distanceToPlayer.normalized * speed * -1;
-        }
-        else
-        {
-            enemyRb.velocity = Vector3.zero;
+            if(distanceToPlayer.magnitude > maxAttackRange)
+            {
+                enemyRb.velocity = distanceToPlayer.normalized * speed;
+            }
+            else if(distanceToPlayer.magnitude < minAttackRange)
+            {
+                enemyRb.velocity = distanceToPlayer.normalized * speed * -1;
+            }
+            else
+            {
+                enemyRb.velocity = Vector3.zero;
+            }
+
+            yield return new WaitForSeconds(0.5f);
+
         }
     }
 }
