@@ -9,6 +9,7 @@ public class PlayerImpact : MonoBehaviour
 
     public float ImpactSpeed { get; set; } = 0f;
 
+    
     private float impactActionWindow = 0.5f;
     private float impactActionTimer = 0f;
     private bool actionWindowIsActive = false;
@@ -35,11 +36,11 @@ public class PlayerImpact : MonoBehaviour
     }
 
     // stop player's velecoity on impact but allows them to move through enemies still
+    // TODO: add visual indicator when ur speed is saved.
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Enemy")
         {
-            Debug.Log("hit");
             StopCoroutine(cameraShake.Shaking());
             StartCoroutine(cameraShake.Shaking());
             ImpactSpeed += rb.velocity.magnitude;

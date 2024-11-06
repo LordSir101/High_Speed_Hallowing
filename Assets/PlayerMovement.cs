@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private InputActionReference movement, dash;
 
     [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private GameObject actionWindowIndicatorPrefab;
     private GameObject reflectDashArrow = null;
 
     Rigidbody2D rb;
@@ -119,7 +120,6 @@ public class PlayerMovement : MonoBehaviour
         reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
     }
 
-    // TODO: Add visual indicator for dash direction
     private void ReflectDash(InputAction.CallbackContext context)
     {
         Vector2 direction = movement.action.ReadValue<Vector2>();
@@ -128,6 +128,13 @@ public class PlayerMovement : MonoBehaviour
         Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction;
         rb.position = teleportLocation;
 
+        // Indicate to the player that they dashed withtin the windo to accumulate speed
+        if(playerImpact.ImpactSpeed > 0)
+        {
+            GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
+            animation.transform.SetParent(transform, false);
+        }
+        
         float reboundDashSpeed = dashSpeed * 2 + playerImpact.ImpactSpeed;
         rb.AddForce(direction * reboundDashSpeed, ForceMode2D.Impulse);
 

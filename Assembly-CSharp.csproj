@@ -76,6 +76,7 @@
     <Compile Include="Assets\PlayerGrapple.cs" />
     <Compile Include="Assets\RingEnemyBehaviour.cs" />
     <Compile Include="Assets\AttackHitboxes\TelegraphedHitbox.cs" />
+    <Compile Include="Assets\Sprites\AnimateIndicator.cs" />
     <Compile Include="Assets\PlayerImpact.cs" />
   </ItemGroup>
   <ItemGroup>
