@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - TelegraphSprite
   - Hurtbox
+  - Buffer
   layers:
   - Default
   - TransparentFX
