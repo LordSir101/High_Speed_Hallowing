@@ -21,7 +21,6 @@ public class Shake : MonoBehaviour
     // TODO: make this happen even when triggered multiple times really fast.
     public IEnumerator Shaking()
     {
-        Debug.Log("Shaking");
         Vector3 startPos = transform.position;
         float elapsedTime = 0f;
 
