@@ -106,7 +106,7 @@ public class PlayerGrapple : MonoBehaviour
             if(movement.action.enabled)
             {
                 movement.action.Disable();
-                rb.velocity = (grappleLocation - rb.position).normalized * initialGrappleSpeed;
+                rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
             }
 
             rb.velocity = rb.velocity.magnitude * grappleAcceleration * rb.velocity.normalized;

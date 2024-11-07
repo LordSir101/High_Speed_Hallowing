@@ -36,7 +36,6 @@ public class PlayerImpact : MonoBehaviour
     }
 
     // stop player's velecoity on impact but allows them to move through enemies still
-    // TODO: add visual indicator when ur speed is saved.
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Enemy")
@@ -46,10 +45,10 @@ public class PlayerImpact : MonoBehaviour
             ImpactSpeed += rb.velocity.magnitude;
             //rb.velocity = Vector2.zero;
             rb.velocity = rb.velocity.normalized;
+
             // Window to input a dash to accumulate speed based on how fast the player was going at impact
             impactActionTimer = 0f;
             actionWindowIsActive = true;
-            //StartCoroutine(ResetImpactSpeed());
         }
     }
 

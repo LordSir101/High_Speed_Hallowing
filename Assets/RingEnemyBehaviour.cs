@@ -31,6 +31,7 @@ public class RingEnemyBehaviour : MonoBehaviour
         StartCoroutine(Move());
     }
 
+    // move towards player until within ring hitbox
     IEnumerator Move()
     {
         while (true)
