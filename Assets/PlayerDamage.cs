@@ -6,16 +6,6 @@ using UnityEngine;
 public class PlayerDamage : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

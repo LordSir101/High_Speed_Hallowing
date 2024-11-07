@@ -132,7 +132,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
                 removalQueue.Add(col);
-                
             }
             
         };
@@ -151,11 +150,11 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
-        // Teleport the player a small distance along the new direction vector
+        // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
         Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction;
         rb.position = teleportLocation;
 
-        // Indicate to the player that they dashed withtin the windo to accumulate speed
+        // Indicate to the player that they dashed within the window to add the speed they were going at impact
         if(playerImpact.ImpactSpeed > 0)
         {
             GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
