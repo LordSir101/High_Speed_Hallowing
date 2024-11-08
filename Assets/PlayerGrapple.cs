@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -44,6 +45,7 @@ public class PlayerGrapple : MonoBehaviour
             lineRenderer.SetPosition(1, grappleLocation);
 
             // Stop grappling when player reaches target
+            // TODO: confirm this is not needed
             if(Vector2.Distance(rb.position, grappleLocation) <= 0.5)
             {
                 grappling = false;
@@ -95,8 +97,12 @@ public class PlayerGrapple : MonoBehaviour
         grapple.action.Disable();
         grappling = true;
 
-        grappleLocation = target.transform.position;
+        if(target.gameObject.tag == "Enemy")
+        {
+            grappleLocation = target.transform.position;
         
+        }
+       
         rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
         rb.drag = 0;
 
@@ -127,6 +133,10 @@ public class PlayerGrapple : MonoBehaviour
         {
            grappling = false;
         }
+    }
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        grappling = false;
     }
 
     // To show where the grapple hook went

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+//using System.Numerics;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,6 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
     private GameObject reflectDashArrow = null;
 
+    [Header("Wall Jump")]
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private LayerMask wallLayer;
+    private bool isOnWall = false;
+    private Collider2D touchingWall;
+    //private Vector3 prevCollisionNormal;
+
     Rigidbody2D rb;
     List<GameObject> currentCollisions;
     List<GameObject> removalQueue;
@@ -22,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 enemyPos;
 
     private float dashSpeed = 50f;
+    private float dashTime = 0.3f;
     private float baseMoveSpeed = 1;
 
     private bool canMove = true;
@@ -92,11 +101,104 @@ public class PlayerMovement : MonoBehaviour
 		
 	}
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // foreach (var contact in collision.contacts)
+        // {
+        //     Debug.DrawRay(contact.point, contact.normal, Color.red, 2f);
+
+        //     Debug.Log("Hit normal: " + contact.normal);
+        // }
+
+        //TODO: use if want to add angled walls
+        //prevCollisionNormal = collision.GetContact(0).normal;
+    }
+
     private void Dash(InputAction.CallbackContext context)
     {
+        SetMovementAbility(false);
+
+        touchingWall = Physics2D.OverlapBox(wallCheck.position, new Vector2(1.2f, 1.2f), 0, wallLayer);
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
-        if(currentCollisions.Count > 0)
+        if(touchingWall && direction != Vector2.zero)
+        {
+            SpriteRenderer wall = touchingWall.gameObject.GetComponent<SpriteRenderer>();
+            Vector3 wallSize = wall.bounds.size;
+            Vector3 wallPos = touchingWall.transform.position;
+            Vector3 dir;
+            //Find out wall orientation compared to player
+
+            // // wall is vertical
+            // if(prevCollisionNormal.y == 0)
+            // {
+            //     dir = new Vector3(prevCollisionNormal.x * dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
+            //     rb.AddForce(dir,  ForceMode2D.Impulse);
+            // }
+            // // wall is horizontal
+            // else if(prevCollisionNormal.x == 0)
+            // {
+            //     dir = new Vector3(direction.x * dashSpeed * 1.5f, prevCollisionNormal.y * dashSpeed * 1.5f, 0);
+            //     rb.AddForce(dir,  ForceMode2D.Impulse);
+            // }
+            // // wall is diagonal under and left
+            // else if(prevCollisionNormal.x > 0 && prevCollisionNormal.y > 0)
+            // {
+            //     vector = Quaternion.Euler(0, , 0) * vector;
+            //     dir = new Vector3(dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
+            //     rb.AddForce(dir,  ForceMode2D.Impulse);
+            // }
+            // // wall is vertical to the right
+            // else if(wallPos.x - wallSize.x/2 > transform.position.x)
+            // {
+            //     dir = new Vector3(-dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
+            //     rb.AddForce(dir,  ForceMode2D.Impulse);
+            // }
+            // // wall on botom
+            // else if(wallPos.y + wallSize.y/2 < transform.position.x)
+            // {
+            //     dir = new Vector3(direction.x * dashSpeed * 1.5f, dashSpeed * 1.5f, 0);
+            //     rb.AddForce(dir,  ForceMode2D.Impulse);
+            // }
+            // // wall on top
+            // else if(wallPos.y - wallSize.y/2 > transform.position.x)
+            // {
+            //     dir = new Vector3(direction.x * dashSpeed * 1.5f, -dashSpeed * 1.5f,0);
+            //     rb.AddForce(dir,  ForceMode2D.Impulse);
+            // }
+            
+            // 90 degree walls only
+            // wall is vertical to the left of player
+            if(wallPos.x + wallSize.x/2 < transform.position.x)
+            {
+                dir = new Vector3(dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
+                rb.AddForce(dir,  ForceMode2D.Impulse);
+            }
+            // wall is vertical to the right
+            else if(wallPos.x - wallSize.x/2 > transform.position.x)
+            {
+                dir = new Vector3(-dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
+                rb.AddForce(dir,  ForceMode2D.Impulse);
+            }
+            // wall on botom
+            else if(wallPos.y + wallSize.y/2 < transform.position.x)
+            {
+                dir = new Vector3(direction.x * dashSpeed * 1.5f, dashSpeed * 1.5f, 0);
+                rb.AddForce(dir,  ForceMode2D.Impulse);
+            }
+            // wall on top
+            else if(wallPos.y - wallSize.y/2 > transform.position.x)
+            {
+                dir = new Vector3(direction.x * dashSpeed * 1.5f, -dashSpeed * 1.5f,0);
+                rb.AddForce(dir,  ForceMode2D.Impulse);
+            }
+
+            //Vector3 diff = touchingWall.transform.position - transform.position;
+            // Vector3 dir = diff.normalized * -1;
+            // Debug.Log(dir);
+            //rb.AddForce(dir * (dashSpeed * 1.5f + rb.velocity.magnitude), ForceMode2D.Impulse);
+        }
+        else if(currentCollisions.Count > 0)
         {
             ReflectDashSetup();
             //ReflectDash(direction);
@@ -105,12 +207,14 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(direction * (dashSpeed + rb.velocity.magnitude), ForceMode2D.Impulse);
         }
+
+        Invoke("EndDash", dashTime);
     }
 
     private void ReflectDashSetup()
     {
         dash.action.canceled += ReflectDash;
-        SetMovementAbility(false);
+        //SetMovementAbility(false);
 
         Vector2 direction = movement.action.ReadValue<Vector2>();
         GameObject closestEnemy = null;
@@ -170,7 +274,10 @@ public class PlayerMovement : MonoBehaviour
         Destroy(reflectDashArrow);
     }
 
-
+    private void EndDash()
+    {
+        canMove = true;
+    }
     // Since the dash reads from movement input, this allows turning on/off basic movement but allowing dashes
     public void SetMovementAbility(bool isActive)
     {
