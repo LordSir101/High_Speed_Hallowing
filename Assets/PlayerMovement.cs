@@ -45,12 +45,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        
+
         if(canMove) 
         {
             Vector2 movementInput = movement.action.ReadValue<Vector2>();
 
             // move using current speed, with a minimum of base move speed
             rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
+            float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+            float playerAngle= playerRadValue * (180/Mathf.PI);
+            rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+            
         }
 
         if(reflectDashArrow)
@@ -118,12 +124,15 @@ public class PlayerMovement : MonoBehaviour
     {
         SetMovementAbility(false);
 
-        touchingWall = Physics2D.OverlapBox(wallCheck.position, new Vector2(1.2f, 1.2f), 0, wallLayer);
+        touchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.6f, wallLayer);
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
         if(touchingWall && direction != Vector2.zero)
         {
-            SpriteRenderer wall = touchingWall.gameObject.GetComponent<SpriteRenderer>();
+            Debug.Log("wjump");
+            BoxCollider2D wall = touchingWall.gameObject.GetComponent<BoxCollider2D>();
+            Debug.Log(wall);
+            
             Vector3 wallSize = wall.bounds.size;
             Vector3 wallPos = touchingWall.transform.position;
             Vector3 dir;
@@ -169,8 +178,11 @@ public class PlayerMovement : MonoBehaviour
             
             // 90 degree walls only
             // wall is vertical to the left of player
+            Debug.Log(wallPos.x + wallSize.x/2);
+            Debug.Log(transform.position.x);
             if(wallPos.x + wallSize.x/2 < transform.position.x)
             {
+                Debug.Log("jump left");
                 dir = new Vector3(dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
                 rb.AddForce(dir,  ForceMode2D.Impulse);
             }
@@ -207,6 +219,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(direction * (dashSpeed + rb.velocity.magnitude), ForceMode2D.Impulse);
         }
+
+        // turn player
+        float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+        float playerAngle= playerRadValue * (180/Mathf.PI);
+        rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
 
         Invoke("EndDash", dashTime);
     }
