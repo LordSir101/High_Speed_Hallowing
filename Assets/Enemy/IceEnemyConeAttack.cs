@@ -1,0 +1,66 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class IceEnemyConeAttack : MonoBehaviour
+{
+   
+    private EnemyTelegraphAttack attackStats;
+    private TH_Cone attackScript;
+    private IceEnemyBehaviour behaviourScript;
+    GameObject attackObj;
+
+    [SerializeField]
+    private GameObject attackType;
+    GameObject player;
+
+    public bool attacking = false;
+
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        attackStats = gameObject.GetComponent<EnemyTelegraphAttack>();
+
+        attackObj = Instantiate(attackType);
+        attackObj.transform.position = transform.position;
+        attackObj.transform.parent = gameObject.transform;
+        attackObj.transform.parent = transform; // make the attack a child of enemy 
+
+        attackScript = attackObj.GetComponent<TH_Cone>();
+        behaviourScript = gameObject.GetComponent<IceEnemyBehaviour>();
+
+        // the telegraph starts at 70% of the total hitbox since the hitbox is a ring.
+        attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.ringAttackDamage, attackStats.StartingTelegaphPercentSize);
+
+        StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
+
+    }
+
+    void Update()
+    {
+        if(attackStats.attackReady && behaviourScript.playerInRange)
+        {
+            // rotate cone
+            Vector2 dir =  player.transform.position - transform.position;
+            float radvalue = Mathf.Atan2(-dir.y, -dir.x);
+            float angle= radvalue * (180/Mathf.PI);
+            attackObj.transform.localRotation = Quaternion.Euler(0,0,angle -90);
+
+            attacking = true;
+            attackScript.StartAttack();
+            ToggleAttackReady(false);
+        }
+        if(attackScript.attackEnded)
+        {
+            StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
+            attackScript.attackEnded = false;
+            attacking = false;
+        }
+    }
+
+    void ToggleAttackReady(bool isReady)
+    {
+        attackStats.attackReady = isReady;
+    }
+}

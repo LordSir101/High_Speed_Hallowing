@@ -19,6 +19,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
     public float StartingTelegaphPercentSize { get; set;} // is a percent of max size
 
     public bool attackStarted { get; set;} = false;
+    public bool attackEnded { get; set;} = false;
 
     GameObject telegraphSprite;
 
@@ -45,7 +46,6 @@ public abstract class TelegraphedHitbox : MonoBehaviour
 
         Setup();
 
-        StartCoroutine(StartCooldown());
     }
 
     public abstract void Setup();
@@ -53,13 +53,13 @@ public abstract class TelegraphedHitbox : MonoBehaviour
     public void SetAllCollidersStatus (bool isActive) {
         foreach(Collider2D c in GetComponentsInChildren<Collider2D>()) {
             c.enabled = isActive;
+        }
     }
-}
 
     public void Update()
     {
+        
         transform.position = transform.parent.transform.position;
-
         if(attackStarted)
         {
             WindupTimer += Time.deltaTime;
@@ -80,10 +80,10 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         }
     }
 
-    public IEnumerator StartCooldown()
+    public IEnumerator StartCooldown(System.Action<bool> callback)
     {
         yield return new WaitForSeconds(CooldownTime);
-        StartAttack();
+        callback(true);
     }
 
     public void StartAttack()
@@ -97,7 +97,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
     {
         gameObject.GetComponent<Renderer>().enabled = false;
         telegraphSprite.GetComponent<Renderer>().enabled = false;
-        StartCoroutine(StartCooldown());
+        attackEnded = true;
     }
 
     //TODO: make active time use frames instead?
