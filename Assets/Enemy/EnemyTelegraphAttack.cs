@@ -8,8 +8,8 @@ public class EnemyTelegraphAttack : MonoBehaviour
     public float windupTime, activeTime, cooldownTime, Size, StartingTelegaphPercentSize;
 
     [SerializeField]
-    public int ringAttackDamage = 10;
+    public int Damage;
 
-    public bool attackReady = false;
+    //public bool attackReady = false;
     // Start is called before the first frame update
 }

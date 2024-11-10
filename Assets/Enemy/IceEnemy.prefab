@@ -445,7 +445,7 @@ MonoBehaviour:
   cooldownTime: 3
   Size: 4
   StartingTelegaphPercentSize: 0
-  ringAttackDamage: 5
+  Damage: 5
   attackReady: 0
 --- !u!114 &7253672186253097941
 MonoBehaviour:
@@ -512,6 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackType: {fileID: 5164034569600164820, guid: 28b6d0efd351750488ebb82e5dec6426, type: 3}
+  attacking: 0
 --- !u!114 &5876194444742420994
 MonoBehaviour:
   m_ObjectHideFlags: 0

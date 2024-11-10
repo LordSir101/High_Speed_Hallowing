@@ -31,15 +31,23 @@ public class IceEnemyConeAttack : MonoBehaviour
         behaviourScript = gameObject.GetComponent<IceEnemyBehaviour>();
 
         // the telegraph starts at 70% of the total hitbox since the hitbox is a ring.
-        attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.ringAttackDamage, attackStats.StartingTelegaphPercentSize);
+        attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize);
 
-        StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
+        StartCoroutine(attackScript.StartCooldown());
 
     }
 
     void Update()
     {
-        if(attackStats.attackReady && behaviourScript.playerInRange)
+        // if the attack is ready, that means the previous attack is complete
+        if(attackScript.attackEnded)
+        {
+            //StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
+            //attackScript.attackEnded = false;
+            attacking = false;
+        }
+
+        if(attackScript.attackReady && behaviourScript.playerInRange)
         {
             // rotate cone
             Vector2 dir =  player.transform.position - transform.position;
@@ -49,18 +57,13 @@ public class IceEnemyConeAttack : MonoBehaviour
 
             attacking = true;
             attackScript.StartAttack();
-            ToggleAttackReady(false);
+            //ToggleAttackReady(false);
         }
-        if(attackScript.attackEnded)
-        {
-            StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
-            attackScript.attackEnded = false;
-            attacking = false;
-        }
+        
     }
 
-    void ToggleAttackReady(bool isReady)
-    {
-        attackStats.attackReady = isReady;
-    }
+    // void ToggleAttackReady(bool isReady)
+    // {
+    //     attackStats.attackReady = isReady;
+    // }
 }
