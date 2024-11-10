@@ -10,6 +10,6 @@ public class EnemyTelegraphAttack : MonoBehaviour
     [SerializeField]
     public int Damage;
 
-    public bool attackReady = false;
+    //public bool attackReady = false;
     // Start is called before the first frame update
 }

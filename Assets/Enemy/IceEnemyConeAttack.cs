@@ -40,7 +40,7 @@ public class IceEnemyConeAttack : MonoBehaviour
     void Update()
     {
         // if the attack is ready, that means the previous attack is complete
-        if(attackScript.attackReady)
+        if(attackScript.attackEnded)
         {
             //StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
             //attackScript.attackEnded = false;

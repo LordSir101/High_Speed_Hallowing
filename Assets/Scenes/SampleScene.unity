@@ -799,13 +799,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5014788926800949754, guid: 779328bf633524149986cc827ed661f1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7773252121538933927, guid: 779328bf633524149986cc827ed661f1, type: 3}
       propertyPath: m_Name
       value: RingEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 7773252121538933927, guid: 779328bf633524149986cc827ed661f1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
