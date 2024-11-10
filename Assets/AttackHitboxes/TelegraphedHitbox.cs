@@ -19,7 +19,8 @@ public abstract class TelegraphedHitbox : MonoBehaviour
     public float StartingTelegaphPercentSize { get; set;} // is a percent of max size
 
     public bool attackStarted { get; set;} = false;
-    public bool attackEnded { get; set;} = false;
+    //public bool attackEnded { get; set;} = false;
+    public bool attackReady = false;
 
     GameObject telegraphSprite;
 
@@ -80,24 +81,27 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         }
     }
 
-    public IEnumerator StartCooldown(System.Action<bool> callback)
+    public IEnumerator StartCooldown()
     {
         yield return new WaitForSeconds(CooldownTime);
-        callback(true);
+        attackReady = true;
     }
 
     public void StartAttack()
     {
         attackStarted = true;
+        attackReady = false;
+        //attackEnded = false;
         gameObject.GetComponent<Renderer>().enabled = true;
         telegraphSprite.GetComponent<Renderer>().enabled = true;
     }
 
     public void EndAttack()
     {
+        StartCoroutine(StartCooldown());
         gameObject.GetComponent<Renderer>().enabled = false;
         telegraphSprite.GetComponent<Renderer>().enabled = false;
-        attackEnded = true;
+        //attackEnded = true;
     }
 
     //TODO: make active time use frames instead?

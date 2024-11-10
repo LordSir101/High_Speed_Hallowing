@@ -29,29 +29,29 @@ public class RingEnemyAttack : MonoBehaviour
         attackScript = attack.GetComponent<TH_Ring>();
 
         // the telegraph starts at 70% of the total hitbox since the hitbox is a ring.
-        attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.ringAttackDamage, attackStats.StartingTelegaphPercentSize);
+        attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize);
 
-        StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
+        StartCoroutine(attackScript.StartCooldown());
 
     }
 
     void Update()
     {
-        if(attackStats.attackReady)
+        if(attackScript.attackReady)
         {
             attackScript.StartAttack();
-            ToggleAttackReady(false);
+            //ToggleAttackReady(false);
             //StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
         }
-        if(attackScript.attackEnded)
-        {
-            StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
-            attackScript.attackEnded = false;
-        }
+        // if(attackScript.attackEnded)
+        // {
+        //     //StartCoroutine(attackScript.StartCooldown());
+        //     //attackScript.attackEnded = false;
+        // }
     }
 
-    void ToggleAttackReady(bool isReady)
-    {
-        attackStats.attackReady = isReady;
-    }
+    // void ToggleAttackReady(bool isReady)
+    // {
+    //     attackStats.attackReady = isReady;
+    // }
 }

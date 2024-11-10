@@ -429,7 +429,7 @@ MonoBehaviour:
   cooldownTime: 3
   Size: 5
   StartingTelegaphPercentSize: 0.7
-  ringAttackDamage: 10
+  Damage: 10
   attackReady: 0
 --- !u!114 &3412426501446858175
 MonoBehaviour:
