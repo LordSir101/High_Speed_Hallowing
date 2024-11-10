@@ -45,8 +45,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        
-
         if(canMove) 
         {
             Vector2 movementInput = movement.action.ReadValue<Vector2>();
@@ -129,9 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(touchingWall && direction != Vector2.zero)
         {
-            Debug.Log("wjump");
             BoxCollider2D wall = touchingWall.gameObject.GetComponent<BoxCollider2D>();
-            Debug.Log(wall);
             
             Vector3 wallSize = wall.bounds.size;
             Vector3 wallPos = touchingWall.transform.position;
@@ -178,29 +174,39 @@ public class PlayerMovement : MonoBehaviour
             
             // 90 degree walls only
             // wall is vertical to the left of player
-            Debug.Log(wallPos.x + wallSize.x/2);
-            Debug.Log(transform.position.x);
+            
             if(wallPos.x + wallSize.x/2 < transform.position.x)
             {
-                Debug.Log("jump left");
+                Debug.Log(wallPos.x + wallSize.x/2);
+                Debug.Log(transform.position.x);
+                Debug.Log("wall left");
                 dir = new Vector3(dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
                 rb.AddForce(dir,  ForceMode2D.Impulse);
             }
             // wall is vertical to the right
             else if(wallPos.x - wallSize.x/2 > transform.position.x)
             {
+                Debug.Log(wallPos.x + wallSize.x/2);
+                Debug.Log(transform.position.x);
+                Debug.Log("wall right");
                 dir = new Vector3(-dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
                 rb.AddForce(dir,  ForceMode2D.Impulse);
             }
             // wall on botom
-            else if(wallPos.y + wallSize.y/2 < transform.position.x)
+            else if(wallPos.y + wallSize.y/2 < transform.position.y)
             {
+                Debug.Log(wallPos.y + wallSize.y/2);
+                Debug.Log(transform.position.y);
+                Debug.Log("wall down");
                 dir = new Vector3(direction.x * dashSpeed * 1.5f, dashSpeed * 1.5f, 0);
                 rb.AddForce(dir,  ForceMode2D.Impulse);
             }
             // wall on top
-            else if(wallPos.y - wallSize.y/2 > transform.position.x)
+            else if(wallPos.y - wallSize.y/2 > transform.position.y)
             {
+                Debug.Log(wallPos.y - wallSize.y/2);
+                Debug.Log(transform.position.y);
+                Debug.Log("wall top");
                 dir = new Vector3(direction.x * dashSpeed * 1.5f, -dashSpeed * 1.5f,0);
                 rb.AddForce(dir,  ForceMode2D.Impulse);
             }
@@ -230,7 +236,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ReflectDashSetup()
     {
-        dash.action.canceled += ReflectDash;
+        
         //SetMovementAbility(false);
 
         Vector2 direction = movement.action.ReadValue<Vector2>();
@@ -240,7 +246,7 @@ public class PlayerMovement : MonoBehaviour
 
         foreach(GameObject col in currentCollisions)
         {
-            if(col.gameObject != null)
+            if(col.gameObject.activeInHierarchy)
             {
                 float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
                 if(distance < closestEnemyDistance)
@@ -257,14 +263,20 @@ public class PlayerMovement : MonoBehaviour
             
         };
 
-        // get direction vector relative to enemy
-        enemyPos = closestEnemy.transform.position;
+        if(closestEnemy != null)
+        {
+            dash.action.canceled += ReflectDash;
 
-        // Teleport the player to the enemy center
-        Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
-        rb.position = teleportLocation;
+            // get direction vector relative to enemy
+            enemyPos = closestEnemy.transform.position;
 
-        reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
+            // Teleport the player to the enemy center
+            Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
+            rb.position = teleportLocation;
+
+            reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
+        }
+     
     }
 
     private void ReflectDash(InputAction.CallbackContext context)

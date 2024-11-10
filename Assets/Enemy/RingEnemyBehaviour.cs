@@ -12,18 +12,20 @@ public class RingEnemyBehaviour : MonoBehaviour
     [SerializeField]
     Rigidbody2D enemyRb;
 
-    [SerializeField]
-    RingEnemyAttack ringAttackInfo;
+    EnemyTelegraphAttack ringAttackInfo;
 
     GameObject player;
 
     private float maxAttackRange;
     private float minAttackRange;
 
+    private float reactiontime = 0.5f;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
+        ringAttackInfo = gameObject.GetComponent<EnemyTelegraphAttack>();
         // Size is the local scale of ring attack. divide by 2 for radius
         maxAttackRange = ringAttackInfo.Size / 2;
         minAttackRange = maxAttackRange * ringAttackInfo.StartingTelegaphPercentSize;
@@ -51,7 +53,7 @@ public class RingEnemyBehaviour : MonoBehaviour
                 enemyRb.velocity = Vector3.zero;
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(reactiontime);
 
         }
     }
