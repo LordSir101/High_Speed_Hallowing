@@ -6,7 +6,9 @@ using UnityEngine.Scripting.APIUpdating;
 
 public class RingEnemyBehaviour : MonoBehaviour
 {
-    [SerializeField]
+    
+    [SerializeField] private float minSpeed, maxSpeed;
+
     private float speed;
 
     [SerializeField]
@@ -23,6 +25,8 @@ public class RingEnemyBehaviour : MonoBehaviour
 
     void Start()
     {
+        speed = Random.Range(minSpeed, maxSpeed);
+
         player = GameObject.FindGameObjectWithTag("Player");
 
         ringAttackInfo = gameObject.GetComponent<EnemyTelegraphAttack>();

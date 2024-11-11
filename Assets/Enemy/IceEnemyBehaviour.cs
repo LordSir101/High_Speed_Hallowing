@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class IceEnemyBehaviour : MonoBehaviour
 {
-    [SerializeField]
     private float speed;
+    [SerializeField] private float minSpeed, maxSpeed;
 
     [SerializeField]
     Rigidbody2D rb;
@@ -27,6 +27,8 @@ public class IceEnemyBehaviour : MonoBehaviour
 
     void Start()
     {
+        speed = Random.Range(minSpeed, maxSpeed);
+
         player = GameObject.FindGameObjectWithTag("Player");
 
         attackInfo = gameObject.GetComponent<EnemyTelegraphAttack>();
