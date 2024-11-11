@@ -9,6 +9,7 @@ TagManager:
   - Hurtbox
   - Buffer
   - AggroRange
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
