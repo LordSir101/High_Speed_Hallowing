@@ -533,6 +533,7 @@ MonoBehaviour:
   maxOuterLightRad: 1.5
   minOuterLightRad: 0.6
   healthLight: {fileID: 2438641202968600515}
+  essencePrefab: {fileID: 8109565986500063856, guid: 2213573895384264faf239c6cdebbe13, type: 3}
 --- !u!114 &7434335805627051734
 MonoBehaviour:
   m_ObjectHideFlags: 0
