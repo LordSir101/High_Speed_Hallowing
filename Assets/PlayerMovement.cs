@@ -246,7 +246,7 @@ public class PlayerMovement : MonoBehaviour
 
         foreach(GameObject col in currentCollisions)
         {
-            if(col.gameObject.activeInHierarchy)
+            if(col.gameObject != null)
             {
                 float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
                 if(distance < closestEnemyDistance)
