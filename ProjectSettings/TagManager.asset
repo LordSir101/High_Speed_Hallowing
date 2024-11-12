@@ -10,6 +10,7 @@ TagManager:
   - Buffer
   - AggroRange
   - SpawnPoint
+  - InteractText
   layers:
   - Default
   - TransparentFX
@@ -49,4 +50,7 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 3180719649
+    locked: 0
+  - name: Resources
+    uniqueID: 961031997
     locked: 0

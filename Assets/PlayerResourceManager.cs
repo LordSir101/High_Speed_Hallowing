@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerResourceManager : MonoBehaviour
 {
-    public int Essence {get; set;} = 0;
+    public int Essence {get; set;} = 500;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,6 @@ public class PlayerResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Essence);
+        //Debug.Log(Essence);
     }
 }

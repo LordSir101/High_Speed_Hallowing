@@ -103,9 +103,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 961031997
+  m_SortingLayer: -1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: e62c22189ad135c49bb3536167c22f08, type: 3}
   m_Color: {r: 0.51174796, g: 0.9433962, b: 0.7850831, a: 1}
   m_FlipX: 0
@@ -176,7 +176,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8109565986500063856}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

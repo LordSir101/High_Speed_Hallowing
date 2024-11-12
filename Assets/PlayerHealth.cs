@@ -15,7 +15,7 @@ public class PlayerHealth: MonoBehaviour
 
         if(health <= 0)
         {
-            gameOverPanel.OpenPanel();
+            gameOverPanel.SetWin(false);
         }
     }
     
