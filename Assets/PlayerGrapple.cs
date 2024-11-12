@@ -62,6 +62,10 @@ public class PlayerGrapple : MonoBehaviour
     {
         Vector2 grappleDirection = GetGrappleDirection();
 
+        grapple.action.Disable();
+        grappling = true;
+        rb.drag = 0;
+
         // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
         RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance);
 
@@ -76,6 +80,15 @@ public class PlayerGrapple : MonoBehaviour
             StartCoroutine(PerformMissedGrapple());
         }
 
+    }
+
+    public void EndGrapple()
+    {
+        movement.action.Enable();
+        grapple.action.Enable();
+        rb.drag = 3;
+        lineRenderer.enabled = false;
+        playerMovement.SetMovementAbility(true);
     }
 
     private Vector2 GetGrappleDirection()
@@ -94,20 +107,25 @@ public class PlayerGrapple : MonoBehaviour
 
         movement.action.Disable();
         playerMovement.SetMovementAbility(false);
-        grapple.action.Disable();
-        grappling = true;
+        // grapple.action.Disable();
+        // grappling = true;
 
-        if(target.gameObject.tag == "Enemy")
-        {
-            grappleLocation = target.transform.position;
-        
-        }
+        // if(target.gameObject.tag == "Enemy")
+        // {
+        //     grappleLocation = target.transform.position;
+        // }
        
         rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
-        rb.drag = 0;
+        // rb.drag = 0;
 
         while (grappling)
         {
+            // prevents player from flying off the screen if they grapple past thier target
+            if(target.gameObject.tag == "Enemy")
+            {
+                grappleLocation = target.transform.position;
+            }
+
             // Temp fix for bug where movement does not get disabled if a move input is pressed while being disabled
             if(movement.action.enabled)
             {
@@ -115,15 +133,16 @@ public class PlayerGrapple : MonoBehaviour
                 rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
             }
 
-            rb.velocity = rb.velocity.magnitude * grappleAcceleration * rb.velocity.normalized;
+            rb.velocity = rb.velocity.magnitude * grappleAcceleration * (grappleLocation - rb.position).normalized;
             yield return new WaitForSeconds(0.1f);
         }
         
-        movement.action.Enable();
-        grapple.action.Enable();
-        rb.drag = 3;
-        lineRenderer.enabled = false;
-        playerMovement.SetMovementAbility(true);
+        EndGrapple();
+        // movement.action.Enable();
+        // grapple.action.Enable();
+        // rb.drag = 3;
+        // lineRenderer.enabled = false;
+        // playerMovement.SetMovementAbility(true);
     }
 
     // end grapple early if hit an enemy
@@ -144,14 +163,15 @@ public class PlayerGrapple : MonoBehaviour
     {
         yield return StartCoroutine(AnimateGrappleShot());
 
-        grappling = true;
-        grapple.action.Disable();
+        // grappling = true;
+        // grapple.action.Disable();
         
         yield return new WaitForSeconds(0.5f);
 
-        grappling = false;
-        lineRenderer.enabled = false;
-        grapple.action.Enable();
+        EndGrapple();
+        // grappling = false;
+        // lineRenderer.enabled = false;
+        // grapple.action.Enable();
     }
 
     IEnumerator AnimateGrappleShot()

@@ -42,8 +42,8 @@ public class PlayerImpact : MonoBehaviour
         {
             StopCoroutine(cameraShake.Shaking());
             StartCoroutine(cameraShake.Shaking());
+            
             ImpactSpeed += rb.velocity.magnitude;
-            //rb.velocity = Vector2.zero;
             rb.velocity = rb.velocity.normalized;
 
             // Window to input a dash to accumulate speed based on how fast the player was going at impact
