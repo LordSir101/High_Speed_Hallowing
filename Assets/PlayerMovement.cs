@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Wall Jump")]
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
-    private bool isOnWall = false;
+    //private bool isOnWall = false;
     private Collider2D touchingWall;
     //private Vector3 prevCollisionNormal;
 
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private float dashTime = 0.3f;
     private float baseMoveSpeed = 1;
 
-    private bool canMove = true;
+    public bool CanMove {get; set;} = true;
 
     void Start()
     {
@@ -45,8 +45,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(canMove) 
+        if(CanMove) 
         {
+            //Debug.Log("moving");
             Vector2 movementInput = movement.action.ReadValue<Vector2>();
 
             // move using current speed, with a minimum of base move speed
@@ -56,6 +57,9 @@ public class PlayerMovement : MonoBehaviour
             rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
             
         }
+        // else{
+        //     Debug.Log("not moving");
+        // }
 
         if(reflectDashArrow)
         {
@@ -120,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dash(InputAction.CallbackContext context)
     {
-        SetMovementAbility(false);
+        CanMove = false;
 
         touchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.6f, wallLayer);
         Vector2 direction = movement.action.ReadValue<Vector2>();
@@ -177,36 +181,24 @@ public class PlayerMovement : MonoBehaviour
             
             if(wallPos.x + wallSize.x/2 < transform.position.x)
             {
-                Debug.Log(wallPos.x + wallSize.x/2);
-                Debug.Log(transform.position.x);
-                Debug.Log("wall left");
                 dir = new Vector3(dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
                 rb.AddForce(dir,  ForceMode2D.Impulse);
             }
             // wall is vertical to the right
             else if(wallPos.x - wallSize.x/2 > transform.position.x)
             {
-                Debug.Log(wallPos.x + wallSize.x/2);
-                Debug.Log(transform.position.x);
-                Debug.Log("wall right");
                 dir = new Vector3(-dashSpeed * 1.5f, direction.y * dashSpeed * 1.5f, 0);
                 rb.AddForce(dir,  ForceMode2D.Impulse);
             }
             // wall on botom
             else if(wallPos.y + wallSize.y/2 < transform.position.y)
             {
-                Debug.Log(wallPos.y + wallSize.y/2);
-                Debug.Log(transform.position.y);
-                Debug.Log("wall down");
                 dir = new Vector3(direction.x * dashSpeed * 1.5f, dashSpeed * 1.5f, 0);
                 rb.AddForce(dir,  ForceMode2D.Impulse);
             }
             // wall on top
             else if(wallPos.y - wallSize.y/2 > transform.position.y)
             {
-                Debug.Log(wallPos.y - wallSize.y/2);
-                Debug.Log(transform.position.y);
-                Debug.Log("wall top");
                 dir = new Vector3(direction.x * dashSpeed * 1.5f, -dashSpeed * 1.5f,0);
                 rb.AddForce(dir,  ForceMode2D.Impulse);
             }
@@ -298,20 +290,20 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(direction * reboundDashSpeed, ForceMode2D.Impulse);
 
         dash.action.canceled -= ReflectDash;
-        SetMovementAbility(true);
+        CanMove = true;
 
         Destroy(reflectDashArrow);
     }
 
     private void EndDash()
     {
-        canMove = true;
+        CanMove = true;
     }
     // Since the dash reads from movement input, this allows turning on/off basic movement but allowing dashes
-    public void SetMovementAbility(bool isActive)
-    {
-        canMove = isActive;
-    }
+    // public void SetMovementAbility(bool isActive)
+    // {
+    //     canMove = isActive;
+    // }
 
     
 }
