@@ -85,10 +85,13 @@ public class PlayerGrapple : MonoBehaviour
 
     public void EndGrapple()
     {
-        //Debug.Log("end grapple");
-        grappling = false;
-        StopAllCoroutines();
-        ResetGrapppleStatus();
+        if(grappling)
+        {
+            grappling = false;
+            StopAllCoroutines();
+            ResetGrapppleStatus();
+        }
+       
     }
 
     private Vector2 GetGrappleDirection()
@@ -173,6 +176,7 @@ public class PlayerGrapple : MonoBehaviour
     public void ResetGrapppleStatus()
     {
         //movement.action.Enable();
+        Debug.Log("reset grapple");
         grapple.action.Enable();
         playerMovement.EnableBasicDash();
         rb.drag = 3;
@@ -185,16 +189,22 @@ public class PlayerGrapple : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            //grappling = false;
-            EndGrapple();
+            if(grappling)
+            {
+                EndGrapple();
+            }
+            
         }
     }
 
     
     private void OnCollisionEnter2D(Collision2D col)
     {
-        //grappling = false;
-        EndGrapple();
+        if(grappling)
+        {
+            EndGrapple();
+        }
+        
     }
 
     IEnumerator AnimateGrapple()

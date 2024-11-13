@@ -129,17 +129,17 @@ GameObject:
   m_Component:
   - component: {fileID: 140164697}
   - component: {fileID: 140164696}
-  - component: {fileID: 140164695}
   - component: {fileID: 140164694}
+  - component: {fileID: 140164704}
   - component: {fileID: 140164698}
+  - component: {fileID: 140164695}
   - component: {fileID: 140164700}
   - component: {fileID: 140164701}
   - component: {fileID: 140164702}
   - component: {fileID: 140164703}
-  - component: {fileID: 140164704}
   - component: {fileID: 140164705}
-  - component: {fileID: 140164706}
   - component: {fileID: 140164707}
+  - component: {fileID: 140164706}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -188,12 +188,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: -7715835082281109425, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
   dash: {fileID: -8372040125090280120, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
-  arrowPrefab: {fileID: 7726366628347379214, guid: 1991e4dd1b08ee04795a9dc3bafd3588, type: 3}
-  actionWindowIndicatorPrefab: {fileID: 7656306893239868232, guid: 26cbc3a35ecb3704885e3e15c9be75bd, type: 3}
   wallCheck: {fileID: 1412480171}
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  actionWindowIndicatorPrefab: {fileID: 7656306893239868232, guid: 26cbc3a35ecb3704885e3e15c9be75bd, type: 3}
+  wallJumpQueued: 0
 --- !u!212 &140164696
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -387,7 +390,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grapple: {fileID: -7356559233500480823, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
   pointerPos: {fileID: 7556248317398578439, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
-  movement: {fileID: -7715835082281109425, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
 --- !u!114 &140164701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,10 +413,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 140164693}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e7d8fd2cb840d24b9242d3911b8e204, type: 3}
+  m_Script: {fileID: 11500000, guid: 5de8e92a4da03db45bb44345af4683e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 140164694}
+  reflectDash: {fileID: 4559285439942075086, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
+  movement: {fileID: -7715835082281109425, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
+  arrowPrefab: {fileID: 7726366628347379214, guid: 1991e4dd1b08ee04795a9dc3bafd3588, type: 3}
+  actionWindowIndicatorPrefab: {fileID: 7656306893239868232, guid: 26cbc3a35ecb3704885e3e15c9be75bd, type: 3}
+  reflectDashing: 0
 --- !u!114 &140164703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1264,6 +1270,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5014788926800949754, guid: 779328bf633524149986cc827ed661f1, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271036020099212978, guid: 779328bf633524149986cc827ed661f1, type: 3}
+      propertyPath: m_Radius
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7773252121538933927, guid: 779328bf633524149986cc827ed661f1, type: 3}

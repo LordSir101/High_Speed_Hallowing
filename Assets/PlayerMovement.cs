@@ -7,21 +7,25 @@ using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
+    
 
     [SerializeField]
-    private InputActionReference movement, dash;
+    public InputActionReference movement, dash;
 
-    [Header("Reflect Dash")]
-    [SerializeField] private GameObject arrowPrefab;
-    [SerializeField] private GameObject actionWindowIndicatorPrefab;
-    private GameObject reflectDashArrow = null;
-    private GameObject relfectDashtarget = null;
-    private float reflectDashSpeedModifier = 2f;
+    private bool isDashing = false;
+
+    // [Header("Reflect Dash")]
+    // [SerializeField] private GameObject arrowPrefab;
+    // [SerializeField] private GameObject actionWindowIndicatorPrefab;
+    // private GameObject reflectDashArrow = null;
+    // private GameObject relfectDashtarget = null;
+    // private float reflectDashSpeedModifier = 2f;
 
     [Header("Wall Jump")]
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private GameObject actionWindowIndicatorPrefab;
     private float wallJumpSpeedModifier = 1.5f;
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
@@ -32,11 +36,11 @@ public class PlayerMovement : MonoBehaviour
     //private Vector3 prevCollisionNormal;
 
     Rigidbody2D rb;
-    List<GameObject> currentCollisions;
-    List<GameObject> removalQueue;
+    // List<GameObject> currentCollisions;
+    // List<GameObject> removalQueue;
     PlayerImpact playerImpact;
 
-    Vector3 enemyPos;
+    // Vector3 enemyPos;
 
     private float dashSpeed = 50f;
     private float dashTime = 0.3f;
@@ -48,10 +52,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        Physics.IgnoreLayerCollision(6, 8, true);
+
+        //Physics.IgnoreLayerCollision(6, 8, true);
         rb = GetComponent<Rigidbody2D>();
-        currentCollisions = new List <GameObject> ();
-        removalQueue = new List<GameObject> ();
+        // currentCollisions = new List <GameObject> ();
+        // removalQueue = new List<GameObject> ();
         playerImpact= GetComponent<PlayerImpact> ();
     }
 
@@ -92,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         //     reflectDashArrow.transform.position = transform.position;
         // }
 
-        RemoveNullCollisions();
+        //RemoveNullCollisions();
 
     }
     void FixedUpdate()
@@ -106,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
 
             // Rotate player. If the player is reflect dashing, only rotate the arrow, not the player
-            if(!reflectDashArrow)
+            if(!gameObject.GetComponent<PlayerReflectDash>().reflectDashing)
             {
                 float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
                 float playerAngle= playerRadValue * (180/Mathf.PI);
@@ -143,14 +148,14 @@ public class PlayerMovement : MonoBehaviour
         // }
     }
 
-    private void RemoveNullCollisions()
-    {
-        foreach(GameObject obj in removalQueue)
-        {
-            currentCollisions.Remove(obj);
-        }
-        removalQueue.Clear();
-    }
+    // private void RemoveNullCollisions()
+    // {
+    //     foreach(GameObject obj in removalQueue)
+    //     {
+    //         currentCollisions.Remove(obj);
+    //     }
+    //     removalQueue.Clear();
+    // }
 
     private void OnEnable()
     {
@@ -158,24 +163,24 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    void OnTriggerEnter2D (Collider2D col) 
-    {
+    // void OnTriggerEnter2D (Collider2D col) 
+    // {
 
-		// You can only reflect dash off of enemies
-        if(col.gameObject.tag == "Buffer")
-        {
-            currentCollisions.Add(col.gameObject.transform.parent.gameObject);
-        }
-	}
+	// 	// You can only reflect dash off of enemies
+    //     if(col.gameObject.tag == "Buffer")
+    //     {
+    //         currentCollisions.Add(col.gameObject.transform.parent.gameObject);
+    //     }
+	// }
 
-	void OnTriggerExit2D (Collider2D col) 
-    {
-        if(col.gameObject.tag == "Buffer")
-        {
-            currentCollisions.Remove(col.gameObject.transform.parent.gameObject);
-        }
+	// void OnTriggerExit2D (Collider2D col) 
+    // {
+    //     if(col.gameObject.tag == "Buffer")
+    //     {
+    //         currentCollisions.Remove(col.gameObject.transform.parent.gameObject);
+    //     }
 		
-	}
+	// }
 
     // Allows walljump while grappling but not normal dashes
     public void DisableBasicDash()
@@ -190,6 +195,7 @@ public class PlayerMovement : MonoBehaviour
         dash.action.performed -= ConditionalDash;
     }
 
+    // In certain circumstances like grappling, we can wall jump but not normal dash
     private void ConditionalDash(InputAction.CallbackContext context)
     {
         //CanMove = false;
@@ -238,26 +244,20 @@ public class PlayerMovement : MonoBehaviour
 
         if(!wallJumpQueued)
         {
-            if(currentCollisions.Count > 0)
-            {
-                ReflectDashSetup();
-                //ReflectDash(direction);
-            }
-            else
-            {
-                CanMove = false;
-                Debug.Log("dash");
-                DisableBasicDash();
-                rb.AddForce(direction * (dashSpeed + rb.velocity.magnitude), ForceMode2D.Impulse);
+            // if(currentCollisions.Count > 0)
+            // {
+            //     ReflectDashSetup();
+            //     //ReflectDash(direction);
+            // }
+            // else
+            // {
+                
                 //Invoke("EndDash", dashTime);
-                endDash = StartCoroutine(EndDash(dashTime));
-            }
+                //Vector2 force = direction * (dashSpeed + rb.velocity.magnitude);
+                endDash = StartCoroutine(PerformDash(direction * (dashSpeed + rb.velocity.magnitude), dashTime));
+            //}
 
         }
-
-       
-
-        
     }
 
     // if they player does not hit a wall in time, dont wall jump
@@ -282,14 +282,11 @@ public class PlayerMovement : MonoBehaviour
             
         Vector3 wallSize = wall.bounds.size;
         Vector3 wallPos = touchingWall.transform.position;
-        Vector3 dir;
+        Vector2 dir = Vector2.zero;
 
         gameObject.GetComponent<PlayerGrapple>().EndGrapple();
-        Debug.Log("Stop");
-        StopCoroutine(endDash); // In case a normal dash was canceled
-
-        Debug.Log("afterStop");
-
+        //StopCoroutine(endDash); // In case a normal dash was canceled
+        EndDash();
         CanMove = false;
         dash.action.Disable();
 
@@ -351,30 +348,32 @@ public class PlayerMovement : MonoBehaviour
 
         //Set velocity to 0 so the dash force is not mitigated by current velocity
         rb.velocity = Vector3.zero;
+        //Vector2 force;
 
         if(wallPos.x + wallSize.x/2 < transform.position.x)
         {
-            dir = new Vector3(wallJumpSpeed, direction.y * wallJumpSpeed, 0);
-            rb.AddForce(dir,  ForceMode2D.Impulse);
+            dir = new Vector2(wallJumpSpeed, direction.y * wallJumpSpeed);
+            //rb.AddForce(dir,  ForceMode2D.Impulse);
+            //force = dir
         }
         // wall is vertical to the right
         else if(wallPos.x - wallSize.x/2 > transform.position.x)
         {
-            dir = new Vector3(-wallJumpSpeed, direction.y * wallJumpSpeed, 0);
-            rb.AddForce(dir,  ForceMode2D.Impulse);
+            dir = new Vector2(-wallJumpSpeed, direction.y * wallJumpSpeed);
+            //rb.AddForce(dir,  ForceMode2D.Impulse);
         }
         // wall on botom
         else if(wallPos.y + wallSize.y/2 < transform.position.y)
         {
-            dir = new Vector3(direction.x * wallJumpSpeed, wallJumpSpeed, 0);
-            rb.AddForce(dir,  ForceMode2D.Impulse);
+            dir = new Vector2(direction.x * wallJumpSpeed, wallJumpSpeed);
+            //rb.AddForce(dir,  ForceMode2D.Impulse);
         }
         // wall on top
         else if(wallPos.y - wallSize.y/2 > transform.position.y)
         {
 
-            dir = new Vector3(direction.x * wallJumpSpeed, -wallJumpSpeed,0);
-            rb.AddForce(dir,  ForceMode2D.Impulse);
+            dir = new Vector2(direction.x * wallJumpSpeed, -wallJumpSpeed);
+            //rb.AddForce(dir,  ForceMode2D.Impulse);
         }
 
         //isWallJumping = true;
@@ -389,8 +388,8 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(rb.velocity);
         //Debug.Log("WallJump");
 
-        EnableBasicDash();
-        endDash = StartCoroutine(EndDash(wallJumpTime));
+        //EnableBasicDash();
+        endDash = StartCoroutine(PerformDash(dir, wallJumpTime));
         //Invoke("EndDash", dashTime);
 
         
@@ -406,83 +405,84 @@ public class PlayerMovement : MonoBehaviour
     //     yield return new W;
     // }
 
-    private void ReflectDashSetup()
-    {
+    // TODO: make it so that you can cancel grapple with reflect dash
+    // private void ReflectDashSetup()
+    // {
         
-        CanMove = false;
+    //     CanMove = false;
 
-        Vector2 direction = movement.action.ReadValue<Vector2>();
-        GameObject closestEnemy = null;
+    //     Vector2 direction = movement.action.ReadValue<Vector2>();
+    //     GameObject closestEnemy = null;
 
-        float closestEnemyDistance = float.MaxValue;
+    //     float closestEnemyDistance = float.MaxValue;
 
-        foreach(GameObject col in currentCollisions)
-        {
-            // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
-            if(col.gameObject != null)
-            {
-                float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
-                if(distance < closestEnemyDistance)
-                {
-                    closestEnemyDistance = distance;
-                    closestEnemy = col;
-                }
-            }
-            else
-            {
-                // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
-                removalQueue.Add(col);
-            }
-        };
+    //     foreach(GameObject col in currentCollisions)
+    //     {
+    //         // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
+    //         if(col.gameObject != null)
+    //         {
+    //             float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
+    //             if(distance < closestEnemyDistance)
+    //             {
+    //                 closestEnemyDistance = distance;
+    //                 closestEnemy = col;
+    //             }
+    //         }
+    //         else
+    //         {
+    //             // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
+    //             removalQueue.Add(col);
+    //         }
+    //     };
 
-        if(closestEnemy != null)
-        {
-            dash.action.canceled += ReflectDash;
-            relfectDashtarget = closestEnemy;
+    //     if(closestEnemy != null)
+    //     {
+    //         dash.action.canceled += ReflectDash;
+    //         relfectDashtarget = closestEnemy;
 
-            //Stop enemy from moving away
-            relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+    //         //Stop enemy from moving away
+    //         relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
 
-            // get direction vector relative to enemy
-            enemyPos = relfectDashtarget.transform.position;
+    //         // get direction vector relative to enemy
+    //         enemyPos = relfectDashtarget.transform.position;
 
-            // Teleport the player to the enemy center
-            Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
-            rb.position = teleportLocation;
+    //         // Teleport the player to the enemy center
+    //         Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
+    //         rb.position = teleportLocation;
 
-            reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
-        }
+    //         reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
+    //     }
      
-    }
+    // }
 
-    private void ReflectDash(InputAction.CallbackContext context)
-    {
-        dash.action.Disable();
-        Vector2 direction = movement.action.ReadValue<Vector2>();
+    // private void ReflectDash(InputAction.CallbackContext context)
+    // {
+    //     dash.action.Disable();
+    //     Vector2 direction = movement.action.ReadValue<Vector2>();
 
-        // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
-        Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction;
-        rb.position = teleportLocation;
+    //     // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
+    //     Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction;
+    //     rb.position = teleportLocation;
 
-        // Indicate to the player that they dashed within the window to add the speed they were going at impact
-        if(playerImpact.ImpactSpeed > 0)
-        {
-            GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
-            animation.transform.SetParent(transform, false);
-        }
+    //     // Indicate to the player that they dashed within the window to add the speed they were going at impact
+    //     if(playerImpact.ImpactSpeed > 0)
+    //     {
+    //         GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
+    //         animation.transform.SetParent(transform, false);
+    //     }
 
-        float reboundDashSpeed = dashSpeed * reflectDashSpeedModifier + playerImpact.ImpactSpeed;
-        rb.AddForce(direction * reboundDashSpeed, ForceMode2D.Impulse);
+    //     float reboundDashSpeed = dashSpeed * reflectDashSpeedModifier + playerImpact.ImpactSpeed;
+    //     rb.AddForce(direction * reboundDashSpeed, ForceMode2D.Impulse);
 
-        dash.action.canceled -= ReflectDash;
-        relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+    //     dash.action.canceled -= ReflectDash;
+    //     relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
 
-        //TODO: change this to the new version if needed
-        //Invoke("EndDash", dashTime);
-        endDash = StartCoroutine(EndDash(dashTime));
+    //     //TODO: change this to the new version if needed
+    //     //Invoke("EndDash", dashTime);
+    //     endDash = StartCoroutine(EndDash(dashTime));
 
-        Destroy(reflectDashArrow);
-    }
+    //     Destroy(reflectDashArrow);
+    // }
 
     // private void EndDash()
     // {
@@ -496,13 +496,30 @@ public class PlayerMovement : MonoBehaviour
     //     //isWallJumping = false;
     //     //Physics.IgnoreLayerCollision(8, 6, false);
     // }
-    IEnumerator EndDash(float time)
+    public void EndDash()
     {
-        yield return new WaitForSeconds(time);
-        Debug.Log("ended");
+        if(isDashing)
+        {
+            StopAllCoroutines();
+        }
+    }
+
+    private void ResetDashStatus()
+    {
+        Debug.Log("reset");
         CanMove = true;
         EnableBasicDash();
         dash.action.Enable();
+        isDashing = false;
+    }
+    IEnumerator PerformDash(Vector2 force, float time)
+    {
+        CanMove = false;
+        isDashing = true;
+        DisableBasicDash();
+        rb.AddForce(force, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(time);
+        ResetDashStatus();
         
         //Debug.Log("ended");
        

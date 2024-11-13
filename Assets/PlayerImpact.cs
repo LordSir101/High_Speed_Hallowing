@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -43,6 +44,10 @@ public class PlayerImpact : MonoBehaviour
         {
             StopCoroutine(cameraShake.Shaking());
             StartCoroutine(cameraShake.Shaking());
+            
+            //Deal damage
+            int damage = (int) Math.Floor(rb.velocity.magnitude);
+            other.gameObject.GetComponent<EnemyHealth>().DealDamage(damage);
 
             rb.velocity = rb.velocity.normalized;
             
