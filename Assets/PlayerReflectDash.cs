@@ -195,6 +195,7 @@ public class PlayerReflectDash : MonoBehaviour
         
         if(reflectDashing)
         {
+            Debug.Log("ended");
             StopAllCoroutines();
             ResetDashStatus();
         }
@@ -202,8 +203,10 @@ public class PlayerReflectDash : MonoBehaviour
 
     void ResetDashStatus()
     {
+        Debug.Log("reset");
         playerMovement.CanMove = true;
         playerMovement.dash.action.Enable();
+        playerMovement.EnableBasicDash();
         reflectDashing = false;
     }
 
@@ -212,6 +215,8 @@ public class PlayerReflectDash : MonoBehaviour
         rb.AddForce(force, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(time);
+
+        ResetDashStatus();
 
         Debug.Log("ended");
        

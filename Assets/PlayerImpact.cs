@@ -12,7 +12,7 @@ public class PlayerImpact : MonoBehaviour
     public float ImpactSpeed { get; set; } = 0f;
 
     
-    private float impactActionWindow = 0.5f;
+    private float impactActionWindow = 0.3f;
     private float impactActionTimer = 0f;
     private bool actionWindowIsActive = false;
 
@@ -30,6 +30,7 @@ public class PlayerImpact : MonoBehaviour
 
             if(impactActionTimer >= impactActionWindow)
             {
+                Debug.Log("reset speed");
                 RemoveImpactSpeed();
                 actionWindowIsActive = false;
             }
@@ -106,7 +107,8 @@ public class PlayerImpact : MonoBehaviour
     //TODO: make the speed increase static so that speed gain is linear instead of based on how fast they player was moving already.
     private void ResetImpactSpeed(float speed)
     {
-        ImpactSpeed += speed;
+        Debug.Log("refresh speed");
+        ImpactSpeed = speed;
 
         rb.velocity = rb.velocity.normalized;
 

@@ -109,12 +109,17 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("moving");
             Vector2 movementInput = movement.action.ReadValue<Vector2>();
 
-            // move using current speed, with a minimum of base move speed
-            rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
+            if(movementInput != Vector2.zero)
+            {
+                 // move using current speed, with a minimum of base move speed
+                rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
 
-            float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-            float playerAngle= playerRadValue * (180/Mathf.PI);
-            rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+                float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+                float playerAngle= playerRadValue * (180/Mathf.PI);
+                rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+
+            }
+           
 
             // Rotate player. If the player is reflect dashing, only rotate the arrow, not the player
             // if(!gameObject.GetComponent<PlayerReflectDash>().reflectDashing)
@@ -227,12 +232,14 @@ public class PlayerMovement : MonoBehaviour
     private void QueueWallJump()
     {
         touchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.6f, wallLayer);
+        
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
         if(touchingWall && direction != Vector2.zero)
         {
             wallJumpDir = direction;
             wallJumpQueued = true;
+            Debug.Log("queued");
             // wallJumpDir = direction;
             StartCoroutine(TurnOffWallJump());
             //WallJump(direction);
@@ -244,8 +251,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //CanMove = false;
 
-        touchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.6f, wallLayer);
-        Vector2 direction = movement.action.ReadValue<Vector2>();
+        // touchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.6f, wallLayer);
+        // Vector2 direction = movement.action.ReadValue<Vector2>();
 
         QueueWallJump();
 
@@ -261,6 +268,7 @@ public class PlayerMovement : MonoBehaviour
                 
                 //Invoke("EndDash", dashTime);
                 //Vector2 force = direction * (dashSpeed + rb.velocity.magnitude);
+                Vector2 direction = movement.action.ReadValue<Vector2>();
                 StartCoroutine(PerformDash(direction * (dashSpeed + rb.velocity.magnitude), dashTime));
             //}
 
