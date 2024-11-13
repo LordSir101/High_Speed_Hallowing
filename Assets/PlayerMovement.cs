@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class PlayerMovement : MonoBehaviour
 {
     
-
+    public float initialDrag;
     [SerializeField]
     public InputActionReference movement, dash;
 
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
     private Vector2 wallJumpDir;
-    private float wallJumpTime = 0.5f;
+    private float wallJumpTime = 0.3f;
     //public bool isWallJumping = false;
     //private Vector3 wallJumpVelo;
     //private Vector3 prevCollisionNormal;
@@ -42,19 +42,20 @@ public class PlayerMovement : MonoBehaviour
 
     // Vector3 enemyPos;
 
-    private float dashSpeed = 50f;
+    public float dashSpeed {get; }= 3f;
     private float dashTime = 0.3f;
     private float baseMoveSpeed = 1;
 
     public bool CanMove {get; set;} = true;
 
-    Coroutine endDash;
+    public float prevFrameSpeed;
 
     void Start()
     {
-
+        
         //Physics.IgnoreLayerCollision(6, 8, true);
         rb = GetComponent<Rigidbody2D>();
+        initialDrag = rb.drag;
         // currentCollisions = new List <GameObject> ();
         // removalQueue = new List<GameObject> ();
         playerImpact= GetComponent<PlayerImpact> ();
@@ -100,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
         //RemoveNullCollisions();
 
     }
+
     void FixedUpdate()
     {
         if(CanMove) 
@@ -129,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
     void LateUpdate()
     {
+        prevFrameSpeed = rb.velocity.magnitude;
         // if(isWallJumping)
         // {
         //     //  // // turn player
@@ -254,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
                 
                 //Invoke("EndDash", dashTime);
                 //Vector2 force = direction * (dashSpeed + rb.velocity.magnitude);
-                endDash = StartCoroutine(PerformDash(direction * (dashSpeed + rb.velocity.magnitude), dashTime));
+                StartCoroutine(PerformDash(direction * (dashSpeed + rb.velocity.magnitude), dashTime));
             //}
 
         }
@@ -288,7 +291,8 @@ public class PlayerMovement : MonoBehaviour
         //StopCoroutine(endDash); // In case a normal dash was canceled
         EndDash();
         CanMove = false;
-        dash.action.Disable();
+        //DisableBasicDash();
+        //dash.action.Disable();
 
        
         //Find out wall orientation compared to player
@@ -345,6 +349,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         float wallJumpSpeed = dashSpeed * wallJumpSpeedModifier + playerImpact.ImpactSpeed;
+        Debug.Log("wspeed " + wallJumpSpeed);
 
         //Set velocity to 0 so the dash force is not mitigated by current velocity
         rb.velocity = Vector3.zero;
@@ -379,9 +384,9 @@ public class PlayerMovement : MonoBehaviour
         //isWallJumping = true;
 
         // // turn player
-        float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-        float playerAngle= playerRadValue * (180/Mathf.PI);
-        rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+        // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+        // float playerAngle= playerRadValue * (180/Mathf.PI);
+        // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
 
         //wallJumpVelo = rb.velocity;
 
@@ -389,7 +394,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("WallJump");
 
         //EnableBasicDash();
-        endDash = StartCoroutine(PerformDash(dir, wallJumpTime));
+        StartCoroutine(PerformDash(dir, wallJumpTime));
         //Invoke("EndDash", dashTime);
 
         
@@ -518,7 +523,15 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         DisableBasicDash();
         rb.AddForce(force, ForceMode2D.Impulse);
+        Debug.Log("wdash " + rb.velocity.magnitude);
+
+        // rotate player
+        float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+        float playerAngle= playerRadValue * (180/Mathf.PI);
+        rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+
         yield return new WaitForSeconds(time);
+
         ResetDashStatus();
         
         //Debug.Log("ended");

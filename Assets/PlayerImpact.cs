@@ -42,16 +42,15 @@ public class PlayerImpact : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
+            Debug.Log("col " + rb.velocity.magnitude);
             StopCoroutine(cameraShake.Shaking());
             StartCoroutine(cameraShake.Shaking());
             
             //Deal damage
             int damage = (int) Math.Floor(rb.velocity.magnitude);
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(damage);
-
-            rb.velocity = rb.velocity.normalized;
             
-            ResetImpactSpeed();
+            ResetImpactSpeed(rb.velocity.magnitude);
         }
         // walls
         // if(other.gameObject.layer == 6)
@@ -71,11 +70,14 @@ public class PlayerImpact : MonoBehaviour
         // Debug.Log("collision " + rb.velocity);
         // Debug.Log("other " + other.gameObject);
         //Debug.Log(gameObject.GetComponent<Rigidbody2D>().velocity);
-        ResetImpactSpeed();
+        
+        ResetImpactSpeed(gameObject.GetComponent<PlayerMovement>().prevFrameSpeed);
+        Debug.Log("col " + gameObject.GetComponent<PlayerMovement>().prevFrameSpeed);
 
         if(gameObject.GetComponent<PlayerMovement>().wallJumpQueued)
         {
             Debug.Log("Starting wj");
+            
             gameObject.GetComponent<PlayerMovement>().StartWallJump();
             gameObject.GetComponent<PlayerMovement>().wallJumpQueued = false;
         }
@@ -83,10 +85,13 @@ public class PlayerImpact : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D collisionInfo)
     {
+        //Debug.Log("col " + rb.velocity.magnitude);
+        //ResetImpactSpeed();
         //Debug.Log("Stay collision " + rb.velocity);
         if(gameObject.GetComponent<PlayerMovement>().wallJumpQueued)
         {
             Debug.Log("Starting wj");
+            
             gameObject.GetComponent<PlayerMovement>().StartWallJump();
             gameObject.GetComponent<PlayerMovement>().wallJumpQueued = false;
         }
@@ -97,9 +102,11 @@ public class PlayerImpact : MonoBehaviour
     //         print("Collision Out: " + gameObject.name);
     // }
 
-    private void ResetImpactSpeed()
+    private void ResetImpactSpeed(float speed)
     {
-        ImpactSpeed += rb.velocity.magnitude;
+        ImpactSpeed += speed;
+
+        rb.velocity = rb.velocity.normalized;
 
         // Window to input a dash to accumulate speed based on how fast the player was going at impact
         impactActionTimer = 0f;

@@ -14,7 +14,7 @@ public class PlayerReflectDash : MonoBehaviour
     private GameObject relfectDashtarget = null;
     private float reflectDashSpeedModifier = 2f;
     public bool reflectDashing = false;
-    private float reflectDashSpeed = 50f;
+    //private float reflectDashSpeed = 4f;
     private float reflectDashTime = 0.3f;
     Vector3 enemyPos;
 
@@ -65,6 +65,7 @@ public class PlayerReflectDash : MonoBehaviour
     {
         
         //CanMove = false;
+        
         playerMovement.EndDash();
         gameObject.GetComponent<PlayerGrapple>().EndGrapple();
         playerMovement.CanMove = false;
@@ -118,7 +119,7 @@ public class PlayerReflectDash : MonoBehaviour
 
     private void ReflectDash(InputAction.CallbackContext context)
     {
-        Debug.Log(playerMovement.CanMove);
+        
         //playerMovement.DisableBasicDash();
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
@@ -133,7 +134,8 @@ public class PlayerReflectDash : MonoBehaviour
             animation.transform.SetParent(transform, false);
         }
 
-        float reboundDashSpeed = reflectDashSpeed * reflectDashSpeedModifier + playerImpact.ImpactSpeed;
+        float reboundDashSpeed = playerMovement.dashSpeed * reflectDashSpeedModifier + playerImpact.ImpactSpeed;
+        Debug.Log("speed " + reboundDashSpeed);
         rb.AddForce(direction * reboundDashSpeed, ForceMode2D.Impulse);
 
         reflectDash.action.canceled -= ReflectDash;
@@ -142,6 +144,8 @@ public class PlayerReflectDash : MonoBehaviour
         {
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         }
+
+        Debug.Log("dash " + rb.velocity.magnitude);
         
 
         //TODO: change this to the new version if needed

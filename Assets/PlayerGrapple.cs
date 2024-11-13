@@ -18,7 +18,7 @@ public class PlayerGrapple : MonoBehaviour
 
     private float maxGrappleDistance = 6;
     private float initialGrappleSpeed = 1.5f;
-    private float maxGrappleSpeed = 80f;
+    private float maxGrappleAccel = 8f;
     private float grappleAcceleration = 1.5f;
     private float grappleShotAnimationTime = 0.3f;
     private bool grappling = false;
@@ -121,6 +121,8 @@ public class PlayerGrapple : MonoBehaviour
         // }
        
         rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
+        float initalSpeed = rb.velocity.magnitude;
+        float maxGrappleSpeed = initalSpeed + maxGrappleAccel;
 
         StartCoroutine(AnimateGrapple());
         // rb.drag = 0;
@@ -179,7 +181,7 @@ public class PlayerGrapple : MonoBehaviour
         Debug.Log("reset grapple");
         grapple.action.Enable();
         playerMovement.EnableBasicDash();
-        rb.drag = 3;
+        rb.drag = playerMovement.initialDrag;
         lineRenderer.enabled = false;
         playerMovement.CanMove = true;
     }
