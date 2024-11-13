@@ -85,7 +85,10 @@ public class PlayerGrapple : MonoBehaviour
 
     public void EndGrapple()
     {
+        //Debug.Log("end grapple");
         grappling = false;
+        StopAllCoroutines();
+        ResetGrapppleStatus();
     }
 
     private Vector2 GetGrappleDirection()
@@ -100,10 +103,12 @@ public class PlayerGrapple : MonoBehaviour
 
     IEnumerator PerformGrapple(GameObject target)
     {
+        //Debug.Log("grapple");
         yield return StartCoroutine(AnimateGrappleShot());
 
         //movement.action.Disable();
         playerMovement.CanMove = false;
+        playerMovement.DisableBasicDash();
         // grapple.action.Disable();
         // grappling = true;
 
@@ -139,7 +144,7 @@ public class PlayerGrapple : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         
-        ResetGrapppleStatus();
+        // ResetGrapppleStatus();
         // movement.action.Enable();
         // grapple.action.Enable();
         // rb.drag = 3;
@@ -156,9 +161,10 @@ public class PlayerGrapple : MonoBehaviour
         // grappling = true;
         // grapple.action.Disable();
         
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
 
         EndGrapple();
+        ResetGrapppleStatus();
         // grappling = false;
         // lineRenderer.enabled = false;
         // grapple.action.Enable();
@@ -168,6 +174,7 @@ public class PlayerGrapple : MonoBehaviour
     {
         //movement.action.Enable();
         grapple.action.Enable();
+        playerMovement.EnableBasicDash();
         rb.drag = 3;
         lineRenderer.enabled = false;
         playerMovement.CanMove = true;
@@ -203,7 +210,7 @@ public class PlayerGrapple : MonoBehaviour
 
             yield return null;
 
-        }   
+        }
     }
 
     IEnumerator AnimateGrappleShot()
@@ -214,7 +221,7 @@ public class PlayerGrapple : MonoBehaviour
 
         do
         {
-            Vector3 start = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,0);
+            Vector3 start = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y,0);
 
             interpolationRatio = grappleAnimationTimer / grappleShotAnimationTime;
 
