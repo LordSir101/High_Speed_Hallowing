@@ -66,10 +66,11 @@ public class PlayerReflectDash : MonoBehaviour
         
         //CanMove = false;
         
-        playerMovement.EndDash();
-        gameObject.GetComponent<PlayerGrapple>().EndGrapple();
-        playerMovement.CanMove = false;
-        playerMovement.dash.action.Disable();
+        // playerMovement.EndDash();
+        // gameObject.GetComponent<PlayerGrapple>().EndGrapple();
+        // playerMovement.CanMove = false;
+        // playerMovement.dash.action.Disable();
+        CancelOtherMovement();
         reflectDashing = true;
 
         Vector2 direction = movement.action.ReadValue<Vector2>();
@@ -119,8 +120,10 @@ public class PlayerReflectDash : MonoBehaviour
 
     private void ReflectDash(InputAction.CallbackContext context)
     {
-        
-        //playerMovement.DisableBasicDash();
+        // Once the dash has started, conditional dashes are allowed, but not basic dashes
+        playerMovement.dash.action.Enable();
+        playerMovement.DisableBasicDash();
+
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
         // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
@@ -136,7 +139,7 @@ public class PlayerReflectDash : MonoBehaviour
 
         float reboundDashSpeed = playerMovement.dashSpeed * reflectDashSpeedModifier + playerImpact.ImpactSpeed;
         Debug.Log("speed " + reboundDashSpeed);
-        rb.AddForce(direction * reboundDashSpeed, ForceMode2D.Impulse);
+        //rb.AddForce(direction * reboundDashSpeed, ForceMode2D.Impulse);
 
         reflectDash.action.canceled -= ReflectDash;
 
@@ -145,14 +148,19 @@ public class PlayerReflectDash : MonoBehaviour
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         }
 
-        Debug.Log("dash " + rb.velocity.magnitude);
+        //Debug.Log("dash " + rb.velocity.magnitude);
         
-
-        //TODO: change this to the new version if needed
-        //Invoke("EndDash", dashTime);
-        StartCoroutine(EndDash(reflectDashTime));
+        StartCoroutine(PerformDash(direction* reboundDashSpeed, reflectDashTime));
 
         Destroy(reflectDashArrow);
+    }
+
+    private void CancelOtherMovement()
+    {
+        playerMovement.EndDash();
+        gameObject.GetComponent<PlayerGrapple>().EndGrapple();
+        playerMovement.CanMove = false;
+        playerMovement.dash.action.Disable();
     }
 
     private void RemoveNullCollisions()
@@ -182,13 +190,31 @@ public class PlayerReflectDash : MonoBehaviour
 		
 	}
 
-    IEnumerator EndDash(float time)
+    public void EndReflectDash()
     {
-        yield return new WaitForSeconds(time);
-        Debug.Log("ended");
+        
+        if(reflectDashing)
+        {
+            StopAllCoroutines();
+            ResetDashStatus();
+        }
+    }
+
+    void ResetDashStatus()
+    {
         playerMovement.CanMove = true;
         playerMovement.dash.action.Enable();
         reflectDashing = false;
+    }
+
+    IEnumerator PerformDash(Vector2 force, float time)
+    {
+        rb.AddForce(force, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(time);
+
+        Debug.Log("ended");
+       
         //EnableBasicDash();
         //dash.action.Enable();
         

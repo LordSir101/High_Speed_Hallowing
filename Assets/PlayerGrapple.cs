@@ -110,6 +110,7 @@ public class PlayerGrapple : MonoBehaviour
         yield return StartCoroutine(AnimateGrappleShot());
 
         //movement.action.Disable();
+        CancelOtherMovment();
         playerMovement.CanMove = false;
         playerMovement.DisableBasicDash();
         // grapple.action.Disable();
@@ -155,6 +156,12 @@ public class PlayerGrapple : MonoBehaviour
         // rb.drag = 3;
         // lineRenderer.enabled = false;
         // playerMovement.SetMovementAbility(true);
+    }
+
+    private void CancelOtherMovment()
+    {
+        gameObject.GetComponent<PlayerMovement>().EndDash();
+        gameObject.GetComponent<PlayerReflectDash>().EndReflectDash();
     }
 
     

@@ -65,6 +65,7 @@ public class PlayerImpact : MonoBehaviour
         // }
     }
 
+    //TODO: make it so that running into a wall doesn't just set velocity to 0, but instead the player is simply affected by drag again.
     private void OnCollisionEnter2D(Collision2D other)
     {
         // Debug.Log("collision " + rb.velocity);
@@ -102,6 +103,7 @@ public class PlayerImpact : MonoBehaviour
     //         print("Collision Out: " + gameObject.name);
     // }
 
+    //TODO: make the speed increase static so that speed gain is linear instead of based on how fast they player was moving already.
     private void ResetImpactSpeed(float speed)
     {
         ImpactSpeed += speed;

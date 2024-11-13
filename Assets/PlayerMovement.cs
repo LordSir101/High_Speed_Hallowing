@@ -112,13 +112,17 @@ public class PlayerMovement : MonoBehaviour
             // move using current speed, with a minimum of base move speed
             rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
 
+            float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+            float playerAngle= playerRadValue * (180/Mathf.PI);
+            rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+
             // Rotate player. If the player is reflect dashing, only rotate the arrow, not the player
-            if(!gameObject.GetComponent<PlayerReflectDash>().reflectDashing)
-            {
-                float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-                float playerAngle= playerRadValue * (180/Mathf.PI);
-                rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
-            }
+            // if(!gameObject.GetComponent<PlayerReflectDash>().reflectDashing)
+            // {
+            //     float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+            //     float playerAngle= playerRadValue * (180/Mathf.PI);
+            //     rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+            // }
             
         }
         // Debug.Log(isWallJumping);
@@ -286,11 +290,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 wallSize = wall.bounds.size;
         Vector3 wallPos = touchingWall.transform.position;
         Vector2 dir = Vector2.zero;
-
-        gameObject.GetComponent<PlayerGrapple>().EndGrapple();
-        //StopCoroutine(endDash); // In case a normal dash was canceled
-        EndDash();
-        CanMove = false;
+        
+        CancelOtherMovement();
+        // gameObject.GetComponent<PlayerGrapple>().EndGrapple();
+        // //StopCoroutine(endDash); // In case a normal dash was canceled
+        // EndDash();
+        // CanMove = false;
         //DisableBasicDash();
         //dash.action.Disable();
 
@@ -341,7 +346,6 @@ public class PlayerMovement : MonoBehaviour
          // Indicate to the player that they dashed within the window to add the speed they were going at impact
         //Debug.Log("pre wj velo " + rb.velocity);
 
-        //TODO: make walljump use impact speed. collisions with wall set velo to 0
         if(playerImpact.ImpactSpeed > 0)
         {
             GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
@@ -403,6 +407,14 @@ public class PlayerMovement : MonoBehaviour
         // Vector3 dir = diff.normalized * -1;
         // Debug.Log(dir);
         //rb.AddForce(dir * (dashSpeed * 1.5f + rb.velocity.magnitude), ForceMode2D.Impulse);
+    }
+
+    private void CancelOtherMovement()
+    {
+        gameObject.GetComponent<PlayerGrapple>().EndGrapple();
+        gameObject.GetComponent<PlayerReflectDash>().EndReflectDash();
+        //StopCoroutine(endDash); // In case a normal dash was canceled
+        EndDash();
     }
 
     // IEnumerator WJ()
