@@ -78,6 +78,7 @@ public class PlayerGrapple : MonoBehaviour
         return direction.normalized;
     }
 
+    // TODO: fix bug where grapple bounces player forever when grapplign enemy from really close
     IEnumerator PerformGrapple(GameObject target)
     {
         //Debug.Log("grapple");
@@ -105,7 +106,7 @@ public class PlayerGrapple : MonoBehaviour
             if(playerMovement.CanMove)
             {
                 playerMovement.CanMove = false;
-                rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
+                rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + playerMovement.currSpeed);
             }
 
             float speed = Mathf.Clamp(rb.velocity.magnitude * grappleAcceleration, initialGrappleSpeed, maxGrappleSpeed);
