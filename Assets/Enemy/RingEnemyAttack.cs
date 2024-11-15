@@ -14,11 +14,14 @@ public class RingEnemyAttack : MonoBehaviour
     [SerializeField]
     private GameObject attackType;
 
+    public Animator animator;
+
     
 
     void Start()
     {
         attackStats = gameObject.GetComponent<EnemyTelegraphAttack>();
+        animator = gameObject.GetComponent<Animator>();
 
         GameObject attack = Instantiate(attackType);
         
@@ -40,8 +43,14 @@ public class RingEnemyAttack : MonoBehaviour
         if(attackScript.attackReady)
         {
             attackScript.StartAttack();
+            
             //ToggleAttackReady(false);
             //StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
+        }
+        if(attackScript.startAnimation)
+        {
+            animator.SetTrigger("Attack");
+            attackScript.startAnimation = false;
         }
         // if(attackScript.attackEnded)
         // {
@@ -49,6 +58,11 @@ public class RingEnemyAttack : MonoBehaviour
         //     //attackScript.attackEnded = false;
         // }
     }
+
+    // public void AnimateActiveFrames()
+    // {
+    //     animator.SetTrigger("Attack");
+    // }
 
     // void ToggleAttackReady(bool isReady)
     // {

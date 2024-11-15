@@ -17,6 +17,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
 
     public bool attackStarted { get; set;} = false;
     public bool attackEnded { get; set;} = false;
+    public bool startAnimation { get; set;} = false;
     public bool attackReady = false;
 
     GameObject telegraphSprite;
@@ -71,6 +72,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
             if(WindupTimer >= WindupTime)
             {
                 attackStarted = false;
+                startAnimation = true;
                 WindupTimer = 0f;
 
                 StartCoroutine(StartActiveAttackFrames());
