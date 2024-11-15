@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 
 public class PlayerImpact : MonoBehaviour
@@ -9,19 +6,15 @@ public class PlayerImpact : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Shake cameraShake;
 
-    public float ImpactSpeed { get; set; } = 0f;
+    //public float ImpactSpeed { get; set; } = 0f;
+    public const float IMPACTSPEEDINCREASE = 2;
 
     
     private float impactActionWindow = 0.3f;
     private float impactActionTimer = 0f;
-    private bool actionWindowIsActive = false;
+    public bool actionWindowIsActive = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
     void Update()
     {
         if (actionWindowIsActive)
@@ -30,8 +23,6 @@ public class PlayerImpact : MonoBehaviour
 
             if(impactActionTimer >= impactActionWindow)
             {
-                Debug.Log("reset speed");
-                RemoveImpactSpeed();
                 actionWindowIsActive = false;
             }
         }
@@ -43,7 +34,6 @@ public class PlayerImpact : MonoBehaviour
     {
         if(other.gameObject.tag == "Enemy")
         {
-            Debug.Log("col " + rb.velocity.magnitude);
             StopCoroutine(cameraShake.Shaking());
             StartCoroutine(cameraShake.Shaking());
             
@@ -51,74 +41,41 @@ public class PlayerImpact : MonoBehaviour
             int damage = (int) Math.Floor(rb.velocity.magnitude);
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(damage);
             
-            ResetImpactSpeed(rb.velocity.magnitude);
+            ResetActionWindow();
+            rb.velocity = rb.velocity.normalized;
         }
-        // walls
-        // if(other.gameObject.layer == 6)
-        // {
-        //     ResetImpactSpeed();
-
-        //     if(!GetComponent<PlayerMovement>().isWallJumping)
-        //     {
-        //         Debug.Log("collision");
-        //         rb.velocity = Vector2.zero;
-        //     }
-        // }
     }
 
-    //TODO: make it so that running into a wall doesn't just set velocity to 0, but instead the player is simply affected by drag again.
     private void OnCollisionEnter2D(Collision2D other)
     {
-        // Debug.Log("collision " + rb.velocity);
-        // Debug.Log("other " + other.gameObject);
-        //Debug.Log(gameObject.GetComponent<Rigidbody2D>().velocity);
         
-        ResetImpactSpeed(gameObject.GetComponent<PlayerMovement>().prevFrameSpeed);
-        Debug.Log("col " + gameObject.GetComponent<PlayerMovement>().prevFrameSpeed);
+        ResetActionWindow();
+        rb.velocity = rb.velocity.normalized;
 
         if(gameObject.GetComponent<PlayerMovement>().wallJumpQueued)
         {
-            Debug.Log("Starting wj");
-            
-            gameObject.GetComponent<PlayerMovement>().StartWallJump();
-            gameObject.GetComponent<PlayerMovement>().wallJumpQueued = false;
+            TriggerWallJump();
         }
     }
 
     void OnCollisionStay2D(Collision2D collisionInfo)
     {
-        //Debug.Log("col " + rb.velocity.magnitude);
-        //ResetImpactSpeed();
-        //Debug.Log("Stay collision " + rb.velocity);
         if(gameObject.GetComponent<PlayerMovement>().wallJumpQueued)
         {
-            Debug.Log("Starting wj");
-            
-            gameObject.GetComponent<PlayerMovement>().StartWallJump();
-            gameObject.GetComponent<PlayerMovement>().wallJumpQueued = false;
+            TriggerWallJump();
         }
     }
 
-    // void OnCollisionExit2D(Collision2D collisionInfo) 
-    // {
-    //         print("Collision Out: " + gameObject.name);
-    // }
-
-    //TODO: make the speed increase static so that speed gain is linear instead of based on how fast they player was moving already.
-    private void ResetImpactSpeed(float speed)
+    // Window to input a dash to accumulate speed based on how fast the player was going at impact
+    private void ResetActionWindow()
     {
-        Debug.Log("refresh speed");
-        ImpactSpeed = speed;
-
-        rb.velocity = rb.velocity.normalized;
-
-        // Window to input a dash to accumulate speed based on how fast the player was going at impact
         impactActionTimer = 0f;
         actionWindowIsActive = true;
     }
 
-    private void RemoveImpactSpeed()
+    private void TriggerWallJump()
     {
-        ImpactSpeed = 0;
+        gameObject.GetComponent<PlayerMovement>().StartWallJump();
+        gameObject.GetComponent<PlayerMovement>().wallJumpQueued = false;
     }
 }

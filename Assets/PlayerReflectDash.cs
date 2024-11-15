@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,8 +24,6 @@ public class PlayerReflectDash : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerImpact playerImpact;
     
-
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,15 +33,11 @@ public class PlayerReflectDash : MonoBehaviour
         playerImpact = gameObject.GetComponent<PlayerImpact>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         RemoveNullCollisions();
     }
-    // void FixedUpdate()
-    // {
-        
-    // }
+
 
     private void OnEnable()
     {
@@ -54,22 +47,16 @@ public class PlayerReflectDash : MonoBehaviour
 
     private void CheckReflectDash(InputAction.CallbackContext context)
     {
+        // We can only reflect dash off of an enemy
         if(currentCollisions.Count > 0)
-            {
-                ReflectDashSetup();
-                //ReflectDash(direction);
-            }
+        {
+            ReflectDashSetup();
+        }
     }
 
     private void ReflectDashSetup()
     {
         
-        //CanMove = false;
-        
-        // playerMovement.EndDash();
-        // gameObject.GetComponent<PlayerGrapple>().EndGrapple();
-        // playerMovement.CanMove = false;
-        // playerMovement.dash.action.Disable();
         CancelOtherMovement();
         reflectDashing = true;
 
@@ -131,15 +118,14 @@ public class PlayerReflectDash : MonoBehaviour
         rb.position = teleportLocation;
 
         // Indicate to the player that they dashed within the window to add the speed they were going at impact
-        if(playerImpact.ImpactSpeed > 0)
+        if(playerImpact.actionWindowIsActive)
         {
             GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
             animation.transform.SetParent(transform, false);
+            playerMovement.currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
         }
 
-        float reboundDashSpeed = playerMovement.dashSpeed * reflectDashSpeedModifier + playerImpact.ImpactSpeed;
-        Debug.Log("speed " + reboundDashSpeed);
-        //rb.AddForce(direction * reboundDashSpeed, ForceMode2D.Impulse);
+        float reboundDashSpeed = playerMovement.dashSpeed + playerMovement.currSpeed;
 
         reflectDash.action.canceled -= ReflectDash;
 
@@ -147,8 +133,6 @@ public class PlayerReflectDash : MonoBehaviour
         {
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         }
-
-        //Debug.Log("dash " + rb.velocity.magnitude);
         
         StartCoroutine(PerformDash(direction* reboundDashSpeed, reflectDashTime));
 
@@ -192,10 +176,8 @@ public class PlayerReflectDash : MonoBehaviour
 
     public void EndReflectDash()
     {
-        
         if(reflectDashing)
         {
-            Debug.Log("ended");
             StopAllCoroutines();
             ResetDashStatus();
         }
@@ -212,20 +194,12 @@ public class PlayerReflectDash : MonoBehaviour
 
     IEnumerator PerformDash(Vector2 force, float time)
     {
+
         rb.AddForce(force, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(time);
 
         ResetDashStatus();
-
-        Debug.Log("ended");
        
-        //EnableBasicDash();
-        //dash.action.Enable();
-        
-        //Debug.Log("ended");
-       
-        //isWallJumping = false;
-        //Physics.IgnoreLayerCollision(8, 6, false);
     }
 }
