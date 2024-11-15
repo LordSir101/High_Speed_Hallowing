@@ -101,7 +101,6 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         attackEnded = true;
     }
 
-    //TODO: make active time use frames instead?
     public virtual IEnumerator StartActiveAttackFrames()
     {
         SetAllCollidersStatus(true);

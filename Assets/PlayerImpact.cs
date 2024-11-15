@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerImpact : MonoBehaviour
@@ -7,19 +6,15 @@ public class PlayerImpact : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Shake cameraShake;
 
-    public float ImpactSpeed { get; set; } = 0f;
+    //public float ImpactSpeed { get; set; } = 0f;
+    public const float IMPACTSPEEDINCREASE = 2;
 
     
-    private float impactActionWindow = 0.5f;
+    private float impactActionWindow = 0.3f;
     private float impactActionTimer = 0f;
-    private bool actionWindowIsActive = false;
+    public bool actionWindowIsActive = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
     void Update()
     {
         if (actionWindowIsActive)
@@ -28,7 +23,6 @@ public class PlayerImpact : MonoBehaviour
 
             if(impactActionTimer >= impactActionWindow)
             {
-                ResetImpactSpeed();
                 actionWindowIsActive = false;
             }
         }
@@ -43,17 +37,45 @@ public class PlayerImpact : MonoBehaviour
             StopCoroutine(cameraShake.Shaking());
             StartCoroutine(cameraShake.Shaking());
             
-            ImpactSpeed += rb.velocity.magnitude;
+            //Deal damage
+            int damage = (int) Math.Floor(rb.velocity.magnitude);
+            other.gameObject.GetComponent<EnemyHealth>().DealDamage(damage);
+            
+            ResetActionWindow();
             rb.velocity = rb.velocity.normalized;
-
-            // Window to input a dash to accumulate speed based on how fast the player was going at impact
-            impactActionTimer = 0f;
-            actionWindowIsActive = true;
         }
     }
 
-    private void ResetImpactSpeed()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        ImpactSpeed = 0;
+        
+        ResetActionWindow();
+        rb.velocity = rb.velocity.normalized;
+
+        if(gameObject.GetComponent<PlayerMovement>().wallJumpQueued)
+        {
+            TriggerWallJump();
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collisionInfo)
+    {
+        if(gameObject.GetComponent<PlayerMovement>().wallJumpQueued)
+        {
+            TriggerWallJump();
+        }
+    }
+
+    // Window to input a dash to accumulate speed based on how fast the player was going at impact
+    private void ResetActionWindow()
+    {
+        impactActionTimer = 0f;
+        actionWindowIsActive = true;
+    }
+
+    private void TriggerWallJump()
+    {
+        gameObject.GetComponent<PlayerMovement>().StartWallJump();
+        gameObject.GetComponent<PlayerMovement>().wallJumpQueued = false;
     }
 }

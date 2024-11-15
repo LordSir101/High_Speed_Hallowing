@@ -16,7 +16,6 @@ public class ShrineManager : MonoBehaviour
         {
             GameObject shrine = childTransform.gameObject;
             shrines.Add(shrine);
-            Debug.Log("added");
         }
     }
 

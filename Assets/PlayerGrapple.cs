@@ -1,25 +1,21 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerGrapple : MonoBehaviour
 {
     [SerializeField]
-    private InputActionReference grapple, pointerPos, movement;
+    private InputActionReference grapple, pointerPos;//, movement;
     private LineRenderer lineRenderer;
     Rigidbody2D rb;
 
     PlayerMovement playerMovement;
-    //PlayerImpact playerImpact;
 
     private float maxGrappleDistance = 6;
     private float initialGrappleSpeed = 1.5f;
+    private float maxGrappleAccel = 8f;
     private float grappleAcceleration = 1.5f;
-    private float grappleAnimationTime = 0.3f;
+    private float grappleShotAnimationTime = 0.3f;
     private bool grappling = false;
 
     
@@ -30,27 +26,6 @@ public class PlayerGrapple : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
-        //playerImpact = GetComponent<PlayerImpact>();
-    }
-
-    void Update()
-    {
-        if(grappling)
-        {
-            // animate the grapple hook while actively grappling
-            Vector3 start = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,0);
-
-            //lineRenderer.enabled = true;
-            lineRenderer.SetPosition(0, start);
-            lineRenderer.SetPosition(1, grappleLocation);
-
-            // Stop grappling when player reaches target
-            // TODO: confirm this is not needed
-            if(Vector2.Distance(rb.position, grappleLocation) <= 0.5)
-            {
-                grappling = false;
-            }
-        }
     }
 
      private void OnEnable()
@@ -84,11 +59,13 @@ public class PlayerGrapple : MonoBehaviour
 
     public void EndGrapple()
     {
-        movement.action.Enable();
-        grapple.action.Enable();
-        rb.drag = 3;
-        lineRenderer.enabled = false;
-        playerMovement.SetMovementAbility(true);
+        if(grappling)
+        {
+            grappling = false;
+            StopAllCoroutines();
+            ResetGrapppleStatus();
+        }
+       
     }
 
     private Vector2 GetGrappleDirection()
@@ -103,23 +80,21 @@ public class PlayerGrapple : MonoBehaviour
 
     IEnumerator PerformGrapple(GameObject target)
     {
+        //Debug.Log("grapple");
         yield return StartCoroutine(AnimateGrappleShot());
 
-        movement.action.Disable();
-        playerMovement.SetMovementAbility(false);
-        // grapple.action.Disable();
-        // grappling = true;
-
-        // if(target.gameObject.tag == "Enemy")
-        // {
-        //     grappleLocation = target.transform.position;
-        // }
+        CancelOtherMovment();
+        
        
         rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
-        // rb.drag = 0;
+        float initalSpeed = rb.velocity.magnitude;
+        float maxGrappleSpeed = initalSpeed + maxGrappleAccel;
+
+        StartCoroutine(AnimateGrapple());
 
         while (grappling)
         {
+
             // prevents player from flying off the screen if they grapple past thier target
             if(target.gameObject.tag == "Enemy")
             {
@@ -127,51 +102,81 @@ public class PlayerGrapple : MonoBehaviour
             }
 
             // Temp fix for bug where movement does not get disabled if a move input is pressed while being disabled
-            if(movement.action.enabled)
+            if(playerMovement.CanMove)
             {
-                movement.action.Disable();
+                playerMovement.CanMove = false;
                 rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
             }
 
-            rb.velocity = rb.velocity.magnitude * grappleAcceleration * (grappleLocation - rb.position).normalized;
+            float speed = Mathf.Clamp(rb.velocity.magnitude * grappleAcceleration, initialGrappleSpeed, maxGrappleSpeed);
+            rb.velocity =  speed * (grappleLocation - rb.position).normalized;
+
             yield return new WaitForSeconds(0.1f);
         }
-        
-        EndGrapple();
-        // movement.action.Enable();
-        // grapple.action.Enable();
-        // rb.drag = 3;
-        // lineRenderer.enabled = false;
-        // playerMovement.SetMovementAbility(true);
     }
 
-    // end grapple early if hit an enemy
-    private void OnTriggerEnter2D(Collider2D other)
+    private void CancelOtherMovment()
     {
-        if(other.gameObject.tag == "Enemy")
-        {
-           grappling = false;
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        grappling = false;
+        gameObject.GetComponent<PlayerMovement>().EndDash();
+        gameObject.GetComponent<PlayerReflectDash>().EndReflectDash();
+        playerMovement.CanMove = false;
+        playerMovement.DisableBasicDash();
     }
 
+    
     // To show where the grapple hook went
     IEnumerator PerformMissedGrapple()
     {
         yield return StartCoroutine(AnimateGrappleShot());
 
-        // grappling = true;
-        // grapple.action.Disable();
-        
-        yield return new WaitForSeconds(0.5f);
-
         EndGrapple();
-        // grappling = false;
-        // lineRenderer.enabled = false;
-        // grapple.action.Enable();
+        ResetGrapppleStatus();
+    }
+
+    public void ResetGrapppleStatus()
+    {
+        grapple.action.Enable();
+        playerMovement.EnableBasicDash();
+        lineRenderer.enabled = false;
+        playerMovement.CanMove = true;
+    }
+
+    // end grapple when a collision occurs
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "Enemy")
+        {
+            if(grappling)
+            {
+                EndGrapple();
+            }
+        }
+    }
+
+    
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(grappling)
+        {
+            EndGrapple();
+        }
+        
+    }
+
+    IEnumerator AnimateGrapple()
+    {
+        while(grappling)
+        {
+            // animate the grapple hook while actively grappling
+            Vector3 start = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,0);
+
+            //lineRenderer.enabled = true;
+            lineRenderer.SetPosition(0, start);
+            lineRenderer.SetPosition(1, grappleLocation);
+
+            yield return null;
+
+        }
     }
 
     IEnumerator AnimateGrappleShot()
@@ -182,9 +187,9 @@ public class PlayerGrapple : MonoBehaviour
 
         do
         {
-            Vector3 start = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,0);
+            Vector3 start = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y,0);
 
-            interpolationRatio = grappleAnimationTimer / grappleAnimationTime;
+            interpolationRatio = grappleAnimationTimer / grappleShotAnimationTime;
 
             Vector3 interpolatedPos = Vector3.Lerp(start, grappleLocation, interpolationRatio);
 
