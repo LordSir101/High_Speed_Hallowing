@@ -15,6 +15,8 @@ public class IceEnemyConeAttack : MonoBehaviour
     GameObject player;
 
     public bool attacking = false;
+    private bool animationComplete = false;
+    [SerializeField] private GameObject snowConePrefab;
 
 
     void Start()
@@ -46,6 +48,7 @@ public class IceEnemyConeAttack : MonoBehaviour
             //StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
             //attackScript.attackEnded = false;
             attacking = false;
+            animationComplete = false;
         }
 
         if(attackScript.attackReady && behaviourScript.playerInRange)
@@ -60,6 +63,22 @@ public class IceEnemyConeAttack : MonoBehaviour
             attackScript.StartAttack();
             //ToggleAttackReady(false);
         }
+
+        if(attackScript.windupProgress >= attackStats.animationStartPercent && !animationComplete)
+        {
+            // windupTimer += Time.deltaTime;
+
+            // if(windupTimer / attackStats.windupTime >= 0.8)
+            // {
+                GameObject attack = Instantiate(snowConePrefab, gameObject.transform.position, attackObj.transform.localRotation);
+                attack.transform.parent = transform;
+                animationComplete = true;
+                //attackScript.startAnimation = false;
+                //windupTimer = 0;
+                //attackScript.startAnimation = false;
+            //}
+        }
+            
         
     }
 
