@@ -26,7 +26,7 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
 
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("attack2"))
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("attack"))
         {
             attackAnimationStarted = true;
         }
