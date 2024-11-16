@@ -29,7 +29,7 @@ public class TH_Cone : TelegraphedHitbox
         player.GetComponent<PlayerMovement>().CanMove = true;
     }
 
-    public override void Setup()
-    {
-    }
+    // public override void Setup()
+    // {
+    // }
 }

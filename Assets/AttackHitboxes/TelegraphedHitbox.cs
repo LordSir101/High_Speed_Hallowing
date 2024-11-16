@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 
@@ -47,11 +49,11 @@ public abstract class TelegraphedHitbox : MonoBehaviour
 
         SetAllCollidersStatus(false);
 
-        Setup();
+        //Setup();
 
     }
 
-    public abstract void Setup();
+    //public abstract void Setup();
 
     public void SetAllCollidersStatus (bool isActive) {
         foreach(Collider2D c in GetComponentsInChildren<Collider2D>()) {
@@ -62,7 +64,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
     public void Update()
     {
         
-        transform.position = transform.parent.transform.position;
+        UpdateHitboxPosition();
         if(attackStarted)
         {
             WindupTimer += Time.deltaTime;
@@ -89,9 +91,16 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         }
     }
 
+    public  virtual void UpdateHitboxPosition()
+    {
+        transform.position = transform.parent.transform.position;
+    }
+
     public IEnumerator StartCooldown()
     {
+        Debug.Log("started");
         yield return new WaitForSeconds(CooldownTime);
+        Debug.Log("ready");
         attackReady = true;
     }
 
