@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyTelegraphAttack : MonoBehaviour
 {
     [SerializeField]
-    public float windupTime, activeTime, cooldownTime, Size, StartingTelegaphPercentSize;
+    public float windupTime, activeTime, cooldownTime, Size, StartingTelegaphPercentSize, animationStartPercent;
 
     [SerializeField]
     public int Damage;

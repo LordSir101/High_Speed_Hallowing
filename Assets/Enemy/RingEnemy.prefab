@@ -139,6 +139,7 @@ MonoBehaviour:
   cooldownTime: 3
   Size: 5
   StartingTelegaphPercentSize: 0.7
+  animationStartPercent: 0.8
   Damage: 10
 --- !u!114 &4563339546134112829
 MonoBehaviour:
@@ -171,6 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: {fileID: 826137643833996335, guid: 01e77312c9dc8824a8e3075b15e9a77a, type: 3}
   animator: {fileID: 0}
+  windupTimer: 0
 --- !u!114 &2084523864801884107
 MonoBehaviour:
   m_ObjectHideFlags: 0

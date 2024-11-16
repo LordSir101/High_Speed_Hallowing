@@ -16,6 +16,10 @@ public class RingEnemyAttack : MonoBehaviour
 
     public Animator animator;
 
+    public float windupTimer = 0;
+
+    private bool animationComplete = false;
+
     
 
     void Start()
@@ -32,9 +36,10 @@ public class RingEnemyAttack : MonoBehaviour
         attackScript = attack.GetComponent<TH_Ring>();
 
         // the telegraph starts at 70% of the total hitbox since the hitbox is a ring.
-        attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize);
+        attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize, attackStats.animationStartPercent);
 
-        StartCoroutine(attackScript.StartCooldown());
+        float delay = UnityEngine.Random.Range(0,2);
+        StartCoroutine(AttackDelay(delay));
 
     }
 
@@ -47,16 +52,34 @@ public class RingEnemyAttack : MonoBehaviour
             //ToggleAttackReady(false);
             //StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
         }
-        if(attackScript.startAnimation)
+
+        // start animation slightly before active frames
+        if(attackScript.windupProgress >= attackStats.animationStartPercent && !animationComplete)
         {
-            animator.SetTrigger("Attack");
-            attackScript.startAnimation = false;
+            // windupTimer += Time.deltaTime;
+
+            // if(windupTimer / attackStats.windupTime >= 0.8)
+            // {
+                animator.SetTrigger("Attack");
+                animationComplete = true;
+                //attackScript.startAnimation = false;
+                //windupTimer = 0;
+                //attackScript.startAnimation = false;
+            //}
+            
         }
-        // if(attackScript.attackEnded)
-        // {
-        //     //StartCoroutine(attackScript.StartCooldown());
-        //     //attackScript.attackEnded = false;
-        // }
+        if(attackScript.attackEnded)
+        {
+            animationComplete = false;
+            //StartCoroutine(attackScript.StartCooldown());
+            //attackScript.attackEnded = false;
+        }
+    }
+
+    IEnumerator AttackDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        StartCoroutine(attackScript.StartCooldown());
     }
 
     // public void AnimateActiveFrames()

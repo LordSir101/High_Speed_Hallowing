@@ -14,15 +14,18 @@ public abstract class TelegraphedHitbox : MonoBehaviour
 
     public float Size { get; set;}
     public float StartingTelegaphPercentSize { get; set;} // is a percent of max size
+    public float AnimationStartPercent { get; set;} //the percentage of hitbox filled when the attack animation starts
 
     public bool attackStarted { get; set;} = false;
     public bool attackEnded { get; set;} = false;
     public bool startAnimation { get; set;} = false;
     public bool attackReady = false;
 
+    public float windupProgress = 0;
+
     GameObject telegraphSprite;
 
-    public void Init(float windupTime, float activeTime, float cooldownTime, float size, int damage, float startingTelegaphPercentSize = 0f)
+    public void Init(float windupTime, float activeTime, float cooldownTime, float size, int damage, float startingTelegaphPercentSize = 0f, float animationStartPercent = 1f)
     {
         WindupTime = windupTime;
         ActiveTime = activeTime;
@@ -30,6 +33,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         Size = size;
         Damage = damage;
         StartingTelegaphPercentSize = startingTelegaphPercentSize;
+        AnimationStartPercent = animationStartPercent;
         
         
         // The sprite that fills up the hitbox to show the player when the attack will come
@@ -63,16 +67,21 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         {
             WindupTimer += Time.deltaTime;
 
-            float interpolationRatio = WindupTimer / WindupTime;
-            float interpolatedScale = Mathf.Lerp(StartingTelegaphPercentSize, 1, interpolationRatio);
+            windupProgress = WindupTimer / WindupTime;
+            float interpolatedScale = Mathf.Lerp(StartingTelegaphPercentSize, 1, windupProgress);
 
             Transform windupSpriteTransform = telegraphSprite.transform;
             windupSpriteTransform.localScale = new Vector3(interpolatedScale, interpolatedScale, 0);
 
+            // if(WindupTimer >= AnimationStartPercent)
+            // {
+            //     startAnimation = true;
+            // }
+
             if(WindupTimer >= WindupTime)
             {
                 attackStarted = false;
-                startAnimation = true;
+                //
                 WindupTimer = 0f;
 
                 StartCoroutine(StartActiveAttackFrames());
@@ -98,14 +107,17 @@ public abstract class TelegraphedHitbox : MonoBehaviour
     public void EndAttack()
     {
         StartCoroutine(StartCooldown());
-        gameObject.GetComponent<Renderer>().enabled = false;
-        telegraphSprite.GetComponent<Renderer>().enabled = false;
+        // gameObject.GetComponent<Renderer>().enabled = false;
+        // telegraphSprite.GetComponent<Renderer>().enabled = false;
         attackEnded = true;
+        windupProgress = 0;
     }
 
     public virtual IEnumerator StartActiveAttackFrames()
     {
         SetAllCollidersStatus(true);
+        gameObject.GetComponent<Renderer>().enabled = false;
+        telegraphSprite.GetComponent<Renderer>().enabled = false;
 
         yield return new WaitForSeconds(ActiveTime);
         
