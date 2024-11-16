@@ -96,7 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 458847477479294420}
   - component: {fileID: 204765119735305098}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: ReflectDashBuffer
   m_TagString: Buffer
   m_Icon: {fileID: 0}

@@ -92,6 +92,9 @@ public class PlayerReflectDash : MonoBehaviour
             //Stop enemy from moving away
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
 
+            //Freeze position
+            rb.velocity = Vector2.zero;
+
             // get direction vector relative to enemy
             enemyPos = relfectDashtarget.transform.position;
 
