@@ -14,6 +14,16 @@ public class PlayerImpact : MonoBehaviour
     private float impactActionTimer = 0f;
     public bool actionWindowIsActive = false;
 
+    private PlayerAnimation playerAnimation;
+    private PlayerReflectDash playerReflectDash;
+    //private PlayerMovement playerMovement;
+
+    void Start()
+    {
+        playerAnimation = GetComponent<PlayerAnimation>();
+        playerReflectDash = GetComponent<PlayerReflectDash>();
+        //playerMovement = GetComponent<PlayerMovement>();
+    }
 
     void Update()
     {
@@ -38,11 +48,25 @@ public class PlayerImpact : MonoBehaviour
             StartCoroutine(cameraShake.Shaking());
             
             //Deal damage
-            int damage = (int) Math.Floor(rb.velocity.magnitude);
+            int damage;
+            //Reflect dashes teleport and freeze the enemy, so we need to get the velocity before the dash for damage
+            if(playerReflectDash.reflectDashing)
+            {
+                damage = (int) Math.Floor(playerReflectDash.prevVelocity.magnitude);
+                playerAnimation.AttackAnimation(playerReflectDash.prevVelocity);
+            }
+            else{
+                damage = (int) Math.Floor(rb.velocity.magnitude);
+                playerAnimation.AttackAnimation(rb.velocity);
+            }
+
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(damage);
             
             ResetActionWindow();
+
             rb.velocity = rb.velocity.normalized;
+
+            
         }
     }
 

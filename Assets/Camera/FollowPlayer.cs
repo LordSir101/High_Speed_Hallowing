@@ -14,8 +14,12 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        float posX = player.transform.position.x;
-        float posY = player.transform.position.y;
-        transform.position = new Vector3(posX, posY, transform.position.z);
+        if(!GetComponent<Shake>().shaking)
+        {
+            float posX = player.transform.position.x;
+            float posY = player.transform.position.y;
+            transform.position = new Vector3(posX, posY, transform.position.z);
+        }
+        
     }
 }

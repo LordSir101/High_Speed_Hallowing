@@ -13,6 +13,7 @@ public class PlayerReflectDash : MonoBehaviour
     private GameObject relfectDashtarget = null;
     private float reflectDashSpeedModifier = 2f;
     public bool reflectDashing = false;
+    public Vector2 prevVelocity;
     //private float reflectDashSpeed = 4f;
     private float reflectDashTime = 0.3f;
     Vector3 enemyPos;
@@ -59,6 +60,7 @@ public class PlayerReflectDash : MonoBehaviour
         
         CancelOtherMovement();
         reflectDashing = true;
+        prevVelocity = rb.velocity;
 
         Vector2 direction = movement.action.ReadValue<Vector2>();
         GameObject closestEnemy = null;
@@ -199,6 +201,11 @@ public class PlayerReflectDash : MonoBehaviour
     {
 
         rb.AddForce(force, ForceMode2D.Impulse);
+
+        // // rotate player
+        // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+        // float playerAngle= playerRadValue * (180/Mathf.PI);
+        // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
 
         yield return new WaitForSeconds(time);
 

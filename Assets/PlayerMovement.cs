@@ -33,10 +33,10 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movementInput;
     private float baseMoveSpeed = 1;
     public float currSpeed;
-    private float linearDrag = 0.5f;
+    private float linearDrag = 0.4f;
 
 
-    public float prevFrameSpeed;
+    public Vector2 prevFrameVelocity;
 
     void Start()
     {
@@ -54,6 +54,9 @@ public class PlayerMovement : MonoBehaviour
         {
             currSpeed = 0;
         }
+
+        
+
     }
 
     void FixedUpdate()
@@ -71,17 +74,27 @@ public class PlayerMovement : MonoBehaviour
             {
                 // move using current speed, with a minimum of base move speed
                 rb.velocity = currSpeed > baseMoveSpeed ? movementInput * currSpeed : movementInput * baseMoveSpeed ;
+
+                // float playerRadValue = Mathf.Atan2(movementInput.y, movementInput.x);
+                // float playerAngle= playerRadValue * (180/Mathf.PI);
+                // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
             }
             else
             {
                 rb.velocity = currSpeed * rb.velocity.normalized;
             }
 
-            float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-            float playerAngle= playerRadValue * (180/Mathf.PI);
-            rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+            // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+            // float playerAngle= playerRadValue * (180/Mathf.PI);
+            // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
             
          }
+
+    }
+
+    void LateUpdate()
+    {
+        prevFrameVelocity = rb.velocity;
     }
 
     private void OnEnable()
@@ -225,9 +238,9 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(force, ForceMode2D.Impulse);
 
         // rotate player
-        float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-        float playerAngle= playerRadValue * (180/Mathf.PI);
-        rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+        // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+        // float playerAngle= playerRadValue * (180/Mathf.PI);
+        // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
 
         yield return new WaitForSeconds(time);
 

@@ -33,7 +33,8 @@ public class IceEnemyConeAttack : MonoBehaviour
         // the telegraph starts at 70% of the total hitbox since the hitbox is a ring.
         attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize);
 
-        StartCoroutine(attackScript.StartCooldown());
+        float delay = UnityEngine.Random.Range(0,2);
+        StartCoroutine(AttackDelay(delay));
 
     }
 
@@ -60,6 +61,12 @@ public class IceEnemyConeAttack : MonoBehaviour
             //ToggleAttackReady(false);
         }
         
+    }
+
+    IEnumerator AttackDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        StartCoroutine(attackScript.StartCooldown());
     }
 
     // void ToggleAttackReady(bool isReady)

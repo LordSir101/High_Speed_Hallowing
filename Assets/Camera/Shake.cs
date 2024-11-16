@@ -6,6 +6,7 @@ public class Shake : MonoBehaviour
 {
     public float duration;
     public AnimationCurve curve;
+    public bool shaking = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class Shake : MonoBehaviour
     // TODO: make this happen even when triggered multiple times really fast.
     public IEnumerator Shaking()
     {
+        shaking = true;
         Vector3 startPos = transform.position;
         float elapsedTime = 0f;
 
@@ -33,5 +35,6 @@ public class Shake : MonoBehaviour
         }
 
         transform.position = startPos;
+        shaking = false;
     }
 }

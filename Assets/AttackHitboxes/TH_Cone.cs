@@ -17,7 +17,7 @@ public class TH_Cone : TelegraphedHitbox
             other.gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);
             
             Vector3 pushDir = (other.gameObject.transform.position - transform.parent.position).normalized;
-            playerRb.AddForce(pushDir * 70f, ForceMode2D.Impulse);
+            playerRb.AddForce(pushDir * 4f, ForceMode2D.Impulse);
 
         }
     }
