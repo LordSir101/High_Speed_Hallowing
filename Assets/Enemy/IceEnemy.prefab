@@ -179,12 +179,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2184953705427618756}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -0.05, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.9845109, y: -0.38905257, z: 0.029722959}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3848255226931365462}
+  m_Father: {fileID: 7913681297688715039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5269526293341801781
 SpriteRenderer:
@@ -326,6 +326,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2873848945060860517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7913681297688715039}
+  m_Layer: 0
+  m_Name: Hands
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7913681297688715039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2873848945060860517}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.9845109, y: 0.33905256, z: -0.029722959}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 971737414156564193}
+  - {fileID: 4437185189854527896}
+  m_Father: {fileID: 3848255226931365462}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6279438701711090031
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,12 +384,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6279438701711090031}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.9, y: -0.02, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.08451092, y: -0.35905257, z: 0.029722959}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3848255226931365462}
+  m_Father: {fileID: 7913681297688715039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7384141144230328198
 SpriteRenderer:
@@ -451,10 +484,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4215915307879590863}
+  - {fileID: 7913681297688715039}
   - {fileID: 1705400297442439722}
-  - {fileID: 971737414156564193}
   - {fileID: 458847477479294420}
-  - {fileID: 4437185189854527896}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &902887542399282911
@@ -561,9 +593,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fe166f848dda042b03afb045360c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windupTime: 2
+  windupTime: 0.7
   activeTime: 1
-  cooldownTime: 3
+  cooldownTime: 2
   Size: 4
   StartingTelegaphPercentSize: 0
   animationStartPercent: 1
@@ -653,6 +685,13 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
+  snowballSprite: {fileID: -2413806693520163455, guid: f6c1520ed67207e408536b9fcf518b6c, type: 3}
+  attackRange: 6
+  projSpeed: 5
+  kiteDistance: 4
+  snowballCooldown: 3
+  snowballDamage: 15
+  projectilePrefab: {fileID: 8906220813581016635, guid: fb681e82f570e0143b8724eb97617dfa, type: 3}
   playerInRange: 0
 --- !u!95 &6151602892267105896
 Animator:
