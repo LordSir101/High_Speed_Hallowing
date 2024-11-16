@@ -91,10 +91,10 @@ public class SpawnEnemy : MonoBehaviour
             }
         }
 
-        foreach(GameObject point in validPoints)
-        {
-            Debug.Log(point);
-        }
+        // foreach(GameObject point in validPoints)
+        // {
+        //     Debug.Log(point);
+        // }
 
         return validPoints;
     }

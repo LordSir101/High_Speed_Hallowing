@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class IceEnemyBehaviour : MonoBehaviour
@@ -13,13 +14,22 @@ public class IceEnemyBehaviour : MonoBehaviour
     [SerializeField]
     LayerMask playerLayer;
 
+    [Header("snowball")]
+    [SerializeField] Sprite snowballSprite;
+    [SerializeField] float attackRange, projSpeed, kiteDistance, snowballCooldown;
+    [SerializeField] int snowballDamage;
+    [SerializeField] GameObject projectilePrefab;
+    private float snowballTimer;
+
+
     EnemyTelegraphAttack attackInfo;
     private IceEnemyConeAttack coneAttack;
 
     GameObject player;
 
-    private float maxAttackRange;
-    private float minAttackRange;
+    private float maxConeAttackRange;
+    private float minConeAttackRange;
+    
 
     private float reactiontime = 0.5f;
 
@@ -35,14 +45,14 @@ public class IceEnemyBehaviour : MonoBehaviour
         coneAttack = gameObject.GetComponent<IceEnemyConeAttack>();
 
         // Size is the local scale
-        maxAttackRange = attackInfo.Size;
-        minAttackRange = maxAttackRange * attackInfo.StartingTelegaphPercentSize;
+        maxConeAttackRange = attackInfo.Size;
+        minConeAttackRange = maxConeAttackRange * attackInfo.StartingTelegaphPercentSize;
 
         StartCoroutine(Move());
     }
     void Update()
     {
-        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxAttackRange, playerLayer);
+        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxConeAttackRange, playerLayer);
 
         if (playerObjInRange != null)
         {
@@ -52,6 +62,36 @@ public class IceEnemyBehaviour : MonoBehaviour
         {
             playerInRange = false;
         }
+
+        snowballTimer += Time.deltaTime;
+        if(snowballTimer >= snowballCooldown)
+        {
+            if(!coneAttack.attacking)
+            {
+                SpawnSnowball();
+            }
+            snowballTimer = 0;
+        }
+
+    }
+
+    private void SpawnSnowball()
+    {
+        Transform throwingHand;
+        Vector3 distanceToPlayer =  player.transform.position - transform.position;
+        if(distanceToPlayer.x > 0)
+        {
+            // right hand
+            throwingHand = transform.GetChild(1).GetChild(1);
+        }
+        else{
+            // left hand
+            throwingHand = transform.GetChild(1).GetChild(0);
+        }
+
+        GameObject proj = Instantiate(projectilePrefab, throwingHand.transform.position, transform.rotation);
+        proj.GetComponent<Projectile>().Init(snowballDamage, snowballSprite);
+        proj.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
     }
 
     // move towards player until within ring hitbox
@@ -63,11 +103,12 @@ public class IceEnemyBehaviour : MonoBehaviour
             {
                 Vector3 distanceToPlayer =  player.transform.position - transform.position;
 
-                if(distanceToPlayer.magnitude > maxAttackRange)
+                // move until the player is 1 unit within attack range
+                if(distanceToPlayer.magnitude > attackRange - 1)
                 {
                     rb.velocity = distanceToPlayer.normalized * speed;
                 }
-                else if(distanceToPlayer.magnitude < minAttackRange)
+                else if(distanceToPlayer.magnitude < attackRange - kiteDistance)
                 {
                     rb.velocity = distanceToPlayer.normalized * speed * -1;
                 }
@@ -75,6 +116,19 @@ public class IceEnemyBehaviour : MonoBehaviour
                 {
                     rb.velocity = Vector3.zero;
                 }
+
+                // if(distanceToPlayer.magnitude > maxConeAttackRange)
+                // {
+                //     rb.velocity = distanceToPlayer.normalized * speed;
+                // }
+                // else if(distanceToPlayer.magnitude < minConeAttackRange)
+                // {
+                //     rb.velocity = distanceToPlayer.normalized * speed * -1;
+                // }
+                // else
+                // {
+                //     rb.velocity = Vector3.zero;
+                // }
             }
             else{
                 rb.velocity = Vector3.zero;

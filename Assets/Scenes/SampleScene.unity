@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 140164707}
   - component: {fileID: 140164706}
   - component: {fileID: 140164708}
+  - component: {fileID: 140164709}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -454,7 +455,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000021ee95bd3d2f4839
+  m_ApplyToSortingLayers: 0000000021ee95bd3d2f4839ad510d4e
   m_LightCookieSprite: {fileID: 4334783836991956000, guid: 0b1e23a1b8a68e6498ab097b8744eeab, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -520,6 +521,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!210 &140164709
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140164693}
+  m_Enabled: 1
+  m_SortingLayerID: 1309495725
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &141541651
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +609,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 312892954}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shrines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -724,7 +737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &384687649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -766,7 +779,7 @@ GameObject:
   - component: {fileID: 465384133}
   - component: {fileID: 465384135}
   - component: {fileID: 465384134}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,7 +1212,7 @@ GameObject:
   - component: {fileID: 756501937}
   - component: {fileID: 756501936}
   - component: {fileID: 756501935}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shrine (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1485,7 +1498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 865044808}
   - component: {fileID: 865044809}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1920,7 +1933,7 @@ GameObject:
   m_Component:
   - component: {fileID: 979838568}
   - component: {fileID: 979838569}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1983,7 +1996,7 @@ GameObject:
   - component: {fileID: 998972304}
   - component: {fileID: 998972303}
   - component: {fileID: 998972302}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InteractText
   m_TagString: InteractText
   m_Icon: {fileID: 0}
@@ -2380,7 +2393,7 @@ GameObject:
   - component: {fileID: 1054111416}
   - component: {fileID: 1054111415}
   - component: {fileID: 1054111414}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shrine (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2930,7 +2943,7 @@ GameObject:
   - component: {fileID: 1137512339}
   - component: {fileID: 1137512338}
   - component: {fileID: 1137512337}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shrine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3454,7 +3467,7 @@ MonoBehaviour:
   m_Intensity: 0.3
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000021ee95bd3d2f4839
+  m_ApplyToSortingLayers: 0000000021ee95bd3d2f4839ad510d4e
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -3658,7 +3671,7 @@ GameObject:
   - component: {fileID: 1478174869}
   - component: {fileID: 1478174871}
   - component: {fileID: 1478174870}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3840,7 +3853,7 @@ GameObject:
   - component: {fileID: 1499026361}
   - component: {fileID: 1499026360}
   - component: {fileID: 1499026359}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InteractText
   m_TagString: InteractText
   m_Icon: {fileID: 0}
@@ -4020,7 +4033,7 @@ GameObject:
   - component: {fileID: 1513619529}
   - component: {fileID: 1513619531}
   - component: {fileID: 1513619530}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4158,7 +4171,7 @@ GameObject:
   - component: {fileID: 1561250774}
   - component: {fileID: 1561250773}
   - component: {fileID: 1561250772}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shrine (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4340,7 +4353,7 @@ GameObject:
   - component: {fileID: 1677155928}
   - component: {fileID: 1677155930}
   - component: {fileID: 1677155929}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4475,7 +4488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1729445790}
   - component: {fileID: 1729445791}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4629,7 +4642,7 @@ GameObject:
   - component: {fileID: 1900221933}
   - component: {fileID: 1900221932}
   - component: {fileID: 1900221931}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InteractText
   m_TagString: InteractText
   m_Icon: {fileID: 0}
@@ -5061,7 +5074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1981210142}
   - component: {fileID: 1981210143}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5244,7 +5257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7206340883337965828, guid: 196dea5c6ca66cb419576678257d4d3c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5337,7 +5350,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c737bb7fa41c842458d6a08e3da76ea8, type: 2}
+  - {fileID: 2100000, guid: c947e1a2ec343c44ca5d906a8eb3bb1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12842,7 +12855,7 @@ GameObject:
   - component: {fileID: 2110543176}
   - component: {fileID: 2110543175}
   - component: {fileID: 2110543174}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InteractText
   m_TagString: InteractText
   m_Icon: {fileID: 0}
@@ -13025,7 +13038,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 260122417904728783, guid: 5dfbc30e22264064e9d8fba385637264, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754870594949009187, guid: 5dfbc30e22264064e9d8fba385637264, type: 3}
+      propertyPath: m_SortingLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754870594949009187, guid: 5dfbc30e22264064e9d8fba385637264, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1114247647
       objectReference: {fileID: 0}
     - target: {fileID: 4756155807930692833, guid: 5dfbc30e22264064e9d8fba385637264, type: 3}
       propertyPath: m_LocalPosition.x
