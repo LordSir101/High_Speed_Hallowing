@@ -48,6 +48,12 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         movementInput = movement.action.ReadValue<Vector2>();
+        // calculate drag for curr speed using linear approximation, same as Unity does normally.
+        currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
+        if(currSpeed < 0.5)
+        {
+            currSpeed = 0;
+        }
     }
 
     void FixedUpdate()
@@ -58,15 +64,9 @@ public class PlayerMovement : MonoBehaviour
         if a player hits a wall, they can still move at currSpeed, instead of velocity being set to 0.
         */
 
-        // calculate drag for curr speed using linear approximation, same as Unity does normally.
-        currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
-        if(currSpeed < 0.5)
-        {
-            currSpeed = 0;
-        }
-
         if(CanMove) 
         {
+
             if(movementInput != Vector2.zero)
             {
                 // move using current speed, with a minimum of base move speed

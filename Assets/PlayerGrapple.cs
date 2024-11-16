@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -78,7 +79,6 @@ public class PlayerGrapple : MonoBehaviour
         return direction.normalized;
     }
 
-    // TODO: fix bug where grapple bounces player forever when grapplign enemy from really close
     IEnumerator PerformGrapple(GameObject target)
     {
         //Debug.Log("grapple");
@@ -99,6 +99,7 @@ public class PlayerGrapple : MonoBehaviour
             // prevents player from flying off the screen if they grapple past thier target
             if(target.gameObject.tag == "Enemy")
             {
+                Debug.Log("targeting enemy");
                 grappleLocation = target.transform.position;
             }
 
