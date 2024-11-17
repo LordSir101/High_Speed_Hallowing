@@ -1104,6 +1104,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b104cf08c8ff4f54db8cc32a945f6f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &552929751
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1758167067608408375, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: maxSpeed
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758167067608408375, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: minSpeed
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.03496077
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412457126975459472, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+      propertyPath: m_Name
+      value: NerdEnemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e349399f831298443b102ceace4bd7c3, type: 3}
 --- !u!1001 &560825266
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14237,71 +14302,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -1.7}
   m_SizeDelta: {x: 3, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &2609880084034859006
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.03496077
-      objectReference: {fileID: 0}
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4412457126975459472, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_Name
-      value: NerdEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 4505310299255876339, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: m_ApplyToSortingLayers.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4505310299255876339, guid: e349399f831298443b102ceace4bd7c3, type: 3}
-      propertyPath: 'm_ApplyToSortingLayers.Array.data[1]'
-      value: 1894172209
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e349399f831298443b102ceace4bd7c3, type: 3}
 --- !u!1001 &5223861577168520964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14390,7 +14390,7 @@ SceneRoots:
   - {fileID: 168721711}
   - {fileID: 1028264328}
   - {fileID: 312892954}
-  - {fileID: 2609880084034859006}
+  - {fileID: 552929751}
   - {fileID: 944405993}
   - {fileID: 2046317256}
   - {fileID: 5223861577168520964}
