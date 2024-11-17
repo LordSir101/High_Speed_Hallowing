@@ -31,9 +31,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CanMove {get; set;} = true;
     Vector2 movementInput;
-    private float baseMoveSpeed = 1;
+    public float baseMoveSpeed = 2;
     public float currSpeed;
-    private float linearDrag = 0.4f;
+    public float linearDrag = 0.4f;
 
 
     public Vector2 prevFrameVelocity;

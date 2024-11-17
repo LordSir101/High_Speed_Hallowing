@@ -30,7 +30,7 @@ public class RingEnemyAttack : MonoBehaviour
         GameObject attack = Instantiate(attackType);
         
         attack.transform.position  = transform.position;
-        attack.transform.parent = gameObject.transform;
+        //attack.transform.parent = gameObject.transform;
         attack.transform.parent = transform; // make the attack a child of enemy 
 
         attackScript = attack.GetComponent<TH_Ring>();

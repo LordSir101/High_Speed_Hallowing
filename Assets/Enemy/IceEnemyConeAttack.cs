@@ -26,7 +26,7 @@ public class IceEnemyConeAttack : MonoBehaviour
 
         attackObj = Instantiate(attackType);
         attackObj.transform.position = transform.position;
-        attackObj.transform.parent = gameObject.transform;
+        //attackObj.transform.parent = gameObject.transform;
         attackObj.transform.parent = transform; // make the attack a child of enemy 
 
         attackScript = attackObj.GetComponent<TH_Cone>();
