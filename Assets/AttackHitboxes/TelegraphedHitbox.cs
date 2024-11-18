@@ -98,9 +98,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
 
     public IEnumerator StartCooldown()
     {
-        Debug.Log("started");
         yield return new WaitForSeconds(CooldownTime);
-        Debug.Log("ready");
         attackReady = true;
     }
 
