@@ -39,7 +39,7 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         
         
         // The sprite that fills up the hitbox to show the player when the attack will come
-        telegraphSprite = FindGameObjectInChildWithTag(gameObject, "TelegraphSprite");
+        telegraphSprite = Utils.FindGameObjectInChildWithTag(gameObject, "TelegraphSprite");
 
         gameObject.GetComponent<Renderer>().enabled = false;
         telegraphSprite.GetComponent<Renderer>().enabled = false;
@@ -132,19 +132,19 @@ public abstract class TelegraphedHitbox : MonoBehaviour
         EndAttack();
     }
 
-    public static GameObject FindGameObjectInChildWithTag (GameObject parent, string tag)
-	{
-		Transform t = parent.transform;
+    // public static GameObject FindGameObjectInChildWithTag (GameObject parent, string tag)
+	// {
+	// 	Transform t = parent.transform;
 
-		for (int i = 0; i < t.childCount; i++) 
-		{
-			if(t.GetChild(i).gameObject.tag == tag)
-			{
-				return t.GetChild(i).gameObject;
-			}
+	// 	for (int i = 0; i < t.childCount; i++) 
+	// 	{
+	// 		if(t.GetChild(i).gameObject.tag == tag)
+	// 		{
+	// 			return t.GetChild(i).gameObject;
+	// 		}
 				
-		}
+	// 	}
 			
-		return null;
-	}
+	// 	return null;
+	// }
 }

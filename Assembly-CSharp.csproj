@@ -67,17 +67,17 @@
     <Compile Include="Assets\PlayerAnimation.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+    <Compile Include="Assets\Utils.cs" />
     <Compile Include="Assets\AttackHitboxes\TH_Cone.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\PlayerReflectDash.cs" />
     <Compile Include="Assets\AttackHitboxes\SlowingCircle.cs" />
     <Compile Include="Assets\UI\HealthBar.cs" />
+    <Compile Include="Assets\Shrines\DamageShrine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Enemy\RingEnemyBehaviour.cs" />
     <Compile Include="Assets\Enemy\EnemyHealth.cs" />
     <Compile Include="Assets\Enemy\RingEnemyAttack.cs" />
-    <Compile Include="Assets\ShrineManager.cs" />
-    <Compile Include="Assets\Shrine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
@@ -86,9 +86,12 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\SpawnEnemy.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\Shrines\HealingShrine.cs" />
     <Compile Include="Assets\Camera\FollowPlayer.cs" />
     <Compile Include="Assets\Enemy\Projectile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
+    <Compile Include="Assets\Shrines\HealthShrine.cs" />
+    <Compile Include="Assets\Shrines\ArmorShrine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Enemy\NerdEnemyBehaviour.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
@@ -130,8 +133,10 @@
     <Compile Include="Assets\AttackHitboxes\TelegraphedHitbox.cs" />
     <Compile Include="Assets\Sprites\AnimateIndicator.cs" />
     <Compile Include="Assets\PlayerImpact.cs" />
+    <Compile Include="Assets\Shrines\Shrine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\PauseControl.cs" />
+    <Compile Include="Assets\Shrines\ShrineManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

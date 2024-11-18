@@ -8,6 +8,7 @@ public class PlayerImpact : MonoBehaviour
 
     //public float ImpactSpeed { get; set; } = 0f;
     public const float IMPACTSPEEDINCREASE = 2;
+    public int DamageBonus = 0;
 
     
     private float impactActionWindow = 0.3f;
@@ -52,11 +53,11 @@ public class PlayerImpact : MonoBehaviour
             //Reflect dashes teleport and freeze the enemy, so we need to get the velocity before the dash for damage
             if(playerReflectDash.reflectDashing)
             {
-                damage = (int) Math.Floor(playerReflectDash.prevVelocity.magnitude);
+                damage = (int) Math.Floor(playerReflectDash.prevVelocity.magnitude) + DamageBonus;
                 playerAnimation.AttackAnimation(playerReflectDash.prevVelocity);
             }
             else{
-                damage = (int) Math.Floor(rb.velocity.magnitude);
+                damage = (int) Math.Floor(rb.velocity.magnitude) + DamageBonus;
                 playerAnimation.AttackAnimation(rb.velocity);
             }
 

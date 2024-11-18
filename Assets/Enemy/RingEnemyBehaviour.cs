@@ -144,24 +144,24 @@ public class RingEnemyBehaviour : MonoBehaviour
         }
     }
 
-    // void OnDrawGizmos()
-    // {
-    //     foreach(Vector2 pos in possibleDirections)
-    //     {
-    //         Gizmos.color = Color.blue;
-    //         if(pos == targetDir)
-    //         {
-    //             Gizmos.color = Color.green;
-    //         }
+    void OnDrawGizmos()
+    {
+        foreach(Vector2 pos in possibleDirections)
+        {
+            Gizmos.color = Color.blue;
+            if(pos == targetDir)
+            {
+                Gizmos.color = Color.green;
+            }
             
-    //         Gizmos.DrawLine(transform.position, new Vector3(pos.x, pos.y, 0) + transform.position);
-    //     }
+            Gizmos.DrawLine(transform.position, new Vector3(pos.x, pos.y, 0) + transform.position);
+        }
 
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireSphere(player.transform.position, minDis);
-    //     Gizmos.color = Color.green;
-    //     Gizmos.DrawWireSphere(player.transform.position, maxDis);
-    // }
+        // Gizmos.color = Color.red;
+        // Gizmos.DrawWireSphere(player.transform.position, minDis);
+        // Gizmos.color = Color.green;
+        // Gizmos.DrawWireSphere(player.transform.position, maxDis);
+    }
 
     // move towards player until within ring hitbox
     IEnumerator Move()
