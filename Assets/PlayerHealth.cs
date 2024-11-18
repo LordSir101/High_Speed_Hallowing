@@ -10,13 +10,13 @@ public class PlayerHealth: MonoBehaviour
     public int MaxHealth { get; set; } = 100;
     public void TakeDamage(int damageTaken)
     {
-        // health -= damageTaken;
-        // healthBar.SetHealth(health);
+        health -= damageTaken;
+        healthBar.SetHealth(health);
 
-        // if(health <= 0)
-        // {
-        //     gameOverPanel.SetWin(false);
-        // }
+        if(health <= 0)
+        {
+            gameOverPanel.SetWin(false);
+        }
     }
     
 }
