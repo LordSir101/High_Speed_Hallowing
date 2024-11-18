@@ -14,7 +14,7 @@ public class SpawnEnemy : MonoBehaviour
     private float spawntimer = 0f;
     private float spawnTime = 1;
 
-    private int maxEnemies = 4;
+    private int maxEnemies = 6;
 
     private List<GameObject> spawnPoints;
     void Start()
