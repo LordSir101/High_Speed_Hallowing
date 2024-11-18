@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class RingEnemyAttack : MonoBehaviour
 {
     private EnemyTelegraphAttack attackStats;
+    private RingEnemyBehaviour behaviourScript;
     private TH_Ring attackScript;
 
     [SerializeField]
@@ -26,6 +27,7 @@ public class RingEnemyAttack : MonoBehaviour
     {
         attackStats = gameObject.GetComponent<EnemyTelegraphAttack>();
         animator = gameObject.GetComponent<Animator>();
+        behaviourScript = gameObject.GetComponent<RingEnemyBehaviour>();
 
         GameObject attack = Instantiate(attackType);
         
@@ -39,6 +41,8 @@ public class RingEnemyAttack : MonoBehaviour
         attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize, attackStats.animationStartPercent);
 
         float delay = UnityEngine.Random.Range(0,2);
+
+        behaviourScript.ChangeState("kiting");
         StartCoroutine(AttackDelay(delay));
 
     }
@@ -47,6 +51,7 @@ public class RingEnemyAttack : MonoBehaviour
     {
         if(attackScript.attackReady)
         {
+            behaviourScript.ChangeState("attacking");
             attackScript.StartAttack();
             
             //ToggleAttackReady(false);
@@ -60,6 +65,7 @@ public class RingEnemyAttack : MonoBehaviour
 
             // if(windupTimer / attackStats.windupTime >= 0.8)
             // {
+            
                 animator.SetTrigger("Attack");
                 animationComplete = true;
                 //attackScript.startAnimation = false;
@@ -70,6 +76,7 @@ public class RingEnemyAttack : MonoBehaviour
         }
         if(attackScript.attackEnded)
         {
+            behaviourScript.ChangeState("kiting");
             animationComplete = false;
             //StartCoroutine(attackScript.StartCooldown());
             //attackScript.attackEnded = false;

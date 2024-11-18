@@ -29,6 +29,12 @@ public class RingEnemyBehaviour : MonoBehaviour
     Vector2 targetDir;
     float maxDis = 3;
     float minDis = 1;
+    // distance enemy will strafe at when attack is ready
+    float minAttackDis;
+    float maxAttackDis;
+    // distance from attack range enemy will strafe at when attack is on cooldown (enemy will stay further back)
+    float minKiteRange = 1;
+    float maxKiteRange = 1;
 
     void Start()
     {
@@ -43,7 +49,7 @@ public class RingEnemyBehaviour : MonoBehaviour
         minAttackRange = maxAttackRange * ringAttackInfo.StartingTelegaphPercentSize;
 
         // Enemy starts running away from player when they get into this range
-        minDis = UnityEngine.Random.Range(1, minAttackRange);
+        minAttackDis = UnityEngine.Random.Range(1, minAttackRange);
 
         float disToMinAttack = minAttackRange - minDis;
         float disToMaxAttack = maxAttackRange - minDis;
@@ -53,7 +59,7 @@ public class RingEnemyBehaviour : MonoBehaviour
         float highestMaxDis = maxAttackRange * 2 - disToMaxAttack; // highest max that will make enemy strafe within its attack range
 
         // some enemies will strafe just outside/inside thier attack range. subtract and add a small buffer to max dis
-        maxDis = UnityEngine.Random.Range(lowestMaxDis - 0.5f, highestMaxDis + 0.5f);
+        maxAttackDis = UnityEngine.Random.Range(lowestMaxDis - 0.5f, highestMaxDis + 0.5f);
         
 
         // get all directions around the enemy at 22.5 degree intervals
@@ -69,6 +75,7 @@ public class RingEnemyBehaviour : MonoBehaviour
         targetDir = player.transform.position - transform.position;
         StartCoroutine(Move());
     }
+
 
     void FixedUpdate()
     {
@@ -120,6 +127,21 @@ public class RingEnemyBehaviour : MonoBehaviour
         
         }
         return bestDir;
+    }
+
+    public void ChangeState(string state)
+    {
+        if(state == "attacking")
+        {
+            minDis = minAttackDis;
+            maxDis = maxAttackDis;
+        }
+        // enemy moves back when ability on cooldown
+        else if(state == "kiting")
+        {
+            minDis = minAttackDis + minKiteRange;
+            maxDis = maxAttackDis + maxKiteRange;
+        }
     }
 
     // void OnDrawGizmos()
