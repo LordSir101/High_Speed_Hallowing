@@ -39,10 +39,12 @@ public class HazardAttack : MonoBehaviour
 
     private Vector2 GetAttackPosition()
     {
-        float posX = UnityEngine.Random.Range(-range, range);
-        float posY = UnityEngine.Random.Range(-range, range);
+        // float posX = UnityEngine.Random.Range(-range, range);
+        // float posY = UnityEngine.Random.Range(-range, range);
 
-        return new Vector2(transform.position.x + posX, transform.position.y + posY);
+
+        //return new Vector2(transform.position.x + posX, transform.position.y + posY);
+        return new Vector2(transform.position.x, transform.position.y);
     }
 
     // Update is called once per frame
