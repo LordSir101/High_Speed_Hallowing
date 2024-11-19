@@ -30,15 +30,15 @@ public class EnemyHealth : MonoBehaviour
 
     public void DealDamage(int damage)
     {
-        // currHealth -= damage;
+        currHealth -= damage;
 
-        // ModifyLightHealthBar();
+        ModifyLightHealthBar();
 
-        // if(currHealth <= 0)
-        // {
-        //     Destroy(gameObject);
-        //     DropEssence();
-        // }
+        if(currHealth <= 0)
+        {
+            Destroy(gameObject);
+            DropEssence();
+        }
     }
 
     private void DropEssence()

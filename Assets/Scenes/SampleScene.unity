@@ -199,7 +199,6 @@ MonoBehaviour:
     m_Bits: 256
   actionWindowIndicatorPrefab: {fileID: 7656306893239868232, guid: 26cbc3a35ecb3704885e3e15c9be75bd, type: 3}
   wallJumpQueued: 0
-  baseMoveSpeed: 4
   linearDrag: 0.4
   prevFrameVelocity: {x: 0, y: 0}
 --- !u!4 &140164697
@@ -831,7 +830,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &384687649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,7 +1221,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -54969282922530565, guid: e349399f831298443b102ceace4bd7c3, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1758167067608408375, guid: e349399f831298443b102ceace4bd7c3, type: 3}
       propertyPath: maxSpeed
@@ -1234,7 +1233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1758167067608408375, guid: e349399f831298443b102ceace4bd7c3, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2134362608062211945, guid: e349399f831298443b102ceace4bd7c3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1282,7 +1281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4412457126975459472, guid: e349399f831298443b102ceace4bd7c3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6399890877251417765, guid: e349399f831298443b102ceace4bd7c3, type: 3}
       propertyPath: m_Enabled

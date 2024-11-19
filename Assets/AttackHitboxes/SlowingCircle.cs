@@ -41,9 +41,10 @@ public class SlowingCircle : TelegraphedHitbox
     {
         if(other.gameObject.tag == "Player" && doDamageEffect)
         {
+            Debug.Log("trigger");
             PlayerMovement playerMovement = other.gameObject.GetComponent<PlayerMovement>();
-            playerMovement.linearDrag = 1;
-            playerMovement.baseMoveSpeed = 1;
+            other.gameObject.GetComponent<Rigidbody2D>().drag *= 1.3f;
+            playerMovement.baseMoveSpeed *= 0.5f;
         }
     }
 
@@ -65,11 +66,13 @@ public class SlowingCircle : TelegraphedHitbox
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player" && doDamageEffect)
+        if(other.gameObject.tag == "Player")
         {
+            Debug.Log("exit");
             PlayerMovement playerMovement = other.gameObject.GetComponent<PlayerMovement>();
-            playerMovement.linearDrag = 0.4f;
-            playerMovement.baseMoveSpeed = 2;
+            PlayerGrapple playerGrapple = other.gameObject.GetComponent<PlayerGrapple>();
+            other.gameObject.GetComponent<Rigidbody2D>().drag = playerGrapple.initialDrag;
+            playerMovement.baseMoveSpeed = playerMovement.initialBaseMoveSpeed;
         }
     
     }
