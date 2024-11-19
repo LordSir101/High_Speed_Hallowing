@@ -35,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CanMove {get; set;} = true;
     Vector2 movementInput;
-    public float baseMoveSpeed = 4;
+    public float baseMoveSpeed {get; set;}
+    public float initialBaseMoveSpeed{get;} = 4;
     //public float currSpeed;
     public float linearDrag = 10f;
     private float speedLossTimer = 0;
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerImpact= GetComponent<PlayerImpact> ();
-        //currSpeed = baseMoveSpeed;
+        baseMoveSpeed = initialBaseMoveSpeed;
         // StartCoroutine(CalculateDrag());
     }
 

@@ -18,7 +18,7 @@ public class PlayerGrapple : MonoBehaviour
     private float grappleAcceleration = 1.5f;
     private float grappleShotAnimationTime = 0.3f;
     private bool grappling = false;
-    private float initalDrag;
+    public float initialDrag {get; set;}
     public bool canGrapple {get;set;} = true;
     private float grappleCooldown = 3.5f;
 
@@ -28,7 +28,7 @@ public class PlayerGrapple : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        initalDrag = rb.drag;
+        initialDrag = rb.drag;
         lineRenderer = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
     }
@@ -157,7 +157,7 @@ public class PlayerGrapple : MonoBehaviour
         playerMovement.EnableBasicDash();
         lineRenderer.enabled = false;
         playerMovement.CanMove = true;
-        rb.drag = initalDrag;
+        rb.drag = initialDrag;
     }
 
     // end grapple when a collision occurs
