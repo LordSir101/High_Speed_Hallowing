@@ -387,6 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 140164694}
   cameraShake: {fileID: 519420034}
+  DamageBonus: 0
   actionWindowIsActive: 0
 --- !u!58 &140164704
 CircleCollider2D:
@@ -783,7 +784,7 @@ GameObject:
   - component: {fileID: 465384135}
   - component: {fileID: 465384134}
   m_Layer: 2
-  m_Name: Text
+  m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -806,7 +807,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 0.2}
+  m_SizeDelta: {x: 4, y: 0.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &465384134
 MonoBehaviour:
@@ -828,7 +829,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Shrine
+  m_text: Shrine of Health
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -893,7 +894,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.5771618, y: -0.14905213, z: -0.5459335, w: -0.15096107}
+  m_margin: {x: -2.270815, y: -0.14905213, z: -3.0259273, w: -0.15096107}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1267,9 +1268,9 @@ GameObject:
   - component: {fileID: 756501938}
   - component: {fileID: 756501937}
   - component: {fileID: 756501936}
-  - component: {fileID: 756501935}
+  - component: {fileID: 756501939}
   m_Layer: 2
-  m_Name: Shrine (3)
+  m_Name: HealingShrine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1295,21 +1296,6 @@ RectTransform:
   m_AnchoredPosition: {x: -14.24, y: -7.55}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &756501935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756501933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48ce71b096e0e75449adaed68ad1b65d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interact: {fileID: -3180328467059563807, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
-  interactText: {fileID: 1900221931}
-  shrineManager: {fileID: 1028264329}
 --- !u!222 &756501936
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1408,6 +1394,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &756501939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756501933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13cdcbd5a7f39c459ee4f26d55d0606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &846719622
 GameObject:
   m_ObjectHideFlags: 0
@@ -2076,7 +2074,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -1.7}
-  m_SizeDelta: {x: 3, y: 0.5}
+  m_SizeDelta: {x: 4, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &998972302
 MonoBehaviour:
@@ -2300,6 +2298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shrineParent: {fileID: 312892953}
   gameOverPanel: {fileID: 1262283862}
+  inputActionRef: {fileID: -3180328467059563807, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
 --- !u!1 &1044049028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2448,29 +2447,14 @@ GameObject:
   - component: {fileID: 1054111417}
   - component: {fileID: 1054111416}
   - component: {fileID: 1054111415}
-  - component: {fileID: 1054111414}
+  - component: {fileID: 1054111419}
   m_Layer: 2
-  m_Name: Shrine (2)
+  m_Name: ArmorShrine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1054111414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1054111413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48ce71b096e0e75449adaed68ad1b65d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interact: {fileID: -3180328467059563807, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
-  interactText: {fileID: 2110543174}
-  shrineManager: {fileID: 1028264329}
 --- !u!222 &1054111415
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2589,6 +2573,18 @@ RectTransform:
   m_AnchoredPosition: {x: -14.71, y: 4.25}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1054111419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054111413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed0dfa6e5d4b02346b36d0dd8270aef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1067688593
 GameObject:
   m_ObjectHideFlags: 0
@@ -2998,29 +2994,14 @@ GameObject:
   - component: {fileID: 1137512340}
   - component: {fileID: 1137512339}
   - component: {fileID: 1137512338}
-  - component: {fileID: 1137512337}
+  - component: {fileID: 1137512342}
   m_Layer: 2
-  m_Name: Shrine
+  m_Name: HealthShrine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1137512337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1137512336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48ce71b096e0e75449adaed68ad1b65d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interact: {fileID: -3180328467059563807, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
-  interactText: {fileID: 1499026359}
-  shrineManager: {fileID: 1028264329}
 --- !u!222 &1137512338
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3139,6 +3120,18 @@ RectTransform:
   m_AnchoredPosition: {x: 14.59, y: 3.99}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1137512342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137512336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4568b5eabffb1e542aa25715cfb42b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1152635671
 GameObject:
   m_ObjectHideFlags: 0
@@ -4977,7 +4970,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 0.2}
+  m_SizeDelta: {x: 4, y: 0.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1478174870
 MonoBehaviour:
@@ -4999,7 +4992,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Shrine
+  m_text: Shrine of Attack
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5160,7 +5153,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -1.7}
-  m_SizeDelta: {x: 3, y: 0.5}
+  m_SizeDelta: {x: 4, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1499026359
 MonoBehaviour:
@@ -5247,7 +5240,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -0.6855259, y: 0, z: -1.1089382, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5340,7 +5333,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 0.2}
+  m_SizeDelta: {x: 4, y: 0.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1513619530
 MonoBehaviour:
@@ -5362,7 +5355,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Shrine
+  m_text: Shrine of Healing
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5453,9 +5446,9 @@ GameObject:
   - component: {fileID: 1561250775}
   - component: {fileID: 1561250774}
   - component: {fileID: 1561250773}
-  - component: {fileID: 1561250772}
+  - component: {fileID: 1561250776}
   m_Layer: 2
-  m_Name: Shrine (4)
+  m_Name: DamageShrine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5481,21 +5474,6 @@ RectTransform:
   m_AnchoredPosition: {x: 14.34, y: -7.33}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1561250772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1561250770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48ce71b096e0e75449adaed68ad1b65d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interact: {fileID: -3180328467059563807, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
-  interactText: {fileID: 998972302}
-  shrineManager: {fileID: 1028264329}
 --- !u!222 &1561250773
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5594,6 +5572,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1561250776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561250770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e7a6cd6e6ebc6e44b19240fe0ba4dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1570156363
 GameObject:
   m_ObjectHideFlags: 0
@@ -5660,7 +5650,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 0.2}
+  m_SizeDelta: {x: 4, y: 0.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1677155929
 MonoBehaviour:
@@ -5682,7 +5672,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Shrine
+  m_text: Shrine of Defence
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5949,7 +5939,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -1.7}
-  m_SizeDelta: {x: 3, y: 0.5}
+  m_SizeDelta: {x: 4, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1900221931
 MonoBehaviour:
@@ -14305,7 +14295,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -1.7}
-  m_SizeDelta: {x: 3, y: 0.5}
+  m_SizeDelta: {x: 4, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &5223861577168520964
 PrefabInstance:
@@ -14321,7 +14311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 260122417904728783, guid: 5dfbc30e22264064e9d8fba385637264, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3754870594949009187, guid: 5dfbc30e22264064e9d8fba385637264, type: 3}
       propertyPath: m_SortingLayer

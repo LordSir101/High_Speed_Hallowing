@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Assets\PlayerAnimation.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+    <Compile Include="Assets\FrenzyMode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Utils.cs" />
     <Compile Include="Assets\AttackHitboxes\TH_Cone.cs" />
