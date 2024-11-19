@@ -15,6 +15,7 @@ public class SpawnEnemy : MonoBehaviour
     private float spawnTime = 1;
 
     private int maxEnemies = 6;
+    private bool spawnEnemies = true;
 
     private List<GameObject> spawnPoints;
     void Start()
@@ -27,13 +28,14 @@ public class SpawnEnemy : MonoBehaviour
         {
             GameObject spawnPoint = childTransform.gameObject;
             spawnPoints.Add(spawnPoint);
-            //Debug.Log("added");
         }
 
     }
 
-    private void SpawnEnemies(int num, List<GameObject> spawnPoints)
+    private void SpawnEnemies(int num)
     {
+        List<GameObject> spawnPoints = GetValidSpawnPoints();
+
         for(int i = 0; i < num; i++)
         {
             float spawnRadius = 1f;
@@ -51,24 +53,28 @@ public class SpawnEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spawntimer += Time.deltaTime;
-
-        if(spawntimer >= spawnTime)
+        if(spawnEnemies)
         {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            spawntimer += Time.deltaTime;
 
-            if(enemies.Length < maxEnemies)
+            if(spawntimer >= spawnTime)
             {
-                //SpawnEnemies(1);
-                List<GameObject> validSpawnPoints = GetValidSpawnPoints();
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-                int numEnemiesAvailableToSpawn = maxEnemies - enemies.Length;
-                SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 1, 5), validSpawnPoints);
-                
+                if(enemies.Length < maxEnemies)
+                {
+                    //SpawnEnemies(1);
+                    // List<GameObject> validSpawnPoints = GetValidSpawnPoints();
+
+                    int numEnemiesAvailableToSpawn = maxEnemies - enemies.Length;
+                    SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, 5));
+                    
+                }
+                spawntimer = 0;
+            
             }
-            spawntimer = 0;
-           
         }
+        
     }
 
     private List<GameObject> GetValidSpawnPoints()
@@ -97,5 +103,13 @@ public class SpawnEnemy : MonoBehaviour
         // }
 
         return validPoints;
+    }
+
+    public void SpawnFrenzyWave()
+    {
+        spawnEnemies = false;
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        int numEnemiesAvailableToSpawn = maxEnemies - enemies.Length;
+        SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, maxEnemies));
     }
 }

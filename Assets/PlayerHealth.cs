@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerHealth: MonoBehaviour
 {
+    [SerializeField] ScriptableRendererFeature frenzyEffect;
     public GameOverPanel gameOverPanel;
     public HealthBar healthBar;
     private int health = 100;
@@ -16,6 +18,7 @@ public class PlayerHealth: MonoBehaviour
 
         if(health <= 0)
         {
+            frenzyEffect.SetActive(false);
             gameOverPanel.SetWin(false);
         }
     }

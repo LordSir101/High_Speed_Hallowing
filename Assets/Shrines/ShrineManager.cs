@@ -9,8 +9,9 @@ public class ShrineManager : MonoBehaviour
     private List<GameObject> shrines;
     private int shrinesActivated = 0;
     [SerializeField] private GameObject shrineParent;
-    [SerializeField] private GameOverPanel gameOverPanel;
+    //[SerializeField] private GameOverPanel gameOverPanel;
     [SerializeField] private InputActionReference inputActionRef;
+    [SerializeField] private FrenzyMode frenzyModeScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,18 +25,23 @@ public class ShrineManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if(shrinesActivated == shrines.Count)
-        {
-            gameOverPanel.SetWin(true);
-        }
-    }
+    // void Update()
+    // {
+        
+    // }
 
     public void CleanseShrine()
     {
         shrinesActivated += 1;
-        IncreaseShrineCleanseCost();
+        if(shrinesActivated == shrines.Count)
+        {
+            frenzyModeScript.StartFrenzyMode();
+        }
+        else
+        {
+            IncreaseShrineCleanseCost();
+        }
+        
     }
 
     private void IncreaseShrineCleanseCost()
