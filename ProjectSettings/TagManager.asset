@@ -11,6 +11,7 @@ TagManager:
   - AggroRange
   - SpawnPoint
   - InteractText
+  - Icon
   layers:
   - Default
   - TransparentFX

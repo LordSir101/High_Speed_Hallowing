@@ -6,9 +6,13 @@ using UnityEngine.InputSystem;
 public class HealingShrine : Shrine
 {
     PlayerHealth playerHealthScript;
+    [SerializeField] Sprite cleanseIcon;
+    [SerializeField] Material cleanseIconMaterial;
     void Start()
     {
         playerHealthScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        CleanseIcon = cleanseIcon;
+        CleanseIconMaterial = cleanseIconMaterial;
     }
 
     protected override void ShowUpgradeText()
