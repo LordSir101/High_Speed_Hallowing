@@ -19,6 +19,6 @@ public class DisplayPlayerSpeed : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        speedTextBox.text = Math.Floor(playerMovement.currSpeed).ToString();
+        speedTextBox.text = Math.Floor(playerRb.velocity.magnitude).ToString();
     }
 }

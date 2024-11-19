@@ -18,6 +18,9 @@ public class PlayerGrapple : MonoBehaviour
     private float grappleAcceleration = 1.5f;
     private float grappleShotAnimationTime = 0.3f;
     private bool grappling = false;
+    private float initalDrag;
+    public bool canGrapple {get;set;} = true;
+    private float grappleCooldown = 3.5f;
 
     
     private Vector2 grappleLocation;
@@ -25,6 +28,7 @@ public class PlayerGrapple : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        initalDrag = rb.drag;
         lineRenderer = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
     }
@@ -36,27 +40,40 @@ public class PlayerGrapple : MonoBehaviour
 
     private void StartGrapple(InputAction.CallbackContext context)
     {
-        Vector2 grappleDirection = GetGrappleDirection();
-
-        grapple.action.Disable();
-        grappling = true;
-        rb.drag = 0;
-
-        // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
-        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance);
-
-        if(hitTarget)
+        if(canGrapple)
         {
-            grappleLocation = hitTarget.point;
-            StartCoroutine(PerformGrapple(hitTarget.collider.gameObject));
-        }
-        else 
-        {
-            grappleLocation = rb.position + grappleDirection.normalized * maxGrappleDistance;
-            StartCoroutine(PerformMissedGrapple());
-        }
+            canGrapple = false;
+            Vector2 grappleDirection = GetGrappleDirection();
 
+            grapple.action.Disable();
+            grappling = true;
+            rb.drag = 0;
+
+            // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
+            RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance);
+
+            if(hitTarget)
+            {
+                grappleLocation = hitTarget.point;
+                StartCoroutine(PerformGrapple(hitTarget.collider.gameObject));
+            }
+            else 
+            {
+                grappleLocation = rb.position + grappleDirection.normalized * maxGrappleDistance;
+                StartCoroutine(PerformMissedGrapple());
+            }
+
+            //GetComponent<PlayerCooldowns>().StartCooldown(grappleCooldown, EndGrappleCooldown);
+
+        }
+        
     }
+
+    // void EndGrappleCooldown()
+    // {
+    //     Debug.Log("grapple cooldown");
+    //     canGrapple = true;
+    // }
 
     public void EndGrapple()
     {
@@ -106,7 +123,7 @@ public class PlayerGrapple : MonoBehaviour
             if(playerMovement.CanMove)
             {
                 playerMovement.CanMove = false;
-                rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + playerMovement.currSpeed);
+                rb.velocity = (grappleLocation - rb.position).normalized * (initialGrappleSpeed + rb.velocity.magnitude);
             }
 
             float speed = Mathf.Clamp(rb.velocity.magnitude * grappleAcceleration, initialGrappleSpeed, maxGrappleSpeed);
@@ -140,6 +157,7 @@ public class PlayerGrapple : MonoBehaviour
         playerMovement.EnableBasicDash();
         lineRenderer.enabled = false;
         playerMovement.CanMove = true;
+        rb.drag = initalDrag;
     }
 
     // end grapple when a collision occurs
