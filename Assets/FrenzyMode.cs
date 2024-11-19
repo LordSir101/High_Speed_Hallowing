@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class FrenzyMode : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class FrenzyMode : MonoBehaviour
     PlayerHealth playerhealthScript;
     SpawnEnemy enemySpawner;
     [SerializeField] GameOverPanel gameOverPanel;
+
+    [SerializeField] ScriptableRendererFeature frenzyEffect;
+    [SerializeField] Material effectMaterial;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +31,7 @@ public class FrenzyMode : MonoBehaviour
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             if(enemies.Length == 0)
             {
+                frenzyEffect.SetActive(false);
                 gameOverPanel.SetWin(true);
             }
             else
@@ -47,5 +52,6 @@ public class FrenzyMode : MonoBehaviour
     {
         frenzy = true;
         enemySpawner.SpawnFrenzyWave();
+        frenzyEffect.SetActive(true);
     }
 }

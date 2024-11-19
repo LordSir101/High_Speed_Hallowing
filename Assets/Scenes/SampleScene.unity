@@ -353,6 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56922967867b8e46b3e4615dc70c812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frenzyEffect: {fileID: -1698484180949896816, guid: dd4290bd0ad6ea6459bdba04c34e0a31, type: 2}
   gameOverPanel: {fileID: 1262283862}
   healthBar: {fileID: 1067688594}
 --- !u!114 &140164702
@@ -734,13 +735,14 @@ GameObject:
   m_Component:
   - component: {fileID: 384687650}
   - component: {fileID: 384687649}
+  - component: {fileID: 384687651}
   m_Layer: 0
   m_Name: Enemy Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &384687649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -772,6 +774,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &384687651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384687648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af625ae74b19aa34aa56f3766f3f7307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverPanel: {fileID: 1262283862}
+  frenzyEffect: {fileID: -1698484180949896816, guid: dd4290bd0ad6ea6459bdba04c34e0a31, type: 2}
+  effectMaterial: {fileID: 2100000, guid: 18a686cc5f5b31c4c9b078e8b06e9ef5, type: 2}
 --- !u!1 &465384132
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,8 +2314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shrineParent: {fileID: 312892953}
-  gameOverPanel: {fileID: 1262283862}
   inputActionRef: {fileID: -3180328467059563807, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
+  frenzyModeScript: {fileID: 384687651}
 --- !u!1 &1044049028
 GameObject:
   m_ObjectHideFlags: 0
