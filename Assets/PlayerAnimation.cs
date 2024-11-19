@@ -33,7 +33,8 @@ public class PlayerAnimation : MonoBehaviour
         
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
         {
-            animator.speed = playerMovement.currSpeed / 3 + 1;
+            //animator.speed = playerMovement.currSpeed / 3 + 1;
+            animator.speed = 1 + rb.velocity.magnitude;
         }
 
         // if state is idle and attacking is true, than the atack animation is finished

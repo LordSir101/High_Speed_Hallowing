@@ -11,7 +11,7 @@ public class PlayerReflectDash : MonoBehaviour
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
     private GameObject reflectDashArrow = null;
     private GameObject relfectDashtarget = null;
-    private float reflectDashSpeedModifier = 2f;
+    private float reflectDashSpeed= 12f;
     public bool reflectDashing = false;
     public Vector2 prevVelocity;
     //private float reflectDashSpeed = 4f;
@@ -119,7 +119,7 @@ public class PlayerReflectDash : MonoBehaviour
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
         // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
-        Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction;
+        Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction * 1.5f;
         rb.position = teleportLocation;
 
         // Indicate to the player that they dashed within the window to add the speed they were going at impact
@@ -127,10 +127,11 @@ public class PlayerReflectDash : MonoBehaviour
         {
             GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
             animation.transform.SetParent(transform, false);
-            playerMovement.currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
+            GetComponent<PlayerCooldowns>().EndAllCooldowns();
+            //playerMovement.currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
         }
 
-        float reboundDashSpeed = playerMovement.dashSpeed + playerMovement.currSpeed;
+        //float reboundDashSpeed = playerMovement.dashSpeed; //+ playerMovement.currSpeed
 
         reflectDash.action.canceled -= ReflectDash;
 
@@ -139,7 +140,7 @@ public class PlayerReflectDash : MonoBehaviour
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         }
         
-        StartCoroutine(PerformDash(direction* reboundDashSpeed, reflectDashTime));
+        StartCoroutine(PerformDash(direction* reflectDashSpeed, reflectDashTime));
 
         Destroy(reflectDashArrow);
     }

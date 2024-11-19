@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public InputActionReference movement, dash;
 
     private bool isDashing = false;
+    public bool canDash {get;set;}= true;
 
 
     [Header("Wall Jump")]
@@ -17,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
-    private float wallJumpSpeedModifier = 1.5f;
+    private float wallJumpForce = 15f;
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
     private Vector2 wallJumpDir;
@@ -26,14 +28,15 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
     PlayerImpact playerImpact;
 
-    public float dashSpeed {get; }= 3f;
+    public float dashSpeed {get; }= 10f;
     private float dashTime = 0.3f;
+    private float dashCooldown = 3;
     
 
     public bool CanMove {get; set;} = true;
     Vector2 movementInput;
-    public float baseMoveSpeed = 3;
-    public float currSpeed;
+    public float baseMoveSpeed = 4;
+    //public float currSpeed;
     public float linearDrag = 10f;
     private float speedLossTimer = 0;
     private float speedLossWindow = 0.002f;
@@ -45,12 +48,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerImpact= GetComponent<PlayerImpact> ();
-        currSpeed = baseMoveSpeed;
+        //currSpeed = baseMoveSpeed;
         // StartCoroutine(CalculateDrag());
     }
 
     void Update()
     {
+        //Debug.Log(canDash);
         movementInput = movement.action.ReadValue<Vector2>();
 
         // calculate drag for curr speed using linear approximation, same as Unity does normally.
@@ -61,18 +65,18 @@ public class PlayerMovement : MonoBehaviour
         // {
         //     currSpeed = 0;
         // }
-        speedLossTimer += Time.deltaTime;
+        // speedLossTimer += Time.deltaTime;
         
-        if(speedLossTimer >= speedLossWindow)
-        {
-            currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
+        // if(speedLossTimer >= speedLossWindow)
+        // {
+        //     currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
 
-            if(currSpeed < 0.5)
-            {
-                currSpeed = 0;
-            }
-            speedLossTimer = 0;
-        }
+        //     if(currSpeed < baseMoveSpeed)
+        //     {
+        //         currSpeed = baseMoveSpeed;
+        //     }
+        //     speedLossTimer = 0;
+        // }
     }
 
     // IEnumerator CalculateDrag()
@@ -110,7 +114,9 @@ public class PlayerMovement : MonoBehaviour
             if(movementInput != Vector2.zero)
             {
                 // move using current speed, with a minimum of base move speed
-                rb.velocity = currSpeed > baseMoveSpeed ? movementInput * currSpeed : movementInput * baseMoveSpeed ;
+                //rb.velocity = currSpeed > baseMoveSpeed ? movementInput * currSpeed : movementInput * baseMoveSpeed ;
+
+                rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
 
                 // float playerRadValue = Mathf.Atan2(movementInput.y, movementInput.x);
                 // float playerAngle= playerRadValue * (180/Mathf.PI);
@@ -182,11 +188,11 @@ public class PlayerMovement : MonoBehaviour
 
         if(!wallJumpQueued)
         {
-            CanMove = false;
-            DisableBasicDash();
-            
-            Vector2 direction = movement.action.ReadValue<Vector2>();
-            StartCoroutine(PerformDash(direction * (dashSpeed + rb.velocity.magnitude), dashTime));
+            if(canDash)
+            {   
+                Vector2 direction = movement.action.ReadValue<Vector2>();
+                StartCoroutine(PerformDash(direction * dashSpeed, dashTime));
+            }
         }
     }
 
@@ -216,10 +222,11 @@ public class PlayerMovement : MonoBehaviour
         {
             GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
             animation.transform.SetParent(transform, false);
-            currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
+            GetComponent<PlayerCooldowns>().EndAllCooldowns();
+            //currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
         }
 
-        float wallJumpSpeed = dashSpeed + currSpeed;
+        float wallJumpSpeed = wallJumpForce;
 
         if(wallPos.x + wallSize.x/2 < transform.position.x)
         {
@@ -242,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
             dir = new Vector2(direction.x * wallJumpSpeed, -wallJumpSpeed);
         }
 
-        StartCoroutine(PerformDash(dir, wallJumpTime));
+        StartCoroutine(PerformWalljump(dir, wallJumpTime));
     }
 
     private void CancelOtherMovement()
@@ -270,6 +277,34 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
     }
     IEnumerator PerformDash(Vector2 force, float time)
+    {
+       
+        isDashing = true;
+        canDash = false;
+
+        CanMove = false;
+        DisableBasicDash();
+
+        rb.AddForce(force, ForceMode2D.Impulse);
+
+        // rotate player
+        // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+        // float playerAngle= playerRadValue * (180/Mathf.PI);
+        // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+
+        yield return new WaitForSeconds(time);
+
+        ResetDashStatus();
+        //GetComponent<PlayerCooldowns>().StartCooldown(dashCooldown, DashCooldownEnded);
+    }
+
+    // void DashCooldownEnded()
+    // {
+    //     canDash = true;
+    // }
+
+    
+    IEnumerator PerformWalljump(Vector2 force, float time)
     {
         isDashing = true;
 
