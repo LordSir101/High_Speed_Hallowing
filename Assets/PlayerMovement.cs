@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,9 +32,11 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CanMove {get; set;} = true;
     Vector2 movementInput;
-    public float baseMoveSpeed = 2;
+    public float baseMoveSpeed = 3;
     public float currSpeed;
-    public float linearDrag = 0.4f;
+    public float linearDrag = 10f;
+    private float speedLossTimer = 0;
+    private float speedLossWindow = 0.002f;
 
 
     public Vector2 prevFrameVelocity;
@@ -43,21 +46,55 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerImpact= GetComponent<PlayerImpact> ();
         currSpeed = baseMoveSpeed;
+        // StartCoroutine(CalculateDrag());
     }
 
     void Update()
     {
         movementInput = movement.action.ReadValue<Vector2>();
+
         // calculate drag for curr speed using linear approximation, same as Unity does normally.
-        currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
-        if(currSpeed < 0.5)
-        {
-            currSpeed = 0;
-        }
+        // currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
+        // Debug.Log(currSpeed);
 
+        // if(currSpeed < 0.5)
+        // {
+        //     currSpeed = 0;
+        // }
+        speedLossTimer += Time.deltaTime;
         
+        if(speedLossTimer >= speedLossWindow)
+        {
+            currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
 
+            if(currSpeed < 0.5)
+            {
+                currSpeed = 0;
+            }
+            speedLossTimer = 0;
+        }
     }
+
+    // IEnumerator CalculateDrag()
+    // {
+    //     while(true)
+    //     {
+    //         currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
+    //         Debug.Log(currSpeed);
+
+    //         if(currSpeed < 0.5)
+    //         {
+    //             currSpeed = 0;
+    //         }
+
+    //         yield return new WaitForSeconds(0.1f);
+    //     }
+    // }
+
+    // public void ResetSpeedLossWindow()
+    // {
+    //     speedLossTimer = 0;
+    // }
 
     void FixedUpdate()
     {
@@ -81,7 +118,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                rb.velocity = currSpeed * rb.velocity.normalized;
+                //rb.velocity = currSpeed * rb.velocity.normalized;
+                rb.velocity = Vector2.zero;
             }
 
             // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);

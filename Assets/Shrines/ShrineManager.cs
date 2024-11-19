@@ -12,6 +12,7 @@ public class ShrineManager : MonoBehaviour
     //[SerializeField] private GameOverPanel gameOverPanel;
     [SerializeField] private InputActionReference inputActionRef;
     [SerializeField] private FrenzyMode frenzyModeScript;
+    [SerializeField] private Sprite happySprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,7 @@ public class ShrineManager : MonoBehaviour
         foreach (Transform childTransform in shrineParent.transform)
         {
             GameObject shrine = childTransform.gameObject;
-            shrine.GetComponent<Shrine>().Init(inputActionRef, this);
+            shrine.GetComponent<Shrine>().Init(inputActionRef, this, happySprite);
             shrines.Add(shrine);
         }
     }

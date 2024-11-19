@@ -12,6 +12,10 @@ public class Shrine : MonoBehaviour
     private ShrineManager shrineManager;
     protected GameObject player;
 
+    //[SerializeField] Sprite angrySprite;
+    Sprite cleanseSprite;
+    
+
     public int Cost {get; set;}= 500;
 
     protected int[] upgradeCosts;
@@ -27,13 +31,14 @@ public class Shrine : MonoBehaviour
         
     // }
 
-    public void Init(InputActionReference interact, ShrineManager shrineManager)
+    public void Init(InputActionReference interact, ShrineManager shrineManager, Sprite cleanseSprite)
     {
         player = GameObject.FindGameObjectWithTag("Player");
         upgradeCosts = new int[] {500, 700, 900};
         interactText = Utils.FindGameObjectInChildWithTag(gameObject.GetComponentInChildren<Canvas>().gameObject, "InteractText").GetComponent<TextMeshProUGUI>();
         this.interact = interact;
         this.shrineManager = shrineManager;
+        this.cleanseSprite = cleanseSprite;
     }
 
     private void Tribute(InputAction.CallbackContext context)
@@ -52,6 +57,7 @@ public class Shrine : MonoBehaviour
             interact.action.performed -= Tribute;
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
             gameObject.GetComponent<CircleCollider2D>().enabled = true;
+            gameObject.GetComponent<SpriteRenderer>().sprite = cleanseSprite;
         }   
     }
 
@@ -73,7 +79,7 @@ public class Shrine : MonoBehaviour
             else
             {
                 interactText.enabled = true;
-                interactText.text = interactText.text + $" ({Cost})" ;
+                interactText.text = $"Tribute to cleanse (E) ({Cost})" ;
                 interact.action.performed += Tribute;
             }
         }
@@ -91,7 +97,7 @@ public class Shrine : MonoBehaviour
             {
                 interact.action.performed -= Tribute;
             }
-            
+
             interactText.enabled = false;
         }
         

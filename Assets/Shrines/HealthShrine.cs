@@ -30,6 +30,7 @@ public class HealthShrine : Shrine
         {
             rm.Essence -= upgradeCosts[numUpgrades];
             playerHealthScript.MaxHealth += healthUpgradeValues[numUpgrades];
+            playerHealthScript.Heal(healthUpgradeValues[numUpgrades]);
             numUpgrades++;
 
         }

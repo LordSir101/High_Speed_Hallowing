@@ -51,16 +51,19 @@ public class PlayerImpact : MonoBehaviour
             //Deal damage
             int damage;
             //Reflect dashes teleport and freeze the enemy, so we need to get the velocity before the dash for damage
+            // Maybe make refelct dashes do no damage instead?
             if(playerReflectDash.reflectDashing)
             {
                 damage = (int) Math.Floor(playerReflectDash.prevVelocity.magnitude) + DamageBonus;
                 playerAnimation.AttackAnimation(playerReflectDash.prevVelocity);
+                
+                //damage = 0;
             }
             else{
                 damage = (int) Math.Floor(rb.velocity.magnitude) + DamageBonus;
                 playerAnimation.AttackAnimation(rb.velocity);
             }
-
+            Debug.Log(damage);
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(damage);
             
             ResetActionWindow();
