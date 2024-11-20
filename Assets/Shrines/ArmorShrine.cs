@@ -8,10 +8,16 @@ public class ArmorShrine : Shrine
     PlayerHealth playerHealthScript;
     private int[] armorUpgradeValues;
 
+    [SerializeField] Sprite cleanseIcon;
+    [SerializeField] Material cleanseIconMaterial;
+
+
     // Start is called before the first frame update
     void Start()
     {
         playerHealthScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        CleanseIcon = cleanseIcon;
+        CleanseIconMaterial = cleanseIconMaterial;
 
         armorUpgradeValues = new int[] {1, 2, 3};
     }

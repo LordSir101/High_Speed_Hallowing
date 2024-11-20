@@ -7,11 +7,15 @@ public class DamageShrine : Shrine
 {
     PlayerImpact playerImpactScript;
     private int[] dmgUpgradeValues;
+    [SerializeField] Sprite cleanseIcon;
+    [SerializeField] Material cleanseIconMaterial;
 
     // Start is called before the first frame update
     void Start()
     {
         playerImpactScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerImpact>();
+        CleanseIcon = cleanseIcon;
+        CleanseIconMaterial = cleanseIconMaterial;
 
         dmgUpgradeValues = new int[] {2, 3, 5};
     }

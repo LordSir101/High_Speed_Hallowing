@@ -23,6 +23,11 @@ public class Shrine : MonoBehaviour
     protected int numUpgrades = 0;
     protected bool cleansed = false;
 
+    protected virtual GameObject icon {get;set;}
+    protected virtual Animator animator {get;set;}
+    protected Sprite CleanseIcon {get;set;}
+    protected Material CleanseIconMaterial {get;set;}
+
     // Start is called before the first frame update
     // void Start()
     // {
@@ -39,6 +44,8 @@ public class Shrine : MonoBehaviour
         this.interact = interact;
         this.shrineManager = shrineManager;
         this.cleanseSprite = cleanseSprite;
+        animator = GetComponentInChildren<Animator>();
+        icon = Utils.FindGameObjectInChildWithTag(gameObject, "Icon");
     }
 
     private void Tribute(InputAction.CallbackContext context)
@@ -58,6 +65,8 @@ public class Shrine : MonoBehaviour
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
             gameObject.GetComponent<CircleCollider2D>().enabled = true;
             gameObject.GetComponent<SpriteRenderer>().sprite = cleanseSprite;
+
+            ChangeIcon();
         }   
     }
 
@@ -102,7 +111,12 @@ public class Shrine : MonoBehaviour
         }
         
     }
-
+     protected void ChangeIcon()
+    {
+        icon.GetComponent<SpriteRenderer>().sprite = CleanseIcon;
+        icon.GetComponent<SpriteRenderer>().material = CleanseIconMaterial;
+        animator.SetTrigger("activated");
+    }
     protected virtual void ShowUpgradeText()
     {
         return;
