@@ -1,0 +1,414 @@
+fileFormatVersion: 2
+guid: c743434686e771847831bfc90de18d14
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -550050914590111380
+    second: DecorReal_0
+  - first:
+      213: 2096402713508388875
+    second: DecorReal_1
+  - first:
+      213: 614382216972456443
+    second: DecorReal_2
+  - first:
+      213: 5147781286390408548
+    second: DecorReal_3
+  - first:
+      213: -2267595413709013785
+    second: DecorReal_4
+  - first:
+      213: -3376658417840260034
+    second: DecorReal_5
+  - first:
+      213: 803681251914350020
+    second: DecorReal_6
+  - first:
+      213: 6379833117441250992
+    second: DecorReal_7
+  - first:
+      213: 6760320165559447083
+    second: DecorReal_8
+  - first:
+      213: 4770874812302230003
+    second: DecorReal_9
+  - first:
+      213: -5377938961248408964
+    second: DecorReal_10
+  - first:
+      213: 8085703094029782592
+    second: DecorReal_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 2048
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DecorReal_0
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 8402
+        width: 419
+        height: 1571
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c694a738b93dd58f0800000000000000
+      internalID: -550050914590111380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_1
+      rect:
+        serializedVersion: 2
+        x: 2847
+        y: 9616
+        width: 290
+        height: 399
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0025d4292be71d10800000000000000
+      internalID: 2096402713508388875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_2
+      rect:
+        serializedVersion: 2
+        x: 4300
+        y: 8249
+        width: 1654
+        height: 1849
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf1d5f60f59b68800800000000000000
+      internalID: 614382216972456443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_3
+      rect:
+        serializedVersion: 2
+        x: 6289
+        y: 8166
+        width: 1947
+        height: 1951
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46524bc4ec7907740800000000000000
+      internalID: 5147781286390408548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_4
+      rect:
+        serializedVersion: 2
+        x: 8516
+        y: 8222
+        width: 1580
+        height: 1882
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ecb1974cf1e780e0800000000000000
+      internalID: -2267595413709013785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_5
+      rect:
+        serializedVersion: 2
+        x: 2593
+        y: 8351
+        width: 812
+        height: 927
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3c7ccc2f03b321d0800000000000000
+      internalID: -3376658417840260034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4125
+        width: 4091
+        height: 3599
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cdfefc27df372b00800000000000000
+      internalID: 803681251914350020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_7
+      rect:
+        serializedVersion: 2
+        x: 4577
+        y: 4313
+        width: 1405
+        height: 3312
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b6db532b68b98850800000000000000
+      internalID: 6379833117441250992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_8
+      rect:
+        serializedVersion: 2
+        x: 8001
+        y: 5357
+        width: 2147
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2ea4147f5b71dd50800000000000000
+      internalID: 6760320165559447083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_9
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 9
+        width: 4467
+        height: 4064
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f102275d5d853240800000000000000
+      internalID: 4770874812302230003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_10
+      rect:
+        serializedVersion: 2
+        x: 5173
+        y: 286
+        width: 1683
+        height: 3142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7a2e0f1209bd55b0800000000000000
+      internalID: -5377938961248408964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DecorReal_11
+      rect:
+        serializedVersion: 2
+        x: 7108
+        y: 254
+        width: 1283
+        height: 2941
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04e0ce6cf10363070800000000000000
+      internalID: 8085703094029782592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      DecorReal_0: -550050914590111380
+      DecorReal_1: 2096402713508388875
+      DecorReal_10: -5377938961248408964
+      DecorReal_11: 8085703094029782592
+      DecorReal_2: 614382216972456443
+      DecorReal_3: 5147781286390408548
+      DecorReal_4: -2267595413709013785
+      DecorReal_5: -3376658417840260034
+      DecorReal_6: 803681251914350020
+      DecorReal_7: 6379833117441250992
+      DecorReal_8: 6760320165559447083
+      DecorReal_9: 4770874812302230003
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

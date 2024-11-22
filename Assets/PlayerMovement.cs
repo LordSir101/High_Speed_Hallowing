@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
-    private float wallJumpForce = 15f;
+    private float wallJumpForce = 11f;
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
     private Vector2 wallJumpDir;
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public bool CanMove {get; set;} = true;
     Vector2 movementInput;
     public float baseMoveSpeed {get; set;}
-    public float initialBaseMoveSpeed{get;} = 4;
+    public float initialBaseMoveSpeed{get;} = 5;
     //public float currSpeed;
     public float linearDrag = 10f;
     private float speedLossTimer = 0;
