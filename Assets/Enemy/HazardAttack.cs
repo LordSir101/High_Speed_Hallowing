@@ -32,6 +32,9 @@ public class HazardAttack : MonoBehaviour
 
         attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize, attackStats.animationStartPercent);
 
+        attack.transform.parent = transform;
+        attack.GetComponent<SpriteRenderer>().sortingLayerID = 0;
+
         float delay = UnityEngine.Random.Range(0,2);
         StartCoroutine(AttackDelay(delay));
         
