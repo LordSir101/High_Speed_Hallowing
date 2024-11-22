@@ -63,12 +63,12 @@ public class PlayerImpact : MonoBehaviour
                 damage = (int) Math.Floor(rb.velocity.magnitude) + DamageBonus;
                 playerAnimation.AttackAnimation(rb.velocity);
             }
-            Debug.Log(damage);
+            // Debug.Log(damage);
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(damage);
             
             ResetActionWindow();
 
-            rb.velocity = rb.velocity.normalized;
+            //rb.velocity = rb.velocity.normalized;
 
             
         }
@@ -78,7 +78,7 @@ public class PlayerImpact : MonoBehaviour
     {
         
         ResetActionWindow();
-        rb.velocity = rb.velocity.normalized;
+        //rb.velocity = rb.velocity.normalized;
 
         if(gameObject.GetComponent<PlayerMovement>().wallJumpQueued)
         {

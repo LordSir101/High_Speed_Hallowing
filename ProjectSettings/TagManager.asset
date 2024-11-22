@@ -12,6 +12,7 @@ TagManager:
   - SpawnPoint
   - InteractText
   - Icon
+  - PauseControl
   layers:
   - Default
   - TransparentFX
