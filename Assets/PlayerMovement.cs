@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.IntegerTime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,28 +21,33 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
-    private float wallJumpForce = 11f;
+    [SerializeField] private float wallJumpForce = 11f;
+    [SerializeField] private float wallJumpTime = 0.2f, wallJumpPause = 0.01f;
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
     private Vector2 wallJumpDir;
-    private float wallJumpTime = 0.3f;
+
+    [Header("Movement")]
+    [SerializeField] public float dashSpeed {get; }= 15f;
+    [SerializeField] private float dashTime = 0.3f, dashPause = 0.05f;
+    
 
     Rigidbody2D rb;
     PlayerImpact playerImpact;
 
-    public float dashSpeed {get; }= 10f;
-    private float dashTime = 0.3f;
+    
     private float dashCooldown = 3;
     
+    [Header("Movement")]
+    [SerializeField] public float baseMoveSpeed;
+    public float initialBaseMoveSpeed{get; set;}
+    [SerializeField] float accel, deaccel, velPower;
 
     public bool CanMove {get; set;} = true;
     Vector2 movementInput;
-    public float baseMoveSpeed {get; set;}
-    public float initialBaseMoveSpeed{get;} = 5;
-    //public float currSpeed;
-    public float linearDrag = 10f;
-    private float speedLossTimer = 0;
-    private float speedLossWindow = 0.002f;
+    private Vector2 prevDashVelocity;
+
+    private IEnumerator currAction;
 
 
     public Vector2 prevFrameVelocity;
@@ -49,57 +56,19 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerImpact= GetComponent<PlayerImpact> ();
-        baseMoveSpeed = initialBaseMoveSpeed;
-        // StartCoroutine(CalculateDrag());
+        initialBaseMoveSpeed = baseMoveSpeed;
     }
 
     void Update()
     {
-        //Debug.Log(canDash);
+
         movementInput = movement.action.ReadValue<Vector2>();
 
         // calculate drag for curr speed using linear approximation, same as Unity does normally.
         // currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
         // Debug.Log(currSpeed);
 
-        // if(currSpeed < 0.5)
-        // {
-        //     currSpeed = 0;
-        // }
-        // speedLossTimer += Time.deltaTime;
-        
-        // if(speedLossTimer >= speedLossWindow)
-        // {
-        //     currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
-
-        //     if(currSpeed < baseMoveSpeed)
-        //     {
-        //         currSpeed = baseMoveSpeed;
-        //     }
-        //     speedLossTimer = 0;
-        // }
     }
-
-    // IEnumerator CalculateDrag()
-    // {
-    //     while(true)
-    //     {
-    //         currSpeed = currSpeed * ( 1 - Time.deltaTime * linearDrag);
-    //         Debug.Log(currSpeed);
-
-    //         if(currSpeed < 0.5)
-    //         {
-    //             currSpeed = 0;
-    //         }
-
-    //         yield return new WaitForSeconds(0.1f);
-    //     }
-    // }
-
-    // public void ResetSpeedLossWindow()
-    // {
-    //     speedLossTimer = 0;
-    // }
 
     void FixedUpdate()
     {
@@ -112,31 +81,51 @@ public class PlayerMovement : MonoBehaviour
         if(CanMove) 
         {
 
-            if(movementInput != Vector2.zero)
-            {
-                // move using current speed, with a minimum of base move speed
-                //rb.velocity = currSpeed > baseMoveSpeed ? movementInput * currSpeed : movementInput * baseMoveSpeed ;
+            // if(rb.velocity.magnitude < baseMoveSpeed)
+            // {
+            //     rb.AddForce(movementInput * baseMoveSpeed*2, ForceMode2D.Force);
+            //     //rb.velocity = rb.velocity.normalized * baseMoveSpeed;
+            // }
+            // else
+            // {
+            //     Vector2 diff = rb.velocity.normalized - movementInput;
+            //     rb.AddForce(diff * 1.5f, ForceMode2D.Force);
+            // }
 
-                rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
+            Vector2 targetVel = movementInput * baseMoveSpeed;
 
-                // float playerRadValue = Mathf.Atan2(movementInput.y, movementInput.x);
-                // float playerAngle= playerRadValue * (180/Mathf.PI);
-                // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
-            }
-            else
-            {
-                //rb.velocity = currSpeed * rb.velocity.normalized;
-                rb.velocity = Vector2.zero;
-            }
+            //targetVel = Vector2.Lerp(rb.velocity, targetVel, 0.5f);
+            Vector2 diff = targetVel - rb.velocity;
+            float accelRate = Mathf.Abs(targetVel.magnitude) > 0.01f ? accel : deaccel;
 
-            // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-            // float playerAngle= playerRadValue * (180/Mathf.PI);
-            // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+            float speed = Mathf.Pow(diff.magnitude * accelRate, velPower);
+
+            rb.AddForce(movementInput * speed);
+
+        
+            // if(movementInput != Vector2.zero)
+            // {
+            //     // move using current speed, with a minimum of base move speed
+            //     //rb.velocity = currSpeed > baseMoveSpeed ? movementInput * currSpeed : movementInput * baseMoveSpeed ;
+
+            //     //rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
+            //     rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
+            
+            
+
+            //     // float playerRadValue = Mathf.Atan2(movementInput.y, movementInput.x);
+            //     // float playerAngle= playerRadValue * (180/Mathf.PI);
+            //     // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+            // }
+            // else
+            // {
+            //     rb.velocity = rb.velocity.magnitude > baseMoveSpeed ? movementInput * rb.velocity.magnitude : movementInput * baseMoveSpeed ;
+            //     //rb.velocity = Vector2.zero;
+            // }
             
          }
 
     }
-
     void LateUpdate()
     {
         prevFrameVelocity = rb.velocity;
@@ -191,11 +180,17 @@ public class PlayerMovement : MonoBehaviour
         {
             if(canDash)
             {   
+                CancelOtherMovement();
+                StartCoroutine(DashWindup(dashPause));
+                GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().Sleep(dashPause);
                 Vector2 direction = movement.action.ReadValue<Vector2>();
-                StartCoroutine(PerformDash(direction * dashSpeed, dashTime));
+                currAction = PerformDash(direction * dashSpeed, dashTime);
+                StartCoroutine(currAction);
             }
         }
     }
+
+    
 
     // if they player does not hit a wall in time, dont wall jump
     IEnumerator TurnOffWallJump()
@@ -210,6 +205,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void WallJump(Vector2 direction)
     {
+        StartCoroutine(DashWindup(wallJumpPause));
+        GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().Sleep(wallJumpPause);
         BoxCollider2D wall = touchingWall.gameObject.GetComponent<BoxCollider2D>();
             
         Vector3 wallSize = wall.bounds.size;
@@ -250,15 +247,20 @@ public class PlayerMovement : MonoBehaviour
             dir = new Vector2(direction.x * wallJumpSpeed, -wallJumpSpeed);
         }
 
-        StartCoroutine(PerformWalljump(dir, wallJumpTime));
+        // // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
+        // Vector2 teleportLocation = new Vector2(rb.position.x, rb.position.y) + dir.normalized * 1.1f;
+        // rb.position = teleportLocation;
+
+        currAction = PerformWalljump(dir, wallJumpTime);
+        StartCoroutine(currAction);
     }
 
     private void CancelOtherMovement()
     {
         gameObject.GetComponent<PlayerGrapple>().EndGrapple();
         gameObject.GetComponent<PlayerReflectDash>().EndReflectDash();
-        CanMove = false;
-        DisableBasicDash();
+        // CanMove = false;
+        // DisableBasicDash();
 
         EndDash();
     }
@@ -266,7 +268,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isDashing)
         {
-            StopAllCoroutines();
+            //StopAllCoroutines();
+            StopCoroutine(currAction);
         }
     }
 
@@ -277,46 +280,88 @@ public class PlayerMovement : MonoBehaviour
         dash.action.Enable();
         isDashing = false;
     }
+
+    IEnumerator DashWindup(float time)
+    {
+        // Vector2 scale = dir * 0.5f;
+        transform.localScale = new Vector2(0.7f, 0.7f);
+        yield return new WaitForSecondsRealtime(time);
+        transform.localScale = new Vector2(1,1);
+    }
     IEnumerator PerformDash(Vector2 force, float time)
     {
        
         isDashing = true;
         canDash = false;
 
-        CanMove = false;
+        //CanMove = false;
         DisableBasicDash();
 
-        rb.AddForce(force, ForceMode2D.Impulse);
+        float startTime = Time.time;
+        rb.drag = 0;
+
+        while (Time.time - startTime <= dashTime)
+		{
+			rb.velocity = force.normalized * dashSpeed;
+            prevDashVelocity = rb.velocity;
+			//Pauses the loop until the next frame, creating something of a Update loop. 
+			//This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D
+			yield return null;
+		}
+
+		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
+
+		rb.velocity = dashSpeed * 0.5f * force.normalized;
+
+        rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
+
+
+        //rb.AddForce(force, ForceMode2D.Impulse);
+        
 
         // rotate player
         // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
         // float playerAngle= playerRadValue * (180/Mathf.PI);
         // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
 
-        yield return new WaitForSeconds(time);
+        //yield return new WaitForSeconds(time);
 
         ResetDashStatus();
-        //GetComponent<PlayerCooldowns>().StartCooldown(dashCooldown, DashCooldownEnded);
     }
-
-    // void DashCooldownEnded()
-    // {
-    //     canDash = true;
-    // }
-
     
     IEnumerator PerformWalljump(Vector2 force, float time)
     {
         isDashing = true;
 
-        rb.AddForce(force, ForceMode2D.Impulse);
+        // // rb.velocity = force.normalized;
+        // // rb.AddForce(force, ForceMode2D.Impulse);
+        // prevDashVelocity = rb.velocity;
+
+        float startTime = Time.time;
+        rb.drag = 0;
+
+        while (Time.time - startTime <= dashTime)
+		{
+			rb.velocity = force.normalized * dashSpeed;
+            prevDashVelocity = rb.velocity;
+			//Pauses the loop until the next frame, creating something of a Update loop. 
+			//This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D
+			yield return null;
+		}
+
+        //startTime = Time.time;
+
+		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
+
+		rb.velocity = wallJumpForce * 0.5f * force.normalized;
+        rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
 
         // rotate player
         // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
         // float playerAngle= playerRadValue * (180/Mathf.PI);
         // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
 
-        yield return new WaitForSeconds(time);
+        //yield return new WaitForSeconds(time);
 
         ResetDashStatus();
     }

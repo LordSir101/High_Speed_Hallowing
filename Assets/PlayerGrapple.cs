@@ -12,7 +12,7 @@ public class PlayerGrapple : MonoBehaviour
 
     PlayerMovement playerMovement;
 
-    private float maxGrappleDistance = 6;
+    private float maxGrappleDistance = 7;
     private float initialGrappleSpeed = 1.5f;
     private float maxGrappleAccel = 8f;
     private float grappleAcceleration = 1.5f;
