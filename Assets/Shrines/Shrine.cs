@@ -54,6 +54,7 @@ public class Shrine : MonoBehaviour
 
         if(rm.Essence >= Cost)
         {
+            GetComponent<ParticleSystem>().Play();
             rm.Essence -= 500;
             //gameObject.GetComponent<CircleCollider2D>().enabled = false;
             //interactText.enabled = false;
