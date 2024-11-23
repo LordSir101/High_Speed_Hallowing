@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] GameObject shadow;
+    [SerializeField] ParticleSystem particleSys;
     private Vector3 shadowInitialPosition;
     private PlayerMovement playerMovement;
 
@@ -25,17 +26,27 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("idle") && rb.velocity.magnitude > 0)
+        {
+            animator.speed = 1;
+            animator.SetTrigger("Move");
+        }
+        else if(animator.GetCurrentAnimatorStateInfo(0).IsName("move") && rb.velocity.magnitude == 0)
+        {
+            animator.speed = 1;
+            animator.SetTrigger("Idle");
+        }
 
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("attack"))
         {
             attackAnimationStarted = true;
         }
         
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
-        {
-            //animator.speed = playerMovement.currSpeed / 3 + 1;
-            animator.speed = 1 + rb.velocity.magnitude;
-        }
+        // if(animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
+        // {
+        //     //animator.speed = playerMovement.currSpeed / 3 + 1;
+        //     animator.speed = 1 + rb.velocity.magnitude;
+        // }
 
         // if state is idle and attacking is true, than the atack animation is finished
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("idle") && attackAnimationStarted)
@@ -62,5 +73,26 @@ public class PlayerAnimation : MonoBehaviour
         animator.speed = 1;
         animator.SetTrigger("Attack");
         
+    }
+
+    public void GrappleAnimation()
+    {
+
+        animator.speed = 1;
+        animator.SetTrigger("Grapple");
+        
+    }
+
+    public void GrappleSpin()
+    {
+
+        animator.speed = 1;
+        animator.SetTrigger("GrappleSpin");
+        
+    }
+
+    public void PlayCooldownRefreshAnimation()
+    {
+        particleSys.Play();
     }
 }

@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDashing = false;
     public bool canDash {get;set;}= true;
+    
 
 
     [Header("Wall Jump")]
@@ -23,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
     [SerializeField] private float wallJumpForce = 11f;
     [SerializeField] private float wallJumpTime = 0.2f, wallJumpPause = 0.01f;
+    [SerializeField] private GameObject wallJumpEffect;
+    private float wallJumpCombo = 0;
+    
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
     private Vector2 wallJumpDir;
@@ -101,6 +105,20 @@ public class PlayerMovement : MonoBehaviour
             float speed = Mathf.Pow(diff.magnitude * accelRate, velPower);
 
             rb.AddForce(movementInput * speed);
+
+            Vector2 normalized = rb.velocity.normalized;
+            float playerRadValue = Mathf.Atan2(normalized.y, normalized.x);
+            float playerAngle= playerRadValue * (180/Mathf.PI);
+            rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+
+            
+
+            if(rb.velocity.magnitude < 0.1f)
+            {
+                rb.velocity = Vector2.zero;
+                rb.transform.localRotation = Quaternion.Euler(0,0,0);
+            }
+            
 
         
             // if(movementInput != Vector2.zero)
@@ -218,9 +236,10 @@ public class PlayerMovement : MonoBehaviour
         // if the player walljumps within the action window, the player's speed increases
         if(playerImpact.actionWindowIsActive)
         {
-            GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
-            animation.transform.SetParent(transform, false);
+            // GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
+            // animation.transform.SetParent(transform, false);
             GetComponent<PlayerCooldowns>().EndAllCooldowns();
+            GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
             //currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
         }
 
@@ -243,13 +262,18 @@ public class PlayerMovement : MonoBehaviour
         // wall on top
         else if(wallPos.y - wallSize.y/2 > transform.position.y)
         {
-
             dir = new Vector2(direction.x * wallJumpSpeed, -wallJumpSpeed);
         }
 
         // // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
         // Vector2 teleportLocation = new Vector2(rb.position.x, rb.position.y) + dir.normalized * 1.1f;
         // rb.position = teleportLocation;
+        float rad = Mathf.Atan2(dir.y, dir.x);
+        float angle = rad * (180/Mathf.PI);
+        Quaternion rotation = Quaternion.Euler(0,0, angle -90);
+        //Vector2 position = transform.position + (transform.position - (Vector3)dir).normalized * 0.5f;
+        Instantiate(wallJumpEffect, transform.position, rotation);
+        
 
         currAction = PerformWalljump(dir, wallJumpTime);
         StartCoroutine(currAction);
@@ -270,6 +294,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //StopAllCoroutines();
             StopCoroutine(currAction);
+            ResetDashStatus();
         }
     }
 
@@ -279,14 +304,25 @@ public class PlayerMovement : MonoBehaviour
         EnableBasicDash();
         dash.action.Enable();
         isDashing = false;
+        rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
     }
 
     IEnumerator DashWindup(float time)
     {
         // Vector2 scale = dir * 0.5f;
-        transform.localScale = new Vector2(0.7f, 0.7f);
-        yield return new WaitForSecondsRealtime(time);
-        transform.localScale = new Vector2(1,1);
+        // transform.localScale = new Vector2(0.7f, 0.7f);
+        // yield return new WaitForSecondsRealtime(time);
+        // transform.localScale = new Vector2(1,1);
+        float startTime = Time.time;
+
+        while(Time.time - startTime <= time)
+        {
+            float ratio = Time.time / startTime;
+            float scale = Mathf.Lerp(1, 0.7f, ratio);
+            transform.localScale = new Vector2(scale, scale);
+            yield return null;
+        }
+        transform.localScale = new Vector2(1, 1);
     }
     IEnumerator PerformDash(Vector2 force, float time)
     {
@@ -313,8 +349,6 @@ public class PlayerMovement : MonoBehaviour
 
 		rb.velocity = dashSpeed * 0.5f * force.normalized;
 
-        rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
-
 
         //rb.AddForce(force, ForceMode2D.Impulse);
         
@@ -331,7 +365,20 @@ public class PlayerMovement : MonoBehaviour
     
     IEnumerator PerformWalljump(Vector2 force, float time)
     {
+        wallJumpCombo += 1;
+        if(wallJumpCombo == 1)
+        {
+            StartCoroutine(StartWallJumpComboTimer());
+        }
+        
         isDashing = true;
+
+
+        // float forceRad = Mathf.Atan2(-force.y, -force.x);
+        // float angle = forceRad * (180/Mathf.PI);
+        // particleSys.transform.rotation = Quaternion.Euler(0,0,angle);
+
+        
 
         // // rb.velocity = force.normalized;
         // // rb.AddForce(force, ForceMode2D.Impulse);
@@ -354,7 +401,7 @@ public class PlayerMovement : MonoBehaviour
 		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
 
 		rb.velocity = wallJumpForce * 0.5f * force.normalized;
-        rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
+        //rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
 
         // rotate player
         // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
@@ -364,6 +411,26 @@ public class PlayerMovement : MonoBehaviour
         //yield return new WaitForSeconds(time);
 
         ResetDashStatus();
+    }
+
+    IEnumerator StartWallJumpComboTimer()
+    {
+        float wallJumpComboTime = 1.5f;
+        float wallJumpComboStart = Time.time;
+
+        while (Time.time - wallJumpComboStart <= wallJumpComboTime)
+        {
+            if(wallJumpCombo == 2)
+            {
+                // use the grapple spin animation as a cool wall jump
+                GetComponent<PlayerAnimation>().GrappleSpin();
+                break;
+            }
+            yield return null;
+        }
+
+        wallJumpCombo = 0;
+
     }
 
 }

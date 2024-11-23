@@ -13,6 +13,7 @@ TagManager:
   - InteractText
   - Icon
   - PauseControl
+  - GrappleBuffer
   layers:
   - Default
   - TransparentFX

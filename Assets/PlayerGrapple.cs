@@ -11,12 +11,13 @@ public class PlayerGrapple : MonoBehaviour
     Rigidbody2D rb;
 
     PlayerMovement playerMovement;
+    private PlayerAnimation playerAnimation;
 
     private float maxGrappleDistance = 7;
     private float initialGrappleSpeed = 1.5f;
     private float maxGrappleAccel = 8f;
     private float grappleAcceleration = 1.5f;
-    private float grappleShotAnimationTime = 0.3f;
+    private float grappleShotAnimationTime = 0.2f;
     private bool grappling = false;
     public float initialDrag {get; set;}
     public bool canGrapple {get;set;} = true;
@@ -31,6 +32,7 @@ public class PlayerGrapple : MonoBehaviour
         initialDrag = rb.drag;
         lineRenderer = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerAnimation = GetComponent<PlayerAnimation>();
     }
 
      private void OnEnable()
@@ -50,7 +52,7 @@ public class PlayerGrapple : MonoBehaviour
             rb.drag = 0;
 
             // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
-            RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance);
+            RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance + 0.2f);
 
             if(hitTarget)
             {
@@ -99,7 +101,7 @@ public class PlayerGrapple : MonoBehaviour
     IEnumerator PerformGrapple(GameObject target)
     {
         //Debug.Log("grapple");
-        yield return StartCoroutine(AnimateGrappleShot());
+        yield return StartCoroutine(AnimateGrappleShot(target));
 
         CancelOtherMovment();
         
@@ -158,12 +160,13 @@ public class PlayerGrapple : MonoBehaviour
         lineRenderer.enabled = false;
         playerMovement.CanMove = true;
         rb.drag = initialDrag;
+        rb.velocity = rb.velocity.normalized;
     }
 
     // end grapple when a collision occurs
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Enemy")
+        if(other.gameObject.tag == "Enemy" || other.gameObject.tag == "GrappleBuffer")
         {
             if(grappling)
             {
@@ -184,6 +187,7 @@ public class PlayerGrapple : MonoBehaviour
 
     IEnumerator AnimateGrapple()
     {
+        
         while(grappling)
         {
             // animate the grapple hook while actively grappling
@@ -198,8 +202,25 @@ public class PlayerGrapple : MonoBehaviour
         }
     }
 
-    IEnumerator AnimateGrappleShot()
+    IEnumerator AnimateGrappleShot(GameObject target = null)
     {
+        float distance = (grappleLocation - rb.position).magnitude;
+
+        // Vector2 normalized = (grappleLocation - rb.position).normalized;
+        // float playerRadValue = Mathf.Atan2(normalized.y, normalized.x);
+        // float playerAngle= playerRadValue * (180/Mathf.PI);
+        // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+
+
+        if(distance > 5.5 && target != null)
+        {
+            playerAnimation.GrappleSpin();
+        }
+        else if(distance > 3 && target != null)
+        {
+            playerAnimation.GrappleAnimation();
+        }
+        
         lineRenderer.enabled = true;
         float grappleAnimationTimer = 0;
         float interpolationRatio;
