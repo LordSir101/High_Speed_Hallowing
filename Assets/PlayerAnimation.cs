@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] GameObject shadow;
+    [SerializeField] ParticleSystem particleSys;
     private Vector3 shadowInitialPosition;
     private PlayerMovement playerMovement;
 
@@ -62,5 +63,10 @@ public class PlayerAnimation : MonoBehaviour
         animator.speed = 1;
         animator.SetTrigger("Attack");
         
+    }
+
+    public void PlayCooldownRefreshAnimation()
+    {
+        particleSys.Play();
     }
 }

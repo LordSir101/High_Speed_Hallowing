@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDashing = false;
     public bool canDash {get;set;}= true;
+    
 
 
     [Header("Wall Jump")]
@@ -218,9 +219,10 @@ public class PlayerMovement : MonoBehaviour
         // if the player walljumps within the action window, the player's speed increases
         if(playerImpact.actionWindowIsActive)
         {
-            GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
-            animation.transform.SetParent(transform, false);
-            GetComponent<PlayerCooldowns>().EndAllCooldowns();
+            // GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
+            // animation.transform.SetParent(transform, false);
+            // GetComponent<PlayerCooldowns>().EndAllCooldowns();
+            GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
             //currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
         }
 
@@ -332,6 +334,13 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator PerformWalljump(Vector2 force, float time)
     {
         isDashing = true;
+
+
+        // float forceRad = Mathf.Atan2(-force.y, -force.x);
+        // float angle = forceRad * (180/Mathf.PI);
+        // particleSys.transform.rotation = Quaternion.Euler(0,0,angle);
+
+        
 
         // // rb.velocity = force.normalized;
         // // rb.AddForce(force, ForceMode2D.Impulse);

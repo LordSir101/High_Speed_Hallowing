@@ -125,9 +125,10 @@ public class PlayerReflectDash : MonoBehaviour
         // Indicate to the player that they dashed within the window to add the speed they were going at impact
         if(playerImpact.actionWindowIsActive)
         {
-            GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
-            animation.transform.SetParent(transform, false);
-            GetComponent<PlayerCooldowns>().EndAllCooldowns();
+            // GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
+            // animation.transform.SetParent(transform, false);
+            // GetComponent<PlayerCooldowns>().EndAllCooldowns();
+            GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
             //playerMovement.currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
         }
 
