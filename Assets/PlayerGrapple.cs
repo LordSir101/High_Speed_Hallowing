@@ -16,7 +16,7 @@ public class PlayerGrapple : MonoBehaviour
     private float initialGrappleSpeed = 1.5f;
     private float maxGrappleAccel = 8f;
     private float grappleAcceleration = 1.5f;
-    private float grappleShotAnimationTime = 0.3f;
+    private float grappleShotAnimationTime = 0.2f;
     private bool grappling = false;
     public float initialDrag {get; set;}
     public bool canGrapple {get;set;} = true;
@@ -50,7 +50,7 @@ public class PlayerGrapple : MonoBehaviour
             rb.drag = 0;
 
             // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
-            RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance);
+            RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance + 0.2f);
 
             if(hitTarget)
             {
@@ -163,7 +163,7 @@ public class PlayerGrapple : MonoBehaviour
     // end grapple when a collision occurs
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Enemy")
+        if(other.gameObject.tag == "Enemy" || other.gameObject.tag == "GrappleBuffer")
         {
             if(grappling)
             {
