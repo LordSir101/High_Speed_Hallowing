@@ -158,6 +158,7 @@ public class PlayerGrapple : MonoBehaviour
         lineRenderer.enabled = false;
         playerMovement.CanMove = true;
         rb.drag = initialDrag;
+        rb.velocity = rb.velocity.normalized;
     }
 
     // end grapple when a collision occurs

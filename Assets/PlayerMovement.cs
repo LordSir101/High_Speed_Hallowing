@@ -221,7 +221,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
             // animation.transform.SetParent(transform, false);
-            // GetComponent<PlayerCooldowns>().EndAllCooldowns();
+            GetComponent<PlayerCooldowns>().EndAllCooldowns();
             GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
             //currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
         }
@@ -272,6 +272,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //StopAllCoroutines();
             StopCoroutine(currAction);
+            ResetDashStatus();
         }
     }
 
@@ -281,6 +282,7 @@ public class PlayerMovement : MonoBehaviour
         EnableBasicDash();
         dash.action.Enable();
         isDashing = false;
+        rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
     }
 
     IEnumerator DashWindup(float time)
@@ -314,8 +316,6 @@ public class PlayerMovement : MonoBehaviour
 		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
 
 		rb.velocity = dashSpeed * 0.5f * force.normalized;
-
-        rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
 
 
         //rb.AddForce(force, ForceMode2D.Impulse);
@@ -363,7 +363,7 @@ public class PlayerMovement : MonoBehaviour
 		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
 
 		rb.velocity = wallJumpForce * 0.5f * force.normalized;
-        rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
+        //rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
 
         // rotate player
         // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
