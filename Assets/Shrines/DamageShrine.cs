@@ -46,5 +46,7 @@ public class DamageShrine : Shrine
         {
             ShowUpgradeText();
         }
+
+        LightCandle();
     }
 }

@@ -48,5 +48,7 @@ public class ArmorShrine : Shrine
         {
             ShowUpgradeText();
         }
+
+        LightCandle();
     }
 }

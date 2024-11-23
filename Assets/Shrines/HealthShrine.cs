@@ -53,6 +53,8 @@ public class HealthShrine : Shrine
         {
             ShowUpgradeText();
         }
+
+        LightCandle();
     }
 
     // protected override void ChangeIcon()
