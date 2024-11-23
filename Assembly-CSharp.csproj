@@ -133,6 +133,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\AttackHitboxes\TelegraphedHitbox.cs" />
+    <Compile Include="Assets\Sprites\AnimateWallJump.cs" />
     <Compile Include="Assets\Sprites\AnimateIndicator.cs" />
     <Compile Include="Assets\PlayerImpact.cs" />
     <Compile Include="Assets\Shrines\Shrine.cs" />

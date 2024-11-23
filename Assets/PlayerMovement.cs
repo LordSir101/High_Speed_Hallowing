@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
     [SerializeField] private float wallJumpForce = 11f;
     [SerializeField] private float wallJumpTime = 0.2f, wallJumpPause = 0.01f;
+    [SerializeField] private GameObject wallJumpEffect;
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
     private Vector2 wallJumpDir;
@@ -245,13 +246,18 @@ public class PlayerMovement : MonoBehaviour
         // wall on top
         else if(wallPos.y - wallSize.y/2 > transform.position.y)
         {
-
             dir = new Vector2(direction.x * wallJumpSpeed, -wallJumpSpeed);
         }
 
         // // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
         // Vector2 teleportLocation = new Vector2(rb.position.x, rb.position.y) + dir.normalized * 1.1f;
         // rb.position = teleportLocation;
+        float rad = Mathf.Atan2(dir.y, dir.x);
+        float angle = rad * (180/Mathf.PI);
+        Quaternion rotation = Quaternion.Euler(0,0, angle -90);
+        //Vector2 position = transform.position + (transform.position - (Vector3)dir).normalized * 0.5f;
+        Instantiate(wallJumpEffect, transform.position, rotation);
+        
 
         currAction = PerformWalljump(dir, wallJumpTime);
         StartCoroutine(currAction);
