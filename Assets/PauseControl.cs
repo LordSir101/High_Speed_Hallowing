@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,18 +21,19 @@ public class PauseControl: MonoBehaviour
         }
     }
 
-    public void Sleep(float duration)
+    public void ActionPause(float duration, Action callBack)
     {
 		//Method used so we don't need to call StartCoroutine everywhere
 		//nameof() notation means we don't need to input a string directly.
 		//Removes chance of spelling mistakes and will improve error messages if any
-		StartCoroutine(nameof(PerformSleep), duration);
+		StartCoroutine(PerformSleep(duration, callBack));
     }
 
-	private IEnumerator PerformSleep(float duration)
+	private IEnumerator PerformSleep(float duration, Action callback)
     {
 		Time.timeScale = 0;
 		yield return new WaitForSecondsRealtime(duration); //Must be Realtime since timeScale with be 0 
 		Time.timeScale = 1;
+        callback();
 	}
 }
