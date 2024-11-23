@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
-    private Vector2 wallJumpDir;
+    //private Vector2 wallJumpDir;
 
     [Header("Movement")]
     [SerializeField] public float dashSpeed {get; }= 15f;
@@ -98,12 +98,15 @@ public class PlayerMovement : MonoBehaviour
 
             Vector2 targetVel = movementInput * baseMoveSpeed;
 
+            // get difference betwen current velocity and velocity we want to accelerate to
             //targetVel = Vector2.Lerp(rb.velocity, targetVel, 0.5f);
             Vector2 diff = targetVel - rb.velocity;
+            // rate of change in speed. set accel and deccel = to base move speed for instant movement
             float accelRate = Mathf.Abs(targetVel.magnitude) > 0.01f ? accel : deaccel;
 
             float speed = Mathf.Pow(diff.magnitude * accelRate, velPower);
 
+            // add force gives us slightly laggy movement
             rb.AddForce(movementInput * speed);
 
             Vector2 normalized = rb.velocity.normalized;
@@ -174,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
         QueueWallJump();
     }
 
+    // queue wall jump so player can press wall jump slightly early before hitting a wall
     private void QueueWallJump()
     {
         touchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.6f, wallLayer);
@@ -182,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(touchingWall && direction != Vector2.zero)
         {
-            wallJumpDir = direction;
+            //wallJumpDir = direction;
             wallJumpQueued = true;
 
             StartCoroutine(TurnOffWallJump());
@@ -200,12 +204,19 @@ public class PlayerMovement : MonoBehaviour
             {   
                 CancelOtherMovement();
                 StartCoroutine(DashWindup(dashPause));
-                GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().Sleep(dashPause);
-                Vector2 direction = movement.action.ReadValue<Vector2>();
-                currAction = PerformDash(direction * dashSpeed, dashTime);
-                StartCoroutine(currAction);
+
+                // pause the game for a bit before dashing. if more forgiving for choosing direction and makes dashes feel strong
+                GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().ActionPause(dashPause, StartDashing);
+                
             }
         }
+    }
+
+    void StartDashing()
+    {
+        Vector2 direction = movement.action.ReadValue<Vector2>();
+        currAction = PerformDash(direction * dashSpeed, dashTime);
+        StartCoroutine(currAction);
     }
 
     
@@ -219,12 +230,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartWallJump()
     {
-        WallJump(wallJumpDir);
-    }
-    private void WallJump(Vector2 direction)
-    {
+        // add slight pause befoe wall jumping
         StartCoroutine(DashWindup(wallJumpPause));
-        GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().Sleep(wallJumpPause);
+        GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().ActionPause(wallJumpPause, WallJump);
+        //WallJump(wallJumpDir);
+    }
+    void WallJump()
+    {
+        // StartCoroutine(DashWindup(wallJumpPause));
+        // GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().ActionPause(wallJumpPause, WallJump());
+        //GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().Sleep(wallJumpPause);
+        Vector2 direction = movement.action.ReadValue<Vector2>();
         BoxCollider2D wall = touchingWall.gameObject.GetComponent<BoxCollider2D>();
             
         Vector3 wallSize = wall.bounds.size;
@@ -307,6 +323,8 @@ public class PlayerMovement : MonoBehaviour
         rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
     }
 
+
+    // squish the player a bit before dashing for visual dash indication
     IEnumerator DashWindup(float time)
     {
         // Vector2 scale = dir * 0.5f;
