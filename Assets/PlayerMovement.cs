@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float wallJumpForce = 11f;
     [SerializeField] private float wallJumpTime = 0.2f, wallJumpPause = 0.01f;
     [SerializeField] private GameObject wallJumpEffect;
+    private float wallJumpCombo = 0;
+    
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
     private Vector2 wallJumpDir;
@@ -103,6 +105,20 @@ public class PlayerMovement : MonoBehaviour
             float speed = Mathf.Pow(diff.magnitude * accelRate, velPower);
 
             rb.AddForce(movementInput * speed);
+
+            Vector2 normalized = rb.velocity.normalized;
+            float playerRadValue = Mathf.Atan2(normalized.y, normalized.x);
+            float playerAngle= playerRadValue * (180/Mathf.PI);
+            rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+
+            
+
+            if(rb.velocity.magnitude < 0.1f)
+            {
+                rb.velocity = Vector2.zero;
+                rb.transform.localRotation = Quaternion.Euler(0,0,0);
+            }
+            
 
         
             // if(movementInput != Vector2.zero)
@@ -294,9 +310,19 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator DashWindup(float time)
     {
         // Vector2 scale = dir * 0.5f;
-        transform.localScale = new Vector2(0.7f, 0.7f);
-        yield return new WaitForSecondsRealtime(time);
-        transform.localScale = new Vector2(1,1);
+        // transform.localScale = new Vector2(0.7f, 0.7f);
+        // yield return new WaitForSecondsRealtime(time);
+        // transform.localScale = new Vector2(1,1);
+        float startTime = Time.time;
+
+        while(Time.time - startTime <= time)
+        {
+            float ratio = Time.time / startTime;
+            float scale = Mathf.Lerp(1, 0.7f, ratio);
+            transform.localScale = new Vector2(scale, scale);
+            yield return null;
+        }
+        transform.localScale = new Vector2(1, 1);
     }
     IEnumerator PerformDash(Vector2 force, float time)
     {
@@ -339,6 +365,12 @@ public class PlayerMovement : MonoBehaviour
     
     IEnumerator PerformWalljump(Vector2 force, float time)
     {
+        wallJumpCombo += 1;
+        if(wallJumpCombo == 1)
+        {
+            StartCoroutine(StartWallJumpComboTimer());
+        }
+        
         isDashing = true;
 
 
@@ -379,6 +411,26 @@ public class PlayerMovement : MonoBehaviour
         //yield return new WaitForSeconds(time);
 
         ResetDashStatus();
+    }
+
+    IEnumerator StartWallJumpComboTimer()
+    {
+        float wallJumpComboTime = 1.5f;
+        float wallJumpComboStart = Time.time;
+
+        while (Time.time - wallJumpComboStart <= wallJumpComboTime)
+        {
+            if(wallJumpCombo == 2)
+            {
+                // use the grapple spin animation as a cool wall jump
+                GetComponent<PlayerAnimation>().GrappleSpin();
+                break;
+            }
+            yield return null;
+        }
+
+        wallJumpCombo = 0;
+
     }
 
 }

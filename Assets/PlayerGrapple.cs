@@ -11,6 +11,7 @@ public class PlayerGrapple : MonoBehaviour
     Rigidbody2D rb;
 
     PlayerMovement playerMovement;
+    private PlayerAnimation playerAnimation;
 
     private float maxGrappleDistance = 7;
     private float initialGrappleSpeed = 1.5f;
@@ -31,6 +32,7 @@ public class PlayerGrapple : MonoBehaviour
         initialDrag = rb.drag;
         lineRenderer = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerAnimation = GetComponent<PlayerAnimation>();
     }
 
      private void OnEnable()
@@ -99,7 +101,7 @@ public class PlayerGrapple : MonoBehaviour
     IEnumerator PerformGrapple(GameObject target)
     {
         //Debug.Log("grapple");
-        yield return StartCoroutine(AnimateGrappleShot());
+        yield return StartCoroutine(AnimateGrappleShot(target));
 
         CancelOtherMovment();
         
@@ -185,6 +187,7 @@ public class PlayerGrapple : MonoBehaviour
 
     IEnumerator AnimateGrapple()
     {
+        
         while(grappling)
         {
             // animate the grapple hook while actively grappling
@@ -199,8 +202,25 @@ public class PlayerGrapple : MonoBehaviour
         }
     }
 
-    IEnumerator AnimateGrappleShot()
+    IEnumerator AnimateGrappleShot(GameObject target = null)
     {
+        float distance = (grappleLocation - rb.position).magnitude;
+
+        // Vector2 normalized = (grappleLocation - rb.position).normalized;
+        // float playerRadValue = Mathf.Atan2(normalized.y, normalized.x);
+        // float playerAngle= playerRadValue * (180/Mathf.PI);
+        // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+
+
+        if(distance > 5.5 && target != null)
+        {
+            playerAnimation.GrappleSpin();
+        }
+        else if(distance > 3 && target != null)
+        {
+            playerAnimation.GrappleAnimation();
+        }
+        
         lineRenderer.enabled = true;
         float grappleAnimationTimer = 0;
         float interpolationRatio;
