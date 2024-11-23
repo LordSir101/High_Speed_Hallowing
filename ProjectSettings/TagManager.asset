@@ -15,6 +15,7 @@ TagManager:
   - PauseControl
   - GrappleBuffer
   - EndGoal
+  - ShrineCandle
   layers:
   - Default
   - TransparentFX
