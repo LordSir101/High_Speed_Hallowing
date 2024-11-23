@@ -13,6 +13,7 @@ public class ShrineManager : MonoBehaviour
     [SerializeField] private InputActionReference inputActionRef;
     [SerializeField] private FrenzyMode frenzyModeScript;
     [SerializeField] private Sprite happySprite;
+    [SerializeField] private SpawnEnemy enemySpawner;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +25,6 @@ public class ShrineManager : MonoBehaviour
             shrines.Add(shrine);
         }
     }
-
-    // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
 
     public void CleanseShrine()
     {
@@ -51,5 +46,10 @@ public class ShrineManager : MonoBehaviour
         {
             shrine.GetComponent<Shrine>().Cost *= 2;
         }
+    }
+
+    public void SpawnEnemiesAtShrine(Vector3 pos, int num)
+    {
+        enemySpawner.SpawnAroundPoint(pos, num);
     }
 }

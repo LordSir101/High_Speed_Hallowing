@@ -50,6 +50,18 @@ public class SpawnEnemy : MonoBehaviour
 
     }
 
+    public void SpawnAroundPoint(Vector3 pos, int num)
+    {
+        for(int i = 0; i < num; i++)
+        {
+            float spawnRadius = 1f;
+            float posX = pos.x + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
+            float posY = pos.y + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
+
+            Instantiate(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Count)], new Vector3(posX, posY, 0), transform.rotation);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
