@@ -34,32 +34,32 @@ public class SpawnEnemy : MonoBehaviour
 
     private void SpawnEnemies(int num)
     {
-        List<GameObject> spawnPoints = GetValidSpawnPoints();
+        // List<GameObject> spawnPoints = GetValidSpawnPoints();
 
-        for(int i = 0; i < num; i++)
-        {
-            float spawnRadius = 1f;
+        // for(int i = 0; i < num; i++)
+        // {
+        //     float spawnRadius = 1f;
 
-            GameObject spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)];
+        //     GameObject spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)];
 
-            float posX = spawnPoint.transform.position.x + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
-            float posY = spawnPoint.transform.position.y + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
+        //     float posX = spawnPoint.transform.position.x + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
+        //     float posY = spawnPoint.transform.position.y + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
 
-            Instantiate(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Count)], new Vector3(posX, posY, 0), transform.rotation);
-        }
+        //     Instantiate(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Count)], new Vector3(posX, posY, 0), transform.rotation);
+        // }
 
     }
 
     public void SpawnAroundPoint(Vector3 pos, int num)
     {
-        for(int i = 0; i < num; i++)
-        {
-            float spawnRadius = 1f;
-            float posX = pos.x + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
-            float posY = pos.y + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
+        // for(int i = 0; i < num; i++)
+        // {
+        //     float spawnRadius = 1f;
+        //     float posX = pos.x + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
+        //     float posY = pos.y + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
 
-            Instantiate(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Count)], new Vector3(posX, posY, 0), transform.rotation);
-        }
+        //     Instantiate(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Count)], new Vector3(posX, posY, 0), transform.rotation);
+        // }
     }
 
     // Update is called once per frame

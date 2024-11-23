@@ -27,6 +27,7 @@ public class Shrine : MonoBehaviour
     protected virtual Animator animator {get;set;}
     protected Sprite CleanseIcon {get;set;}
     protected Material CleanseIconMaterial {get;set;}
+    protected List<GameObject> candles;
 
     // Start is called before the first frame update
     // void Start()
@@ -46,6 +47,13 @@ public class Shrine : MonoBehaviour
         this.cleanseSprite = cleanseSprite;
         animator = GetComponentInChildren<Animator>();
         icon = Utils.FindGameObjectInChildWithTag(gameObject, "Icon");
+
+        GameObject candleParent = Utils.FindGameObjectInChildWithTag(gameObject, "ShrineCandle");
+        candles = new List<GameObject>();
+        foreach(Transform candle in candleParent.transform)
+        {
+            candles.Add(candle.gameObject);
+        }
     }
 
     private void Tribute(InputAction.CallbackContext context)
@@ -55,7 +63,7 @@ public class Shrine : MonoBehaviour
         if(rm.Essence >= Cost)
         {
             GetComponent<ParticleSystem>().Play();
-            rm.Essence -= 500;
+            rm.Essence -= Cost;
             //gameObject.GetComponent<CircleCollider2D>().enabled = false;
             //interactText.enabled = false;
             shrineManager.CleanseShrine();
@@ -63,8 +71,10 @@ public class Shrine : MonoBehaviour
 
             // allows upgrade text to appear right away without moving away from shrine
             interact.action.performed -= Tribute;
-            gameObject.GetComponent<CircleCollider2D>().enabled = false;
-            gameObject.GetComponent<CircleCollider2D>().enabled = true;
+            
+            ShowUpgradeText();
+            interact.action.performed += Upgrade;
+
             gameObject.GetComponent<SpriteRenderer>().sprite = cleanseSprite;
 
             ChangeIcon();
@@ -118,6 +128,10 @@ public class Shrine : MonoBehaviour
     {
         return;
     }
+    // protected virtual string GetUpgradeText()
+    // {
+    //     return "";
+    // }
 
     protected virtual void Upgrade(InputAction.CallbackContext context)
     {
@@ -128,5 +142,17 @@ public class Shrine : MonoBehaviour
     {
         gameObject.GetComponent<CircleCollider2D>().enabled = false;
         interactText.enabled = false;
+    }
+
+    protected void LightCandle()
+    {
+        foreach(GameObject candle in candles)
+        {
+            if(!candle.transform.GetChild(0).gameObject.activeInHierarchy)
+            {
+                candle.transform.GetChild(0).gameObject.SetActive(true);
+                break;
+            }
+        }
     }
 }

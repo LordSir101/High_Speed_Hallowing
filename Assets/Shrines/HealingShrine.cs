@@ -41,5 +41,7 @@ public class HealingShrine : Shrine
         {
             ShowUpgradeText();
         }
+
+        LightCandle();
     }
 }

@@ -14,29 +14,30 @@ public class ShrineManager : MonoBehaviour
     [SerializeField] private FrenzyMode frenzyModeScript;
     [SerializeField] private Sprite happySprite;
     [SerializeField] private SpawnEnemy enemySpawner;
+    private EndShrine bigShrine;
     // Start is called before the first frame update
     void Start()
     {
+        bigShrine = GameObject.FindGameObjectWithTag("EndGoal").GetComponent<EndShrine>();
         shrines = new List<GameObject>();
         foreach (Transform childTransform in shrineParent.transform)
         {
             GameObject shrine = childTransform.gameObject;
-            shrine.GetComponent<Shrine>().Init(inputActionRef, this, happySprite);
-            shrines.Add(shrine);
+            if(shrine.tag != "EndGoal")
+            {
+                shrine.GetComponent<Shrine>().Init(inputActionRef, this, happySprite);
+                shrines.Add(shrine);
+            }
         }
     }
 
     public void CleanseShrine()
     {
         shrinesActivated += 1;
-        if(shrinesActivated == shrines.Count)
-        {
-            frenzyModeScript.StartFrenzyMode();
-        }
-        else
-        {
-            IncreaseShrineCleanseCost();
-        }
+        
+        bigShrine.TurnOnGem();
+        IncreaseShrineCleanseCost();
+
         
     }
 
@@ -51,5 +52,10 @@ public class ShrineManager : MonoBehaviour
     public void SpawnEnemiesAtShrine(Vector3 pos, int num)
     {
         enemySpawner.SpawnAroundPoint(pos, num);
+    }
+
+    public void StartFrenzyMode()
+    {
+        frenzyModeScript.StartFrenzyMode();
     }
 }
