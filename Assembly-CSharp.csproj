@@ -69,6 +69,7 @@
     <Compile Include="Assets\FrenzyMode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Utils.cs" />
+    <Compile Include="Assets\SpawnData\WaveInfo.cs" />
     <Compile Include="Assets\AttackHitboxes\TH_Cone.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\PlayerReflectDash.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\Shrines\DamageShrine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Enemy\RingEnemyBehaviour.cs" />
+    <Compile Include="Assets\Enemy\EnemyInfo.cs" />
     <Compile Include="Assets\Enemy\EnemyHealth.cs" />
     <Compile Include="Assets\Enemy\RingEnemyAttack.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />

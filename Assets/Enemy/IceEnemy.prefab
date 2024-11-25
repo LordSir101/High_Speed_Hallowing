@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 3610794958487481407}
   - component: {fileID: 1296482962783849285}
   - component: {fileID: 5960231561584415512}
+  - component: {fileID: 6958061405744895557}
   - component: {fileID: 7253672186253097941}
   - component: {fileID: 8045079833336917666}
   - component: {fileID: 5876194444742420994}
@@ -564,6 +565,20 @@ MonoBehaviour:
   StartingTelegaphPercentSize: 0
   animationStartPercent: 1
   Damage: 5
+--- !u!114 &6958061405744895557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7206340883337965828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9c2548288d91b4b824b8e6e68c9ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &7253672186253097941
 MonoBehaviour:
   m_ObjectHideFlags: 0
