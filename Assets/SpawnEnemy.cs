@@ -30,7 +30,7 @@ public class SpawnEnemy : MonoBehaviour
     void Start()
     {
         currWave = waveInfos[0];
-        waveTime = 30;
+        waveTime = waveInfos[0].time;
 
         GameObject spawnPointParent = GameObject.FindGameObjectWithTag("SpawnPoint");
         spawnPoints = new List<GameObject>();
@@ -51,6 +51,7 @@ public class SpawnEnemy : MonoBehaviour
             waveTimer += Time.deltaTime;
             if(waveTimer >= waveTime)
             {
+                // don't change the waves anymore if we have reached the last wave in the list
                 int waveIndex = waveInfos.IndexOf(currWave) + 1;
                 
                 if(waveIndex > waveInfos.Count - 1)
@@ -62,7 +63,7 @@ public class SpawnEnemy : MonoBehaviour
                     // the time between each wave gets longer
                     currWave = waveInfos[waveIndex];
                     waveTimer = 0;
-                    waveTime *= 1.5f;
+                    waveTime = waveInfos[waveIndex].time;
 
                 }
             }
