@@ -11,8 +11,12 @@ public class SpawnEnemy : MonoBehaviour
     // [Header("Possible Enemy Prefabs")]
     // [SerializeField] private List<GameObject> enemyPrefabs;
     [Header("Possible Waves")]
-    [SerializeField] WaveInfo wave1;
+    [SerializeField] List<WaveInfo> waveInfos;
     private WaveInfo currWave;
+    private float waveTimer = 0;
+    private float waveTime;
+    private bool lastWaveTypeSpawned = false;
+    
 
     private float spawntimer = 0f;
     private float spawnTime = 1;
@@ -20,10 +24,14 @@ public class SpawnEnemy : MonoBehaviour
     private int maxEnemies = 6;
     private bool spawnEnemies = true;
 
+    
+
     private List<GameObject> spawnPoints;
     void Start()
     {
-        currWave = wave1;
+        currWave = waveInfos[0];
+        waveTime = 30;
+
         GameObject spawnPointParent = GameObject.FindGameObjectWithTag("SpawnPoint");
         spawnPoints = new List<GameObject>();
 
@@ -33,6 +41,55 @@ public class SpawnEnemy : MonoBehaviour
             spawnPoints.Add(spawnPoint);
         }
 
+    }
+
+    void Update()
+    {
+        // update the wave information if there are more types of waves in waveinfos at certain increments.
+        if(!lastWaveTypeSpawned )
+        {
+            waveTimer += Time.deltaTime;
+            if(waveTimer >= waveTime)
+            {
+                int waveIndex = waveInfos.IndexOf(currWave) + 1;
+                
+                if(waveIndex > waveInfos.Count - 1)
+                {
+                    lastWaveTypeSpawned  = true;
+                }
+                else
+                {
+                    // the time between each wave gets longer
+                    currWave = waveInfos[waveIndex];
+                    waveTimer = 0;
+                    waveTime *= 1.5f;
+
+                }
+            }
+        }
+
+        if(spawnEnemies)
+        {
+            spawntimer += Time.deltaTime;
+
+            if(spawntimer >= spawnTime)
+            {
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+                if(enemies.Length < maxEnemies)
+                {
+                    //SpawnEnemies(1);
+                    // List<GameObject> validSpawnPoints = GetValidSpawnPoints();
+
+                    int numEnemiesAvailableToSpawn = maxEnemies - enemies.Length;
+                    SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, 5));
+                    
+                }
+                spawntimer = 0;
+            
+            }
+        }
+        
     }
 
     private void SpawnEnemies(int num)
@@ -51,11 +108,20 @@ public class SpawnEnemy : MonoBehaviour
             // get a list of enemies whose current percent of spawns are less that the max percent of spawns in the curr wave info.
             List<GameObject> enemiesThatCanBeSpawned = GetEnemiesThatCanBeSpawned(currWave);
 
-            Instantiate(enemiesThatCanBeSpawned[UnityEngine.Random.Range(0, enemiesThatCanBeSpawned.Count)], new Vector3(posX, posY, 0), transform.rotation);
+            if(enemiesThatCanBeSpawned.Count != 0)
+            {
+                Instantiate(enemiesThatCanBeSpawned[UnityEngine.Random.Range(0, enemiesThatCanBeSpawned.Count)], new Vector3(posX, posY, 0), transform.rotation);
+            }
+            // if enemiesThatCanBeSpawned = 0, than the current enemies spawned follow the correct distribution already, so spawn a random enemy
+            else
+            {
+                Instantiate(currWave.possibleEnemies[UnityEngine.Random.Range(0, currWave.possibleEnemies.Count)], new Vector3(posX, posY, 0), transform.rotation);
+            }
+
         }
 
     }
-
+    
     public void SpawnAroundPoint(Vector3 pos, int num)
     {
         for(int i = 0; i < num; i++)
@@ -66,7 +132,18 @@ public class SpawnEnemy : MonoBehaviour
 
             List<GameObject> enemiesThatCanBeSpawned = GetEnemiesThatCanBeSpawned(currWave);
 
-            Instantiate(enemiesThatCanBeSpawned[UnityEngine.Random.Range(0, enemiesThatCanBeSpawned.Count)], new Vector3(posX, posY, 0), transform.rotation);
+            
+            if(enemiesThatCanBeSpawned.Count != 0)
+            {
+                Instantiate(enemiesThatCanBeSpawned[UnityEngine.Random.Range(0, enemiesThatCanBeSpawned.Count)], new Vector3(posX, posY, 0), transform.rotation);
+            }
+            // if enemiesThatCanBeSpawned = 0, than the current enemies spawned follow the correct distribution already, so spawn a random enemy
+            else
+            {
+                Instantiate(currWave.possibleEnemies[UnityEngine.Random.Range(0, currWave.possibleEnemies.Count)], new Vector3(posX, posY, 0), transform.rotation);
+            }
+
+            
         }
     }
 
@@ -97,37 +174,9 @@ public class SpawnEnemy : MonoBehaviour
                 validEnemies.Add(wave.possibleEnemies[index]);
             }
         }
-
+        Debug.Log(validEnemies.Count);
         return validEnemies;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(spawnEnemies)
-        {
-            spawntimer += Time.deltaTime;
-
-            if(spawntimer >= spawnTime)
-            {
-                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-                if(enemies.Length < maxEnemies)
-                {
-                    //SpawnEnemies(1);
-                    // List<GameObject> validSpawnPoints = GetValidSpawnPoints();
-
-                    int numEnemiesAvailableToSpawn = maxEnemies - enemies.Length;
-                    SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, 5));
-                    
-                }
-                spawntimer = 0;
-            
-            }
-        }
-        
-    }
-
     private List<GameObject> GetValidSpawnPoints()
     {
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);

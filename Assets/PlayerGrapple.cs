@@ -18,7 +18,7 @@ public class PlayerGrapple : MonoBehaviour
     private float maxGrappleAccel = 8f;
     private float grappleAcceleration = 1.5f;
     private float grappleShotAnimationTime = 0.2f;
-    private bool grappling = false;
+    public bool grappling = false;
     public float initialDrag {get; set;}
     public bool canGrapple {get;set;} = true;
     private float grappleCooldown = 3.5f;
@@ -163,19 +163,20 @@ public class PlayerGrapple : MonoBehaviour
         rb.velocity = rb.velocity.normalized;
     }
 
-    // end grapple when a collision occurs
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.tag == "Enemy" || other.gameObject.tag == "GrappleBuffer")
-        {
-            if(grappling)
-            {
-                EndGrapple();
-            }
-        }
-    }
-
     
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if(other.gameObject.tag == "Enemy" || other.gameObject.tag == "GrappleBuffer")
+    //     {
+    //         if(grappling)
+    //         {
+    //             EndGrapple();
+    //         }
+    //     }
+    // }
+
+    // end grapple when a collision occurs
+    // collisions with enemy handled in player impact so damage can be assigned before the player velocity is set    
     private void OnCollisionEnter2D(Collision2D col)
     {
         if(grappling)

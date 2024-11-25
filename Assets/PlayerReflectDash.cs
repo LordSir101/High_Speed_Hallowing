@@ -106,7 +106,6 @@ public class PlayerReflectDash : MonoBehaviour
 
             reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
         }
-        Debug.Log(playerMovement.CanMove);
      
     }
 
@@ -192,7 +191,6 @@ public class PlayerReflectDash : MonoBehaviour
 
     void ResetDashStatus()
     {
-        Debug.Log("reset");
         playerMovement.CanMove = true;
         playerMovement.dash.action.Enable();
         playerMovement.EnableBasicDash();

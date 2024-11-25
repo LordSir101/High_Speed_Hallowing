@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1f117bedae0384e949df3aba2ffe39, type: 3}
+  m_Name: Map1 wave 3
+  m_EditorClassIdentifier: 
+  possibleEnemies:
+  - {fileID: 260122417904728783, guid: 5dfbc30e22264064e9d8fba385637264, type: 3}
+  - {fileID: 7206340883337965828, guid: 196dea5c6ca66cb419576678257d4d3c, type: 3}
+  - {fileID: 4412457126975459472, guid: e349399f831298443b102ceace4bd7c3, type: 3}
+  distribution:
+  - 50
+  - 30
+  - 20
