@@ -7,4 +7,5 @@ public class WaveInfo : ScriptableObject
 {
     public List<GameObject> possibleEnemies;
     public List<float> distribution;
+    public float time = 60;
 }
