@@ -14,12 +14,16 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] private GameObject essencePrefab;
 
+    EnemyDamageEffects enemyAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
         currHealth = maxHealth;
 
         maxOuterLightRad = healthLight.pointLightOuterRadius;
+
+        enemyAnimator = GetComponent<EnemyDamageEffects>();
     }
 
     // // Update is called once per frame
@@ -39,6 +43,8 @@ public class EnemyHealth : MonoBehaviour
             Destroy(gameObject);
             DropEssence();
         }
+
+        enemyAnimator.StartDamageFlash();
     }
 
     private void DropEssence()

@@ -8,9 +8,15 @@ public class PlayerHealth: MonoBehaviour
     [SerializeField] ScriptableRendererFeature frenzyEffect;
     public GameOverPanel gameOverPanel;
     public HealthBar healthBar;
+    private PlayerDamageEffects damageEffects;
     private int health = 100;
     public int MaxHealth { get; set; } = 100;
     public int Armor {get; set;} = 0;
+
+    void Start()
+    {
+        damageEffects = GetComponent<PlayerDamageEffects>();
+    }
     public void TakeDamage(int damageTaken)
     {
         health -= damageTaken - Armor;
@@ -21,6 +27,8 @@ public class PlayerHealth: MonoBehaviour
             frenzyEffect.SetActive(false);
             gameOverPanel.SetWin(false);
         }
+
+        damageEffects.StartDamageFlash();
     }
 
     public void Heal(int healing)
