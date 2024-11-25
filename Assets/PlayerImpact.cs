@@ -17,12 +17,14 @@ public class PlayerImpact : MonoBehaviour
 
     private PlayerAnimation playerAnimation;
     private PlayerReflectDash playerReflectDash;
+    private PlayerGrapple playerGrapple;
     //private PlayerMovement playerMovement;
 
     void Start()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
         playerReflectDash = GetComponent<PlayerReflectDash>();
+        playerGrapple = GetComponent<PlayerGrapple>();
         //playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -56,14 +58,16 @@ public class PlayerImpact : MonoBehaviour
             {
                 damage = (int) Math.Floor(playerReflectDash.prevVelocity.magnitude) + DamageBonus;
                 playerAnimation.AttackAnimation(playerReflectDash.prevVelocity);
-                
-                //damage = 0;
+            }
+            else if(playerGrapple.grappling)
+            {
+                damage = (int) Math.Floor(rb.velocity.magnitude) + DamageBonus;
+                playerGrapple.EndGrapple();
             }
             else{
                 damage = (int) Math.Floor(rb.velocity.magnitude) + DamageBonus;
                 playerAnimation.AttackAnimation(rb.velocity);
             }
-            // Debug.Log(damage);
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(damage);
             
             ResetActionWindow();

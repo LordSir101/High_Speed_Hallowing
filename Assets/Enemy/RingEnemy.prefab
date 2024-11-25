@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4563339546134112829}
   - component: {fileID: 5529561892312203062}
   - component: {fileID: 2084523864801884107}
+  - component: {fileID: 7832744055192746511}
   - component: {fileID: 925794410537270334}
   - component: {fileID: 1025160777026084136}
   - component: {fileID: 6675800069253587840}
@@ -152,6 +153,20 @@ MonoBehaviour:
   minSpeed: 1
   maxSpeed: 1.8
   enemyRb: {fileID: 6829624023255592024}
+--- !u!114 &7832744055192746511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260122417904728783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9c2548288d91b4b824b8e6e68c9ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &925794410537270334
 MonoBehaviour:
   m_ObjectHideFlags: 0
