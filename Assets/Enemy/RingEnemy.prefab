@@ -167,7 +167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  color: {r: 0, g: 0, b: 0, a: 0}
+  soulColor: {r: 1, g: 1, b: 1, a: 1}
+  soulLightColor: {r: 0.8392157, g: 0.8980392, b: 0.47843137, a: 1}
 --- !u!114 &9164114768383828586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashTime: 0.25
+  deathAnimator: {fileID: 8346287207291623753, guid: 9291915a13b60434791e2577ae049fe4, type: 3}
 --- !u!114 &925794410537270334
 MonoBehaviour:
   m_ObjectHideFlags: 0

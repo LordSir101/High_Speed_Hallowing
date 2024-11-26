@@ -11,11 +11,17 @@ public class EnemyDamageEffects : MonoBehaviour
 
    private SpriteRenderer[] spriteRenderers;
    private List<Material> materials;
+
+   [SerializeField] GameObject deathAnimator;
+//    private ParticleSystem particleSystem;
+   private EnemyInfo enemyInfo;
    //[SerializeField] Material damageFlashMaterial;
 
    private void Awake()
    {
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        //particleSystem = deathAnimator.GetComponent<ParticleSystem>();
+        enemyInfo = GetComponent<EnemyInfo>();
         Init();
    }
 
@@ -32,6 +38,23 @@ public class EnemyDamageEffects : MonoBehaviour
             }
             
         }
+   }
+
+   public void StartDeathAnimation(Vector3 impact)
+   {    
+        GameObject animation = Instantiate(deathAnimator,transform.position,transform.rotation);
+        ParticleSystem particleSystem = animation.GetComponent<ParticleSystem>();
+
+        ParticleSystem.MainModule settings = particleSystem.main;
+        settings.startColor = enemyInfo.soulColor;
+
+        Vector2 normalized = impact.normalized;
+        float radValue = Mathf.Atan2(normalized.y, normalized.x);
+        float angle= radValue * (180/Mathf.PI);
+        animation.transform.rotation = Quaternion.Euler(0,0, angle -90);;
+
+        particleSystem.Play();
+
    }
 
    public void StartDamageFlash()

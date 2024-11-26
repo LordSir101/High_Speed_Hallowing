@@ -51,24 +51,24 @@ public class PlayerImpact : MonoBehaviour
             StartCoroutine(cameraShake.Shaking());
             
             //Deal damage
-            int damage;
+            Vector2 impact;
             //Reflect dashes teleport and freeze the enemy, so we need to get the velocity before the dash for damage
             // Maybe make refelct dashes do no damage instead?
             if(playerReflectDash.reflectDashing)
             {
-                damage = (int) Math.Floor(playerReflectDash.prevVelocity.magnitude) + DamageBonus;
+                impact = playerReflectDash.prevVelocity;
                 playerAnimation.AttackAnimation(playerReflectDash.prevVelocity);
             }
             else if(playerGrapple.grappling)
             {
-                damage = (int) Math.Floor(rb.velocity.magnitude) + DamageBonus;
+                impact = rb.velocity;
                 playerGrapple.EndGrapple();
             }
             else{
-                damage = (int) Math.Floor(rb.velocity.magnitude) + DamageBonus;
+                impact = rb.velocity;
                 playerAnimation.AttackAnimation(rb.velocity);
             }
-            other.gameObject.GetComponent<EnemyHealth>().DealDamage(damage);
+            other.gameObject.GetComponent<EnemyHealth>().DealDamage(impact, DamageBonus);
             
             ResetActionWindow();
 
