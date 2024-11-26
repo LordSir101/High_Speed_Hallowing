@@ -9,12 +9,13 @@ public class PlayerHealth: MonoBehaviour
     public GameOverPanel gameOverPanel;
     public HealthBar healthBar;
     private PlayerDamageEffects damageEffects;
-    private int health = 100;
-    public int MaxHealth { get; set; } = 100;
+    private int health;
+    public int MaxHealth { get; set; } = 1000;
     public int Armor {get; set;} = 0;
 
     void Start()
     {
+        health = MaxHealth;
         damageEffects = GetComponent<PlayerDamageEffects>();
     }
     public void TakeDamage(int damageTaken)

@@ -62,7 +62,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -106,7 +106,7 @@ MonoBehaviour:
   Size: 5
   StartingTelegaphPercentSize: 0.7
   animationStartPercent: 0.75
-  Damage: 10
+  Damage: 100
 --- !u!114 &4563339546134112829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8648eab8b6f873e4dae4f2ba86d5d732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
+  maxHealth: 300
   maxOuterLightRad: 1.5
   minOuterLightRad: 0.6
   healthLight: {fileID: 925794410537270334}
@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141330ca08678b948907cd3a8287a88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 1
-  maxSpeed: 1.8
+  minSpeed: 6.4
+  maxSpeed: 6.9
   enemyRb: {fileID: 6829624023255592024}
 --- !u!114 &7832744055192746511
 MonoBehaviour:
