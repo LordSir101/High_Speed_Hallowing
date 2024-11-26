@@ -14,12 +14,18 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] private GameObject essencePrefab;
 
+    EnemyDamageEffects enemyAnimator;
+    EnemyInfo enemyInfo;
+
     // Start is called before the first frame update
     void Start()
     {
         currHealth = maxHealth;
 
         maxOuterLightRad = healthLight.pointLightOuterRadius;
+
+        enemyAnimator = GetComponent<EnemyDamageEffects>();
+        enemyInfo = GetComponent<EnemyInfo>();
     }
 
     // // Update is called once per frame
@@ -28,32 +34,62 @@ public class EnemyHealth : MonoBehaviour
         
     // }
 
-    public void DealDamage(int damage)
+    public void DealDamage(Vector2 impact, int DamageBonus)
     {
+        int damage = (int) Math.Floor(impact.magnitude) + DamageBonus;
         currHealth -= damage;
 
         ModifyLightHealthBar();
 
         if(currHealth <= 0)
         {
+            enemyAnimator.StartDeathAnimation(impact);
             Destroy(gameObject);
-            DropEssence();
+            DropEssence(impact);
         }
+
+        enemyAnimator.StartDamageFlash();
     }
 
-    private void DropEssence()
+    private void DropEssence(Vector3 impact)
     {
-        int maxDrops = 3;
-        int numToDrop = UnityEngine.Random.Range(1, maxDrops + 1);
-        float dropRad = 0.5f;
+        //int maxDrops = 3;
+        //int numToDrop = UnityEngine.Random.Range(1, maxDrops + 1);
+        //float dropRad = 0.5f;
         
-        for(int i = 0; i < numToDrop; i++)
-        {
-            float dropDistX = UnityEngine.Random.Range(-dropRad, dropRad);
-            float dropDistY = UnityEngine.Random.Range(-dropRad, dropRad);
-            Instantiate(essencePrefab, new Vector3(transform.position.x + dropDistX, transform.position.y + dropDistY, 0), transform.rotation);
-        }
+        // for(int i = 0; i < numToDrop; i++)
+        // {
+        //     float dropDistX = UnityEngine.Random.Range(-dropRad, dropRad);
+        //     float dropDistY = UnityEngine.Random.Range(-dropRad, dropRad);
+            //Instantiate(essencePrefab, new Vector3(transform.position.x + dropDistX, transform.position.y + dropDistY, 0), transform.rotation);
+        //}
+        GameObject drop = Instantiate(essencePrefab, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation);
+        drop.GetComponent<SpriteRenderer>().color = enemyInfo.soulColor;
+        //drop.GetComponent<Light2D>().color = enemyInfo.soulLightColor;
+
+        drop.GetComponent<Rigidbody2D>().velocity = impact;
+
+
     }
+
+    // private IEnumerator AnimateSoulDrop(GameObject soul,)
+    // {
+    //     float startTime = Time.time;
+
+    //     // while (Time.time - startTime <= dashTime)
+	// 	// {
+	// 	// 	rb.velocity = force.normalized * dashSpeed;
+    //     //     prevDashVelocity = rb.velocity;
+	// 	// 	//Pauses the loop until the next frame, creating something of a Update loop. 
+	// 	// 	//This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D
+	// 	// 	yield return null;
+	// 	// }
+    //     yield return new WaitForSeconds(startTime);
+
+	// 	//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
+
+	// 	rb.velocity = dashSpeed * 0.5f * force.normalized;
+    // }
 
     private void ModifyLightHealthBar()
     {

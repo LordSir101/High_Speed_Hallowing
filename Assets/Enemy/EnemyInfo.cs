@@ -5,5 +5,6 @@ using UnityEngine;
 public class EnemyInfo : MonoBehaviour
 {
     [SerializeField] public int id;
-    [SerializeField] Color color;
+    [SerializeField] public Color soulColor;
+    [SerializeField] public Color soulLightColor;
 }

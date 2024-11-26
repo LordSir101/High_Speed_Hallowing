@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6738648754c6d7044979ff949c648027, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -208,7 +208,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: 6738648754c6d7044979ff949c648027, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -413,7 +413,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6738648754c6d7044979ff949c648027, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -462,6 +462,7 @@ GameObject:
   - component: {fileID: 7253672186253097941}
   - component: {fileID: 8045079833336917666}
   - component: {fileID: 5876194444742420994}
+  - component: {fileID: 1873032066976856824}
   - component: {fileID: 6151602892267105896}
   - component: {fileID: 2514381154095137542}
   m_Layer: 7
@@ -578,7 +579,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  color: {r: 0, g: 0, b: 0, a: 0}
+  soulColor: {r: 0.5411765, g: 0.972549, b: 0.98039216, a: 1}
+  soulLightColor: {r: 0.17150229, g: 0.3735138, b: 0.8867924, a: 1}
 --- !u!114 &7253672186253097941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,6 +674,21 @@ MonoBehaviour:
   snowballDamage: 15
   projectilePrefab: {fileID: 8906220813581016635, guid: fb681e82f570e0143b8724eb97617dfa, type: 3}
   playerInRange: 0
+--- !u!114 &1873032066976856824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7206340883337965828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc77673714e941b40bd5014aaddc5c81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashTime: 0.25
+  deathAnimator: {fileID: 8346287207291623753, guid: 9291915a13b60434791e2577ae049fe4, type: 3}
 --- !u!95 &6151602892267105896
 Animator:
   serializedVersion: 7

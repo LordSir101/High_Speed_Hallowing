@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class Essence : MonoBehaviour
@@ -32,7 +33,12 @@ public class Essence : MonoBehaviour
             other.gameObject.GetComponent<PlayerResourceManager>().Essence += value;
             StartCoroutine(MoveToPlayer(other.gameObject));
         }
+        else
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
     }
+    
 
     IEnumerator MoveToPlayer(GameObject player)
     {
