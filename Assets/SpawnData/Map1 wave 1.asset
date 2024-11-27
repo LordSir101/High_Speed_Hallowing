@@ -16,4 +16,5 @@ MonoBehaviour:
   - {fileID: 260122417904728783, guid: 5dfbc30e22264064e9d8fba385637264, type: 3}
   distribution:
   - 100
-  time: 30
+  time: 45
+  maxEnemies: 4

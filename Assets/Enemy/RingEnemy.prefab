@@ -153,6 +153,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 6.4
   maxSpeed: 6.9
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   enemyRb: {fileID: 6829624023255592024}
 --- !u!114 &7832744055192746511
 MonoBehaviour:

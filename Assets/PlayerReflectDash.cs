@@ -118,7 +118,7 @@ public class PlayerReflectDash : MonoBehaviour
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
         // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
-        Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction * 1.5f;
+        Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction * 1.3f;
         rb.position = teleportLocation;
 
         // Indicate to the player that they dashed within the window to add the speed they were going at impact
