@@ -38,10 +38,29 @@ public class PlayerHealth: MonoBehaviour
         healthBar.SetHealth(health);
     }
 
-    public void HealToFull()
+    // public void HealToFull()
+    // {
+    //     health = MaxHealth;
+    //     healthBar.SetHealth(health);
+    // }
+    public void HealPercentHealthOverTime(float percent, int time)
     {
-        health = MaxHealth;
-        healthBar.SetHealth(health);
+        StartCoroutine(StartHOT(percent, time));
+    }
+
+    IEnumerator StartHOT(float percent, int time)
+    {
+        float startTime = Time.time;
+
+        float totalhealing = MaxHealth *  percent;
+        int healingIncrement = (int) Mathf.Ceil(totalhealing / time);
+
+        while(Time.time - startTime <= time)
+        {
+            Debug.Log(healingIncrement);
+            health += healingIncrement;
+            yield return new WaitForSeconds(1f);
+        }
     }
     
 }

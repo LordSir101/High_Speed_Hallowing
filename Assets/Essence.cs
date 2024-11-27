@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Essence : MonoBehaviour
 {
-    private int value, minMultiplier = 1, maxMultiplier = 3, baseValue = 100;
+    private int value, minMultiplier = 2, maxMultiplier = 4, baseValue = 50;
 
 
     // Start is called before the first frame update
