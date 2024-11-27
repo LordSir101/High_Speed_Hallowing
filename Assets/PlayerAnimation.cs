@@ -70,8 +70,13 @@ public class PlayerAnimation : MonoBehaviour
         float playerAngle= playerRadValue * (180/Mathf.PI);
         rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
 
-        animator.speed = 1;
-        animator.SetTrigger("Attack");
+        // if we are currently in the grapple spin animation when attacking, just use that instead of the normal attack animation
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("GrappleSpin"))
+        {
+             animator.speed = 1;
+            animator.SetTrigger("Attack");
+        }
+       
         
     }
 
