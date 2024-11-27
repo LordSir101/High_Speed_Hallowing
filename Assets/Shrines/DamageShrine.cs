@@ -17,7 +17,7 @@ public class DamageShrine : Shrine
         CleanseIcon = cleanseIcon;
         CleanseIconMaterial = cleanseIconMaterial;
 
-        dmgUpgradeValues = new int[] {2, 3, 5};
+        dmgUpgradeValues = new int[] {10, 10, 15};
     }
 
     protected override void ShowUpgradeText()

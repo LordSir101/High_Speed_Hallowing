@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6038892902629130475}
   - component: {fileID: 1573484876270517386}
   - component: {fileID: 2687373131438471877}
+  - component: {fileID: 1761223919182096026}
   m_Layer: 0
   m_Name: DeathAnimation
   m_TagString: Untagged
@@ -116,8 +117,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
-      minScalar: 0.2
+      scalar: 0.5
+      minScalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -169,8 +170,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10
-      minScalar: 8
+      scalar: 11
+      minScalar: 9
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -980,7 +981,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 10
+        scalar: 15
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -4899,3 +4900,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!210 &1761223919182096026
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346287207291623753}
+  m_Enabled: 1
+  m_SortingLayerID: 529069933
+  m_SortingLayer: 6
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

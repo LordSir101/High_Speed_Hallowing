@@ -31,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
     public bool wallJumpQueued = false;
     //private Vector2 wallJumpDir;
 
-    [Header("Movement")]
-    [SerializeField] public float dashSpeed {get; }= 15f;
+    [Header("Dash")]
+    [SerializeField] public float dashSpeed {get; set;}= 13f;
     [SerializeField] private float dashTime = 0.3f, dashPause = 0.05f;
     
 

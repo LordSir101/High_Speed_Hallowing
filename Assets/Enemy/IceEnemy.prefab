@@ -504,7 +504,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -542,7 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8648eab8b6f873e4dae4f2ba86d5d732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
+  maxHealth: 150
   maxOuterLightRad: 1.5
   minOuterLightRad: 0.6
   healthLight: {fileID: 7253672186253097941}
@@ -565,7 +565,7 @@ MonoBehaviour:
   Size: 4
   StartingTelegaphPercentSize: 0
   animationStartPercent: 1
-  Damage: 5
+  Damage: 30
 --- !u!114 &6958061405744895557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,8 +660,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca735baac6ac5704e8f086fbc988a1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 0.4
-  maxSpeed: 0.7
+  minSpeed: 3
+  maxSpeed: 3.5
   rb: {fileID: 8849390093149267439}
   playerLayer:
     serializedVersion: 2
@@ -671,7 +671,7 @@ MonoBehaviour:
   projSpeed: 5
   kiteDistance: 4
   snowballCooldown: 3
-  snowballDamage: 15
+  snowballDamage: 150
   projectilePrefab: {fileID: 8906220813581016635, guid: fb681e82f570e0143b8724eb97617dfa, type: 3}
   playerInRange: 0
 --- !u!114 &1873032066976856824

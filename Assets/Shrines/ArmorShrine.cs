@@ -19,7 +19,7 @@ public class ArmorShrine : Shrine
         CleanseIcon = cleanseIcon;
         CleanseIconMaterial = cleanseIconMaterial;
 
-        armorUpgradeValues = new int[] {1, 2, 3};
+        armorUpgradeValues = new int[] {10, 15, 15};
     }
 
     protected override void ShowUpgradeText()

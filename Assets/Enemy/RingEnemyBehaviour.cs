@@ -79,7 +79,19 @@ public class RingEnemyBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        enemyRb.velocity = targetDir * speed;
+        Vector2 targetVel = targetDir * speed;
+
+        // get difference betwen current velocity and velocity we want to accelerate to
+        //targetVel = Vector2.Lerp(rb.velocity, targetVel, 0.5f);
+        Vector2 diff = targetVel - enemyRb.velocity;
+        // rate of change in speed. set accel and deccel = to base move speed for instant movement
+        float accelRate = Mathf.Abs(targetVel.magnitude) > 0.01f ? 5.5f : 5.5f;
+
+        float newSpeed = Mathf.Pow(diff.magnitude * accelRate, 0.9f);
+
+        // add force gives us slightly laggy movement
+        enemyRb.AddForce(targetDir * newSpeed);
+        //enemyRb.velocity = targetDir * speed;
     }
 
     Vector2 GetBestDirection()

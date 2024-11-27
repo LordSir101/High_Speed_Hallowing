@@ -17,6 +17,9 @@ public class EnemyHealth : MonoBehaviour
     EnemyDamageEffects enemyAnimator;
     EnemyInfo enemyInfo;
 
+    // multiply damage by 10 since all enemy and player stats are scaled up by 10 to make upgrades feel more worth it to buy
+    private int damageMod = 10; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +39,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void DealDamage(Vector2 impact, int DamageBonus)
     {
-        int damage = (int) Math.Floor(impact.magnitude) + DamageBonus;
+        int damage = (int) Math.Floor(impact.magnitude) * damageMod + DamageBonus;
         currHealth -= damage;
 
         ModifyLightHealthBar();
