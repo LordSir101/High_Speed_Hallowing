@@ -23,6 +23,8 @@ public class PlayerHealth: MonoBehaviour
         health -= damageTaken - Armor;
         healthBar.SetHealth(health);
 
+        Debug.Log(damageTaken);
+
         if(health <= 0)
         {
             frenzyEffect.SetActive(false);
@@ -57,8 +59,7 @@ public class PlayerHealth: MonoBehaviour
 
         while(Time.time - startTime <= time)
         {
-            Debug.Log(healingIncrement);
-            health += healingIncrement;
+            Heal(healingIncrement);
             yield return new WaitForSeconds(1f);
         }
     }
