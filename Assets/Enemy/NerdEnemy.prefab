@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 4
-  attackType: {fileID: 5354543632496679901, guid: 3422669e426106d49b5b7abf0f90e31c, type: 3}
+  attackType: {fileID: 4159131704458173581, guid: 1c18b11e271b39e4ca3906d8c3d1ab5e, type: 3}
 --- !u!61 &3090709760235880917
 BoxCollider2D:
   m_ObjectHideFlags: 0

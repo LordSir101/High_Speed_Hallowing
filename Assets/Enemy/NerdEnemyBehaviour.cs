@@ -87,13 +87,14 @@ public class NerdEnemyBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 targetVel = targetDir * speed;
-        Vector2 diff = targetVel - rb.velocity;
+        // Vector2 targetVel = targetDir * speed;
+        // Vector2 diff = targetVel - rb.velocity;
 
-        float accelRate = Mathf.Abs(targetVel.magnitude) > 0.01f ? 5.5f : 5.5f;
-        float newSpeed = Mathf.Pow(diff.magnitude * accelRate, 0.9f);
+        // float accelRate = Mathf.Abs(targetVel.magnitude) > 0.01f ? 5.5f : 5.5f;
+        // float newSpeed = Mathf.Pow(diff.magnitude * accelRate, 0.9f);
         
-        rb.AddForce(targetDir * newSpeed);
+        // rb.AddForce(targetDir * newSpeed);
+        rb.velocity = targetDir * speed;
     }
 
     Vector2 GetBestDirection()

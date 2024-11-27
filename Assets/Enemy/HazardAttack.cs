@@ -75,14 +75,16 @@ public class HazardAttack : MonoBehaviour
         }
         if(attackScript.attackEnded)
         {
-            attackScript.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
+            // attackScript.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
+            attackScript.transform.GetChild(1).gameObject.SetActive(false);
             attackPos = GetAttackPosition();
             attack.transform.position  = attackPos;
         }
 
         if(attackScript.windupProgress >= 1)
         {
-            attackScript.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
+            //attackScript.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
+            attackScript.transform.GetChild(1).gameObject.SetActive(true);
         }
     }
 
