@@ -18,4 +18,5 @@ MonoBehaviour:
   distribution:
   - 60
   - 40
-  time: 45
+  time: 60
+  maxEnemies: 6

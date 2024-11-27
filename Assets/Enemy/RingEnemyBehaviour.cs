@@ -10,6 +10,7 @@ public class RingEnemyBehaviour : MonoBehaviour
 {
     
     [SerializeField] private float minSpeed, maxSpeed;
+    [SerializeField] private LayerMask enemyLayer;
 
     private float speed;
 
@@ -35,6 +36,7 @@ public class RingEnemyBehaviour : MonoBehaviour
     // distance from attack range enemy will strafe at when attack is on cooldown (enemy will stay further back)
     float minKiteRange = 1;
     float maxKiteRange = 1;
+    //Vector2 patrolPoint;
 
     void Start()
     {
@@ -107,6 +109,8 @@ public class RingEnemyBehaviour : MonoBehaviour
         // The further away the enemy is, the more weight a dot product of 1 will have and vice versa
         float offset = (dirToPlayer.magnitude - minDis) / (maxDis - minDis);
         offset = Mathf.Clamp(offset, 0, 1);
+
+        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, 2f, enemyLayer);
        
         foreach(Vector2 dir in possibleDirections)
         {
@@ -116,6 +120,9 @@ public class RingEnemyBehaviour : MonoBehaviour
             float normalized = (dot + 1) / 2; // normalize between 0 and 1
             float weight = 1 - Math.Abs(normalized - offset);
             
+            float weightTowardsEnemies = GetHighestWeightOfVectorTowardsEnemies(dir, nearbyEnemies);
+            // if a dir brings us closer to an enemy, weigh it less to avoid clumping of enemies
+            weight -= weightTowardsEnemies;
             
             // Favor moving in the general direction we are already moving over slightly better weight in the opposite direction.
             // This prevents jittery movement when the enemy has two equal options to move.
@@ -139,6 +146,33 @@ public class RingEnemyBehaviour : MonoBehaviour
         
         }
         return bestDir;
+    }
+
+    float GetHighestWeightOfVectorTowardsEnemies(Vector2 dir, Collider2D[] nearbyEnemies)
+    {
+        float highest = -2f;
+        foreach(Collider2D col in nearbyEnemies)
+        {
+            Vector3 dirToEnemy = col.transform.position - transform.position;
+            // float offset = (dirToEnemy.magnitude - minDis) / (maxDis - minDis);
+            // offset = Mathf.Clamp(offset, 0, 1);
+            // offset = 1-offset; // 0 when close 1 when far
+
+            float dot = Vector2.Dot(dirToEnemy.normalized, dir.normalized);
+            float normalized = (dot + 1) / 2; // normalize between 0 and 1
+            float weight = normalized;
+
+            if(weight > highest)
+            {
+                highest = weight;
+            }
+
+        }
+
+        // the highest weight tells us the closest this vector will move us towards another enemy
+        // we only care about the highest weight for each direction
+        return highest;
+       
     }
 
     public void ChangeState(string state)

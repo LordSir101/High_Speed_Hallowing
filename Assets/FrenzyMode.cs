@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class FrenzyMode : MonoBehaviour
 {
-    private int damage = 10;
+    private int damage = 90;
     private float damageTimer = 0;
     private float damageRate = 2;
     private bool frenzy = false;
