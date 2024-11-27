@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
             
 
-            if(rb.velocity.magnitude < 0.1f)
+            if(rb.velocity.magnitude < 1f && movementInput == Vector2.zero)
             {
                 rb.velocity = Vector2.zero;
                 rb.transform.localRotation = Quaternion.Euler(0,0,0);
