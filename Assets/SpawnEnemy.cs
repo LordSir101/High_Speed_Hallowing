@@ -21,7 +21,7 @@ public class SpawnEnemy : MonoBehaviour
     private float spawntimer = 0f;
     private float spawnTime = 1;
 
-    private int maxEnemies = 6;
+    //private int maxEnemies = 6;
     private bool spawnEnemies = true;
 
     
@@ -77,12 +77,12 @@ public class SpawnEnemy : MonoBehaviour
             {
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-                if(enemies.Length < maxEnemies)
+                if(enemies.Length < currWave.maxEnemies)
                 {
                     //SpawnEnemies(1);
                     // List<GameObject> validSpawnPoints = GetValidSpawnPoints();
 
-                    int numEnemiesAvailableToSpawn = maxEnemies - enemies.Length;
+                    int numEnemiesAvailableToSpawn = currWave.maxEnemies - enemies.Length;
                     SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, 5));
                     
                 }
@@ -210,7 +210,7 @@ public class SpawnEnemy : MonoBehaviour
     {
         spawnEnemies = false;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        int numEnemiesAvailableToSpawn = maxEnemies - enemies.Length;
-        SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, maxEnemies));
+        int numEnemiesAvailableToSpawn = currWave.maxEnemies - enemies.Length;
+        SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, currWave.maxEnemies));
     }
 }
