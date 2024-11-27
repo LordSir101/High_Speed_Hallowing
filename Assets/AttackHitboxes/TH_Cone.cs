@@ -19,6 +19,8 @@ public class TH_Cone : TelegraphedHitbox
             Vector3 pushDir = (other.gameObject.transform.position - transform.parent.position).normalized;
             playerRb.AddForce(pushDir * 4f, ForceMode2D.Impulse);
 
+            SetAllCollidersStatus(false);
+
         }
     }
 

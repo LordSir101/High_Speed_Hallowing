@@ -25,6 +25,7 @@ public class TH_Ring : TelegraphedHitbox
         if(other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);
+            SetAllCollidersStatus(false);
         }
     }
 
