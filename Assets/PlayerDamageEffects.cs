@@ -26,7 +26,6 @@ public class PlayerDamageEffects : MonoBehaviour
         {
             if(spriteRenderers[i].material.name == "DamageFlashMAT (Instance)")
             {
-                Debug.Log(spriteRenderers[i]);
                 materials.Add(spriteRenderers[i].material);
             }
             

@@ -80,6 +80,7 @@
     <Compile Include="Assets\Enemy\RingEnemyBehaviour.cs" />
     <Compile Include="Assets\Enemy\EnemyInfo.cs" />
     <Compile Include="Assets\Enemy\EnemyHealth.cs" />
+    <Compile Include="Assets\UI\PauseMenu.cs" />
     <Compile Include="Assets\Enemy\RingEnemyAttack.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />

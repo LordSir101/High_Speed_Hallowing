@@ -33,7 +33,6 @@ public class EnemyDamageEffects : MonoBehaviour
         {
             if(spriteRenderers[i].material.name == "DamageFlashMAT (Instance)")
             {
-                Debug.Log(spriteRenderers[i]);
                 materials.Add(spriteRenderers[i].material);
             }
             

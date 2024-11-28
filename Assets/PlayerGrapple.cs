@@ -35,7 +35,7 @@ public class PlayerGrapple : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
     }
 
-     private void OnEnable()
+    private void OnEnable()
     {
         grapple.action.performed += StartGrapple;
     }
