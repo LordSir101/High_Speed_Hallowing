@@ -1,10 +1,19 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PauseControl: MonoBehaviour
 {
     public static bool gameIsPaused = false;
+    [SerializeField] GameObject pauseMenu;
+    public InputActionReference pause;
+
+    private void OnEnable()
+    {
+        pause.action.performed += TogglePauseMenu;
+    }
 
     public static void PauseGame(bool pause)
     {
@@ -35,4 +44,18 @@ public class PauseControl: MonoBehaviour
 		Time.timeScale = 1;
         callback();
 	}
+
+    private void TogglePauseMenu(InputAction.CallbackContext context)
+    {
+        if(gameIsPaused)
+        {
+            pauseMenu.SetActive(false);
+            PauseGame(false);
+        }
+        else
+        {
+            pauseMenu.SetActive(true);
+            PauseGame(true);
+        }
+    }
 }
