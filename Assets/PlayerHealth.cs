@@ -20,10 +20,9 @@ public class PlayerHealth: MonoBehaviour
     }
     public void TakeDamage(int damageTaken)
     {
-        health -= damageTaken - Armor;
+        int damageDealt = damageTaken - Armor > 0 ? damageTaken - Armor : 0;
+        health -= damageDealt;
         healthBar.SetHealth(health);
-
-        Debug.Log(damageTaken);
 
         if(health <= 0)
         {

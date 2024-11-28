@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class FrenzyMode : MonoBehaviour
 {
-    private int damage = 90;
+    private int damage = 75;
     private float damageTimer = 0;
     private float damageRate = 2;
     private bool frenzy = false;
