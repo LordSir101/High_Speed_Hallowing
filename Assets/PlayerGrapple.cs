@@ -21,7 +21,7 @@ public class PlayerGrapple : MonoBehaviour
     public bool grappling = false;
     public float initialDrag {get; set;}
     public bool canGrapple {get;set;} = true;
-    private float grappleCooldown = 3.5f;
+    //private float grappleCooldown = 3.5f;
 
     
     private Vector2 grappleLocation;
