@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerImpact playerImpact;
 
     
-    private float dashCooldown = 3;
+    //private float dashCooldown = 3;
     
     [Header("Movement")]
     [SerializeField] public float baseMoveSpeed;

@@ -101,8 +101,8 @@ public class PlayerReflectDash : MonoBehaviour
             enemyPos = relfectDashtarget.transform.position;
 
             // Teleport the player to the enemy center
-            Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
-            rb.position = teleportLocation;
+            // Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
+            // rb.position = teleportLocation;
 
             reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
         }

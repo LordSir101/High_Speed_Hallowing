@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 4946922149685287571}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.9999539, w: -0.009600183}
-  m_LocalPosition: {x: 0.29, y: -1.22, z: 0}
+  m_LocalPosition: {x: 0.07, y: -0.89, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.497
-  m_Color: {r: 0.8301887, g: 0.6197513, b: 0.19188325, a: 1}
-  m_Intensity: 4
+  m_Color: {r: 0.9150943, g: 0.7102916, b: 0.2460395, a: 1}
+  m_Intensity: 3
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 0000000031c6e670eb271d3721ee95bd3d2f4839ad510d4e
@@ -70,10 +70,10 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 164.58278
-  m_PointLightOuterAngle: 221.19527
-  m_PointLightInnerRadius: 1
-  m_PointLightOuterRadius: 7
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0.5
+  m_PointLightOuterRadius: 3.5
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -111,8 +111,8 @@ Transform:
   m_GameObject: {fileID: 5137487831075639633}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.54, y: 11.26, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.06, y: 15.69, z: 0.06621055}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4289519334829104548}
@@ -188,8 +188,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.581
-  m_Color: {r: 0.9019608, g: 0.9254902, b: 0.26666668, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.8714754, g: 0.9528302, b: 0.14831792, a: 1}
+  m_Intensity: 3
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 0000000031c6e670eb271d3721ee95bd3d2f4839ad510d4e

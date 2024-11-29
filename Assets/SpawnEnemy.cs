@@ -1,12 +1,10 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    private int numInitialEmemies = 5;
+    //private int numInitialEmemies = 5;
 
     // [Header("Possible Enemy Prefabs")]
     // [SerializeField] private List<GameObject> enemyPrefabs;
