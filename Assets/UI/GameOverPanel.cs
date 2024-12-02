@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,24 +7,38 @@ using UnityEngine.SceneManagement;
 
 public class GameOverPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    [SerializeField] GameObject hud;
+    //TODO: save the map name that was just played to make restart button work correctly
 
-    public void SetWin(bool win)
+    [SerializeField] TextMeshProUGUI gameOverText;
+    [SerializeField] TextMeshProUGUI completionTimeText;
+    [SerializeField] TextMeshProUGUI shrinesCleansedText;
+    void Start()
     {
-        TextMeshProUGUI text = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        SetWin(GameStats.gameWon);
+        SetStats();
+    }
+
+    private void SetWin(bool win)
+    {
+        //TextMeshProUGUI text = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
         if(win)
         {
-            text.text = "You Win";
+            gameOverText.text = "You Win";
         }
         else
         {
-            text.text = "You Lose";
+            gameOverText.text = "You Lose";
         }
-        hud.SetActive(false);
-        gameObject.SetActive(true);
-        PauseControl.PauseGame(true);
+        //hud.SetActive(false);
+        //gameObject.SetActive(true);
+        //PauseControl.PauseGame(true);
+    }
+
+    private void SetStats()
+    {
+        completionTimeText.text = TimeSpan.FromSeconds(GameStats.completionTime).ToString(@"mm\:ss");
+        shrinesCleansedText.text = $"{GameStats.shrinesCleansed}/{GameStats.totalShrines}";
     }
 
     public void RestartGame()

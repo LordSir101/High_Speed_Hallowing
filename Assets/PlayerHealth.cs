@@ -8,7 +8,7 @@ public class PlayerHealth: MonoBehaviour
 {
     [SerializeField] ScriptableRendererFeature frenzyEffect;
     [SerializeField] GameObject damageText;
-    public GameOverPanel gameOverPanel;
+    [SerializeField] public GameControl gameController;
     public HealthBar healthBar;
     private PlayerDamageEffects damageEffects;
     private int health;
@@ -29,7 +29,7 @@ public class PlayerHealth: MonoBehaviour
         if(health <= 0)
         {
             frenzyEffect.SetActive(false);
-            gameOverPanel.SetWin(false);
+            gameController.SetWin(false);
         }
 
         damageEffects.StartDamageFlash();

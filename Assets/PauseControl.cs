@@ -34,10 +34,25 @@ public class PauseControl: MonoBehaviour
 		//Method used so we don't need to call StartCoroutine everywhere
 		//nameof() notation means we don't need to input a string directly.
 		//Removes chance of spelling mistakes and will improve error messages if any
-		StartCoroutine(PerformSleep(duration, callBack));
+		StartCoroutine(PerformSleepCallback(duration, callBack));
     }
 
-	private IEnumerator PerformSleep(float duration, Action callback)
+     public void HitPause(float duration)
+    {
+		//Method used so we don't need to call StartCoroutine everywhere
+		//nameof() notation means we don't need to input a string directly.
+		//Removes chance of spelling mistakes and will improve error messages if any
+		StartCoroutine(PerformSleep(duration));
+    }
+
+    private IEnumerator PerformSleep(float duration)
+    {
+		Time.timeScale = 0;
+		yield return new WaitForSecondsRealtime(duration); //Must be Realtime since timeScale with be 0 
+		Time.timeScale = 1;
+	}
+
+	private IEnumerator PerformSleepCallback(float duration, Action callback)
     {
 		Time.timeScale = 0;
 		yield return new WaitForSecondsRealtime(duration); //Must be Realtime since timeScale with be 0 

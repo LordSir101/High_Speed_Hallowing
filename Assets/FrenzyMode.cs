@@ -10,7 +10,7 @@ public class FrenzyMode : MonoBehaviour
 
     PlayerHealth playerhealthScript;
     SpawnEnemy enemySpawner;
-    [SerializeField] GameOverPanel gameOverPanel;
+    [SerializeField] GameControl gameController;
 
     [SerializeField] ScriptableRendererFeature frenzyEffect;
     [SerializeField] Material effectMaterial;
@@ -30,7 +30,7 @@ public class FrenzyMode : MonoBehaviour
             if(enemies.Length == 0)
             {
                 frenzyEffect.SetActive(false);
-                gameOverPanel.SetWin(true);
+                gameController.SetWin(true);
             }
             else
             {
