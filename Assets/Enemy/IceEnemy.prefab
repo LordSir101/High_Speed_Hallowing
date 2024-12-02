@@ -547,6 +547,7 @@ MonoBehaviour:
   minOuterLightRad: 0.6
   healthLight: {fileID: 7253672186253097941}
   essencePrefab: {fileID: 8109565986500063856, guid: 2213573895384264faf239c6cdebbe13, type: 3}
+  damageText: {fileID: 144933026977808247, guid: ca4f6ed07ac709b42bb62f58c3cdf706, type: 3}
 --- !u!114 &5960231561584415512
 MonoBehaviour:
   m_ObjectHideFlags: 0

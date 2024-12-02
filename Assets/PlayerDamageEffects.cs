@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerDamageEffects : MonoBehaviour
 {
    [ColorUsage(true, true)]
-   [SerializeField] private Color flashColor = Color.white;
-   [SerializeField] private float flashTime = 0.25f;
+   [SerializeField] private Color flashColor;
+   [SerializeField] private float flashTime = 0.4f;
 
    private SpriteRenderer[] spriteRenderers;
    private List<Material> materials;

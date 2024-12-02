@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Light2D healthLight;
 
     [SerializeField] private GameObject essencePrefab;
+    [SerializeField] private GameObject damageText;
 
     EnemyDamageEffects enemyAnimator;
     EnemyInfo enemyInfo;
@@ -52,6 +55,8 @@ public class EnemyHealth : MonoBehaviour
         }
 
         enemyAnimator.StartDamageFlash();
+        GameObject damageTextParent = Instantiate(damageText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
+        damageTextParent.GetComponentInChildren<TextMeshPro>().text = damage.ToString();
     }
 
     private void DropEssence(Vector3 impact)

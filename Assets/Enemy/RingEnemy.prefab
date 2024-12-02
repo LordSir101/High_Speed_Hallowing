@@ -124,6 +124,7 @@ MonoBehaviour:
   minOuterLightRad: 0.6
   healthLight: {fileID: 925794410537270334}
   essencePrefab: {fileID: 8109565986500063856, guid: 2213573895384264faf239c6cdebbe13, type: 3}
+  damageText: {fileID: 144933026977808247, guid: ca4f6ed07ac709b42bb62f58c3cdf706, type: 3}
 --- !u!114 &5529561892312203062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 1, g: 1, b: 1, a: 1}
-  flashTime: 0.25
+  flashTime: 0.4
   deathAnimator: {fileID: 8346287207291623753, guid: 9291915a13b60434791e2577ae049fe4, type: 3}
 --- !u!114 &925794410537270334
 MonoBehaviour:

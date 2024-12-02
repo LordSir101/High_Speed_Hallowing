@@ -7,7 +7,7 @@ public class EnemyDamageEffects : MonoBehaviour
 {
    [ColorUsage(true, true)]
    [SerializeField] private Color flashColor = Color.white;
-   [SerializeField] private float flashTime = 0.25f;
+   [SerializeField] private float flashTime = 0.4f;
 
    private SpriteRenderer[] spriteRenderers;
    private List<Material> materials;

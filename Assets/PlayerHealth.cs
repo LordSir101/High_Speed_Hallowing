@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerHealth: MonoBehaviour
 {
     [SerializeField] ScriptableRendererFeature frenzyEffect;
+    [SerializeField] GameObject damageText;
     public GameOverPanel gameOverPanel;
     public HealthBar healthBar;
     private PlayerDamageEffects damageEffects;
@@ -31,6 +33,9 @@ public class PlayerHealth: MonoBehaviour
         }
 
         damageEffects.StartDamageFlash();
+        GameObject damageTextParent = Instantiate(damageText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
+        damageTextParent.GetComponentInChildren<TextMeshPro>().text = $"-{damageDealt}";
+        damageTextParent.GetComponentInChildren<TextMeshPro>().color = Color.red;
     }
 
     public void Heal(int healing)

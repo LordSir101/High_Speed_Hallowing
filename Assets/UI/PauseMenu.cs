@@ -16,9 +16,9 @@ public class PauseMenu : MonoBehaviour
         
     // }
 
-    public void ExitGame()
-    {
-        Debug.Log("clicked");
-        Application.Quit();
-    }
+    // public void ExitGame()
+    // {
+    //     Debug.Log("clicked");
+    //     Application.Quit();
+    // }
 }

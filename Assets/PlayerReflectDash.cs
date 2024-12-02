@@ -11,11 +11,11 @@ public class PlayerReflectDash : MonoBehaviour
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
     private GameObject reflectDashArrow = null;
     private GameObject relfectDashtarget = null;
-    private float reflectDashSpeed= 12f;
+    private float reflectDashSpeed= 11f;
     public bool reflectDashing = false;
     public Vector2 prevVelocity;
     //private float reflectDashSpeed = 4f;
-    private float reflectDashTime = 0.3f;
+    private float reflectDashTime = 0.2f;
     Vector3 enemyPos;
 
     List<GameObject> currentCollisions;
@@ -43,6 +43,11 @@ public class PlayerReflectDash : MonoBehaviour
     private void OnEnable()
     {
         reflectDash.action.performed += CheckReflectDash;
+        
+    }
+    private void OnDisable()
+    {
+        reflectDash.action.performed -= CheckReflectDash;
         
     }
 
@@ -101,8 +106,8 @@ public class PlayerReflectDash : MonoBehaviour
             enemyPos = relfectDashtarget.transform.position;
 
             // Teleport the player to the enemy center
-            // Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
-            // rb.position = teleportLocation;
+            Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
+            rb.position = teleportLocation;
 
             reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
         }
@@ -118,8 +123,8 @@ public class PlayerReflectDash : MonoBehaviour
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
         // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
-        Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction * 1.3f;
-        rb.position = teleportLocation;
+        // Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction * 1.3f;
+        // rb.position = teleportLocation;
 
         // Indicate to the player that they dashed within the window to add the speed they were going at impact
         if(playerImpact.actionWindowIsActive)
@@ -195,17 +200,52 @@ public class PlayerReflectDash : MonoBehaviour
         playerMovement.dash.action.Enable();
         playerMovement.EnableBasicDash();
         reflectDashing = false;
+        rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
     }
 
     IEnumerator PerformDash(Vector2 force, float time)
     {
 
-        rb.AddForce(force, ForceMode2D.Impulse);
+        //rb.AddForce(force, ForceMode2D.Impulse);
+        float startTime = Time.time;
+        rb.drag = 0;
 
         // // rotate player
-        // float playerRadValue = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+        // float playerRadValue = Mathf.Atan2(rb.velocity.normalized.y, rb.velocity.normalized.x);
         // float playerAngle= playerRadValue * (180/Mathf.PI);
-        // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+        // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle - 90);
+
+        // instead of teleporting at the beginning of the dash, just move really quickly instead
+        while (Time.time - startTime <= 0.05)
+		{
+			rb.velocity = force * 2;
+            Vector2 normalized = rb.velocity.normalized;
+            float playerRadValue = Mathf.Atan2(normalized.y, normalized.x);
+            float playerAngle= playerRadValue * (180/Mathf.PI);
+            rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+            //prevDashVelocity = rb.velocity;
+			//Pauses the loop until the next frame, creating something of a Update loop. 
+			//This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D
+			yield return null;
+		}
+
+        startTime = Time.time;
+        while (Time.time - startTime <= time)
+		{
+			rb.velocity = force;
+            Vector2 normalized = rb.velocity.normalized;
+            float playerRadValue = Mathf.Atan2(normalized.y, normalized.x);
+            float playerAngle= playerRadValue * (180/Mathf.PI);
+            rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+            //prevDashVelocity = rb.velocity;
+			//Pauses the loop until the next frame, creating something of a Update loop. 
+			//This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D
+			yield return null;
+		}
+
+		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
+
+		rb.velocity = force.magnitude * 0.5f * force.normalized;
 
         yield return new WaitForSeconds(time);
 
