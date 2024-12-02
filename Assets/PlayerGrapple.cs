@@ -40,6 +40,12 @@ public class PlayerGrapple : MonoBehaviour
         grapple.action.performed += StartGrapple;
     }
 
+    private void OnDisable()
+    {
+        grapple.action.performed -= StartGrapple;
+        
+    }
+
     private void StartGrapple(InputAction.CallbackContext context)
     {
         if(canGrapple)

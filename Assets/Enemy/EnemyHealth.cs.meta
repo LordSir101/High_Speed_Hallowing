@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 8648eab8b6f873e4dae4f2ba86d5d732
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - healthLight: {instanceID: 0}
+  - essencePrefab: {instanceID: 0}
+  - damageText: {fileID: 144933026977808247, guid: ca4f6ed07ac709b42bb62f58c3cdf706, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

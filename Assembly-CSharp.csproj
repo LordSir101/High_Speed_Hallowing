@@ -73,6 +73,7 @@
     <Compile Include="Assets\AttackHitboxes\TH_Cone.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\PlayerReflectDash.cs" />
+    <Compile Include="Assets\SceneControl.cs" />
     <Compile Include="Assets\AttackHitboxes\SlowingCircle.cs" />
     <Compile Include="Assets\UI\HealthBar.cs" />
     <Compile Include="Assets\Shrines\DamageShrine.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\Enemy\EnemyDamageEffects.cs" />
     <Compile Include="Assets\PlayerCooldowns.cs" />
+    <Compile Include="Assets\DestroyOnEnd.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\PlayerGrapple.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />

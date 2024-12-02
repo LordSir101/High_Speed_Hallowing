@@ -154,6 +154,11 @@ public class PlayerMovement : MonoBehaviour
         dash.action.performed += Dash;
         
     }
+    private void OnDisable()
+    {
+        dash.action.performed -= Dash;
+        
+    }
 
     // Allows walljump while grappling but not normal dashes
     public void DisableBasicDash()
@@ -177,7 +182,7 @@ public class PlayerMovement : MonoBehaviour
     // queue wall jump so player can press wall jump slightly early before hitting a wall
     private void QueueWallJump()
     {
-        touchingWall = Physics2D.OverlapCircle(wallCheck.position, 0.6f, wallLayer);
+        touchingWall = Physics2D.OverlapCircle(transform.position, 0.6f, wallLayer);
         
         Vector2 direction = movement.action.ReadValue<Vector2>();
 
