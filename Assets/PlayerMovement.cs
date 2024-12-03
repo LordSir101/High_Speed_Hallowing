@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
-    [SerializeField] private float wallJumpForce = 11f;
+    [SerializeField] private float wallJumpForce = 12f;
     [SerializeField] private float wallJumpTime = 0.2f, wallJumpPause = 0.01f;
     [SerializeField] private GameObject wallJumpEffect;
     private float wallJumpCombo = 0;
@@ -409,7 +409,7 @@ public class PlayerMovement : MonoBehaviour
 
         while (Time.time - startTime <= dashTime)
 		{
-			rb.velocity = force.normalized * dashSpeed;
+			rb.velocity = force.normalized * wallJumpForce;
             prevDashVelocity = rb.velocity;
 			//Pauses the loop until the next frame, creating something of a Update loop. 
 			//This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D

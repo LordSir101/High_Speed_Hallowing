@@ -42,7 +42,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void DealDamage(Vector2 impact, int DamageBonus)
     {
-        int damage = (int) Math.Floor(impact.magnitude) * damageMod + DamageBonus;
+        int damage = (int) Math.Floor(impact.magnitude * damageMod * 1.5f)  + DamageBonus;
         currHealth -= damage;
 
         ModifyLightHealthBar();
