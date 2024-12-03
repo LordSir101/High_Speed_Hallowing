@@ -85,6 +85,7 @@ public class EndShrine : MonoBehaviour
         {
             GetComponent<ParticleSystem>().Play();
             rm.Essence -= cost;
+            GameStats.IncreaseShrinesCleansed();
             //gameObject.GetComponent<CircleCollider2D>().enabled = false;
             //interactText.enabled = false;
 
