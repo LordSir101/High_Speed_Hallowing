@@ -542,7 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8648eab8b6f873e4dae4f2ba86d5d732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 150
+  maxHealth: 220
   maxOuterLightRad: 1.5
   minOuterLightRad: 0.6
   healthLight: {fileID: 7253672186253097941}
