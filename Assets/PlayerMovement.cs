@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     public InputActionReference movement, dash;
 
+    public AnimationCurve animCurve;
+
     private bool isDashing = false;
     public bool canDash {get;set;}= true;
     
@@ -337,8 +339,9 @@ public class PlayerMovement : MonoBehaviour
 
         while(Time.time - startTime <= time)
         {
-            float ratio = Time.time / startTime;
-            float scale = Mathf.Lerp(1, 0.7f, ratio);
+            float ratio = (Time.time - startTime) / time;
+            //float scale = Mathf.Lerp(1, 0.7f, ratio);
+            float scale = animCurve.Evaluate(ratio);
             transform.localScale = new Vector2(scale, scale);
             yield return null;
         }

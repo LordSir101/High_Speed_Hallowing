@@ -119,11 +119,11 @@ public class IceEnemyBehaviour : MonoBehaviour
         if(distanceToPlayer.x > 0)
         {
             // right hand
-            throwingHand = transform.GetChild(1).GetChild(1);
+            throwingHand = transform.GetChild(0).GetChild(1).GetChild(1);
         }
         else{
             // left hand
-            throwingHand = transform.GetChild(1).GetChild(0);
+            throwingHand = transform.GetChild(0).GetChild(1).GetChild(0);
         }
 
         GameObject proj = Instantiate(projectilePrefab, throwingHand.transform.position, transform.rotation);

@@ -26,7 +26,7 @@ public class RingEnemyAttack : MonoBehaviour
     void Start()
     {
         attackStats = gameObject.GetComponent<EnemyTelegraphAttack>();
-        animator = gameObject.GetComponent<Animator>();
+        animator = gameObject.GetComponentInChildren<Animator>();
         behaviourScript = gameObject.GetComponent<RingEnemyBehaviour>();
 
         GameObject attack = Instantiate(attackType);
