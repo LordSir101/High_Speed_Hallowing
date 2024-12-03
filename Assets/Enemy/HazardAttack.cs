@@ -33,7 +33,7 @@ public class HazardAttack : MonoBehaviour
         attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize, attackStats.animationStartPercent);
 
         attack.transform.parent = transform;
-        attack.GetComponent<SpriteRenderer>().sortingLayerID = 0;
+        //attack.GetComponent<SpriteRenderer>().sortingLayerID = 0;
 
         float delay = UnityEngine.Random.Range(0,2);
         StartCoroutine(AttackDelay(delay));
@@ -77,14 +77,20 @@ public class HazardAttack : MonoBehaviour
         {
             // attackScript.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
             attackScript.transform.GetChild(1).gameObject.SetActive(false);
-            attackPos = GetAttackPosition();
-            attack.transform.position  = attackPos;
+            // attackPos = GetAttackPosition();
+            // attack.transform.position = attackPos;
         }
 
         if(attackScript.windupProgress >= 1)
         {
             //attackScript.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
+            
             attackScript.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else
+        {
+            attackPos = GetAttackPosition();
+            attack.transform.position = attackPos;
         }
     }
 
