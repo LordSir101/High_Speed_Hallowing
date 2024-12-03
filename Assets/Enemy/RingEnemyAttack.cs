@@ -89,6 +89,11 @@ public class RingEnemyAttack : MonoBehaviour
         StartCoroutine(attackScript.StartCooldown());
     }
 
+    public void PlayAttackSound()
+    {
+        GetComponentInChildren<AudioSource>().Play();
+    }
+
     // public void AnimateActiveFrames()
     // {
     //     animator.SetTrigger("Attack");

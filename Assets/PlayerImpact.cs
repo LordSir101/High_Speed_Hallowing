@@ -68,8 +68,10 @@ public class PlayerImpact : MonoBehaviour
                 impact = rb.velocity;
                 playerAnimation.AttackAnimation(rb.velocity);
             }
+
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(impact, DamageBonus);
             GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().HitPause(0.01f);
+            GetComponentInChildren<AudioSource>().Play();
             
             ResetActionWindow();
 
