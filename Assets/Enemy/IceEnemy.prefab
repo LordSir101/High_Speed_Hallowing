@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc77673714e941b40bd5014aaddc5c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColor: {r: 2.1185477, g: 2.1185477, b: 2.1185477, a: 1}
   flashTime: 0.25
   deathAnimator: {fileID: 8346287207291623753, guid: 9291915a13b60434791e2577ae049fe4, type: 3}
 --- !u!95 &6151602892267105896

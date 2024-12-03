@@ -40,7 +40,9 @@ public class EndShrine : MonoBehaviour
     {
         shrinesCleansed += 1;
         gems[shrinesCleansed -1].GetComponent<SpriteRenderer>().sprite = cleansedGemOutlineSprite;
-        gems[shrinesCleansed -1].GetComponentInChildren<Light2D>().color = new Color32(0, 65, 4, 255);
+        gems[shrinesCleansed -1].GetComponentInChildren<Light2D>().color = new Color32(0, 183, 12, 255);
+        Debug.Log(gems[shrinesCleansed -1]);
+        gems[shrinesCleansed -1].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(0, 183, 12, 255);
     }
 
      private void OnTriggerEnter2D(Collider2D other)
