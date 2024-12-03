@@ -54,7 +54,7 @@ public class IceEnemyBehaviour : MonoBehaviour
         maxConeAttackRange = attackInfo.Size;
         //minConeAttackRange = maxConeAttackRange * attackInfo.StartingTelegaphPercentSize;
 
-        minDis = UnityEngine.Random.Range(1, maxConeAttackRange /2);
+        minDis = maxConeAttackRange;//UnityEngine.Random.Range(1, maxConeAttackRange /2);
         maxDis = UnityEngine.Random.Range(attackRange+1, attackRange + 3);
         
         // get all directions around the enemy at 22.5 degree intervals

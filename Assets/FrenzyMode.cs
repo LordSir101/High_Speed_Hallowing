@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -14,6 +15,7 @@ public class FrenzyMode : MonoBehaviour
 
     [SerializeField] ScriptableRendererFeature frenzyEffect;
     [SerializeField] Material effectMaterial;
+    [SerializeField] GameObject frenzyText;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,5 +53,6 @@ public class FrenzyMode : MonoBehaviour
         frenzy = true;
         enemySpawner.SpawnFrenzyWave();
         frenzyEffect.SetActive(true);
+        frenzyText.SetActive(true);
     }
 }

@@ -72,8 +72,8 @@ public class EnemyHealth : MonoBehaviour
             //Instantiate(essencePrefab, new Vector3(transform.position.x + dropDistX, transform.position.y + dropDistY, 0), transform.rotation);
         //}
         GameObject drop = Instantiate(essencePrefab, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation);
-        drop.GetComponent<SpriteRenderer>().color = enemyInfo.soulColor;
-        //drop.GetComponent<Light2D>().color = enemyInfo.soulLightColor;
+        drop.transform.GetChild(0).GetComponent<SpriteRenderer>().color = enemyInfo.soulColor;
+        drop.transform.GetChild(0).GetComponentInChildren<Light2D>().color = enemyInfo.soulLightColor;
 
         drop.GetComponent<Rigidbody2D>().velocity = impact;
 

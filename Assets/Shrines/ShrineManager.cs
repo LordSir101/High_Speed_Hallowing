@@ -29,7 +29,7 @@ public class ShrineManager : MonoBehaviour
                 shrines.Add(shrine);
             }
         }
-        GameStats.totalShrines = shrines.Count;
+        GameStats.totalShrines = shrines.Count + 1;
     }
 
     public void CleanseShrine()
