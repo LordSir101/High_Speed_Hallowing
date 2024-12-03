@@ -10,6 +10,7 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
     private int currHealth;
+    public AnimationCurve animCurve;
 
     [SerializeField] private float maxOuterLightRad, minOuterLightRad;
     [SerializeField] private Light2D healthLight;
@@ -57,6 +58,28 @@ public class EnemyHealth : MonoBehaviour
         enemyAnimator.StartDamageFlash();
         GameObject damageTextParent = Instantiate(damageText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
         damageTextParent.GetComponentInChildren<TextMeshPro>().text = damage.ToString();
+
+        StartCoroutine(DamageFlinch(0.15f));
+    }
+
+    IEnumerator DamageFlinch(float time)
+    {
+        // Vector2 scale = dir * 0.5f;
+        // transform.localScale = new Vector2(0.7f, 0.7f);
+        // yield return new WaitForSecondsRealtime(time);
+        // transform.localScale = new Vector2(1,1);
+        Transform spriteParent = transform.GetChild(0);
+        float startTime = Time.time;
+
+        while(Time.time - startTime <= time)
+        {
+            float ratio = (Time.time - startTime) / time;
+            //float scale = Mathf.Lerp(1, 0.7f, ratio);
+            float scale = animCurve.Evaluate(ratio);
+            spriteParent.localScale = new Vector2(scale, scale);
+            yield return null;
+        }
+        transform.localScale = new Vector2(1, 1);
     }
 
     private void DropEssence(Vector3 impact)

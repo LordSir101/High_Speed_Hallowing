@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897998950603053658}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3848255226931365462}
+  m_Father: {fileID: 1835580299750473664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &25213763832201102
 SpriteRenderer:
@@ -180,7 +180,7 @@ Transform:
   m_GameObject: {fileID: 2184953705427618756}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9845109, y: -0.38905257, z: 0.029722959}
+  m_LocalPosition: {x: 0.944, y: -0.006, z: 0.029722959}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -351,14 +351,70 @@ Transform:
   m_GameObject: {fileID: 2873848945060860517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.9845109, y: 0.33905256, z: -0.029722959}
+  m_LocalPosition: {x: 0, y: 0, z: -0.029722959}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 971737414156564193}
   - {fileID: 4437185189854527896}
+  m_Father: {fileID: 1835580299750473664}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6032411463250234109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1835580299750473664}
+  - component: {fileID: 7699706621321263318}
+  m_Layer: 7
+  m_Name: SpriteParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1835580299750473664
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032411463250234109}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4215915307879590863}
+  - {fileID: 7913681297688715039}
   m_Father: {fileID: 3848255226931365462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &7699706621321263318
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032411463250234109}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e318f6defeabe25409076defd421cd6b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6279438701711090031
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +441,7 @@ Transform:
   m_GameObject: {fileID: 6279438701711090031}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.08451092, y: -0.35905257, z: 0.029722959}
+  m_LocalPosition: {x: -0.907, y: 0.055, z: 0.029722959}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -463,7 +519,6 @@ GameObject:
   - component: {fileID: 8045079833336917666}
   - component: {fileID: 5876194444742420994}
   - component: {fileID: 1873032066976856824}
-  - component: {fileID: 6151602892267105896}
   - component: {fileID: 2514381154095137542}
   m_Layer: 7
   m_Name: IceEnemy
@@ -485,8 +540,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4215915307879590863}
-  - {fileID: 7913681297688715039}
+  - {fileID: 1835580299750473664}
   - {fileID: 1705400297442439722}
   - {fileID: 458847477479294420}
   m_Father: {fileID: 0}
@@ -543,6 +597,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 220
+  animCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.013023376
+      value: 1.0094299
+      inSlope: -1.7823687
+      outSlope: -1.7823687
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.046922002
+    - serializedVersion: 3
+      time: 0.52385
+      value: 0.49501604
+      inSlope: -0.0076560266
+      outSlope: -0.0076560266
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   maxOuterLightRad: 1.5
   minOuterLightRad: 0.6
   healthLight: {fileID: 7253672186253097941}
@@ -611,7 +698,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowsEnabled: 1
+  m_ShadowsEnabled: 0
   m_ShadowIntensity: 0.75
   m_ShadowSoftness: 0.3
   m_ShadowSoftnessFalloffIntensity: 0.5
@@ -690,28 +777,6 @@ MonoBehaviour:
   flashColor: {r: 2.1185477, g: 2.1185477, b: 2.1185477, a: 1}
   flashTime: 0.25
   deathAnimator: {fileID: 8346287207291623753, guid: 9291915a13b60434791e2577ae049fe4, type: 3}
---- !u!95 &6151602892267105896
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7206340883337965828}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e318f6defeabe25409076defd421cd6b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &2514381154095137542
 BoxCollider2D:
   m_ObjectHideFlags: 0
