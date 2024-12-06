@@ -80,7 +80,7 @@ public class Shrine : MonoBehaviour
             ChangeIcon();
 
             shrineManager.SpawnEnemiesAtShrine(transform.position, 3);
-        }   
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

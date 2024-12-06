@@ -179,6 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1cee755bdff4d14990d8971b3db746e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackReady: 0
+  windupProgress: 0
 --- !u!1 &6341842234073364832
 GameObject:
   m_ObjectHideFlags: 0

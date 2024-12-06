@@ -33,6 +33,8 @@ public class PlayerHealth: MonoBehaviour
         }
 
         damageEffects.StartDamageFlash();
+        GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().HitPause(0.01f);
+        
         GameObject damageTextParent = Instantiate(damageText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
         damageTextParent.GetComponentInChildren<TextMeshPro>().text = $"-{damageDealt}";
         damageTextParent.GetComponentInChildren<TextMeshPro>().color = Color.red;

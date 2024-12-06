@@ -15,11 +15,14 @@ public class IceEnemyBehaviour : MonoBehaviour
     [SerializeField]
     LayerMask playerLayer;
 
+    private EnemySounds audioController;
+
     [Header("snowball")]
     [SerializeField] Sprite snowballSprite;
     [SerializeField] float attackRange, projSpeed, kiteDistance, snowballCooldown;
     [SerializeField] int snowballDamage;
     [SerializeField] GameObject projectilePrefab;
+    [SerializeField] GameObject snowballAudioParent;
     private float snowballTimer;
 
 
@@ -49,6 +52,7 @@ public class IceEnemyBehaviour : MonoBehaviour
 
         attackInfo = gameObject.GetComponent<EnemyTelegraphAttack>();
         coneAttack = gameObject.GetComponent<IceEnemyConeAttack>();
+        audioController = gameObject.GetComponentInChildren<EnemySounds>();
 
         // Size is the local scale
         maxConeAttackRange = attackInfo.Size;
@@ -129,6 +133,8 @@ public class IceEnemyBehaviour : MonoBehaviour
         GameObject proj = Instantiate(projectilePrefab, throwingHand.transform.position, transform.rotation);
         proj.GetComponent<Projectile>().Init(snowballDamage, snowballSprite);
         proj.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
+
+        snowballAudioParent.GetComponent<AudioSource>().Play();
     }
 
     Vector2 GetBestDirection()
