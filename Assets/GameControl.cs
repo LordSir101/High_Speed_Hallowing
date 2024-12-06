@@ -7,6 +7,7 @@ public class GameControl : MonoBehaviour
     private float gameTime = 0;
     private bool gameEnded = false;
     [SerializeField] AudioSource backgroundMusic;
+    [SerializeField] PauseControl pauseControl;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,7 @@ public class GameControl : MonoBehaviour
 
     public void SetWin(bool win)
     {
-        PauseControl.PauseGame(true);
+        pauseControl.PauseGame(true);
         GameStats.gameWon = win;
         GameStats.completionTime = gameTime;
         SceneControl.LoadScene("GameOverMenu");
