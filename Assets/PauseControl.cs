@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -9,25 +10,46 @@ public class PauseControl: MonoBehaviour
     public static bool gameIsPaused = false;
     [SerializeField] GameObject pauseMenu;
     public InputActionReference pause;
+    //[SerializeField] InputActionMap playerActions;
+    [SerializeField] private PlayerInput playerInput;
+
+    void Start()
+    {
+        playerInput.actions.FindActionMap("PauseMenu").Enable();
+    }
 
     private void OnEnable()
     {
         pause.action.performed += TogglePauseMenu;
     }
+    private void OnDisable()
+    {
+        pause.action.performed -= TogglePauseMenu;
+    }
 
-    public static void PauseGame(bool pause)
+    public void PauseGame(bool pause)
     {
         if(pause)
         {
             Time.timeScale = 0f;
             gameIsPaused = true;
+            //playerActions.Disable();
+            playerInput.actions.FindActionMap("PlayerInput").Disable();
         }
         else 
         {
             Time.timeScale = 1;
             gameIsPaused = false;
+            playerInput.actions.FindActionMap("PlayerInput").Enable();
         }
+
+        
     }
+
+    // private void DisablePlayerMovement()
+    // {
+
+    // }
 
     public void ActionPause(float duration, Action callBack)
     {

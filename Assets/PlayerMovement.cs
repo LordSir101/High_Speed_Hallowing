@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDashing = false;
     public bool canDash {get;set;}= true;
+
+    [SerializeField] PauseControl pauseControl;
     
 
 
@@ -212,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(DashWindup(dashPause));
 
                 // pause the game for a bit before dashing. if more forgiving for choosing direction and makes dashes feel strong
-                GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().ActionPause(dashPause, StartDashing);
+                pauseControl.ActionPause(dashPause, StartDashing);
                 
             }
         }
@@ -238,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // add slight pause befoe wall jumping
         StartCoroutine(DashWindup(wallJumpPause));
-        GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().ActionPause(wallJumpPause, WallJump);
+        pauseControl.ActionPause(wallJumpPause, WallJump);
         //WallJump(wallJumpDir);
     }
     void WallJump()

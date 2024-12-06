@@ -6,6 +6,7 @@ public class PlayerImpact : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Shake cameraShake;
+    [SerializeField] PauseControl pauseControl;
 
     //public float ImpactSpeed { get; set; } = 0f;
     public const float IMPACTSPEEDINCREASE = 2;
@@ -74,7 +75,7 @@ public class PlayerImpact : MonoBehaviour
 
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(impact, DamageBonus);
             playerAudio.PlayAttackSound();
-            GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().HitPause(0.07f);
+            pauseControl.HitPause(0.07f);
             //StartCoroutine(HitPause(other.gameObject, gameObject));
             
             
