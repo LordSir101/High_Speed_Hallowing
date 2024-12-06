@@ -41,9 +41,12 @@ public class EnemyHealth : MonoBehaviour
         
     // }
 
-    public void DealDamage(Vector2 impact, int DamageBonus)
+    public void DealDamage(Vector2 impact, float DamageBonusPercent)
     {
-        int damage = (int) Math.Floor(impact.magnitude * damageMod * 1.5f)  + DamageBonus;
+        // damage mod increases damage by factor of 10 so upgrades feel more impactful
+        // multiply damage mod by 1.5 so the difference between attacks is more obvious
+        // damage bonus percent is damage bonus from upgrades
+        int damage = (int) Math.Floor(impact.magnitude * damageMod * 1.5f  * (1 + DamageBonusPercent));
         currHealth -= damage;
 
         ModifyLightHealthBar();

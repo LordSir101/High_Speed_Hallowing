@@ -10,7 +10,7 @@ public class PlayerImpact : MonoBehaviour
 
     //public float ImpactSpeed { get; set; } = 0f;
     public const float IMPACTSPEEDINCREASE = 2;
-    public int DamageBonus = 0;
+    public float DamageBonusPercent = 0;
 
     
     private float impactActionWindow = 0.3f;
@@ -73,9 +73,9 @@ public class PlayerImpact : MonoBehaviour
                 playerAnimation.AttackAnimation(rb.velocity);
             }
 
-            other.gameObject.GetComponent<EnemyHealth>().DealDamage(impact, DamageBonus);
+            other.gameObject.GetComponent<EnemyHealth>().DealDamage(impact, DamageBonusPercent);
             playerAudio.PlayAttackSound();
-            pauseControl.HitPause(0.07f);
+            //pauseControl.HitPause(0.07f);
             //StartCoroutine(HitPause(other.gameObject, gameObject));
             
             

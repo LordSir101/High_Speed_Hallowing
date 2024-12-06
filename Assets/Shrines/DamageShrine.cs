@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class DamageShrine : Shrine
 {
     PlayerImpact playerImpactScript;
-    private int[] dmgUpgradeValues;
+    private float[] dmgUpgradeValues;
     [SerializeField] Sprite cleanseIcon;
     [SerializeField] Material cleanseIconMaterial;
 
@@ -17,7 +17,7 @@ public class DamageShrine : Shrine
         CleanseIcon = cleanseIcon;
         CleanseIconMaterial = cleanseIconMaterial;
 
-        dmgUpgradeValues = new int[] {10, 10, 15};
+        dmgUpgradeValues = new float[] {0.10f, 0.10f, 0.15f};
     }
 
     protected override void ShowUpgradeText()
@@ -33,7 +33,7 @@ public class DamageShrine : Shrine
         if(rm.Essence >= upgradeCosts[numUpgrades])
         {
             rm.Essence -= upgradeCosts[numUpgrades];
-            playerImpactScript.DamageBonus += dmgUpgradeValues[numUpgrades];
+            playerImpactScript.DamageBonusPercent += dmgUpgradeValues[numUpgrades];
             numUpgrades++;
 
         }
