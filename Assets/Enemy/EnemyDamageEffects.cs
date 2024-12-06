@@ -104,7 +104,7 @@ public class EnemyDamageEffects : MonoBehaviour
             spriteParent.localScale = new Vector2(scale, scale);
             yield return null;
         }
-        transform.localScale = new Vector2(1, 1);
+        spriteParent.localScale = new Vector2(1, 1);
     }
 
     private void SetFlashAmount(float amount)

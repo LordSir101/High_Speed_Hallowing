@@ -29,6 +29,7 @@ public class HazardAttack : MonoBehaviour
         attackVisuals.transform.localScale = new Vector3(attackStats.Size, attackStats.Size, 0);
         
         attack.transform.position  = attackPos;
+        
         //attack.transform.parent = gameObject.transform;
         //attack.transform.parent = transform; // make the attack a child of enemy 
 
@@ -37,6 +38,7 @@ public class HazardAttack : MonoBehaviour
         attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize, attackStats.animationStartPercent);
 
         attack.transform.parent = transform;
+        attackVisuals.transform.parent = transform;
         //attack.GetComponent<SpriteRenderer>().sortingLayerID = 0;
 
         float delay = UnityEngine.Random.Range(0,2);

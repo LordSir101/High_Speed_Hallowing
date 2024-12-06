@@ -12,6 +12,7 @@ public class GameControl : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
+        pauseControl = GetComponent<PauseControl>();
         PlayMusic();
     }
 
