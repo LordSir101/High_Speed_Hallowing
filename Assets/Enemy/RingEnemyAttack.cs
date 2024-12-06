@@ -16,6 +16,10 @@ public class RingEnemyAttack : MonoBehaviour
     private GameObject attackType;
 
     public Animator animator;
+    private EnemySounds audioController;
+
+    [Header("attack Sounds")]
+    [SerializeField] GameObject attackAudioParent;
 
     public float windupTimer = 0;
 
@@ -28,6 +32,7 @@ public class RingEnemyAttack : MonoBehaviour
         attackStats = gameObject.GetComponent<EnemyTelegraphAttack>();
         animator = gameObject.GetComponentInChildren<Animator>();
         behaviourScript = gameObject.GetComponent<RingEnemyBehaviour>();
+        audioController = gameObject.GetComponentInChildren<EnemySounds>();
 
         GameObject attack = Instantiate(attackType);
         
@@ -65,7 +70,9 @@ public class RingEnemyAttack : MonoBehaviour
 
             // if(windupTimer / attackStats.windupTime >= 0.8)
             // {
-            
+                // set chain attack audio as the audio to be played
+                // the audio will be played later by an animation event
+                audioController.SetCurrAttackAudio(attackAudioParent);
                 animator.SetTrigger("Attack");
                 animationComplete = true;
                 //attackScript.startAnimation = false;
@@ -89,10 +96,10 @@ public class RingEnemyAttack : MonoBehaviour
         StartCoroutine(attackScript.StartCooldown());
     }
 
-    public void PlayAttackSound()
-    {
-        GetComponentInChildren<AudioSource>().Play();
-    }
+    // public void PlayAttackSound()
+    // {
+    //     GetComponentInChildren<AudioSource>().Play();
+    // }
 
     // public void AnimateActiveFrames()
     // {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerImpact : MonoBehaviour
@@ -18,6 +19,7 @@ public class PlayerImpact : MonoBehaviour
     private PlayerAnimation playerAnimation;
     private PlayerReflectDash playerReflectDash;
     private PlayerGrapple playerGrapple;
+    private PlayerAudio playerAudio;
     //private PlayerMovement playerMovement;
 
     void Start()
@@ -25,6 +27,7 @@ public class PlayerImpact : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerReflectDash = GetComponent<PlayerReflectDash>();
         playerGrapple = GetComponent<PlayerGrapple>();
+        playerAudio = GetComponentInChildren<PlayerAudio>();
         //playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -70,8 +73,10 @@ public class PlayerImpact : MonoBehaviour
             }
 
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(impact, DamageBonus);
-            GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().HitPause(0.01f);
-            GetComponentInChildren<AudioSource>().Play();
+            playerAudio.PlayAttackSound();
+            GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().HitPause(0.07f);
+            //StartCoroutine(HitPause(other.gameObject, gameObject));
+            
             
             ResetActionWindow();
 
@@ -80,6 +85,34 @@ public class PlayerImpact : MonoBehaviour
             
         }
     }
+
+    // IEnumerator HitPause(GameObject enemy, GameObject player)
+    // {
+    //     // check if enemy died during the hit
+    //     Rigidbody2D enemyrb = null;
+    //     Vector2 enemyOrigionalVel = Vector2.zero;
+
+    //     if(enemy != null)
+    //     {
+    //         enemyrb = enemy.GetComponent<Rigidbody2D>();
+    //         enemyOrigionalVel = enemyrb.velocity;
+    //         enemyrb.velocity = Vector2.zero;
+    //     }
+       
+
+    //     Rigidbody2D playerrb = player.GetComponent<Rigidbody2D>();
+    //     Vector2 playerOrigionalVel = playerrb.velocity;
+    //     playerrb.velocity = Vector2.zero;
+
+    //     yield return new WaitForSeconds(1f);
+
+    //     playerrb.velocity = playerOrigionalVel;
+    //     if(enemyrb != null)
+    //     {
+    //         enemyrb.velocity = enemyOrigionalVel;
+    //     }
+        
+    // }
 
     private void OnCollisionEnter2D(Collision2D other)
     {

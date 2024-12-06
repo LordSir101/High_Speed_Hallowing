@@ -4760,7 +4760,7 @@ AnimationClip:
   - time: 0.51666665
     functionName: PlayAttackSound
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 8951143509657351926, guid: e9b843b028dca0c44b44d70991645395, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

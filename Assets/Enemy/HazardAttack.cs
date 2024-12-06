@@ -11,6 +11,8 @@ public class HazardAttack : MonoBehaviour
 
     [SerializeField]
     private GameObject attackType;
+    [SerializeField] GameObject acidPrefab;
+    GameObject attackVisuals;
     GameObject attack;
     Vector2 attackPos;
     // Start is called before the first frame update
@@ -23,6 +25,8 @@ public class HazardAttack : MonoBehaviour
         attackPos = GetAttackPosition();
 
         attack = Instantiate(attackType);
+        attackVisuals = Instantiate(acidPrefab);
+        attackVisuals.transform.localScale = new Vector3(attackStats.Size, attackStats.Size, 0);
         
         attack.transform.position  = attackPos;
         //attack.transform.parent = gameObject.transform;
@@ -76,7 +80,8 @@ public class HazardAttack : MonoBehaviour
         if(attackScript.attackEnded)
         {
             // attackScript.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
-            attackScript.transform.GetChild(1).gameObject.SetActive(false);
+            //attackScript.transform.GetChild(1).gameObject.SetActive(false);
+            attackVisuals.SetActive(false);
             // attackPos = GetAttackPosition();
             // attack.transform.position = attackPos;
         }
@@ -85,12 +90,14 @@ public class HazardAttack : MonoBehaviour
         {
             //attackScript.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
             
-            attackScript.transform.GetChild(1).gameObject.SetActive(true);
+            //attackScript.transform.GetChild(1).gameObject.SetActive(true);
+            attackVisuals.SetActive(true);
         }
         else
         {
             attackPos = GetAttackPosition();
             attack.transform.position = attackPos;
+            attackVisuals.transform.position = attackPos;
         }
     }
 

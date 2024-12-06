@@ -9,6 +9,8 @@ public class EnemyDamageEffects : MonoBehaviour
    [SerializeField] private Color flashColor = Color.white;
    [SerializeField] private float flashTime = 0.4f;
 
+   public AnimationCurve animCurve;
+
    private SpriteRenderer[] spriteRenderers;
    private List<Material> materials;
 
@@ -79,6 +81,31 @@ public class EnemyDamageEffects : MonoBehaviour
             yield return null;
         }
    }
+
+   public void StartDamageFlinch()
+   {
+        StartCoroutine(DamageFlinch(0.2f));
+   }
+
+    IEnumerator DamageFlinch(float time)
+    {
+        // Vector2 scale = dir * 0.5f;
+        // transform.localScale = new Vector2(0.7f, 0.7f);
+        // yield return new WaitForSecondsRealtime(time);
+        // transform.localScale = new Vector2(1,1);
+        Transform spriteParent = transform.GetChild(0);
+        float startTime = Time.time;
+
+        while(Time.time - startTime <= time)
+        {
+            float ratio = (Time.time - startTime) / time;
+            //float scale = Mathf.Lerp(1, 0.7f, ratio);
+            float scale = animCurve.Evaluate(ratio);
+            spriteParent.localScale = new Vector2(scale, scale);
+            yield return null;
+        }
+        transform.localScale = new Vector2(1, 1);
+    }
 
     private void SetFlashAmount(float amount)
     {

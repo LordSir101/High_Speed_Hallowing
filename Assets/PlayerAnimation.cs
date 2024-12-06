@@ -71,7 +71,7 @@ public class PlayerAnimation : MonoBehaviour
         // if we are currently in the grapple spin animation when attacking, just use that instead of the normal attack animation
         if(!animator.GetCurrentAnimatorStateInfo(0).IsName("GrappleSpin"))
         {
-             animator.speed = 1;
+            animator.speed = 1;
             animator.SetTrigger("Attack");
         }
        

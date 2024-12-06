@@ -8,6 +8,7 @@ public class IceEnemyConeAttack : MonoBehaviour
     private EnemyTelegraphAttack attackStats;
     private TH_Cone attackScript;
     private IceEnemyBehaviour behaviourScript;
+    private EnemySounds audioController;
     GameObject attackObj;
 
     [SerializeField]
@@ -17,12 +18,14 @@ public class IceEnemyConeAttack : MonoBehaviour
     public bool attacking = false;
     private bool animationComplete = false;
     [SerializeField] private GameObject snowConePrefab;
+    [SerializeField] GameObject snowconeAudioParent;
 
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         attackStats = gameObject.GetComponent<EnemyTelegraphAttack>();
+        audioController = gameObject.GetComponentInChildren<EnemySounds>();
 
         attackObj = Instantiate(attackType);
         attackObj.transform.position = transform.position;
@@ -61,6 +64,7 @@ public class IceEnemyConeAttack : MonoBehaviour
 
             attacking = true;
             attackScript.StartAttack();
+            audioController.SetCurrAttackAudio(snowconeAudioParent);
             //ToggleAttackReady(false);
         }
 
@@ -72,6 +76,7 @@ public class IceEnemyConeAttack : MonoBehaviour
             // {
                 GameObject attack = Instantiate(snowConePrefab, gameObject.transform.position, attackObj.transform.localRotation);
                 attack.transform.parent = transform;
+                attack.GetComponent<AudioSource>().Play();
                 animationComplete = true;
                 //attackScript.startAnimation = false;
                 //windupTimer = 0;

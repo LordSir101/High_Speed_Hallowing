@@ -125,6 +125,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\Enemy\EnemyDamageEffects.cs" />
+    <Compile Include="Assets\PlayerAudio.cs" />
     <Compile Include="Assets\PlayerCooldowns.cs" />
     <Compile Include="Assets\DestroyOnEnd.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />

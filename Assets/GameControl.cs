@@ -6,10 +6,12 @@ public class GameControl : MonoBehaviour
 {
     private float gameTime = 0;
     private bool gameEnded = false;
+    [SerializeField] AudioSource backgroundMusic;
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1;
+        PlayMusic();
     }
 
     // Update is called once per frame
@@ -42,5 +44,13 @@ public class GameControl : MonoBehaviour
         // hud.SetActive(false);
         // gameObject.SetActive(true);
         // PauseControl.PauseGame(true);
+    }
+
+    //************************************************************************************************************************
+    // Make sure to get music that can be used for commercial purposes if selling the game. current version cannot be used
+    //************************************************************************************************************************
+    void PlayMusic()
+    {
+        backgroundMusic.Play();
     }
 }

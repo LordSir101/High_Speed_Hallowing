@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public InputActionReference movement, dash;
 
     public AnimationCurve animCurve;
+    private PlayerAudio playerAudio;
 
     private bool isDashing = false;
     public bool canDash {get;set;}= true;
@@ -21,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
-    [SerializeField] private float wallJumpForce = 12f;
+    [SerializeField] private float wallJumpForce = 13f;
     [SerializeField] private float wallJumpTime = 0.2f, wallJumpPause = 0.01f;
     [SerializeField] private GameObject wallJumpEffect;
     private float wallJumpCombo = 0;
@@ -31,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     //private Vector2 wallJumpDir;
 
     [Header("Dash")]
-    [SerializeField] public float dashSpeed {get; set;}= 13f;
+    [SerializeField] public float dashSpeed {get; set;}= 14f;
     [SerializeField] private float dashTime = 0.3f, dashPause = 0.05f;
     
 
@@ -59,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerImpact= GetComponent<PlayerImpact> ();
+        playerAudio = GetComponentInChildren<PlayerAudio>();
         initialBaseMoveSpeed = baseMoveSpeed;
     }
 
@@ -359,6 +361,8 @@ public class PlayerMovement : MonoBehaviour
         float startTime = Time.time;
         rb.drag = 0;
 
+        playerAudio.PlayDashSound();
+
         while (Time.time - startTime <= dashTime)
 		{
 			rb.velocity = force.normalized * dashSpeed;
@@ -409,6 +413,8 @@ public class PlayerMovement : MonoBehaviour
 
         float startTime = Time.time;
         rb.drag = 0;
+
+        playerAudio.PlayJumpSound();
 
         while (Time.time - startTime <= dashTime)
 		{

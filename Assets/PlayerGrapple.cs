@@ -21,6 +21,8 @@ public class PlayerGrapple : MonoBehaviour
     public bool grappling = false;
     public float initialDrag {get; set;}
     public bool canGrapple {get;set;} = true;
+
+    private PlayerAudio playerAudio;
     //private float grappleCooldown = 3.5f;
 
     
@@ -33,6 +35,7 @@ public class PlayerGrapple : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerAudio = GetComponentInChildren<PlayerAudio>();
     }
 
     private void OnEnable()
@@ -117,6 +120,8 @@ public class PlayerGrapple : MonoBehaviour
         float maxGrappleSpeed = initalSpeed + maxGrappleAccel;
 
         StartCoroutine(AnimateGrapple());
+
+        playerAudio.PlayGrappleSound();
 
         while (grappling)
         {
@@ -211,6 +216,7 @@ public class PlayerGrapple : MonoBehaviour
 
     IEnumerator AnimateGrappleShot(GameObject target = null)
     {
+        playerAudio.PlayGrappleShootSound();
         float distance = (grappleLocation - rb.position).magnitude;
 
         // Vector2 normalized = (grappleLocation - rb.position).normalized;
