@@ -47,7 +47,7 @@ public class EnemyHealth : MonoBehaviour
         // multiply damage mod by 1.5 so the difference between attacks is more obvious
         // damage bonus percent is damage bonus from upgrades
         int damage = (int) Math.Floor(impact.magnitude * damageMod * 1.5f  * (1 + DamageBonusPercent));
-        currHealth -= damage;
+        //currHealth -= damage;
 
         ModifyLightHealthBar();
 

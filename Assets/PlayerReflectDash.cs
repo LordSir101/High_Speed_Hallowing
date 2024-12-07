@@ -5,10 +5,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerReflectDash : MonoBehaviour
 {
-    [SerializeField] private InputActionReference reflectDash, movement;
+    [SerializeField] private InputActionReference reflectDash, movement, pointerPos;
     [Header("Reflect Dash")]
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
+    [SerializeField] private LayerMask enemyLayer;
     private GameObject reflectDashArrow = null;
     private GameObject relfectDashtarget = null;
     private float reflectDashSpeed= 11f;
@@ -24,6 +25,8 @@ public class PlayerReflectDash : MonoBehaviour
 
     PlayerMovement playerMovement;
     PlayerImpact playerImpact;
+
+    Coroutine currDash;
     
     void Start()
     {
@@ -54,47 +57,55 @@ public class PlayerReflectDash : MonoBehaviour
     private void CheckReflectDash(InputAction.CallbackContext context)
     {
         // We can only reflect dash off of an enemy
-        if(currentCollisions.Count > 0)
-        {
-            ReflectDashSetup();
-        }
+        // if(currentCollisions.Count > 0)
+        // {
+        //     ReflectDashSetup();
+        // }
+        ReflectDashSetup();
     }
 
     private void ReflectDashSetup()
     {
         
-        CancelOtherMovement();
-        reflectDashing = true;
-        prevVelocity = rb.velocity;
+        
 
-        Vector2 direction = movement.action.ReadValue<Vector2>();
-        GameObject closestEnemy = null;
+        // Vector2 direction = movement.action.ReadValue<Vector2>();
+        // GameObject closestEnemy = null;
 
-        float closestEnemyDistance = float.MaxValue;
+        // float closestEnemyDistance = float.MaxValue;
 
-        foreach(GameObject col in currentCollisions)
+        // foreach(GameObject col in currentCollisions)
+        // {
+        //     // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
+        //     if(col.gameObject != null)
+        //     {
+        //         float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
+        //         if(distance < closestEnemyDistance)
+        //         {
+        //             closestEnemyDistance = distance;
+        //             closestEnemy = col;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
+        //         removalQueue.Add(col);
+        //     }
+        // };
+
+        // if(closestEnemy != null)
+        // {
+        Vector2 dir = GetDashDirection();
+        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: 1.6f, layerMask: enemyLayer);
+        if(hitTarget)
         {
-            // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
-            if(col.gameObject != null)
-            {
-                float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
-                if(distance < closestEnemyDistance)
-                {
-                    closestEnemyDistance = distance;
-                    closestEnemy = col;
-                }
-            }
-            else
-            {
-                // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
-                removalQueue.Add(col);
-            }
-        };
+            CancelOtherMovement();
+            reflectDashing = true;
+            prevVelocity = rb.velocity;
 
-        if(closestEnemy != null)
-        {
             reflectDash.action.canceled += ReflectDash;
-            relfectDashtarget = closestEnemy;
+            //relfectDashtarget = closestEnemy;
+            relfectDashtarget = hitTarget.transform.gameObject;
 
             //Stop enemy from moving away
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
@@ -110,8 +121,21 @@ public class PlayerReflectDash : MonoBehaviour
             rb.position = teleportLocation;
 
             reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
+
         }
+            
+        //}
      
+    }
+
+    private Vector2 GetDashDirection()
+    {
+        Vector2 mousePos = pointerPos.action.ReadValue<Vector2>();
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        Vector2 direction = mousePos - rb.position;
+
+        return direction.normalized;
     }
 
     private void ReflectDash(InputAction.CallbackContext context)
@@ -145,7 +169,7 @@ public class PlayerReflectDash : MonoBehaviour
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         }
         
-        StartCoroutine(PerformDash(direction* reflectDashSpeed, reflectDashTime));
+        currDash = StartCoroutine(PerformDash(direction* reflectDashSpeed, reflectDashTime));
 
         Destroy(reflectDashArrow);
     }
@@ -156,6 +180,14 @@ public class PlayerReflectDash : MonoBehaviour
         gameObject.GetComponent<PlayerGrapple>().EndGrapple();
         playerMovement.CanMove = false;
         playerMovement.dash.action.Disable();
+
+        // allows to start new reflect dash during a reflect dash
+        if(currDash != null)
+        {
+            StopCoroutine(currDash);
+            reflectDash.action.Enable();
+        }
+        
     }
 
     private void RemoveNullCollisions()
@@ -214,7 +246,7 @@ public class PlayerReflectDash : MonoBehaviour
         // float playerRadValue = Mathf.Atan2(rb.velocity.normalized.y, rb.velocity.normalized.x);
         // float playerAngle= playerRadValue * (180/Mathf.PI);
         // rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle - 90);
-
+        reflectDash.action.Disable();
         // instead of teleporting at the beginning of the dash, just move really quickly instead
         while (Time.time - startTime <= 0.05)
 		{
@@ -232,6 +264,11 @@ public class PlayerReflectDash : MonoBehaviour
         startTime = Time.time;
         while (Time.time - startTime <= time)
 		{
+            // don't allow another reflect dash until current dash is half done
+            if(Time.time - startTime > time * 0.5)
+            {
+                reflectDash.action.Enable();
+            }
 			rb.velocity = force;
             Vector2 normalized = rb.velocity.normalized;
             float playerRadValue = Mathf.Atan2(normalized.y, normalized.x);
