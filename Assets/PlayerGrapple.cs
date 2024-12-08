@@ -23,6 +23,7 @@ public class PlayerGrapple : MonoBehaviour
     public bool canGrapple {get;set;} = true;
 
     private PlayerAudio playerAudio;
+    private PlayerCooldowns playerCooldowns;
     //private float grappleCooldown = 3.5f;
 
     
@@ -36,6 +37,7 @@ public class PlayerGrapple : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimation = GetComponent<PlayerAnimation>();
         playerAudio = GetComponentInChildren<PlayerAudio>();
+        playerCooldowns = GetComponent<PlayerCooldowns>();
     }
 
     private void OnEnable()
@@ -53,6 +55,7 @@ public class PlayerGrapple : MonoBehaviour
     {
         if(canGrapple)
         {
+
             canGrapple = false;
             Vector2 grappleDirection = GetGrappleDirection();
 
@@ -62,6 +65,8 @@ public class PlayerGrapple : MonoBehaviour
 
             // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
             RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance + 0.2f);
+
+            playerCooldowns.StartGrappleCooldown();
 
             if(hitTarget)
             {

@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     public AnimationCurve animCurve;
     private PlayerAudio playerAudio;
+    private PlayerCooldowns playerCooldowns;
 
     private bool isDashing = false;
     public bool canDash {get;set;}= true;
@@ -63,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerImpact= GetComponent<PlayerImpact> ();
         playerAudio = GetComponentInChildren<PlayerAudio>();
+        playerCooldowns = GetComponent<PlayerCooldowns>();
         initialBaseMoveSpeed = baseMoveSpeed;
     }
 
@@ -353,7 +355,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator PerformDash(Vector2 force, float time)
     {
-       
+        playerCooldowns.StartDashCooldown();
         isDashing = true;
         canDash = false;
 
