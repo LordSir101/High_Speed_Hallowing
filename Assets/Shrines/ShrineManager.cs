@@ -41,10 +41,17 @@ public class ShrineManager : MonoBehaviour
         bigShrine.TurnOnGem();
         IncreaseShrineCleanseCost();
 
-        StartCoroutine(PlayCleanseSound());
+        PlayCleanseSound();
+        
     }
 
-    IEnumerator PlayCleanseSound()
+    // public function so big shrine can use it too
+    public void PlayCleanseSound()
+    {
+        StartCoroutine(StartCleanseSound());
+    }
+
+    IEnumerator StartCleanseSound()
     {
         shrineCleanseSound.Play();
         shrineCleanseSound.pitch = 1;
