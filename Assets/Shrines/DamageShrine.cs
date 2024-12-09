@@ -35,7 +35,8 @@ public class DamageShrine : Shrine
             rm.Essence -= upgradeCosts[numUpgrades];
             playerImpactScript.DamageBonusPercent += dmgUpgradeValues[numUpgrades];
             numUpgrades++;
-
+            
+            LightCandle();
         }
        
         if(numUpgrades == maxUpgrades)
@@ -47,6 +48,5 @@ public class DamageShrine : Shrine
             ShowUpgradeText();
         }
 
-        LightCandle();
     }
 }

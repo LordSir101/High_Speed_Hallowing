@@ -31,6 +31,7 @@ public class HealingShrine : Shrine
             playerHealthScript.HealPercentHealthOverTime(0.3f, 10);
             numUpgrades++;
 
+            LightCandle();
         }
        
         if(numUpgrades == maxUpgrades)
@@ -41,7 +42,5 @@ public class HealingShrine : Shrine
         {
             ShowUpgradeText();
         }
-
-        LightCandle();
     }
 }

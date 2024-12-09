@@ -43,6 +43,7 @@ public class HealthShrine : Shrine
             playerHealthScript.Heal(healthUpgradeValues[numUpgrades]);
             numUpgrades++;
 
+            LightCandle();
         }
        
         if(numUpgrades == maxUpgrades)
@@ -54,7 +55,6 @@ public class HealthShrine : Shrine
             ShowUpgradeText();
         }
 
-        LightCandle();
     }
 
     // protected override void ChangeIcon()
