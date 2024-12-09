@@ -18,7 +18,7 @@ public class HealingShrine : Shrine
     protected override void ShowUpgradeText()
     {
         interactText.enabled = true;
-        interactText.text = $"Heal 30% health ({upgradeCosts[numUpgrades]})";
+        interactText.text = $"Heal 50% health ({upgradeCosts[numUpgrades]})";
     }
 
     protected override void Upgrade(InputAction.CallbackContext context)
@@ -28,9 +28,10 @@ public class HealingShrine : Shrine
         if(rm.Essence >= upgradeCosts[numUpgrades])
         {
             rm.Essence -= upgradeCosts[numUpgrades];
-            playerHealthScript.HealPercentHealthOverTime(0.3f, 10);
+            playerHealthScript.HealPercentHealthOverTime(0.5f, 10);
             numUpgrades++;
 
+            LightCandle();
         }
        
         if(numUpgrades == maxUpgrades)
@@ -41,7 +42,5 @@ public class HealingShrine : Shrine
         {
             ShowUpgradeText();
         }
-
-        LightCandle();
     }
 }

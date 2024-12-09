@@ -16,6 +16,7 @@ TagManager:
   - GrappleBuffer
   - EndGoal
   - ShrineCandle
+  - AttackHitbox
   layers:
   - Default
   - TransparentFX

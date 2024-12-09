@@ -23,7 +23,7 @@ public class HealthShrine : Shrine
         // animator = GetComponentInChildren<Animator>();
         // icon = Utils.FindGameObjectInChildWithTag(gameObject, "Icon");
 
-        healthUpgradeValues = new int[] {50, 100, 200};
+        healthUpgradeValues = new int[] {200, 300, 400};
     }
 
     protected override void ShowUpgradeText()
@@ -43,6 +43,7 @@ public class HealthShrine : Shrine
             playerHealthScript.Heal(healthUpgradeValues[numUpgrades]);
             numUpgrades++;
 
+            LightCandle();
         }
        
         if(numUpgrades == maxUpgrades)
@@ -54,7 +55,6 @@ public class HealthShrine : Shrine
             ShowUpgradeText();
         }
 
-        LightCandle();
     }
 
     // protected override void ChangeIcon()
