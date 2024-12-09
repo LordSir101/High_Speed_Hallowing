@@ -11,12 +11,16 @@ public class AnimateReflectDashArrow : MonoBehaviour
     void Update()
     {
         Vector2 dir = movement.action.ReadValue<Vector2>();
+        if(dir != Vector2.zero)
+        {
+            float radvalue = Mathf.Atan2(dir.y, dir.x);
+            float angle= radvalue * (180/Mathf.PI);
 
-        float radvalue = Mathf.Atan2(dir.y, dir.x);
-        float angle= radvalue * (180/Mathf.PI);
+            transform.localRotation = Quaternion.Euler(0,0,angle -90);
+            transform.position = transform.position;
+        }
 
-        transform.localRotation = Quaternion.Euler(0,0,angle -90);
-        transform.position = transform.position;
+        
         
     }
 }

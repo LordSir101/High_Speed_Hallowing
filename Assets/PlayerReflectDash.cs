@@ -15,6 +15,7 @@ public class PlayerReflectDash : MonoBehaviour
     private float reflectDashSpeed= 11f;
     public bool reflectDashing = false;
     public Vector2 prevVelocity;
+    private Vector2 reflectDashDirection;
     //private float reflectDashSpeed = 4f;
     private float reflectDashTime = 0.2f;
     Vector3 enemyPos;
@@ -40,6 +41,15 @@ public class PlayerReflectDash : MonoBehaviour
     void Update()
     {
         RemoveNullCollisions();
+
+        if(reflectDashing)
+        {
+            if(movement.action.ReadValue<Vector2>() != Vector2.zero)
+            {
+                reflectDashDirection = movement.action.ReadValue<Vector2>();
+            }
+            
+        }
     }
 
 
@@ -96,7 +106,7 @@ public class PlayerReflectDash : MonoBehaviour
         // if(closestEnemy != null)
         // {
         Vector2 dir = GetDashDirection();
-        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: 1.6f, layerMask: enemyLayer);
+        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: 2f, layerMask: enemyLayer);
         if(hitTarget)
         {
             CancelOtherMovement();
@@ -144,7 +154,7 @@ public class PlayerReflectDash : MonoBehaviour
         playerMovement.dash.action.Enable();
         playerMovement.DisableBasicDash();
 
-        Vector2 direction = movement.action.ReadValue<Vector2>();
+        // Vector2 direction = movement.action.ReadValue<Vector2>();
 
         // Teleport the player a small distance along the new direction vector, gives the sense they "bounced" off the enemy
         // Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y) + direction * 1.3f;
@@ -169,7 +179,7 @@ public class PlayerReflectDash : MonoBehaviour
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         }
         
-        currDash = StartCoroutine(PerformDash(direction* reflectDashSpeed, reflectDashTime));
+        currDash = StartCoroutine(PerformDash(reflectDashDirection* reflectDashSpeed, reflectDashTime));
 
         Destroy(reflectDashArrow);
     }

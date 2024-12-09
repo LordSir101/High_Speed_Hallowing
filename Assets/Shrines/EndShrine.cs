@@ -86,6 +86,8 @@ public class EndShrine : MonoBehaviour
         if(rm.Essence >= cost)
         {
             GetComponent<ParticleSystem>().Play();
+            shrineManager.PlayCleanseSound();
+            
             rm.Essence -= cost;
             GameStats.IncreaseShrinesCleansed();
             //gameObject.GetComponent<CircleCollider2D>().enabled = false;
