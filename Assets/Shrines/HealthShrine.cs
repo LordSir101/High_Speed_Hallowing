@@ -23,7 +23,7 @@ public class HealthShrine : Shrine
         // animator = GetComponentInChildren<Animator>();
         // icon = Utils.FindGameObjectInChildWithTag(gameObject, "Icon");
 
-        healthUpgradeValues = new int[] {50, 100, 200};
+        healthUpgradeValues = new int[] {200, 300, 400};
     }
 
     protected override void ShowUpgradeText()
