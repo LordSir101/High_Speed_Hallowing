@@ -101,6 +101,7 @@
     <Compile Include="Assets\Shrines\HealthShrine.cs" />
     <Compile Include="Assets\Shrines\ArmorShrine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\PlayerAttack.cs" />
     <Compile Include="Assets\Enemy\NerdEnemyBehaviour.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />

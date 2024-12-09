@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class DamageShrine : Shrine
 {
-    PlayerImpact playerImpactScript;
+    PlayerAttack playerAttackScript;
     private float[] dmgUpgradeValues;
     [SerializeField] Sprite cleanseIcon;
     [SerializeField] Material cleanseIconMaterial;
@@ -13,7 +13,7 @@ public class DamageShrine : Shrine
     // Start is called before the first frame update
     void Start()
     {
-        playerImpactScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerImpact>();
+        playerAttackScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
         CleanseIcon = cleanseIcon;
         CleanseIconMaterial = cleanseIconMaterial;
 
@@ -33,7 +33,7 @@ public class DamageShrine : Shrine
         if(rm.Essence >= upgradeCosts[numUpgrades])
         {
             rm.Essence -= upgradeCosts[numUpgrades];
-            playerImpactScript.DamageBonusPercent += dmgUpgradeValues[numUpgrades];
+            playerAttackScript.DamageBonusPercent += dmgUpgradeValues[numUpgrades];
             numUpgrades++;
             
             LightCandle();
