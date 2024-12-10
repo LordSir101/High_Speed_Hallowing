@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
-public class EndShrine : MonoBehaviour
+public class TutEndShrine : MonoBehaviour
 {
     List<GameObject> gems;
     [SerializeField] GameObject gemParent;
@@ -14,7 +14,7 @@ public class EndShrine : MonoBehaviour
     [SerializeField] private ShrineManager shrineManager;
     TextMeshProUGUI interactText;
     private GameObject player;
-    private int cost = 8000;
+    private int cost = 300;
 
     int shrinesCleansed = 0;
     // Start is called before the first frame update
@@ -27,7 +27,6 @@ public class EndShrine : MonoBehaviour
         }
 
         interactText = Utils.FindGameObjectInChildWithTag(gameObject.GetComponentInChildren<Canvas>().gameObject, "InteractText").GetComponent<TextMeshProUGUI>();
-        Debug.Log(interactText.gameObject);
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -39,17 +38,19 @@ public class EndShrine : MonoBehaviour
 
     public void TurnOnGem()
     {
+        
         shrinesCleansed += 1;
         gems[shrinesCleansed -1].GetComponent<SpriteRenderer>().sprite = cleansedGemOutlineSprite;
         gems[shrinesCleansed -1].GetComponentInChildren<Light2D>().color = new Color32(0, 183, 12, 255);
         gems[shrinesCleansed -1].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(0, 183, 12, 255);
+        Debug.Log(shrinesCleansed);
     }
 
      private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Player")
         {
-            if(shrinesCleansed == 4)
+            if(shrinesCleansed == 1)
             {
                 // ShowTrText();
                 // interact.action.performed += Upgrade;
@@ -69,7 +70,7 @@ public class EndShrine : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            if(shrinesCleansed == 4)
+            if(shrinesCleansed == 1)
             {
                 interact.action.performed -= TributeBigShrine;
             }
@@ -89,14 +90,16 @@ public class EndShrine : MonoBehaviour
             shrineManager.PlayCleanseSound();
             
             rm.Essence -= cost;
-            GameStats.IncreaseShrinesCleansed();
+            //GameStats.IncreaseShrinesCleansed();
             //gameObject.GetComponent<CircleCollider2D>().enabled = false;
             //interactText.enabled = false;
 
             // allows upgrade text to appear right away without moving away from shrine
             interact.action.performed -= TributeBigShrine;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            shrineManager.StartFrenzyMode();
+
+            SceneControl.LoadScene("CastleMap");
+            //shrineManager.StartFrenzyMode();
             //gameObject.GetComponent<SpriteRenderer>().sprite = cleanseSprite;
 
             // ChangeIcon();

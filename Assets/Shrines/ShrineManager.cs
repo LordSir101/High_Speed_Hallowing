@@ -15,11 +15,13 @@ public class ShrineManager : MonoBehaviour
     [SerializeField] private Sprite happySprite;
     [SerializeField] private SpawnEnemy enemySpawner;
     [SerializeField] private AudioSource shrineCleanseSound;
-    private EndShrine bigShrine;
+    private GameObject bigShrine;
     // Start is called before the first frame update
     void Start()
     {
-        bigShrine = GameObject.FindGameObjectWithTag("EndGoal").GetComponent<EndShrine>();
+        
+        bigShrine = GameObject.FindGameObjectWithTag("EndGoal");
+
         shrines = new List<GameObject>();
         foreach (Transform childTransform in shrineParent.transform)
         {
@@ -38,7 +40,15 @@ public class ShrineManager : MonoBehaviour
         shrinesActivated += 1;
         GameStats.IncreaseShrinesCleansed();
         
-        bigShrine.TurnOnGem();
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.tutorial)
+        {
+            bigShrine.GetComponent<TutEndShrine>().TurnOnGem();
+        }
+        else
+        {
+            bigShrine.GetComponent<EndShrine>().TurnOnGem();
+        }
+        
         IncreaseShrineCleanseCost();
 
         PlayCleanseSound();

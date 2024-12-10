@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,7 +15,9 @@ public class TH_Cone : TelegraphedHitbox
             playerRb.GetComponent<PlayerGrapple>().EndGrapple();
             StartCoroutine(TempStopMovement(other.gameObject));
 
-            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);
+             // increase damage based on difficulty
+            int damage = (int) Math.Ceiling(Damage * GetComponent<EnemyInfo>().damageMod);
+            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             
             Vector3 pushDir = (other.gameObject.transform.position - transform.parent.position).normalized;
             playerRb.AddForce(pushDir * 4f, ForceMode2D.Impulse);

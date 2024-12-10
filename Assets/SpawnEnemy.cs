@@ -17,16 +17,19 @@ public class SpawnEnemy : MonoBehaviour
     
 
     private float spawntimer = 0f;
-    private float spawnTime = 1;
+    private float spawnTime = 2;
 
     //private int maxEnemies = 6;
     private bool spawnEnemies = true;
 
-    
+    private float damageMod =1;
+    private float healthMod =1;
 
     private List<GameObject> spawnPoints;
     void Start()
     {
+        SetStatsBasedOnDifficulty();
+        
         currWave = waveInfos[0];
         waveTime = waveInfos[0].time;
 
@@ -109,12 +112,12 @@ public class SpawnEnemy : MonoBehaviour
 
             if(enemiesThatCanBeSpawned.Count != 0)
             {
-                Instantiate(enemiesThatCanBeSpawned[UnityEngine.Random.Range(0, enemiesThatCanBeSpawned.Count)], new Vector3(posX, posY, 0), transform.rotation);
+                Spawn(enemiesThatCanBeSpawned[UnityEngine.Random.Range(0, enemiesThatCanBeSpawned.Count)], new Vector3(posX, posY, 0));
             }
             // if enemiesThatCanBeSpawned = 0, than the current enemies spawned follow the correct distribution already, so spawn a random enemy
             else
             {
-                Instantiate(currWave.possibleEnemies[UnityEngine.Random.Range(0, currWave.possibleEnemies.Count)], new Vector3(posX, posY, 0), transform.rotation);
+                Spawn(currWave.possibleEnemies[UnityEngine.Random.Range(0, currWave.possibleEnemies.Count)], new Vector3(posX, posY, 0));
             }
 
         }
@@ -134,16 +137,25 @@ public class SpawnEnemy : MonoBehaviour
             
             if(enemiesThatCanBeSpawned.Count != 0)
             {
-                Instantiate(enemiesThatCanBeSpawned[UnityEngine.Random.Range(0, enemiesThatCanBeSpawned.Count)], new Vector3(posX, posY, 0), transform.rotation);
+                Spawn(enemiesThatCanBeSpawned[UnityEngine.Random.Range(0, enemiesThatCanBeSpawned.Count)], new Vector3(posX, posY, 0));
             }
             // if enemiesThatCanBeSpawned = 0, than the current enemies spawned follow the correct distribution already, so spawn a random enemy
             else
             {
-                Instantiate(currWave.possibleEnemies[UnityEngine.Random.Range(0, currWave.possibleEnemies.Count)], new Vector3(posX, posY, 0), transform.rotation);
+                Spawn(currWave.possibleEnemies[UnityEngine.Random.Range(0, currWave.possibleEnemies.Count)], new Vector3(posX, posY, 0));
             }
 
             
         }
+    }
+
+    private void Spawn(GameObject enemyPrefab, Vector3 pos)
+    {
+        GameObject enemy = Instantiate(enemyPrefab, pos, transform.rotation);
+        EnemyInfo ei = enemy.GetComponent<EnemyInfo>();
+        ei.damageMod = damageMod;
+        ei.healthMod = healthMod;
+
     }
 
     private List<GameObject> GetEnemiesThatCanBeSpawned(WaveInfo wave)
@@ -173,7 +185,6 @@ public class SpawnEnemy : MonoBehaviour
                 validEnemies.Add(wave.possibleEnemies[index]);
             }
         }
-        Debug.Log(validEnemies.Count);
         return validEnemies;
     }
     private List<GameObject> GetValidSpawnPoints()
@@ -210,5 +221,23 @@ public class SpawnEnemy : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         int numEnemiesAvailableToSpawn = currWave.maxEnemies - enemies.Length;
         SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, currWave.maxEnemies));
+    }
+    private void SetStatsBasedOnDifficulty()
+    {
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        {
+            damageMod = 0.7f;
+            healthMod = 0.7f;
+        }
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        {
+            damageMod = 1;
+            healthMod = 1;
+        }
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.tutorial)
+        {
+            damageMod = 0.5f;
+            healthMod = 0.5f;
+        }
     }
 }

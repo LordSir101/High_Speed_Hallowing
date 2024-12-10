@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -57,7 +58,9 @@ public class SlowingCircle : TelegraphedHitbox
             // PlayerMovement playerMovement = other.gameObject.GetComponent<PlayerMovement>();
             // playerMovement.currSpeed -= 2;
 
-            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);
+             // increase damage based on difficulty
+            int damage = (int) Math.Ceiling(Damage * transform.parent.GetComponent<EnemyInfo>().damageMod);
+            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
 
             doDamageEffect = false;
         }

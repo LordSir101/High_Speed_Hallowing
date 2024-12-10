@@ -27,6 +27,7 @@ public class EnemyHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        maxHealth = (int) Math.Ceiling(maxHealth * GetComponent<EnemyInfo>().healthMod);
         currHealth = maxHealth;
 
         maxOuterLightRad = healthLight.pointLightOuterRadius;
