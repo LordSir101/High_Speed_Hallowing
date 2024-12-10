@@ -24,6 +24,7 @@ public class IceEnemyBehaviour : MonoBehaviour
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject snowballAudioParent;
     private float snowballTimer;
+    private float snowballDamageMod;
 
 
     EnemyTelegraphAttack attackInfo;
@@ -46,6 +47,7 @@ public class IceEnemyBehaviour : MonoBehaviour
 
     void Start()
     {
+        snowballDamageMod = GetComponent<EnemyInfo>().damageMod;
         speed = UnityEngine.Random.Range(minSpeed, maxSpeed);
 
         player = GameObject.FindGameObjectWithTag("Player");
@@ -131,7 +133,7 @@ public class IceEnemyBehaviour : MonoBehaviour
         }
 
         GameObject proj = Instantiate(projectilePrefab, throwingHand.transform.position, transform.rotation);
-        proj.GetComponent<Projectile>().Init(snowballDamage, GetComponent<EnemyInfo>().damageMod, snowballSprite);
+        proj.GetComponent<Projectile>().Init(snowballDamage, snowballDamageMod, snowballSprite);
         proj.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
 
         snowballAudioParent.GetComponent<AudioSource>().Play();
