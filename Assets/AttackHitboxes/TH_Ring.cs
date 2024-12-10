@@ -2,6 +2,7 @@
 // using System.Collections;
 // using System.Collections.Generic;
 // using Unity.VisualScripting;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -24,7 +25,10 @@ public class TH_Ring : TelegraphedHitbox
     {
         if(other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);
+            //Debug.Log(transform.parent.GetComponent<EnemyInfo>().damageMod);
+            // increase damage based on difficulty
+            int damage = (int) Math.Ceiling(Damage * transform.parent.GetComponent<EnemyInfo>().damageMod);
+            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             SetAllCollidersStatus(false);
         }
     }

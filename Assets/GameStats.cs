@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public static class GameStats
 {
    public static float completionTime {get;set;} = 0;
@@ -16,6 +17,15 @@ public static class GameStats
    public static int armor {get;set;} = 0;
    public static int soulPowerCollected {get;set;} = 0;
    public static int soulPowerSpent {get;set;} = 0;
+
+   public enum GameDifficulty
+   {
+        tutorial,
+        normal,
+        hard
+   }
+
+   public static GameDifficulty gameDifficulty {get;set;} = GameDifficulty.normal;
 
    public static void IncreaseEnemiesKilled()
    {
@@ -46,5 +56,4 @@ public static class GameStats
         soulPowerSpent = 0;
 
     }
-
 }

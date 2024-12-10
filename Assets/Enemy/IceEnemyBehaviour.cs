@@ -131,7 +131,7 @@ public class IceEnemyBehaviour : MonoBehaviour
         }
 
         GameObject proj = Instantiate(projectilePrefab, throwingHand.transform.position, transform.rotation);
-        proj.GetComponent<Projectile>().Init(snowballDamage, snowballSprite);
+        proj.GetComponent<Projectile>().Init(snowballDamage, GetComponent<EnemyInfo>().damageMod, snowballSprite);
         proj.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
 
         snowballAudioParent.GetComponent<AudioSource>().Play();

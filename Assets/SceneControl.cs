@@ -5,7 +5,6 @@ public class SceneControl : MonoBehaviour
 {
    public static void Quit()
    {
-        Debug.Log("quit");
         Application.Quit();
    }
 
