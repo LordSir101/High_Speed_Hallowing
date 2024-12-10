@@ -8,10 +8,12 @@ public class SlowingCircle : TelegraphedHitbox
     private float damageRate = 1;
     private float timer = 0;
     private bool doDamageEffect = false;
+    private float damageMod;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(Tick());
+        damageMod = transform.parent.GetComponent<EnemyInfo>().damageMod;
     }
 
     // Update is called once per frame
@@ -59,7 +61,7 @@ public class SlowingCircle : TelegraphedHitbox
             // playerMovement.currSpeed -= 2;
 
              // increase damage based on difficulty
-            int damage = (int) Math.Ceiling(Damage * transform.parent.GetComponent<EnemyInfo>().damageMod);
+            int damage = (int) Math.Ceiling(Damage * damageMod);
             other.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
 
             doDamageEffect = false;

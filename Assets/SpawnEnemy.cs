@@ -26,6 +26,9 @@ public class SpawnEnemy : MonoBehaviour
     private float healthMod =1;
 
     private List<GameObject> spawnPoints;
+
+    // private float strengthTimer = 0;
+    // private float strenghtUpgradeTime = 10;
     void Start()
     {
         SetStatsBasedOnDifficulty();
@@ -91,6 +94,16 @@ public class SpawnEnemy : MonoBehaviour
             
             }
         }
+
+        //TODO: use this to make enemies grow stronger as time goes on in endless mode
+
+        // strengthTimer += Time.deltaTime;
+        // if(strengthTimer >= strenghtUpgradeTime)
+        // {
+        //     damageMod += 0.2f;
+        //     healthMod += 0.2f;
+        //     strengthTimer = 0;
+        // }
         
     }
 
