@@ -12,6 +12,7 @@ public class GameOverPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI gameOverText;
     [SerializeField] TextMeshProUGUI completionTimeText;
     [SerializeField] TextMeshProUGUI shrinesCleansedText;
+    [SerializeField] TextMeshProUGUI difficultyText;
     void Start()
     {
         SetWin(GameStats.gameWon);
@@ -39,6 +40,8 @@ public class GameOverPanel : MonoBehaviour
     {
         completionTimeText.text = TimeSpan.FromSeconds(GameStats.completionTime).ToString(@"mm\:ss");
         shrinesCleansedText.text = $"{GameStats.shrinesCleansed}/{GameStats.totalShrines}";
+        Debug.Log(GameStats.gameDifficulty.ToString());
+        difficultyText.text = GameStats.gameDifficulty.ToString();
     }
 
     public void RestartGame()

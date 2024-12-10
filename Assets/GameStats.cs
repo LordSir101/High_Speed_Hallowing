@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public static class GameStats
+public class GameStats : MonoBehaviour
 {
    public static float completionTime {get;set;} = 0;
    public static bool gameWon {get;set;} = false;
@@ -55,5 +55,10 @@ public static class GameStats
         soulPowerCollected = 0;
         soulPowerSpent = 0;
 
+    }
+
+    public static void SetGameDifficulty(int diff)
+    {
+        gameDifficulty = (GameDifficulty)diff;
     }
 }

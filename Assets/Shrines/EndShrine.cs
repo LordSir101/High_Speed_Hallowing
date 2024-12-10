@@ -27,7 +27,6 @@ public class EndShrine : MonoBehaviour
         }
 
         interactText = Utils.FindGameObjectInChildWithTag(gameObject.GetComponentInChildren<Canvas>().gameObject, "InteractText").GetComponent<TextMeshProUGUI>();
-        Debug.Log(interactText.gameObject);
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
