@@ -85,6 +85,16 @@ public class PlayerGrapple : MonoBehaviour
         
     }
 
+    void Update()
+    {
+        // stop grappling if we are close to target destination
+        // this stops bug where player gets stuck in grapple animation bouncing back and forth
+        if(((grappleLocation - rb.position).magnitude < 0.2f) && grappling)
+        {
+            EndGrapple();
+        }
+    }
+
     // void EndGrappleCooldown()
     // {
     //     Debug.Log("grapple cooldown");
@@ -132,7 +142,7 @@ public class PlayerGrapple : MonoBehaviour
         {
 
             // prevents player from flying off the screen if they grapple past thier target
-            if(target.gameObject.tag == "Enemy")
+            if(target.gameObject.tag == "Enemy" || target.gameObject.tag == "Buffer")
             {
                 grappleLocation = target.transform.position;
             }

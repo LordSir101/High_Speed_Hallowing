@@ -8,6 +8,6 @@ public class EnemyInfo : MonoBehaviour
     [SerializeField] public Color soulColor;
     [SerializeField] public Color soulLightColor;
 
-    public float damageMod {get;set;}
-    public float healthMod {get;set;}
+    public float damageMod {get;set;} = 1;
+    public float healthMod {get;set;} = 1;
 }
