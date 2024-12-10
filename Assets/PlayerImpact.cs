@@ -74,7 +74,7 @@ public class PlayerImpact : MonoBehaviour
     // reset the action window when the player hurtbox collides with an enemy. (for the right click mechanic)
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "enemy")
+        if(other.gameObject.tag == "Enemy")
         {
             ResetActionWindow();
         }

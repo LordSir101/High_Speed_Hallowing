@@ -9,10 +9,10 @@ public class PlayerReflectDash : MonoBehaviour
     [Header("Reflect Dash")]
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask bufferLayer;
     private GameObject reflectDashArrow = null;
     private GameObject relfectDashtarget = null;
-    private float reflectDashSpeed= 11f;
+    private float reflectDashSpeed= 12f;
     public bool reflectDashing = false;
     public Vector2 prevVelocity;
     private Vector2 reflectDashDirection;
@@ -106,7 +106,7 @@ public class PlayerReflectDash : MonoBehaviour
         // if(closestEnemy != null)
         // {
         Vector2 dir = GetDashDirection();
-        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: 2f, layerMask: enemyLayer);
+        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: 2f, layerMask: bufferLayer);
         if(hitTarget)
         {
             CancelOtherMovement();

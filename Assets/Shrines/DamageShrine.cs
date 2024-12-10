@@ -13,7 +13,7 @@ public class DamageShrine : Shrine
     // Start is called before the first frame update
     void Start()
     {
-        playerAttackScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
+        playerAttackScript = Utils.FindGameObjectInChildWithTag(GameObject.FindGameObjectWithTag("Player"), "AttackHitbox").GetComponent<PlayerAttack>();
         CleanseIcon = cleanseIcon;
         CleanseIconMaterial = cleanseIconMaterial;
 

@@ -1282,8 +1282,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1978607171649806140}
   - component: {fileID: 5617285412527950299}
-  m_Layer: 2
-  m_Name: ReflectDashBuffer
+  m_Layer: 10
+  m_Name: RaycastBuffer
   m_TagString: Buffer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1339,7 +1339,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.6
+  m_Radius: 1
 --- !u!1001 &2626939021112293058
 PrefabInstance:
   m_ObjectHideFlags: 0
