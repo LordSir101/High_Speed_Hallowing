@@ -16,7 +16,7 @@ public class TH_Cone : TelegraphedHitbox
             StartCoroutine(TempStopMovement(other.gameObject));
 
              // increase damage based on difficulty
-            int damage = (int) Math.Ceiling(Damage * GetComponent<EnemyInfo>().damageMod);
+            int damage = (int) Math.Ceiling(Damage * transform.parent.GetComponent<EnemyInfo>().damageMod);
             other.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             
             Vector3 pushDir = (other.gameObject.transform.position - transform.parent.position).normalized;
