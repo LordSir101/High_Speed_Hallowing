@@ -82,6 +82,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Enemy\RingEnemyBehaviour.cs" />
     <Compile Include="Assets\Enemy\EnemyInfo.cs" />
+    <Compile Include="Assets\UI\StartMenu.cs" />
     <Compile Include="Assets\Enemy\EnemyHealth.cs" />
     <Compile Include="Assets\UI\PauseMenu.cs" />
     <Compile Include="Assets\Enemy\RingEnemyAttack.cs" />

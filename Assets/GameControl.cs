@@ -9,13 +9,6 @@ public class GameControl : MonoBehaviour
     [SerializeField] AudioSource backgroundMusic;
     [SerializeField] PauseControl pauseControl;
     // Start is called before the first frame update
-
-    void Awake()
-    {
-        //TODO: make this a menu option
-        GameStats.gameDifficulty = GameStats.GameDifficulty.normal;
-    }
-
     void Start()
     {
         Time.timeScale = 1;
