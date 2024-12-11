@@ -14,7 +14,7 @@ public class TutEndShrine : MonoBehaviour
     [SerializeField] private ShrineManager shrineManager;
     TextMeshProUGUI interactText;
     private GameObject player;
-    private int cost = 300;
+    private int cost = 0;
 
     int shrinesCleansed = 0;
     // Start is called before the first frame update
@@ -43,7 +43,6 @@ public class TutEndShrine : MonoBehaviour
         gems[shrinesCleansed -1].GetComponent<SpriteRenderer>().sprite = cleansedGemOutlineSprite;
         gems[shrinesCleansed -1].GetComponentInChildren<Light2D>().color = new Color32(0, 183, 12, 255);
         gems[shrinesCleansed -1].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color32(0, 183, 12, 255);
-        Debug.Log(shrinesCleansed);
     }
 
      private void OnTriggerEnter2D(Collider2D other)
@@ -98,6 +97,7 @@ public class TutEndShrine : MonoBehaviour
             interact.action.performed -= TributeBigShrine;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
+            GameStats.gameDifficulty = GameStats.GameDifficulty.normal;
             SceneControl.LoadScene("CastleMap");
             //shrineManager.StartFrenzyMode();
             //gameObject.GetComponent<SpriteRenderer>().sprite = cleanseSprite;

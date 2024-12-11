@@ -200,6 +200,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Tutorial",
+            "id": "f4961f43-f3cb-4186-92fd-4d3ef6b9e589",
+            "actions": [
+                {
+                    "name": "ToggleTutorialText",
+                    "type": "Button",
+                    "id": "f4dd26c2-ac0e-4321-81f0-8eab0bd78d5a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8bdb4d42-001f-440e-8958-0f64707284d1",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleTutorialText",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
