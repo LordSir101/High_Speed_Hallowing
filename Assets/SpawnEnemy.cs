@@ -250,7 +250,7 @@ public class SpawnEnemy : MonoBehaviour
         else if(GameStats.gameDifficulty == GameStats.GameDifficulty.tutorial)
         {
             damageMod = 0.5f;
-            healthMod = 0.7f;
+            healthMod = 0.8f;
         }
     }
 }

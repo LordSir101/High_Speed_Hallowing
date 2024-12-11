@@ -13,4 +13,19 @@ MonoBehaviour:
   m_Name: Text
   m_EditorClassIdentifier: 
   text:
-  - Oh, you're the new guy.
+  - Use WASD to move.
+  - Move into an enemy to attack it.
+  - The faster you are moving, the more damage you deal. Dash with SPACE to deal
+    more damage.
+  - LEFT-CLICK to grapple towards walls and enemies.
+  - Move into a wall and press SPACE to wall-dash in the opposite direction. Wall-dash
+    has no cooldown.
+  - Hold RIGHT-CLICK to snap to an enemy. Choose a direction with WASD and release
+    RIGHT-CLICK to perform a snap-dash. Snap-dash has no cooldown.
+  - Performing a wall-dash or snap-dash quickly resets the cooldown of dash and grapple.
+  - Attack the ghost until its lights go out!
+  - Collect the ghost soul and use its soul power to cleanse the grey shrine.
+  - Once a shrine has been cleansed, you can spend soul power to buy upgrades depending
+    on the type of shrine.
+  - When all grey shrines are cleansed, you can cleanse the king shrine to complete
+    the level!
