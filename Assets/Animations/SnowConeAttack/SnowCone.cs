@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class SnowCone : MonoBehaviour
 {
-    Animation anim;
-    // Start is called before the first frame update
-    void Start()
-    {
-        //anim = GetComponent<Animation>();
-    }
+    //TODO: this can be deleted?
+    // Animation anim;
+    // // Start is called before the first frame update
+    // void Start()
+    // {
+    //     //anim = GetComponent<Animation>();
+    // }
 
-    public void Finished()
-    {
-        Destroy(gameObject);
-    }
+    // public void Finished()
+    // {
+    //     Destroy(gameObject);
+    // }
 }

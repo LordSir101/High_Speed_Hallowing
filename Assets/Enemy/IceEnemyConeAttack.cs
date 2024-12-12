@@ -18,6 +18,7 @@ public class IceEnemyConeAttack : MonoBehaviour
     private bool animationComplete = false;
     [SerializeField] private GameObject snowConePrefab;
     [SerializeField] GameObject snowconeAudioParent;
+    GameObject currAttack;
 
 
     void Start()
@@ -51,6 +52,7 @@ public class IceEnemyConeAttack : MonoBehaviour
             //attackScript.attackEnded = false;
             attacking = false;
             animationComplete = false;
+            currAttack.GetComponentInChildren<SpriteRenderer>().enabled = false;
         }
 
         if(attackScript.attackReady && behaviourScript.playerInRange)
@@ -73,10 +75,13 @@ public class IceEnemyConeAttack : MonoBehaviour
 
             // if(windupTimer / attackStats.windupTime >= 0.8)
             // {
-                GameObject attack = Instantiate(snowConePrefab, gameObject.transform.position, attackObj.transform.localRotation);
-                attack.transform.parent = transform;
-                attack.GetComponent<AudioSource>().Play();
+                currAttack = Instantiate(snowConePrefab, gameObject.transform.position, attackObj.transform.localRotation);
+                currAttack.transform.parent = transform;
+                currAttack.GetComponent<AudioSource>().Play();
                 animationComplete = true;
+
+                // show the snow area sprite
+                currAttack.GetComponentInChildren<SpriteRenderer>().enabled = true;
                 //attackScript.startAnimation = false;
                 //windupTimer = 0;
                 //attackScript.startAnimation = false;
