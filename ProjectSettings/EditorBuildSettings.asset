@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
     guid: b74b2ed7ad22fbb4aade9b6983e08415
   - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 0740392200fb42541ba49fd54b968935
+  - enabled: 1
     path: Assets/Scenes/CastleMap.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
