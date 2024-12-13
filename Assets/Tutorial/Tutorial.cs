@@ -15,7 +15,9 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] InputActionReference toggleText;
     [SerializeField] TextMeshProUGUI toggleReminderText;
+    [SerializeField] TextMeshProUGUI tutorialCompleteText;
     [SerializeField] GameObject buttons;
+    [SerializeField] AnimationCurve curve;
     int tutTextIndex = 0;
     // Start is called before the first frame update
 
@@ -73,6 +75,8 @@ public class Tutorial : MonoBehaviour
         //     tutTextIndex += 1;
         //     currTextDisplay.text = tutText.text[tutTextIndex];
         // }
+        tutTextIndex += 1;
+        currTextDisplay.text = tutText.text[tutTextIndex];
 
         if(tutTextIndex == tutText.text.Count - 1)
         {
@@ -93,7 +97,8 @@ public class Tutorial : MonoBehaviour
         //     tutTextIndex -= 1;
         //     currTextDisplay.text = tutText.text[tutTextIndex];
         // }
-
+        tutTextIndex -= 1;
+        currTextDisplay.text = tutText.text[tutTextIndex];
         if(tutTextIndex == 0)
         {
             // disable next button when at last instruction
@@ -103,6 +108,38 @@ public class Tutorial : MonoBehaviour
         // enable "next" button when "prev" button is pressed
         buttons.transform.GetChild(0).gameObject.SetActive(true);
         
+    }
+
+    public void FinishTutorial()
+    {
+        currTextDisplay.gameObject.SetActive(false);
+        toggleReminderText.gameObject.SetActive(false);
+
+        playerInput.actions.FindActionMap("Tutorial").Disable();
+
+        StartCoroutine(AnimateTutorialComplete());
+    }
+
+    private IEnumerator AnimateTutorialComplete()
+    {
+        float animationTime = 0.5f;
+        float startTime = Time.time;
+
+        float maxFontSize = tutorialCompleteText.fontSize;
+
+        while(Time.time - startTime < animationTime)
+        {
+            float fontSizePercent = curve.Evaluate((Time.time - startTime) / animationTime);
+            tutorialCompleteText.fontSize =  maxFontSize * fontSizePercent;
+
+            // enable text here so that we can set max font size in the editor.
+            // have to enable text after the curve begins so it doesn't flash at full size for a frame at the beginning
+            tutorialCompleteText.enabled = true;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(2);
+        SceneControl.LoadScene("CastleMap");
     }
 
 

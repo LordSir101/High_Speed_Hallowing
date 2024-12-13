@@ -12,6 +12,7 @@ public class TutEndShrine : MonoBehaviour
     [SerializeField] Sprite cleansedGemOutlineSprite;
     [SerializeField] private InputActionReference interact;
     [SerializeField] private ShrineManager shrineManager;
+    [SerializeField] Tutorial tutorialScript;
     TextMeshProUGUI interactText;
     private GameObject player;
     private int cost = 0;
@@ -98,7 +99,7 @@ public class TutEndShrine : MonoBehaviour
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
             GameStats.gameDifficulty = GameStats.GameDifficulty.normal;
-            SceneControl.LoadScene("CastleMap");
+            tutorialScript.FinishTutorial();
             //shrineManager.StartFrenzyMode();
             //gameObject.GetComponent<SpriteRenderer>().sprite = cleanseSprite;
 
