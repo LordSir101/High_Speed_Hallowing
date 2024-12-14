@@ -14,7 +14,8 @@ public class ShrineManager : MonoBehaviour
     [SerializeField] private FrenzyMode frenzyModeScript;
     [SerializeField] private Sprite happySprite;
     [SerializeField] private SpawnEnemy enemySpawner;
-    [SerializeField] private AudioSource shrineCleanseSound;
+    [SerializeField] private AudioSource shrineCleanseSound, shrineUpgradePurchaseSound;
+    [SerializeField] public GameObject paymentText;
     private GameObject bigShrine;
     // Start is called before the first frame update
     void Start()
@@ -60,6 +61,24 @@ public class ShrineManager : MonoBehaviour
     {
         StartCoroutine(StartCleanseSound());
     }
+
+    public void PlayUpgradeSound()
+    {
+        //StartCoroutine(StartUpgradeSound());
+        shrineUpgradePurchaseSound.Play();
+    }
+
+    // IEnumerator StartUpgradeSound()
+    // {
+    //     shrineUpgradePurchaseSound.Play();
+    //     shrineUpgradePurchaseSound.pitch = 2.5f;
+
+    //     while(shrineUpgradePurchaseSound.isPlaying)
+    //     {
+    //         shrineUpgradePurchaseSound.pitch += 0.1f;
+    //         yield return new WaitForSecondsRealtime(0.2f);
+    //     }
+    // }
 
     IEnumerator StartCleanseSound()
     {

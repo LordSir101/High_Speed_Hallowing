@@ -35,9 +35,13 @@ public class ArmorShrine : Shrine
         if(rm.Essence >= upgradeCosts[numUpgrades])
         {
             rm.Essence -= upgradeCosts[numUpgrades];
+            ShowUpgradeCostText(upgradeCosts[numUpgrades]);
+            
             playerHealthScript.Armor += armorUpgradeValues[numUpgrades];
             numUpgrades++;
             LightCandle();
+            PlayUpgradeSound();
+           
         }
        
         if(numUpgrades == maxUpgrades)

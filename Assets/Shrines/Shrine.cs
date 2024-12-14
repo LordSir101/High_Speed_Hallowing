@@ -63,6 +63,11 @@ public class Shrine : MonoBehaviour
         if(rm.Essence >= Cost)
         {
             GetComponent<ParticleSystem>().Play();
+
+            GameObject damageTextParent = Instantiate(shrineManager.paymentText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
+            damageTextParent.GetComponentInChildren<TextMeshPro>().text = $"-{Cost}";
+            damageTextParent.GetComponentInChildren<TextMeshPro>().color = Color.white;
+
             rm.Essence -= Cost;
             //gameObject.GetComponent<CircleCollider2D>().enabled = false;
             //interactText.enabled = false;
@@ -136,6 +141,18 @@ public class Shrine : MonoBehaviour
     protected virtual void Upgrade(InputAction.CallbackContext context)
     {
         return;
+    }
+
+    protected void ShowUpgradeCostText(int cost)
+    {
+        GameObject damageTextParent = Instantiate(shrineManager.paymentText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
+        damageTextParent.GetComponentInChildren<TextMeshPro>().text = $"-{cost}";
+        damageTextParent.GetComponentInChildren<TextMeshPro>().color = Color.white;
+    }
+
+    protected void PlayUpgradeSound()
+    {
+        shrineManager.PlayUpgradeSound();
     }
 
     protected void CloseShrine()
