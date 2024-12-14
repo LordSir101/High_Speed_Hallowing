@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7447549776055056912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6515215629520118803}
+  - component: {fileID: 3414421842408428757}
+  m_Layer: 0
+  m_Name: ShrineManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6515215629520118803
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7447549776055056912}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.45406634, y: 2.351107, z: 0.041010547}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3414421842408428757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7447549776055056912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64510b0868e767f41b195ee41b46b2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shrineParent: {fileID: 0}
+  inputActionRef: {fileID: -3180328467059563807, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
+  frenzyModeScript: {fileID: 0}
+  happySprite: {fileID: -1822084412059159431, guid: 815c5032c648f7c4aba3edb9e10aa288, type: 3}
+  enemySpawner: {fileID: 0}
+  shrineCleanseSound: {fileID: 0}
+  shrineUpgradePurchaseSound: {fileID: 0}
+  paymentText: {fileID: 144933026977808247, guid: ca4f6ed07ac709b42bb62f58c3cdf706, type: 3}
