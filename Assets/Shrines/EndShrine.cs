@@ -88,6 +88,11 @@ public class EndShrine : MonoBehaviour
             shrineManager.PlayCleanseSound();
             
             rm.Essence -= cost;
+
+            GameObject damageTextParent = Instantiate(shrineManager.paymentText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
+            damageTextParent.GetComponentInChildren<TextMeshPro>().text = $"-{cost}";
+            damageTextParent.GetComponentInChildren<TextMeshPro>().color = Color.white;
+            
             GameStats.IncreaseShrinesCleansed();
             //gameObject.GetComponent<CircleCollider2D>().enabled = false;
             //interactText.enabled = false;

@@ -33,10 +33,13 @@ public class DamageShrine : Shrine
         if(rm.Essence >= upgradeCosts[numUpgrades])
         {
             rm.Essence -= upgradeCosts[numUpgrades];
+            ShowUpgradeCostText(upgradeCosts[numUpgrades]);
+            
             playerAttackScript.DamageBonusPercent += dmgUpgradeValues[numUpgrades];
             numUpgrades++;
             
             LightCandle();
+            PlayUpgradeSound();
         }
        
         if(numUpgrades == maxUpgrades)

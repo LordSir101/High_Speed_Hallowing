@@ -39,11 +39,15 @@ public class HealthShrine : Shrine
         if(rm.Essence >= upgradeCosts[numUpgrades])
         {
             rm.Essence -= upgradeCosts[numUpgrades];
+            ShowUpgradeCostText(upgradeCosts[numUpgrades]);
+            
             playerHealthScript.MaxHealth += healthUpgradeValues[numUpgrades];
             playerHealthScript.Heal(healthUpgradeValues[numUpgrades]);
             numUpgrades++;
 
             LightCandle();
+            PlayUpgradeSound();
+            
         }
        
         if(numUpgrades == maxUpgrades)
