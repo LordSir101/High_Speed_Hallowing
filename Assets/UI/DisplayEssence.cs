@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class DisplayEssence : MonoBehaviour
 {
-    [SerializeField] PlayerResourceManager rm;
+    PlayerResourceManager rm;
 
     [SerializeField] TextMeshProUGUI essenceTextBox;
     void Start()
     {
         //speedTextBox = gameObject.GetComponentInChildren<TextMeshPro>();
+        rm = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResourceManager>();
     }
 
     // Update is called once per frame

@@ -13,6 +13,8 @@ public class GameControl : MonoBehaviour
     {
         Time.timeScale = 1;
         pauseControl = GetComponent<PauseControl>();
+        // un pause game in case game was restarted through pause menu
+        pauseControl.PauseGame(false);
         PlayMusic();
     }
 

@@ -26,6 +26,8 @@ public class PlayerReflectDash : MonoBehaviour
 
     PlayerMovement playerMovement;
     PlayerImpact playerImpact;
+    PlayerAudio playerAudio;
+    PlayerCooldowns playerCooldowns;
 
     Coroutine currDash;
     
@@ -36,6 +38,8 @@ public class PlayerReflectDash : MonoBehaviour
         removalQueue = new List<GameObject> ();
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         playerImpact = gameObject.GetComponent<PlayerImpact>();
+        playerAudio = gameObject.GetComponentInChildren<PlayerAudio>();
+        playerCooldowns = gameObject.GetComponent<PlayerCooldowns>();
     }
 
     void Update()
@@ -132,6 +136,8 @@ public class PlayerReflectDash : MonoBehaviour
 
             reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
 
+            playerAudio.PlayReflectDashAudio();
+
         }
             
         //}
@@ -165,8 +171,8 @@ public class PlayerReflectDash : MonoBehaviour
         {
             // GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
             // animation.transform.SetParent(transform, false);
-            GetComponent<PlayerCooldowns>().EndAllCooldowns();
-            GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
+            playerCooldowns.EndAllCooldowns();
+            //GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
             //playerMovement.currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
         }
 

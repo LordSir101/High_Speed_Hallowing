@@ -25,6 +25,7 @@ public class Tutorial : MonoBehaviour
     void Awake()
     {
         GameStats.gameDifficulty = GameStats.GameDifficulty.tutorial;
+        Time.timeScale = 1;
     }
 
     private void OnEnable()
@@ -122,6 +123,7 @@ public class Tutorial : MonoBehaviour
 
     private IEnumerator AnimateTutorialComplete()
     {
+        Debug.Log("animate");
         float animationTime = 0.5f;
         float startTime = Time.time;
 
