@@ -4,6 +4,8 @@ public class PlayerCooldowns : MonoBehaviour
 {
     PlayerMovement playerMovement;
     PlayerGrapple playerGrapple;
+    PlayerAudio playerAudio;
+    PlayerAnimation playerAnimation;
 
     float dashCooldown = 3;
     float dashCooldownTimer = 0;
@@ -48,6 +50,8 @@ public class PlayerCooldowns : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerGrapple = GetComponent<PlayerGrapple>();
+        playerAudio = GetComponentInChildren<PlayerAudio>();
+        playerAnimation = GetComponent<PlayerAnimation>();
     }
     // public void StartCooldown(float cooldownTime, System.Action callback)
     // {
@@ -73,11 +77,27 @@ public class PlayerCooldowns : MonoBehaviour
     public void EndAllCooldowns()
     {
         StopAllCoroutines();
+        PlayCooldownRefeshAnimations();
         playerMovement.canDash = true;
         playerGrapple.canGrapple = true;
         //grappleCooldownIcon.SetActive(true);
         //dashCooldownIcon.SetActive(true);
         cooldownUI.EndAllCooldowns();
 
+        
+        
+
+    }
+
+    private void PlayCooldownRefeshAnimations()
+    {
+        // only play the animation if a cooldown was actually affected 
+
+        if(!playerMovement.canDash || !playerGrapple.canGrapple)
+        {
+            playerAnimation.PlayCooldownRefreshAnimation();
+            playerAudio.PlayCooldownRefreshAudio();
+        }
+        
     }
 }

@@ -11,6 +11,8 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] AudioSource jumpAudio;
     [SerializeField] AudioSource grappleShootAudio;
     [SerializeField] AudioSource grappleAudio;
+    [SerializeField] AudioSource cooldownRefreshAudio;
+    [SerializeField] AudioSource reflectDashAudio;
     void Start()
     {
         //attackAudios = transform.GetChild(0).GetComponents<AudioSource>();
@@ -46,5 +48,16 @@ public class PlayerAudio : MonoBehaviour
     public void PlayGrappleSound()
     {
         grappleAudio.Play();
+    }
+
+    public void PlayCooldownRefreshAudio()
+    {
+        cooldownRefreshAudio.pitch = 1.9f + 0.05f * Random.Range(0f,2f);
+        cooldownRefreshAudio.Play();
+    }
+
+    public void PlayReflectDashAudio()
+    {
+        reflectDashAudio.Play();
     }
 }

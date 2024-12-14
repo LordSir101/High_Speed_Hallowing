@@ -264,8 +264,8 @@ public class PlayerMovement : MonoBehaviour
         {
             // GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
             // animation.transform.SetParent(transform, false);
-            GetComponent<PlayerCooldowns>().EndAllCooldowns();
-            GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
+            playerCooldowns.EndAllCooldowns();
+            // GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
             //currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
         }
 
