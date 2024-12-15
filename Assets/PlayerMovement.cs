@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float wallJumpForce = 13f;
     [SerializeField] private float wallJumpTime = 0.2f, wallJumpPause = 0.01f;
     [SerializeField] private GameObject wallJumpEffect;
-    private float wallJumpCombo = 0;
+    private int wallJumpCombo = 0;
     
     private Collider2D touchingWall;
     public bool wallJumpQueued = false;
@@ -464,6 +464,11 @@ public class PlayerMovement : MonoBehaviour
 
         wallJumpCombo = 0;
 
+    }
+
+    public int GetWallJumpCombo()
+    {
+        return wallJumpCombo;
     }
 
 }

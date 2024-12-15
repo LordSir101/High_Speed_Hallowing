@@ -24,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         
-        // since the player has a hurbox and a hitbox, check for the attack hitbox tag to prvent double hits
+        
         if(other.gameObject.tag == "Enemy")
         {
             StopCoroutine(cameraShake.Shaking());

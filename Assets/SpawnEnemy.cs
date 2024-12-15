@@ -45,6 +45,7 @@ public class SpawnEnemy : MonoBehaviour
             spawnPoints.Add(spawnPoint);
         }
 
+        Debug.Log(spawnPoints[0]);
     }
 
     void Update()
@@ -64,7 +65,6 @@ public class SpawnEnemy : MonoBehaviour
                 }
                 else
                 {
-                    // the time between each wave gets longer
                     currWave = waveInfos[waveIndex];
                     waveTimer = 0;
                     waveTime = waveInfos[waveIndex].time;
@@ -114,7 +114,6 @@ public class SpawnEnemy : MonoBehaviour
         for(int i = 0; i < num; i++)
         {
             float spawnRadius = 1f;
-
             GameObject spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)];
 
             float posX = spawnPoint.transform.position.x + UnityEngine.Random.Range(-spawnRadius, spawnRadius);
@@ -252,5 +251,13 @@ public class SpawnEnemy : MonoBehaviour
             damageMod = 0.5f;
             healthMod = 0.8f;
         }
+    }
+
+    // for stuff like the tutorial where the wave changes based on factors that are not time
+    public void SetWave(int waveNum)
+    {
+        currWave = waveInfos[waveNum];
+        waveTimer = 0;
+        waveTime = waveInfos[waveNum].time;
     }
 }

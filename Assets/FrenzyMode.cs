@@ -54,5 +54,6 @@ public class FrenzyMode : MonoBehaviour
         enemySpawner.SpawnFrenzyWave();
         frenzyEffect.SetActive(true);
         frenzyText.SetActive(true);
+        frenzyText.GetComponent<TextMeshProUGUI>().text = "Defeat the remaining enemies quickly!";
     }
 }

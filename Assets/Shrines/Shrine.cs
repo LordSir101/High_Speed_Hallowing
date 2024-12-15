@@ -29,6 +29,8 @@ public class Shrine : MonoBehaviour
     protected Material CleanseIconMaterial {get;set;}
     protected List<GameObject> candles;
 
+    public int numEnemiesToSpawn = 3;
+
     // Start is called before the first frame update
     // void Start()
     // {
@@ -84,7 +86,7 @@ public class Shrine : MonoBehaviour
 
             ChangeIcon();
 
-            shrineManager.SpawnEnemiesAtShrine(transform.position, 3);
+            shrineManager.SpawnEnemiesAtShrine(transform.position, numEnemiesToSpawn);
         }
     }
 
@@ -171,5 +173,10 @@ public class Shrine : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public int GetNumUpgrades()
+    {
+        return numUpgrades;
     }
 }

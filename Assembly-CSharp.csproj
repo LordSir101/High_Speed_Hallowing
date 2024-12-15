@@ -158,6 +158,7 @@
     <Compile Include="Assets\PauseControl.cs" />
     <Compile Include="Assets\Shrines\ShrineManager.cs" />
     <Compile Include="Assets\GameStats.cs" />
+    <Compile Include="Assets\Tutorial\PlayerTutorial.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
