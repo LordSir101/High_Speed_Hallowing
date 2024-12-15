@@ -48,7 +48,8 @@ public class EndShrine : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            if(shrinesCleansed == 4)
+            // check shrines -1 since totalShrines includes the end shrine
+            if(shrineManager.shrinesActivated == GameStats.totalShrines - 1)
             {
                 // ShowTrText();
                 // interact.action.performed += Upgrade;
@@ -68,7 +69,7 @@ public class EndShrine : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            if(shrinesCleansed == 4)
+            if(shrineManager.shrinesActivated == GameStats.totalShrines - 1)
             {
                 interact.action.performed -= TributeBigShrine;
             }

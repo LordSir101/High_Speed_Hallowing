@@ -18,7 +18,21 @@ public class Tutorial : MonoBehaviour
     [SerializeField] TextMeshProUGUI tutorialCompleteText;
     [SerializeField] GameObject buttons;
     [SerializeField] AnimationCurve curve;
+    [SerializeField] SpawnEnemy enemySpawner;
+    [SerializeField] GameObject cooldownUIParent;
+    [SerializeField] ShrineManager shrineManager;
+    [SerializeField] Shrine shrine;
+
+    //[SerializeField] 
     int tutTextIndex = 0;
+    public bool firstEnemyAttacked = false;
+    private bool firstGrapple = false;
+    private int tutWaveNum = 0;
+    float maxTextFontSize;
+
+    PlayerMovement playerMovement;
+    PlayerReflectDash playerReflectDash;
+    PlayerResourceManager playerResources;
     // Start is called before the first frame update
 
     // TODO: remove if this gets set by a menu later
@@ -28,88 +42,289 @@ public class Tutorial : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    private void OnEnable()
-    {
-        toggleText.action.performed += ToggleTutorialText;
-    }
+    // private void OnEnable()
+    // {
+    //     //toggleText.action.performed += ToggleTutorialText;
+    // }
 
-    private void OnDisable()
-    {
-        toggleText.action.performed -= ToggleTutorialText;
-    }
+    // private void OnDisable()
+    // {
+    //     toggleText.action.performed -= ToggleTutorialText;
+    // }
 
     void Start()
     {
 
-        playerInput.actions.FindActionMap("Tutorial").Enable();
+        //playerInput.actions.FindActionMap("Tutorial").Enable();
         playerInput.actions.FindActionMap("PlayerInput").Disable();
+        playerInput.actions["Movement"].Enable();
+        playerInput.actions["PointerPosition"].Enable();
 
         player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponent<PlayerResourceManager>().Essence = 400;
+        //player.GetComponent<PlayerResourceManager>().Essence = 400;
 
         currTextDisplay.text = tutText.text[tutTextIndex];
 
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerReflectDash = player.GetComponent<PlayerReflectDash>();
+        playerResources = player.GetComponent<PlayerResourceManager>();
+
+        shrine.numEnemiesToSpawn = 2;
+
+        maxTextFontSize = currTextDisplay.fontSize;
+
+        //playerInput.actions["ReflectDash"].Enable();
+
+
         // disable prev button at the start
-        buttons.transform.GetChild(1).gameObject.SetActive(false);
+        //buttons.transform.GetChild(1).gameObject.SetActive(false);
     }
 
-    private void ToggleTutorialText(InputAction.CallbackContext context)
+    public void CheckFirstEnemyAttacked()
     {
-        if(tutorialTextParent.activeInHierarchy)
+        if(!firstEnemyAttacked)
         {
-            tutorialTextParent.SetActive(false);
-            playerInput.actions.FindActionMap("PlayerInput").Enable();
-            toggleReminderText.text = "Press T to show tutorial";
+            firstEnemyAttacked = true;
+            NextText();
+            StartCoroutine(WaitForTime(10, UnlockDash));
         }
-        else
+    }
+
+    private void UnlockDash()
+    {
+        NextWave();
+        NextText();
+        playerInput.actions["Dash"].Enable();
+        playerInput.actions["Dash"].performed += DashComplete;
+        cooldownUIParent.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    private void DashComplete(InputAction.CallbackContext context)
+    {
+        NextText();
+        playerInput.actions["Dash"].performed -= DashComplete;
+        StartCoroutine(CheckForWallDash());
+    }
+
+    IEnumerator CheckForWallDash()
+    {
+        bool wallJumpPerformed = false;
+
+        while(!wallJumpPerformed)
         {
-            tutorialTextParent.SetActive(true);
-            playerInput.actions.FindActionMap("PlayerInput").Disable();
-            toggleReminderText.text = "Press T to practice";
+            if(playerMovement.GetWallJumpCombo() > 0)
+            {
+                wallJumpPerformed = true;
+            }
+
+            yield return null;
+        }
+
+        NextText();
+        StartCoroutine(WaitForTime(10, UnlockSnapDash));
+
+    }
+
+    private void UnlockSnapDash()
+    {
+        NextWave();
+        NextText();
+        playerInput.actions["ReflectDash"].Enable();
+        StartCoroutine(CheckForReflectDash());
+    }
+
+    IEnumerator CheckForReflectDash()
+    {
+        bool dashPerformed = false;
+
+        while(!dashPerformed)
+        {
+            if(playerReflectDash.reflectDashing)
+            {
+                dashPerformed = true;
+            }
+
+            yield return null;
+        }
+
+        NextText();
+        NextWave();
+        StartCoroutine(WaitForTime(5, UnlockShrines));
+
+    }
+
+    private void UnlockShrines()
+    {
+        playerInput.actions["Interact"].Enable();
+        StartCoroutine(CheckCanCleanseShrine());
+    }
+
+    IEnumerator CheckCanCleanseShrine()
+    {
+        bool enoughResources = false;
+
+        while(!enoughResources)
+        {
+            if(playerResources.Essence > 500)
+            {
+                enoughResources = true;
+            }
+
+            yield return null;
+        }
+
+        NextText();
+        StartCoroutine(CheckShrineCleansed());
+
+    }
+
+    IEnumerator CheckShrineCleansed()
+    {
+        bool shrineCleansed = false;
+
+        while(!shrineCleansed)
+        {
+            if(shrineManager.shrinesActivated > 0)
+            {
+                shrineCleansed = true;
+            }
+
+            yield return null;
+        }
+
+        NextText();
+        StartCoroutine(CheckUpgradeMade());
+    }
+
+    IEnumerator CheckUpgradeMade()
+    {
+        bool upgraded = false;
+
+        while(!upgraded)
+        {
+            if(shrine.GetNumUpgrades() > 0)
+            {
+                upgraded = true;
+            }
+
+            yield return null;
+        }
+
+        NextText();
+        NextWave();
+        playerInput.actions["Grapple"].Enable();
+        playerInput.actions["Grapple"].performed += FirstGrapple;
+        cooldownUIParent.transform.GetChild(1).gameObject.SetActive(true);
+        //StartCoroutine(CheckUpgradeMade());
+    }
+
+    private void FirstGrapple(InputAction.CallbackContext context)
+    {
+        if(!firstGrapple)
+        {
+            firstGrapple = true;
+            NextText();
+            playerInput.actions["Grapple"].performed -= FirstGrapple;
+            //StartCoroutine(WaitForTime(10, UnlockDash));
         }
     }
 
     public void NextText()
-    {
-        // if(tutTextIndex < tutText.text.Count - 1)
-        // {
-        //     tutTextIndex += 1;
-        //     currTextDisplay.text = tutText.text[tutTextIndex];
-        // }
+    {       
+        currTextDisplay.enabled = false;
         tutTextIndex += 1;
         currTextDisplay.text = tutText.text[tutTextIndex];
-
-        if(tutTextIndex == tutText.text.Count - 1)
-        {
-            // disable next button when at last instruction
-            buttons.transform.GetChild(0).gameObject.SetActive(false);
-        }
-        
-        // enable the "prev" button whenever we hit the "next" button
-        buttons.transform.GetChild(1).gameObject.SetActive(true);
-        
-        
+        StartCoroutine(AnimateText(currTextDisplay));
     }
 
-    public void PrevText()
+    private void NextWave()
     {
-        // if(tutTextIndex > 0)
-        // {
-        //     tutTextIndex -= 1;
-        //     currTextDisplay.text = tutText.text[tutTextIndex];
-        // }
-        tutTextIndex -= 1;
-        currTextDisplay.text = tutText.text[tutTextIndex];
-        if(tutTextIndex == 0)
-        {
-            // disable next button when at last instruction
-            buttons.transform.GetChild(1).gameObject.SetActive(false);
-        }
-      
-        // enable "next" button when "prev" button is pressed
-        buttons.transform.GetChild(0).gameObject.SetActive(true);
-        
+        tutWaveNum += 1;
+        enemySpawner.SetWave(tutWaveNum);
     }
+
+     private IEnumerator AnimateText(TextMeshProUGUI text)
+    {
+        float animationTime = 0.3f;
+        float startTime = Time.time;
+
+        //float maxFontSize = text.fontSize;
+
+        while(Time.time - startTime < animationTime)
+        {
+            float fontSizePercent = curve.Evaluate((Time.time - startTime) / animationTime);
+            text.fontSize =  maxTextFontSize * fontSizePercent;
+
+            // enable text here so that we can set max font size in the editor.
+            // have to enable text after the curve begins so it doesn't flash at full size for a frame at the beginning
+            text.enabled = true;
+            yield return null;
+        }
+    }
+
+    IEnumerator WaitForTime(float duration, Action callback)
+    {
+        yield return new WaitForSeconds(duration);
+        callback();
+    }
+
+    // private void ToggleTutorialText(InputAction.CallbackContext context)
+    // {
+    //     if(tutorialTextParent.activeInHierarchy)
+    //     {
+    //         tutorialTextParent.SetActive(false);
+    //         playerInput.actions.FindActionMap("PlayerInput").Enable();
+    //         toggleReminderText.text = "Press T to show tutorial";
+    //     }
+    //     else
+    //     {
+    //         tutorialTextParent.SetActive(true);
+    //         playerInput.actions.FindActionMap("PlayerInput").Disable();
+    //         toggleReminderText.text = "Press T to practice";
+    //     }
+    // }
+
+    // public void NextText()
+    // {
+    //     // if(tutTextIndex < tutText.text.Count - 1)
+    //     // {
+    //     //     tutTextIndex += 1;
+    //     //     currTextDisplay.text = tutText.text[tutTextIndex];
+    //     // }
+    //     tutTextIndex += 1;
+    //     currTextDisplay.text = tutText.text[tutTextIndex];
+
+    //     if(tutTextIndex == tutText.text.Count - 1)
+    //     {
+    //         // disable next button when at last instruction
+    //         buttons.transform.GetChild(0).gameObject.SetActive(false);
+    //     }
+        
+    //     // enable the "prev" button whenever we hit the "next" button
+    //     buttons.transform.GetChild(1).gameObject.SetActive(true);
+        
+        
+    // }
+
+    // public void PrevText()
+    // {
+    //     // if(tutTextIndex > 0)
+    //     // {
+    //     //     tutTextIndex -= 1;
+    //     //     currTextDisplay.text = tutText.text[tutTextIndex];
+    //     // }
+    //     tutTextIndex -= 1;
+    //     currTextDisplay.text = tutText.text[tutTextIndex];
+    //     if(tutTextIndex == 0)
+    //     {
+    //         // disable next button when at last instruction
+    //         buttons.transform.GetChild(1).gameObject.SetActive(false);
+    //     }
+      
+    //     // enable "next" button when "prev" button is pressed
+    //     buttons.transform.GetChild(0).gameObject.SetActive(true);
+        
+    // }
 
     public void FinishTutorial()
     {
@@ -123,7 +338,6 @@ public class Tutorial : MonoBehaviour
 
     private IEnumerator AnimateTutorialComplete()
     {
-        Debug.Log("animate");
         float animationTime = 0.5f;
         float startTime = Time.time;
 

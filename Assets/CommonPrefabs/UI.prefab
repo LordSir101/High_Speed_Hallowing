@@ -408,7 +408,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312dc79fde9c79e439d2fb13cceb8d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rm: {fileID: 0}
   essenceTextBox: {fileID: 6578400124056282966}
 --- !u!1 &676070844259983551
 GameObject:
@@ -3732,7 +3731,7 @@ GameObject:
   - component: {fileID: 5628135480078930748}
   - component: {fileID: 2933988653136895252}
   m_Layer: 0
-  m_Name: FrenzyWaveText
+  m_Name: NotificationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

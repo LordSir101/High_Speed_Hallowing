@@ -15,7 +15,7 @@ public class TutEndShrine : MonoBehaviour
     [SerializeField] Tutorial tutorialScript;
     TextMeshProUGUI interactText;
     private GameObject player;
-    private int cost = 0;
+    private int cost = 1000;
 
     int shrinesCleansed = 0;
     // Start is called before the first frame update
@@ -99,8 +99,8 @@ public class TutEndShrine : MonoBehaviour
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
             GameStats.gameDifficulty = GameStats.GameDifficulty.normal;
-            tutorialScript.FinishTutorial();
-            //shrineManager.StartFrenzyMode();
+            //tutorialScript.FinishTutorial();
+            shrineManager.StartFrenzyMode();
             //gameObject.GetComponent<SpriteRenderer>().sprite = cleanseSprite;
 
             // ChangeIcon();

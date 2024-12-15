@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class ShrineManager : MonoBehaviour
 {
     private List<GameObject> shrines;
-    private int shrinesActivated = 0;
+    public int shrinesActivated {get;set;} = 0;
     [SerializeField] private GameObject shrineParent;
     //[SerializeField] private GameOverPanel gameOverPanel;
     [SerializeField] private InputActionReference inputActionRef;
