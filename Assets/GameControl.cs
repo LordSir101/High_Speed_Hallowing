@@ -1,21 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameControl : MonoBehaviour
 {
     private float gameTime = 0;
     private bool gameEnded = false;
     [SerializeField] AudioSource backgroundMusic;
-    [SerializeField] PauseControl pauseControl;
+    PauseControl pauseControl;
+    [SerializeField] AnimateGameOverText gameOverTextAnimateScript;
     // Start is called before the first frame update
     void Start()
+    {
+        PlayMusic();
+    }
+
+    void Awake()
     {
         Time.timeScale = 1;
         pauseControl = GetComponent<PauseControl>();
         // un pause game in case game was restarted through pause menu
         pauseControl.PauseGame(false);
-        PlayMusic();
     }
 
     // Update is called once per frame
@@ -30,10 +38,14 @@ public class GameControl : MonoBehaviour
 
     public void SetWin(bool win)
     {
-        pauseControl.PauseGame(true);
+        //pauseControl.PauseGame(true);
         GameStats.gameWon = win;
         GameStats.completionTime = gameTime;
-        SceneControl.LoadScene("GameOverMenu");
+
+        string text = win ? "Level Complete" : "Game Over";
+
+        gameOverTextAnimateScript.AnimateText(text, LoadEndScreen);
+        
 
         // TextMeshProUGUI text = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -50,8 +62,13 @@ public class GameControl : MonoBehaviour
         // PauseControl.PauseGame(true);
     }
 
+    private void LoadEndScreen()
+    {
+        SceneControl.LoadScene("GameOverMenu");
+    }
+
     //************************************************************************************************************************
-    // Make sure to get music that can be used for commercial purposes if selling the game. current version cannot be used
+    // TODO Make sure to get music that can be used for commercial purposes if selling the game. current version cannot be used
     //************************************************************************************************************************
     void PlayMusic()
     {

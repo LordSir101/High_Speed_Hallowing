@@ -139,12 +139,12 @@ public class NerdEnemyBehaviour : MonoBehaviour
             if(totalWeight > bestWeight)
             {
                 //Check for obstruction
-                RaycastHit2D hitTarget = Physics2D.Raycast(transform.position, dir, distance: 2f);
+                // RaycastHit2D hitTarget = Physics2D.Raycast(transform.position, dir, distance: 2f);
 
-                if(hitTarget)
-                {
-                    continue;
-                }
+                // if(hitTarget)
+                // {
+                //     continue;
+                // }
 
                 bestWeight = totalWeight;
                 bestDir = dir;

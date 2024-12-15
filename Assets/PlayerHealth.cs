@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerHealth: MonoBehaviour
@@ -10,11 +11,13 @@ public class PlayerHealth: MonoBehaviour
     [SerializeField] GameObject damageText;
     [SerializeField] public GameControl gameController;
     [SerializeField] PauseControl pauseControl;
+    [SerializeField] private PlayerInput playerInput;
     public HealthBar healthBar;
     private PlayerDamageEffects damageEffects;
     private int health;
     public int MaxHealth { get; set; } = 1000;
     public int Armor {get; set;} = 0;
+    private bool isDead = false;
 
     void Start()
     {
@@ -29,8 +32,14 @@ public class PlayerHealth: MonoBehaviour
 
         if(health <= 0)
         {
-            frenzyEffect.SetActive(false);
-            gameController.SetWin(false);
+            if(!isDead)
+            {
+                playerInput.actions.FindActionMap("PlayerInput").Disable();
+                frenzyEffect.SetActive(false);
+                gameController.SetWin(false);
+                isDead = true;
+            }
+            
         }
 
         damageEffects.StartDamageFlash();

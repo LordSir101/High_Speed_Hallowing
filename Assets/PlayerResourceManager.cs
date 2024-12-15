@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerResourceManager : MonoBehaviour
 {
-    public int Essence {get; set;} = 10000;
+    public int Essence {get; set;} = 0;
 
     // Start is called before the first frame update
     // void Start()
