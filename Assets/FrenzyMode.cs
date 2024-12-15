@@ -33,6 +33,7 @@ public class FrenzyMode : MonoBehaviour
             {
                 frenzyEffect.SetActive(false);
                 gameController.SetWin(true);
+                frenzy = false;
             }
             else
             {

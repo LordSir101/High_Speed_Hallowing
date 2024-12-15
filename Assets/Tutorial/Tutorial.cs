@@ -10,13 +10,13 @@ public class Tutorial : MonoBehaviour
 {
     GameObject player;
     [SerializeField] TutorialText tutText;
-    [SerializeField] GameObject tutorialTextParent;
+    // [SerializeField] GameObject tutorialTextParent;
     [SerializeField] TextMeshProUGUI currTextDisplay;
     [SerializeField] private PlayerInput playerInput;
-    [SerializeField] InputActionReference toggleText;
-    [SerializeField] TextMeshProUGUI toggleReminderText;
-    [SerializeField] TextMeshProUGUI tutorialCompleteText;
-    [SerializeField] GameObject buttons;
+    // [SerializeField] InputActionReference toggleText;
+    // [SerializeField] TextMeshProUGUI toggleReminderText;
+    // [SerializeField] TextMeshProUGUI tutorialCompleteText;
+    // [SerializeField] GameObject buttons;
     [SerializeField] AnimationCurve curve;
     [SerializeField] SpawnEnemy enemySpawner;
     [SerializeField] GameObject cooldownUIParent;
@@ -54,7 +54,6 @@ public class Tutorial : MonoBehaviour
 
     void Start()
     {
-
         //playerInput.actions.FindActionMap("Tutorial").Enable();
         playerInput.actions.FindActionMap("PlayerInput").Disable();
         playerInput.actions["Movement"].Enable();
@@ -326,37 +325,37 @@ public class Tutorial : MonoBehaviour
         
     // }
 
-    public void FinishTutorial()
-    {
-        currTextDisplay.gameObject.SetActive(false);
-        toggleReminderText.gameObject.SetActive(false);
+    // public void FinishTutorial()
+    // {
+    //     currTextDisplay.gameObject.SetActive(false);
+    //     toggleReminderText.gameObject.SetActive(false);
 
-        playerInput.actions.FindActionMap("Tutorial").Disable();
+    //     playerInput.actions.FindActionMap("Tutorial").Disable();
 
-        StartCoroutine(AnimateTutorialComplete());
-    }
+    //     StartCoroutine(AnimateTutorialComplete());
+    // }
 
-    private IEnumerator AnimateTutorialComplete()
-    {
-        float animationTime = 0.5f;
-        float startTime = Time.time;
+    // private IEnumerator AnimateTutorialComplete()
+    // {
+    //     float animationTime = 0.5f;
+    //     float startTime = Time.time;
 
-        float maxFontSize = tutorialCompleteText.fontSize;
+    //     float maxFontSize = tutorialCompleteText.fontSize;
 
-        while(Time.time - startTime < animationTime)
-        {
-            float fontSizePercent = curve.Evaluate((Time.time - startTime) / animationTime);
-            tutorialCompleteText.fontSize =  maxFontSize * fontSizePercent;
+    //     while(Time.time - startTime < animationTime)
+    //     {
+    //         float fontSizePercent = curve.Evaluate((Time.time - startTime) / animationTime);
+    //         tutorialCompleteText.fontSize =  maxFontSize * fontSizePercent;
 
-            // enable text here so that we can set max font size in the editor.
-            // have to enable text after the curve begins so it doesn't flash at full size for a frame at the beginning
-            tutorialCompleteText.enabled = true;
-            yield return null;
-        }
+    //         // enable text here so that we can set max font size in the editor.
+    //         // have to enable text after the curve begins so it doesn't flash at full size for a frame at the beginning
+    //         tutorialCompleteText.enabled = true;
+    //         yield return null;
+    //     }
 
-        yield return new WaitForSeconds(2);
-        SceneControl.LoadScene("CastleMap");
-    }
+    //     yield return new WaitForSeconds(2);
+    //     SceneControl.LoadScene("CastleMap");
+    // }
 
 
 }
