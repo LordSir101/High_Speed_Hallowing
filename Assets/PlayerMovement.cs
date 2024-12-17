@@ -259,16 +259,6 @@ public class PlayerMovement : MonoBehaviour
         
         CancelOtherMovement();
 
-        // if the player walljumps within the action window, the player's speed increases
-        if(playerImpact.actionWindowIsActive)
-        {
-            // GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
-            // animation.transform.SetParent(transform, false);
-            playerCooldowns.EndAllCooldowns();
-            // GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
-            //currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
-        }
-
         float wallJumpSpeed = wallJumpForce;
 
         if(wallPos.x + wallSize.x/2 < transform.position.x)
@@ -403,6 +393,16 @@ public class PlayerMovement : MonoBehaviour
         }
         
         isDashing = true;
+
+        // if the player walljumps within the action window, the player's speed increases
+        if(playerImpact.actionWindowIsActive)
+        {
+            // GameObject animation = Instantiate(actionWindowIndicatorPrefab, transform.position, transform.rotation);
+            // animation.transform.SetParent(transform, false);
+            playerCooldowns.EndAllCooldowns();
+            // GetComponent<PlayerAnimation>().PlayCooldownRefreshAnimation();
+            //currSpeed += PlayerImpact.IMPACTSPEEDINCREASE;
+        }
 
 
         // float forceRad = Mathf.Atan2(-force.y, -force.x);

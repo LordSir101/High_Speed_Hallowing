@@ -16,10 +16,10 @@ MonoBehaviour:
   - Use WASD to move into a ghost and attack it
   - 'You deal more damage \nthe faster you are moving '
   - Press SPACE to dash
-  - Press space while moving \ninto a wall to wall-dash
-  - Wall dashes refresh your \ncooldowns if done quickly
+  - Press WASD towards a wall \nthen press SPACE to wall-dash
+  - Perform a quick wall-dash to reset ability cooldowns
   - Hold Right click on \na ghost to snap-dash
-  - Snap dashes refresh your \ncooldowns if done quickly
+  - Perform a quick snap-dash to reset ability cooldowns
   - Find the grey shrine \nand cleanse it
   - Light a candle at a shrine \nto get an upgrade
   - Left-Click to grapple \nto walls and enemies

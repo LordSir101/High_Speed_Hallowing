@@ -79,14 +79,12 @@ public class PlayerCooldowns : MonoBehaviour
         StopAllCoroutines();
         PlayCooldownRefeshAnimations();
         playerMovement.canDash = true;
+        dashCooldownTimer = 0;
         playerGrapple.canGrapple = true;
+        grappleCooldownTimer = 0;
         //grappleCooldownIcon.SetActive(true);
         //dashCooldownIcon.SetActive(true);
         cooldownUI.EndAllCooldowns();
-
-        
-        
-
     }
 
     private void PlayCooldownRefeshAnimations()
