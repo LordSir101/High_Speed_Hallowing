@@ -22,6 +22,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject cooldownUIParent;
     [SerializeField] ShrineManager shrineManager;
     [SerializeField] Shrine shrine;
+    [SerializeField] ParticleSystem cooldownRefreshEffect;
 
     //[SerializeField] 
     int tutTextIndex = 0;
@@ -33,6 +34,7 @@ public class Tutorial : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerReflectDash playerReflectDash;
     PlayerResourceManager playerResources;
+    PlayerImpact playerImpact;
     // Start is called before the first frame update
 
     // TODO: remove if this gets set by a menu later
@@ -67,6 +69,7 @@ public class Tutorial : MonoBehaviour
         playerMovement = player.GetComponent<PlayerMovement>();
         playerReflectDash = player.GetComponent<PlayerReflectDash>();
         playerResources = player.GetComponent<PlayerResourceManager>();
+        playerImpact = player.GetComponent<PlayerImpact>();
 
         shrine.numEnemiesToSpawn = 2;
 
@@ -120,8 +123,47 @@ public class Tutorial : MonoBehaviour
         }
 
         NextText();
-        StartCoroutine(WaitForTime(10, UnlockSnapDash));
+        StartCoroutine(CheckForWallDashRefresh());
+        //playerInput.actions["Dash"].performed += CheckForWallDashRefresh;
+        //StartCoroutine(WaitForTime(10, UnlockSnapDash));
 
+    }
+
+    IEnumerator CheckForWallDashRefresh()
+    {
+        bool refreshPerformed = false;
+        bool cooldownReset = false;
+
+        while(!refreshPerformed)
+        {
+            if(!cooldownRefreshEffect.isEmitting)
+            {
+                cooldownReset = true;
+            }
+            
+            if(playerMovement.GetWallJumpCombo() > 0 && cooldownRefreshEffect.isEmitting && cooldownReset)
+            {
+                // if dash is on cooldown and the action window is active when wall jump is pressed, they successfuly performed the combo
+                refreshPerformed = true;
+            }
+            
+
+            yield return null;
+        }
+        //NextText();
+        UnlockSnapDash();
+
+        // if(playerMovement.GetWallJumpCombo() > 0 && cooldownRefreshEffect.isEmitting)
+        // {
+        //     // if dash is on cooldown and the action window is active when wall jump is pressed, they successfuly performed the combo
+            
+        //     //refreshPerformed = true;
+            
+        //     playerInput.actions["Dash"].performed -= CheckForWallDashRefresh;
+            
+            
+        // }
+        
     }
 
     private void UnlockSnapDash()
@@ -148,34 +190,62 @@ public class Tutorial : MonoBehaviour
 
         NextText();
         NextWave();
-        StartCoroutine(WaitForTime(5, UnlockShrines));
+        StartCoroutine(CheckForSnapDashRefresh());
+        //StartCoroutine(WaitForTime(5, UnlockShrines));
 
     }
+
+    IEnumerator CheckForSnapDashRefresh()
+    {
+        bool refreshPerformed = false;
+        bool cooldownReset = false;
+
+        while(!refreshPerformed)
+        {
+            if(!cooldownRefreshEffect.isEmitting)
+            {
+                cooldownReset = true;
+            }
+            
+            if(playerReflectDash.reflectDashing && cooldownRefreshEffect.isEmitting && cooldownReset)
+            {
+                // if dash is on cooldown and the action window is active when wall jump is pressed, they successfuly performed the combo
+                refreshPerformed = true;
+            }
+            
+
+            yield return null;
+        }
+        NextText();
+        UnlockShrines();
+    }
+        
 
     private void UnlockShrines()
     {
         playerInput.actions["Interact"].Enable();
-        StartCoroutine(CheckCanCleanseShrine());
-    }
-
-    IEnumerator CheckCanCleanseShrine()
-    {
-        bool enoughResources = false;
-
-        while(!enoughResources)
-        {
-            if(playerResources.Essence > 500)
-            {
-                enoughResources = true;
-            }
-
-            yield return null;
-        }
-
-        NextText();
+        //StartCoroutine(CheckCanCleanseShrine());
         StartCoroutine(CheckShrineCleansed());
-
     }
+
+    // IEnumerator CheckCanCleanseShrine()
+    // {
+    //     bool enoughResources = false;
+
+    //     while(!enoughResources)
+    //     {
+    //         if(playerResources.Essence > 500)
+    //         {
+    //             enoughResources = true;
+    //         }
+
+    //         yield return null;
+    //     }
+
+    //     NextText();
+    //     StartCoroutine(CheckShrineCleansed());
+
+    // }
 
     IEnumerator CheckShrineCleansed()
     {
@@ -259,6 +329,12 @@ public class Tutorial : MonoBehaviour
             text.enabled = true;
             yield return null;
         }
+
+        // Time.timeScale = 0;
+
+        // yield return new WaitForSecondsRealtime(2);
+
+        // Time.timeScale = 1;
     }
 
     IEnumerator WaitForTime(float duration, Action callback)
