@@ -368,7 +368,7 @@ public class PlayerMovement : MonoBehaviour
 
 		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
 
-		rb.velocity = dashSpeed * 0.8f * force.normalized;
+		rb.velocity = dashSpeed * 0.7f * force.normalized;
 
 
         //rb.AddForce(force, ForceMode2D.Impulse);
@@ -433,7 +433,7 @@ public class PlayerMovement : MonoBehaviour
 
 		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
 
-		rb.velocity = wallJumpForce * 0.9f * force.normalized;
+		rb.velocity = wallJumpForce * 0.7f * force.normalized;
         //rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
 
         // rotate player
