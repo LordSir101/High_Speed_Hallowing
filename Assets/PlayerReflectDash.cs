@@ -81,7 +81,7 @@ public class PlayerReflectDash : MonoBehaviour
     private void ReflectDashSetup()
     {
         
-        
+        bool validTarget = false;
 
         // Vector2 direction = movement.action.ReadValue<Vector2>();
         // GameObject closestEnemy = null;
@@ -113,13 +113,75 @@ public class PlayerReflectDash : MonoBehaviour
         RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: 2f, layerMask: bufferLayer);
         if(hitTarget)
         {
+            validTarget = true;
+            relfectDashtarget = hitTarget.transform.gameObject;
+            // CancelOtherMovement();
+            // reflectDashing = true;
+            // prevVelocity = rb.velocity;
+
+            // reflectDash.action.canceled += ReflectDash;
+            // //relfectDashtarget = closestEnemy;
+            // relfectDashtarget = hitTarget.transform.gameObject;
+
+            // //Stop enemy from moving away
+            // relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+
+            // //Freeze position
+            // rb.velocity = Vector2.zero;
+
+            // // get direction vector relative to enemy
+            // enemyPos = relfectDashtarget.transform.position;
+
+            // // Teleport the player to the enemy center
+            // Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
+            // rb.position = teleportLocation;
+
+            // reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
+
+            // playerAudio.PlayReflectDashAudio();
+
+        }
+        else
+        {
+            GameObject closestEnemy = null;
+
+            float closestEnemyDistance = float.MaxValue;
+
+            foreach(GameObject col in currentCollisions)
+            {
+                // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
+                if(col.gameObject != null)
+                {
+                    float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
+                    if(distance < closestEnemyDistance)
+                    {
+                        closestEnemyDistance = distance;
+                        closestEnemy = col;
+                    }
+                }
+                else
+                {
+                    // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
+                    removalQueue.Add(col);
+                }
+            };
+
+            if(closestEnemy != null)
+            {
+                validTarget = true;
+                relfectDashtarget = closestEnemy;
+            }
+        }
+
+        if(validTarget)
+        {
             CancelOtherMovement();
             reflectDashing = true;
             prevVelocity = rb.velocity;
 
             reflectDash.action.canceled += ReflectDash;
             //relfectDashtarget = closestEnemy;
-            relfectDashtarget = hitTarget.transform.gameObject;
+            
 
             //Stop enemy from moving away
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
@@ -137,7 +199,6 @@ public class PlayerReflectDash : MonoBehaviour
             reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
 
             playerAudio.PlayReflectDashAudio();
-
         }
             
         //}
@@ -183,6 +244,7 @@ public class PlayerReflectDash : MonoBehaviour
         if(relfectDashtarget != null)
         {
             relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            relfectDashtarget = null;
         }
         
         currDash = StartCoroutine(PerformDash(reflectDashDirection* reflectDashSpeed, reflectDashTime));
