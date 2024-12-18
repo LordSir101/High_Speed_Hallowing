@@ -298,7 +298,7 @@ public class PlayerReflectDash : MonoBehaviour
 
 		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
 
-		rb.velocity = force.magnitude * 0.7f * force.normalized;
+		rb.velocity = force.magnitude * 0.6f * force.normalized;
 
         yield return new WaitForSeconds(time);
 
