@@ -14,6 +14,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        
         if(!GetComponent<Shake>().shaking)
         {
             float posX = player.transform.position.x;

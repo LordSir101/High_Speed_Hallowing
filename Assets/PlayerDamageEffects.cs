@@ -7,6 +7,7 @@ public class PlayerDamageEffects : MonoBehaviour
    [ColorUsage(true, true)]
    [SerializeField] private Color flashColor;
    [SerializeField] private float flashTime = 0.4f;
+   [SerializeField] Shake cameraShake;
 
    private SpriteRenderer[] spriteRenderers;
    private List<Material> materials;
@@ -35,6 +36,13 @@ public class PlayerDamageEffects : MonoBehaviour
    public void StartDamageFlash()
    {
         StartCoroutine(DamageFlash());
+   }
+
+   public void StartCameraShake()
+   {
+        cameraShake.StopShake();
+        float duration = 0.4f;
+        cameraShake.StartShake(duration);
    }
 
    private IEnumerator DamageFlash()

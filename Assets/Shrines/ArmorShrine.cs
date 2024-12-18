@@ -25,7 +25,7 @@ public class ArmorShrine : Shrine
     protected override void ShowUpgradeText()
     {
         interactText.enabled = true;
-        interactText.text = $"Upgrade Armor +{armorUpgradeValues[numUpgrades]} ({upgradeCosts[numUpgrades]})";
+        interactText.text = $"Light Candle: +{armorUpgradeValues[numUpgrades]}  Armor ({upgradeCosts[numUpgrades]})";
     }
 
     protected override void Upgrade(InputAction.CallbackContext context)

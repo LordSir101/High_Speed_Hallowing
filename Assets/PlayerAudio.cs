@@ -12,7 +12,7 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] AudioSource grappleShootAudio;
     [SerializeField] AudioSource grappleAudio;
     [SerializeField] AudioSource cooldownRefreshAudio;
-    [SerializeField] AudioSource reflectDashAudio;
+    [SerializeField] AudioSource reflectDashAudio, playerDamage;
     void Start()
     {
         //attackAudios = transform.GetChild(0).GetComponents<AudioSource>();
@@ -59,5 +59,10 @@ public class PlayerAudio : MonoBehaviour
     public void PlayReflectDashAudio()
     {
         reflectDashAudio.Play();
+    }
+
+    public void PlayPlayerDamageSound()
+    {
+        playerDamage.Play();
     }
 }

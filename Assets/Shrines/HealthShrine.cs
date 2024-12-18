@@ -29,7 +29,7 @@ public class HealthShrine : Shrine
     protected override void ShowUpgradeText()
     {
         interactText.enabled = true;
-        interactText.text = $"Upgrade max health +{healthUpgradeValues[numUpgrades]} ({upgradeCosts[numUpgrades]})";
+        interactText.text = $"Light Candle: +{healthUpgradeValues[numUpgrades]} max health  ({upgradeCosts[numUpgrades]})";
     }
 
     protected override void Upgrade(InputAction.CallbackContext context)
