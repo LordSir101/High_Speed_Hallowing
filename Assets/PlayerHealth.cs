@@ -14,6 +14,7 @@ public class PlayerHealth: MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     public HealthBar healthBar;
     private PlayerDamageEffects damageEffects;
+    private PlayerAudio playerAudio;
     private int health;
     public int MaxHealth { get; set; } = 1000;
     public int Armor {get; set;} = 0;
@@ -23,6 +24,7 @@ public class PlayerHealth: MonoBehaviour
     {
         health = MaxHealth;
         damageEffects = GetComponent<PlayerDamageEffects>();
+        playerAudio = GetComponentInChildren<PlayerAudio>();
     }
     public void TakeDamage(int damageTaken)
     {
@@ -43,6 +45,8 @@ public class PlayerHealth: MonoBehaviour
         }
 
         damageEffects.StartDamageFlash();
+        damageEffects.StartCameraShake();
+        playerAudio.PlayPlayerDamageSound();
         pauseControl.HitPause(0.01f);
         
         GameObject damageTextParent = Instantiate(damageText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);

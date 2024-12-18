@@ -186,7 +186,7 @@ public class PlayerGrapple : MonoBehaviour
         lineRenderer.enabled = false;
         playerMovement.CanMove = true;
         rb.drag = initialDrag;
-        rb.velocity = rb.velocity.normalized;
+        rb.velocity = rb.velocity.normalized * 0.7f * rb.velocity.magnitude;
     }
 
     

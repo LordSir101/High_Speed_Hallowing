@@ -23,7 +23,7 @@ public class DamageShrine : Shrine
     protected override void ShowUpgradeText()
     {
         interactText.enabled = true;
-        interactText.text = $"Increase damage dealt +{dmgUpgradeValues[numUpgrades]} ({upgradeCosts[numUpgrades]})";
+        interactText.text = $"Light candle: +{dmgUpgradeValues[numUpgrades]} damage ({upgradeCosts[numUpgrades]})";
     }
 
     protected override void Upgrade(InputAction.CallbackContext context)

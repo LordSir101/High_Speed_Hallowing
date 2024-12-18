@@ -74,6 +74,11 @@ public class PlayerAnimation : MonoBehaviour
             animator.speed = 1;
             animator.SetTrigger("Attack");
         }
+        else
+        {
+            animator.speed = 1;
+            animator.SetTrigger("SpinAttack");
+        }
        
         
     }
@@ -94,8 +99,21 @@ public class PlayerAnimation : MonoBehaviour
         
     }
 
+    public void SpinAttack()
+    {
+
+        animator.speed = 1;
+        animator.SetTrigger("SpinAttack");
+        
+    }
+
     public void PlayCooldownRefreshAnimation()
     {
         particleSys.Play();
     }
+
+    // public bool CheckIfAnimationPlaying(string animationNAme)
+    // {
+    //     return animator.GetCurrentAnimatorStateInfo(0).IsName(animationNAme);
+    // }
 }

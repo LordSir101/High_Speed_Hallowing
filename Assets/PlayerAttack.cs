@@ -27,8 +27,6 @@ public class PlayerAttack : MonoBehaviour
         
         if(other.gameObject.tag == "Enemy")
         {
-            StopCoroutine(cameraShake.Shaking());
-            StartCoroutine(cameraShake.Shaking());
             
             //Deal damage
             Vector2 impact;
@@ -42,6 +40,7 @@ public class PlayerAttack : MonoBehaviour
             else if(playerGrapple.grappling)
             {
                 impact = rb.velocity;
+                playerAnimation.AttackAnimation(impact);
                 playerGrapple.EndGrapple();
             }
             else{
@@ -51,6 +50,10 @@ public class PlayerAttack : MonoBehaviour
 
             other.gameObject.GetComponent<EnemyHealth>().DealDamage(impact, DamageBonusPercent);
             playerAudio.PlayAttackSound();
+
+            cameraShake.StopShake();
+            float duration = impact.magnitude * 0.07f;
+            cameraShake.StartShake(duration);
             //pauseControl.HitPause(0.07f);
             //StartCoroutine(HitPause(other.gameObject, gameObject));
             
