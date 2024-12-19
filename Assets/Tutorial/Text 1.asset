@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text:
   - Use WASD to move into a ghost and attack it
-  - 'You deal more damage \nthe faster you are moving '
+  - Attack ghosts until thier lights \ngo out. Your damage is based \non your speed.
   - Press SPACE to dash
   - Press WASD towards a wall \nthen press SPACE to wall-dash
   - Perform a quick wall-dash \nwhen your abilities are on cooldown \nto reset them
