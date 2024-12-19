@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class GameStats : MonoBehaviour
 {
    public static float completionTime {get;set;} = 0;
+   public static List<float> completionTargets {get;set;}
+   public static int rating {get;set;} = 0;
    public static bool gameWon {get;set;} = false;
    public static int shrinesCleansed {get;set;} = 0;
    public static int totalShrines {get;set;} = 0;

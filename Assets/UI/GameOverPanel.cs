@@ -1,9 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+// using System.Collections;
+// using System.Collections.Generic;
+// using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOverPanel : MonoBehaviour
 {
@@ -13,10 +14,12 @@ public class GameOverPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI completionTimeText;
     [SerializeField] TextMeshProUGUI shrinesCleansedText;
     [SerializeField] TextMeshProUGUI difficultyText;
+    [SerializeField] GameObject starParent;
     void Start()
     {
         SetWin(GameStats.gameWon);
         SetStats();
+        SetStars();
     }
 
     private void SetWin(bool win)
@@ -40,14 +43,33 @@ public class GameOverPanel : MonoBehaviour
     {
         completionTimeText.text = TimeSpan.FromSeconds(GameStats.completionTime).ToString(@"mm\:ss");
         shrinesCleansedText.text = $"{GameStats.shrinesCleansed}/{GameStats.totalShrines}";
-        Debug.Log(GameStats.gameDifficulty.ToString());
         difficultyText.text = GameStats.gameDifficulty.ToString();
+    }
+
+    private void SetStars()
+    {
+        for (int i = 0; i < GameStats.rating; i++)
+        {
+            starParent.transform.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().enabled = true;
+
+            // show required time for 2 and 3 star rating
+            
+        }
+
+
+        starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+        starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[0]).ToString(@"mm\:ss");
+
+        starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+        starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[1]).ToString(@"mm\:ss");
+
     }
 
     public void RestartGame()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //TODO fix restart
+        // Time.timeScale = 1;
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         
     }
 }
