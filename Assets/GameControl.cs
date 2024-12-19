@@ -5,6 +5,7 @@ using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameControl : MonoBehaviour
     void Start()
     {
         GameStats.completionTargets = targetTimes.timesInSeconds;
+        GameStats.levelName = SceneManager.GetActiveScene().name;
         PlayMusic();
         
     }

@@ -4,6 +4,7 @@ using System;
 // using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOverPanel : MonoBehaviour
@@ -67,9 +68,7 @@ public class GameOverPanel : MonoBehaviour
 
     public void RestartGame()
     {
-        //TODO fix restart
-        // Time.timeScale = 1;
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        
+        Time.timeScale = 1;
+        SceneManager.LoadScene(GameStats.levelName); 
     }
 }
