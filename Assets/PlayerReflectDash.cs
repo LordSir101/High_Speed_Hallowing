@@ -192,17 +192,42 @@ public class PlayerReflectDash : MonoBehaviour
             // get direction vector relative to enemy
             enemyPos = relfectDashtarget.transform.position;
 
+            playerAudio.PlayReflectDashAudio();
+
+            //StartCoroutine(MoveToTarget());
             // Teleport the player to the enemy center
             Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
             rb.position = teleportLocation;
 
             reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
 
-            playerAudio.PlayReflectDashAudio();
         }
             
         //}
      
+    }
+
+    IEnumerator MoveToTarget()
+    {
+        float startTime = Time.time;
+        rb.drag = 0;
+        //reflectDash.action.Disable();
+        // instead of teleporting at the beginning of the dash, just move really quickly instead
+        while ((enemyPos - (Vector3)rb.position).magnitude > 0.1)
+		{
+			rb.velocity = new Vector2(enemyPos.x, enemyPos.y) * 20;
+            Vector2 normalized = rb.velocity.normalized;
+            float playerRadValue = Mathf.Atan2(normalized.y, normalized.x);
+            float playerAngle= playerRadValue * (180/Mathf.PI);
+            rb.transform.localRotation = Quaternion.Euler(0,0,playerAngle -90);
+            //prevDashVelocity = rb.velocity;
+			//Pauses the loop until the next frame, creating something of a Update loop. 
+			//This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D
+			yield return null;
+		}
+
+        reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
+
     }
 
     private Vector2 GetDashDirection()
@@ -219,7 +244,7 @@ public class PlayerReflectDash : MonoBehaviour
     {
         // Once the dash has started, conditional dashes are allowed, but not basic dashes
         playerMovement.dash.action.Enable();
-        playerMovement.DisableBasicDash();
+        //playerMovement.DisableBasicDash();
 
         // Vector2 direction = movement.action.ReadValue<Vector2>();
 
@@ -243,7 +268,7 @@ public class PlayerReflectDash : MonoBehaviour
 
         if(relfectDashtarget != null)
         {
-            relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            relfectDashtarget.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             relfectDashtarget = null;
         }
         

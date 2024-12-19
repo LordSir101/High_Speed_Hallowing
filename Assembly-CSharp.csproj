@@ -111,6 +111,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\PlayerDamageEffects.cs" />
     <Compile Include="Assets\UI\AnimateReflectDashArrow.cs" />
+    <Compile Include="Assets\Enemy\EnemyIntangibility.cs" />
     <Compile Include="Assets\Enemy\EnemyTelegraphAttack.cs" />
     <Compile Include="Assets\Shrines\EndShrine.cs" />
     <Compile Include="Assets\Camera\Shake.cs" />

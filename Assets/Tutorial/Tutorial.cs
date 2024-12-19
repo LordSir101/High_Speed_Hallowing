@@ -35,6 +35,7 @@ public class Tutorial : MonoBehaviour
     PlayerReflectDash playerReflectDash;
     PlayerResourceManager playerResources;
     PlayerImpact playerImpact;
+    GameObject startingEnemy;
     // Start is called before the first frame update
 
     // TODO: remove if this gets set by a menu later
@@ -42,6 +43,7 @@ public class Tutorial : MonoBehaviour
     {
         GameStats.gameDifficulty = GameStats.GameDifficulty.tutorial;
         Time.timeScale = 1;
+        startingEnemy = GameObject.FindGameObjectWithTag("Enemy");
     }
 
     // private void OnEnable()
@@ -88,8 +90,25 @@ public class Tutorial : MonoBehaviour
         {
             firstEnemyAttacked = true;
             NextText();
-            StartCoroutine(WaitForTime(10, UnlockDash));
+            StartCoroutine(CheckFirstEnemyKilled());
         }
+    }
+
+    IEnumerator CheckFirstEnemyKilled()
+    {
+        bool enemyKilled = false;
+
+        while(!enemyKilled)
+        {
+            if(startingEnemy == null)
+            {
+                enemyKilled = true;
+            }
+
+            yield return null;
+        }
+
+        UnlockDash();
     }
 
     private void UnlockDash()
