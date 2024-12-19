@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -12,10 +13,13 @@ public class GameControl : MonoBehaviour
     [SerializeField] AudioSource backgroundMusic;
     PauseControl pauseControl;
     [SerializeField] AnimateGameOverText gameOverTextAnimateScript;
+    [SerializeField] TargetTimes targetTimes;
     // Start is called before the first frame update
     void Start()
     {
+        GameStats.completionTargets = targetTimes.timesInSeconds;
         PlayMusic();
+        
     }
 
     void Awake()
@@ -42,11 +46,16 @@ public class GameControl : MonoBehaviour
         GameStats.gameWon = win;
         GameStats.completionTime = gameTime;
 
+        //int rating = 0;
+        if(win)
+        {
+            GameStats.rating = CalulateRating();
+        }
+
         string text = win ? "Level Complete" : "Game Over";
 
-        gameOverTextAnimateScript.AnimateText(text, LoadEndScreen);
+        gameOverTextAnimateScript.AnimateText(text, GameStats.rating, LoadEndScreen);
         
-
         // TextMeshProUGUI text = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
         // if(win)
@@ -60,6 +69,21 @@ public class GameControl : MonoBehaviour
         // hud.SetActive(false);
         // gameObject.SetActive(true);
         // PauseControl.PauseGame(true);
+    }
+
+    private int CalulateRating()
+    {
+        int rating = 1;
+
+        foreach(float time in targetTimes.timesInSeconds)
+        {
+            if(GameStats.completionTime < time)
+            {
+                rating += 1;
+            }
+        }
+
+        return rating;
     }
 
     private void LoadEndScreen()

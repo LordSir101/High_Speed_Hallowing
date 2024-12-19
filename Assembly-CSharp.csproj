@@ -71,8 +71,8 @@
     <Compile Include="Assets\FrenzyMode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Utils.cs" />
-    <Compile Include="Assets\SpawnData\WaveInfo.cs" />
     <Compile Include="Assets\AttackHitboxes\TH_Cone.cs" />
+    <Compile Include="Assets\ScriptableObjects\TargetTimes\TargetTimes.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\PlayerReflectDash.cs" />
     <Compile Include="Assets\SceneControl.cs" />
@@ -138,6 +138,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\UI\DisplayPlayerSpeed.cs" />
     <Compile Include="Assets\Tutorial\Tutorial.cs" />
+    <Compile Include="Assets\ScriptableObjects\SpawnData\WaveInfo.cs" />
     <Compile Include="Assets\Enemy\IceEnemyConeAttack.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
