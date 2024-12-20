@@ -9,11 +9,14 @@ public class Shake : MonoBehaviour
     public bool shaking = false;
     private GameObject player;
 
+    private float zPos; // keep zPos constant to avoid the black screen bug. If camera z > -1, cant see the sprites on screen
+
     Coroutine shake;
     // Start is called before the first frame update
     void Start()
     {
          player = GameObject.FindGameObjectWithTag("Player");
+         zPos = transform.position.z;
     }
 
     // Update is called once per frame
@@ -32,6 +35,10 @@ public class Shake : MonoBehaviour
         if(shaking)
         {
             StopCoroutine(shake);
+
+            // I think this is needed to stop the screen from blacking out?
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y, zPos);
+            shaking = false;
         }
         
     }
@@ -50,12 +57,13 @@ public class Shake : MonoBehaviour
             float strength = curve.Evaluate(elapsedTime / duration);
             float posX = player.transform.position.x;
             float posY = player.transform.position.y;
-            Vector3 playerPos = new Vector3(posX, posY, transform.position.z);
-            transform.position = playerPos + Random.insideUnitSphere * strength;
+            Vector2 playerPos = new Vector2(posX, posY);
+            Vector2 shake = playerPos + Random.insideUnitCircle * strength;
+            transform.position = new Vector3(shake.x, shake.y, zPos);
             yield return null;
         }
 
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);;
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, zPos);
         shaking = false;
     }
 }
