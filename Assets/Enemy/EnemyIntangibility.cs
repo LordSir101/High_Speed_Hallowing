@@ -21,7 +21,6 @@ public class EnemyIntangibility : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject);
         foreach(SpriteRenderer sprite in sprites)
         {
             Color color = sprite.color;
@@ -35,7 +34,6 @@ public class EnemyIntangibility : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("enemy leave");
         foreach(SpriteRenderer sprite in sprites)
         {
             Color color = sprite.color;
@@ -44,5 +42,21 @@ public class EnemyIntangibility : MonoBehaviour
         }
 
         raycastBuffer.SetActive(true);
+    }
+
+    // keep ghost intangible when passing through overlaping colliders
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if(raycastBuffer.activeInHierarchy)
+        {
+            foreach(SpriteRenderer sprite in sprites)
+            {
+                Color color = sprite.color;
+                color.a = 0.3f;
+                sprite.color = color;
+            }
+
+            raycastBuffer.SetActive(false);
+        }
     }
 }

@@ -18,6 +18,7 @@ public class RingEnemyBehaviour : MonoBehaviour
     Rigidbody2D enemyRb;
 
     EnemyTelegraphAttack ringAttackInfo;
+    [SerializeField] EnemyInfo enemyInfo;
 
     GameObject player;
 
@@ -108,9 +109,19 @@ public class RingEnemyBehaviour : MonoBehaviour
 
         // Change the preferred direction based on how far away enemy is
         // The further away the enemy is, the more weight a dot product of 1 will have and vice versa
-        float offset = (dirToPlayer.magnitude - minDis) / (maxDis - minDis);
-        offset = Mathf.Clamp(offset, 0, 1);
+        float offset;
 
+        if(enemyInfo.isFrenzy)
+        {
+            offset = (dirToPlayer.magnitude - minDis + 20) / ((maxDis + 20) - minDis + 20);
+            offset = Mathf.Clamp(offset, 0, 1);
+        }
+        else
+        {
+            offset = (dirToPlayer.magnitude - minDis) / (maxDis - minDis);
+            offset = Mathf.Clamp(offset, 0, 1);
+        }
+        
         Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, 2f, enemyLayer);
        
         foreach(Vector2 dir in possibleDirections)
