@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,7 +46,9 @@ public class SpawnEnemy : MonoBehaviour
             spawnPoints.Add(spawnPoint);
         }
 
-        Debug.Log(spawnPoints[0]);
+        // currWave = waveInfos[3];
+        // SpawnFrenzyWave();
+
     }
 
     void Update()
@@ -219,11 +222,6 @@ public class SpawnEnemy : MonoBehaviour
             }
         }
 
-        // foreach(GameObject point in validPoints)
-        // {
-        //     Debug.Log(point);
-        // }
-
         return validPoints;
     }
 
@@ -233,7 +231,19 @@ public class SpawnEnemy : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         int numEnemiesAvailableToSpawn = currWave.maxEnemies - enemies.Length;
         SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, currWave.maxEnemies));
+        SetEnemyFrenzy();
     }
+
+    private void SetEnemyFrenzy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach(GameObject enemy in enemies)
+        {
+            enemy.GetComponent<EnemyInfo>().isFrenzy = true;
+        }
+    }
+
     private void SetStatsBasedOnDifficulty()
     {
         if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)

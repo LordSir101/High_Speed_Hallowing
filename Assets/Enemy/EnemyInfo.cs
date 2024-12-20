@@ -10,4 +10,5 @@ public class EnemyInfo : MonoBehaviour
 
     public float damageMod {get;set;} = 1;
     public float healthMod {get;set;} = 1;
+    public bool isFrenzy {get;set;} = false;
 }
