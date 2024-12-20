@@ -1091,6 +1091,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
+  enemyInfo: {fileID: 6958061405744895557}
   snowballSprite: {fileID: 21300000, guid: 2643e9d4b6fdfc341bb9f12734d6cf4d, type: 3}
   attackRange: 6
   projSpeed: 5

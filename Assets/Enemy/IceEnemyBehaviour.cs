@@ -15,6 +15,8 @@ public class IceEnemyBehaviour : MonoBehaviour
     [SerializeField]
     LayerMask playerLayer;
 
+    [SerializeField] EnemyInfo enemyInfo;
+
     private EnemySounds audioController;
 
     [Header("snowball")]
@@ -150,8 +152,19 @@ public class IceEnemyBehaviour : MonoBehaviour
 
         // Change the preferred direction based on how far away enemy is
         // The further away the enemy is, the more weight a dot product of 1 will have and vice versa
-        float offset = (dirToPlayer.magnitude - minDis) / (maxDis - minDis);
-        offset = Mathf.Clamp(offset, 0, 1);
+        float offset;
+
+        if(enemyInfo.isFrenzy)
+        {
+            offset = (dirToPlayer.magnitude - minDis + 10) / (maxDis + 10 - minDis + 10);
+            offset = Mathf.Clamp(offset, 0, 1);
+        }
+        else
+        {
+             offset = (dirToPlayer.magnitude - minDis) / (maxDis - minDis);
+            offset = Mathf.Clamp(offset, 0, 1);
+        }
+       
        
         foreach(Vector2 dir in possibleDirections)
         {

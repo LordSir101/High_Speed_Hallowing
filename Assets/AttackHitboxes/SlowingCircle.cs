@@ -55,7 +55,6 @@ public class SlowingCircle : TelegraphedHitbox
 
         if(other.gameObject.tag == "Player" && doDamageEffect)
         {
-            //Debug.Log("damage");
 
             // PlayerMovement playerMovement = other.gameObject.GetComponent<PlayerMovement>();
             // playerMovement.currSpeed -= 2;
@@ -101,9 +100,4 @@ public class SlowingCircle : TelegraphedHitbox
         }
 
     }
-
-    // public override void Setup()
-    // {
-    //     //throw new System.NotImplementedException();
-    // }
 }

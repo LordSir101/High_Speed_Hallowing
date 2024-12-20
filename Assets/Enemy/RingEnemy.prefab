@@ -158,6 +158,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   enemyRb: {fileID: 6829624023255592024}
+  enemyInfo: {fileID: 7832744055192746511}
 --- !u!114 &7832744055192746511
 MonoBehaviour:
   m_ObjectHideFlags: 0
