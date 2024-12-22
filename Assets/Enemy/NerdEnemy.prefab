@@ -556,6 +556,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   deathAnimator: {fileID: 8346287207291623753, guid: 9291915a13b60434791e2577ae049fe4, type: 3}
+  hitAnimator: {fileID: 4283131039924268535, guid: 60716d468f3265c44a71548aee1b79f2, type: 3}
 --- !u!114 &1758167067608408375
 MonoBehaviour:
   m_ObjectHideFlags: 0

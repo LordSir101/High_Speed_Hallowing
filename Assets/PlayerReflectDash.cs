@@ -242,6 +242,7 @@ public class PlayerReflectDash : MonoBehaviour
 
     private void ReflectDash(InputAction.CallbackContext context)
     {
+        playerAudio.PlayDashSound();
         // Once the dash has started, conditional dashes are allowed, but not basic dashes
         playerMovement.dash.action.Enable();
         //playerMovement.DisableBasicDash();
@@ -340,7 +341,7 @@ public class PlayerReflectDash : MonoBehaviour
 
     IEnumerator PerformDash(Vector2 force, float time)
     {
-
+        
         //rb.AddForce(force, ForceMode2D.Impulse);
         float startTime = Time.time;
         rb.drag = 0;
