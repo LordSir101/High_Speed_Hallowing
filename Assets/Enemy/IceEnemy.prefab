@@ -1087,6 +1087,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 3
   maxSpeed: 3.5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   rb: {fileID: 8849390093149267439}
   playerLayer:
     serializedVersion: 2
