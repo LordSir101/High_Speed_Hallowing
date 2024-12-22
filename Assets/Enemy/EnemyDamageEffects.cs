@@ -15,8 +15,12 @@ public class EnemyDamageEffects : MonoBehaviour
    private List<Material> materials;
 
    [SerializeField] GameObject deathAnimator;
+   GameObject deathAnimation;
 //    private ParticleSystem particleSystem;
    private EnemyInfo enemyInfo;
+   [SerializeField] private GameObject hitAnimator;
+   GameObject hitAnimation;
+   private Color hitColor;
    //[SerializeField] Material damageFlashMaterial;
 
    private void Awake()
@@ -24,6 +28,10 @@ public class EnemyDamageEffects : MonoBehaviour
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         //particleSystem = deathAnimator.GetComponent<ParticleSystem>();
         enemyInfo = GetComponent<EnemyInfo>();
+        deathAnimation = Instantiate(deathAnimator);
+        hitAnimation = Instantiate(hitAnimator);
+        hitColor = enemyInfo.soulColor;
+
         Init();
    }
 
@@ -43,8 +51,8 @@ public class EnemyDamageEffects : MonoBehaviour
 
    public void StartDeathAnimation(Vector3 impact)
    {    
-        GameObject animation = Instantiate(deathAnimator,transform.position,transform.rotation);
-        ParticleSystem particleSystem = animation.GetComponent<ParticleSystem>();
+        
+        ParticleSystem particleSystem = deathAnimation.GetComponent<ParticleSystem>();
 
         ParticleSystem.MainModule settings = particleSystem.main;
         settings.startColor = enemyInfo.soulColor;
@@ -52,7 +60,8 @@ public class EnemyDamageEffects : MonoBehaviour
         Vector2 normalized = impact.normalized;
         float radValue = Mathf.Atan2(normalized.y, normalized.x);
         float angle= radValue * (180/Mathf.PI);
-        animation.transform.rotation = Quaternion.Euler(0,0, angle -90);;
+        deathAnimation.transform.rotation = Quaternion.Euler(0,0, angle -90);
+        deathAnimation.transform.position = transform.position;
 
         particleSystem.Play();
 
@@ -60,6 +69,13 @@ public class EnemyDamageEffects : MonoBehaviour
 
    public void StartDamageFlash()
    {
+        ParticleSystem particleSystem = hitAnimation.GetComponent<ParticleSystem>();
+        ParticleSystem.MainModule settings = particleSystem.main;
+        settings.startColor = enemyInfo.soulColor;
+
+        hitAnimation.transform.position = transform.position;
+        particleSystem.Play();
+
         StartCoroutine(DamageFlash());
    }
 
