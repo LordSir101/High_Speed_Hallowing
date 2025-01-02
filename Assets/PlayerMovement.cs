@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     public InputActionReference movement, dash;
-
     public AnimationCurve animCurve;
     private PlayerAudio playerAudio;
     private PlayerCooldowns playerCooldowns;
@@ -37,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash")]
     [SerializeField] public float dashSpeed {get; set;}= 14f;
     [SerializeField] private float dashTime = 0.3f, dashPause = 0.05f;
+    [SerializeField] private TrailRenderer leftWing, rightWing;
     
 
     Rigidbody2D rb;
@@ -321,6 +321,8 @@ public class PlayerMovement : MonoBehaviour
         dash.action.Enable();
         isDashing = false;
         rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
+        // leftWing.enabled = false;
+        // rightWing.emitting = false;
     }
 
 
@@ -356,6 +358,9 @@ public class PlayerMovement : MonoBehaviour
         rb.drag = 0;
 
         playerAudio.PlayDashSound();
+
+        //leftWing.enabled = true;
+        //rightWing.emitting = true;
 
         while (Time.time - startTime <= dashTime)
 		{

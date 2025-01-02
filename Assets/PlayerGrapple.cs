@@ -7,6 +7,8 @@ public class PlayerGrapple : MonoBehaviour
 {
     [SerializeField]
     private InputActionReference grapple, pointerPos;//, movement;
+    [SerializeField] private PlayerInput playerInput;
+
     private LineRenderer lineRenderer;
     Rigidbody2D rb;
 
@@ -115,6 +117,13 @@ public class PlayerGrapple : MonoBehaviour
     private Vector2 GetGrappleDirection()
     {
         Vector2 mousePos = pointerPos.action.ReadValue<Vector2>();
+
+        // controller will give us the direction the left stick is pointing
+        if(playerInput.currentControlScheme == "Controller")
+        {
+            return mousePos;
+        }
+
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
         Vector2 direction = mousePos - rb.position;

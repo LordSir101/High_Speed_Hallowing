@@ -10,6 +10,7 @@ public class PlayerReflectDash : MonoBehaviour
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
     [SerializeField] private LayerMask bufferLayer;
+    [SerializeField] private PlayerInput playerInput;
     private GameObject reflectDashArrow = null;
     private GameObject relfectDashtarget = null;
     private float reflectDashSpeed= 12f;
@@ -234,6 +235,11 @@ public class PlayerReflectDash : MonoBehaviour
     {
         Vector2 mousePos = pointerPos.action.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        if(playerInput.currentControlScheme == "Controller")
+        {
+            return mousePos;
+        }
 
         Vector2 direction = mousePos - rb.position;
 
