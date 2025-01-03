@@ -7,10 +7,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class GameControl : MonoBehaviour
+public class GameControl : MonoBehaviour, IDataPersistence
 {
     private float gameTime = 0;
     private bool gameEnded = false;
+
+    private float prevHighScore;
+    private float currHighScore;
     [SerializeField] AudioSource backgroundMusic;
     PauseControl pauseControl;
     [SerializeField] AnimateGameOverText gameOverTextAnimateScript;
@@ -20,6 +23,7 @@ public class GameControl : MonoBehaviour
     {
         GameStats.completionTargets = targetTimes.timesInSeconds;
         GameStats.levelName = SceneManager.GetActiveScene().name;
+        Debug.Log(SceneManager.GetActiveScene().name);
         PlayMusic();
         
     }
@@ -51,6 +55,11 @@ public class GameControl : MonoBehaviour
         //int rating = 0;
         if(win)
         {
+            if(GameStats.completionTime < prevHighScore || prevHighScore == 0)
+            {
+                currHighScore = GameStats.completionTime;
+            }
+           
             GameStats.rating = CalulateRating();
         }
 
@@ -93,11 +102,20 @@ public class GameControl : MonoBehaviour
         SceneControl.LoadScene("GameOverMenu");
     }
 
-    //************************************************************************************************************************
-    // TODO Make sure to get music that can be used for commercial purposes if selling the game. current version cannot be used
-    //************************************************************************************************************************
     void PlayMusic()
     {
         backgroundMusic.Play();
+    }
+
+    // These get called when scene is loaded, by dataPersitenceManager
+    public void LoadData(GameData data)
+    {
+        prevHighScore = data.highScores[SceneManager.GetActiveScene().name];
+        currHighScore = prevHighScore;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.highScores[SceneManager.GetActiveScene().name] = currHighScore;
     }
 }
