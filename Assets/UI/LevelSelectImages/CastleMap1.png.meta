@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ed433221f8343a849be3ddd2f24c0dbb
+guid: 7e45bed0afc767d4f9ba1284412cda9f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4488517631568061309
-    second: path1-2-1-11-8_0
+      213: -5345379552148353557
+    second: CastleMap1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: path1-2-1-11-8_0
+      name: CastleMap1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 685
-        height: 525
+        width: 1657
+        height: 924
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 38cde4acef495b1c0800000000000000
-      internalID: -4488517631568061309
+      spriteID: bed8f8c4e9561d5b0800000000000000
+      internalID: -5345379552148353557
       vertices: []
       indices: 
       edges: []
@@ -136,7 +136,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      path1-2-1-11-8_0: -4488517631568061309
+      CastleMap1_0: -5345379552148353557
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
