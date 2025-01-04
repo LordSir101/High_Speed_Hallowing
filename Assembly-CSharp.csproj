@@ -82,6 +82,7 @@
     <Compile Include="Assets\Shrines\DamageShrine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Enemy\RingEnemyBehaviour.cs" />
+    <Compile Include="Assets\UI\LevelSelect\LevelSelectInfo.cs" />
     <Compile Include="Assets\Enemy\EnemyInfo.cs" />
     <Compile Include="Assets\UI\StartMenu.cs" />
     <Compile Include="Assets\Enemy\EnemyHealth.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Essence.cs" />
+    <Compile Include="Assets\UI\LevelSelect\LevelSelectMenu.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\Tutorial\TutorialText.cs" />
@@ -655,12 +657,12 @@
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

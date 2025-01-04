@@ -22,7 +22,9 @@ public class DataPersistenceManager : MonoBehaviour
 
         if(instance != null)
         {
-            Debug.LogError("An Instance of DataPersistenceManager already exists");
+            Debug.Log("An Instance of DataPersistenceManager already exists, destroying newest instance");
+            Destroy(gameObject);
+            return;
         }
 
         instance = this;
