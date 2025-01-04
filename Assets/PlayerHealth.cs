@@ -16,7 +16,7 @@ public class PlayerHealth: MonoBehaviour
     private PlayerDamageEffects damageEffects;
     private PlayerAudio playerAudio;
     private int health;
-    public int MaxHealth { get; set; } = 1000;
+    public int MaxHealth { get; set; } = 1000;//1000;
     public int Armor {get; set;} = 0;
     private bool isDead = false;
 

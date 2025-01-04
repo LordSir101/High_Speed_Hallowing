@@ -700,16 +700,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 717408242}
-        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
-        m_MethodName: ShowDifficultySelect
-        m_Mode: 1
+      - m_Target: {fileID: 6960980173078447693, guid: e18e9eeeac23f284abb37a44fe5348ac, type: 3}
+        m_TargetAssemblyTypeName: SceneControl, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: CastleMap
+          m_StringArgument: LevelSelect
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &428775040
@@ -4160,6 +4160,63 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1001 &5247326774109861134
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.13106447
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0361333
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.110948734
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408672265022688527, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8732336176039034691, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
+      propertyPath: m_Name
+      value: DataPersitenceManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4f2d60cc92e9fa0469c3a7de86a6295b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4172,3 +4229,4 @@ SceneRoots:
   - {fileID: 654007492}
   - {fileID: 1563048707}
   - {fileID: 1505466595}
+  - {fileID: 5247326774109861134}
