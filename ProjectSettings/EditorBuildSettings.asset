@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/CastleMap2.unity
     guid: c94069c0c5c78ce4983624b0b7408150
   - enabled: 1
+    path: Assets/Scenes/CastleMap3.unity
+    guid: 02766b99122bf8049be16414763f34f1
+  - enabled: 1
     path: Assets/Scenes/CastleMap4.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects:
