@@ -716,6 +716,10 @@ PrefabInstance:
       propertyPath: levelName
       value: CastleMap3
       objectReference: {fileID: 0}
+    - target: {fileID: 112784551639403811, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
+      propertyPath: targetTimes
+      value: 
+      objectReference: {fileID: 11400000, guid: 657e98af9ef6ea84188db6ec912f2ff3, type: 2}
     - target: {fileID: 965476089695681269, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -4170,6 +4174,10 @@ PrefabInstance:
       propertyPath: levelName
       value: CastleMap2
       objectReference: {fileID: 0}
+    - target: {fileID: 112784551639403811, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
+      propertyPath: targetTimes
+      value: 
+      objectReference: {fileID: 11400000, guid: 08e5a9280dbd87647afb1573ed258c53, type: 2}
     - target: {fileID: 965476089695681269, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -5411,6 +5419,10 @@ PrefabInstance:
       propertyPath: levelName
       value: CastleMap1
       objectReference: {fileID: 0}
+    - target: {fileID: 112784551639403811, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
+      propertyPath: targetTimes
+      value: 
+      objectReference: {fileID: 11400000, guid: 0a41224bf45f3a54995009d53564c099, type: 2}
     - target: {fileID: 2791408091010588526, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_Pivot.x
       value: 0

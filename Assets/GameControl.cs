@@ -65,6 +65,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
                 currHighScore = GameStats.completionTime;
                 bestRating = GameStats.rating;
             }
+
            
         }
 
@@ -132,6 +133,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
+        Debug.Log("saved");
         if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
         {
             data.highScores[SceneManager.GetActiveScene().name] = currHighScore;
