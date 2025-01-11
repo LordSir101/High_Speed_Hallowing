@@ -27,6 +27,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
     {
         GameStats.completionTargets = targetTimes.timesInSeconds;
         GameStats.levelName = SceneManager.GetActiveScene().name;
+        GameStats.ResetDefaults();
         PlayMusic();
         
     }
