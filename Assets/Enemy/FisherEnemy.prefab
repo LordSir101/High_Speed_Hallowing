@@ -1348,13 +1348,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fe166f848dda042b03afb045360c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windupTime: 0.7
-  activeTime: 1
+  windupTime: 0.5
+  activeTime: 0.5
   cooldownTime: 2
-  Size: 4
+  Size: 3
   StartingTelegaphPercentSize: 0
   animationStartPercent: 1
-  Damage: 150
+  Damage: 40
 --- !u!114 &2756437173833000015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1368,8 +1368,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  soulColor: {r: 0.5411765, g: 0.972549, b: 0.98039216, a: 1}
-  soulLightColor: {r: 0.17150229, g: 0.3735138, b: 0.8867924, a: 1}
+  soulColor: {r: 1, g: 0.97355634, b: 0.4764151, a: 1}
+  soulLightColor: {r: 1, g: 0.9607843, b: 0.22352941, a: 1}
 --- !u!114 &624097810962276802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1515,15 +1515,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8449083161894472925}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3eafbe5e6676594d93babc182e69ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackType: {fileID: 0}
+  attackType: {fileID: 5164034569600164820, guid: 95c8a1ce7c43a6041b54aa86d2a44ff8, type: 3}
   animator: {fileID: 0}
   attackAudioParent: {fileID: 0}
   windupTimer: 0
+  playerInRange: 0
+  attacking: 0
 --- !u!114 &5710089196740826660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1548,7 +1550,7 @@ MonoBehaviour:
   enemyInfo: {fileID: 2756437173833000015}
   hookSprite: {fileID: -7982265730141556313, guid: 50080122ca4617f4f9ba8deba1ad167f, type: 3}
   attackRange: 5
-  projSpeed: 11
+  projSpeed: 15
   hookCooldown: 5
   hookDamage: 15
   projectilePrefab: {fileID: 8906220813581016635, guid: fb681e82f570e0143b8724eb97617dfa, type: 3}

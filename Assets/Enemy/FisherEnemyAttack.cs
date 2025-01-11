@@ -10,7 +10,7 @@ public class FisherEnemyAttack : MonoBehaviour
 {
     private EnemyTelegraphAttack attackStats;
     private FisherEnemyBehaviour behaviourScript;
-    private TH_Ring attackScript;
+    private FishRodAttack attackScript;
 
     [SerializeField]
     private GameObject attackType;
@@ -24,6 +24,10 @@ public class FisherEnemyAttack : MonoBehaviour
     public float windupTimer = 0;
 
     private bool animationComplete = false;
+    public bool playerInRange = false;
+    public bool attacking = false;
+    GameObject attack;
+    GameObject player;
 
     
 
@@ -34,13 +38,15 @@ public class FisherEnemyAttack : MonoBehaviour
         behaviourScript = gameObject.GetComponent<FisherEnemyBehaviour>();
         audioController = gameObject.GetComponentInChildren<EnemySounds>();
 
-        GameObject attack = Instantiate(attackType);
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        attack = Instantiate(attackType);
         
-        attack.transform.position  = transform.position;
+        attack.transform.position = transform.position;
         //attack.transform.parent = gameObject.transform;
         attack.transform.parent = transform; // make the attack a child of enemy 
 
-        attackScript = attack.GetComponent<TH_Ring>();
+        attackScript = attack.GetComponent<FishRodAttack>();
 
         // the telegraph starts at 70% of the total hitbox since the hitbox is a ring.
         attackScript.Init(attackStats.windupTime, attackStats.activeTime, attackStats.cooldownTime, attackStats.Size, attackStats.Damage, attackStats.StartingTelegaphPercentSize, attackStats.animationStartPercent);
@@ -54,37 +60,44 @@ public class FisherEnemyAttack : MonoBehaviour
 
     void Update()
     {
-        if(attackScript.attackReady)
+        
+         if(attackScript.attackReady && behaviourScript.playerInRange)
         {
-            //behaviourScript.ChangeState("attacking");
+            // rotate cone
+            Vector2 dir = player.transform.position - transform.position;
+            float radvalue = Mathf.Atan2(-dir.y, -dir.x);
+            float angle= radvalue * (180/Mathf.PI);
+            attack.transform.localRotation = Quaternion.Euler(0,0,angle -90);
+
+            attacking = true;
             attackScript.StartAttack();
-            
+            //audioController.SetCurrAttackAudio(snowconeAudioParent);
             //ToggleAttackReady(false);
-            //StartCoroutine(attackScript.StartCooldown(ToggleAttackReady));
         }
 
         // start animation slightly before active frames
-        if(attackScript.windupProgress >= attackStats.animationStartPercent && !animationComplete)
-        {
-            // windupTimer += Time.deltaTime;
+        // if(attackScript.windupProgress >= attackStats.animationStartPercent && !animationComplete)
+        // {
+        //     // windupTimer += Time.deltaTime;
 
-            // if(windupTimer / attackStats.windupTime >= 0.8)
-            // {
-                // set chain attack audio as the audio to be played
-                // the audio will be played later by an animation event
-                audioController.SetCurrAttackAudio(attackAudioParent);
-                animator.SetTrigger("Attack");
-                animationComplete = true;
-                //attackScript.startAnimation = false;
-                //windupTimer = 0;
-                //attackScript.startAnimation = false;
-            //}
+        //     // if(windupTimer / attackStats.windupTime >= 0.8)
+        //     // {
+        //         // set chain attack audio as the audio to be played
+        //         // the audio will be played later by an animation event
+        //         audioController.SetCurrAttackAudio(attackAudioParent);
+        //         animator.SetTrigger("Attack");
+        //         animationComplete = true;
+        //         //attackScript.startAnimation = false;
+        //         //windupTimer = 0;
+        //         //attackScript.startAnimation = false;
+        //     //}
             
-        }
+        // }
         if(attackScript.attackEnded)
         {
             //behaviourScript.ChangeState("kiting");
             animationComplete = false;
+            attacking = false;
             //StartCoroutine(attackScript.StartCooldown());
             //attackScript.attackEnded = false;
         }

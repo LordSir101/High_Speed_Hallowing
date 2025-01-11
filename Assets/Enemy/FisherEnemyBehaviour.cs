@@ -35,7 +35,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
 
 
     EnemyTelegraphAttack attackInfo;
-    private IceEnemyConeAttack coneAttack;
+    private FisherEnemyAttack coneAttack;
 
     GameObject player;
 
@@ -60,12 +60,12 @@ public class FisherEnemyBehaviour : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
 
-        // attackInfo = gameObject.GetComponent<EnemyTelegraphAttack>();
-        // coneAttack = gameObject.GetComponent<IceEnemyConeAttack>();
+        attackInfo = gameObject.GetComponent<EnemyTelegraphAttack>();
+        coneAttack = gameObject.GetComponent<FisherEnemyAttack>();
         //audioController = gameObject.GetComponentInChildren<EnemySounds>();
 
         // Size is the local scale
-        //maxConeAttackRange = attackInfo.Size;
+        maxConeAttackRange = attackInfo.Size;
         //minConeAttackRange = maxConeAttackRange * attackInfo.StartingTelegaphPercentSize;
 
         minDis = 0.5f;//maxConeAttackRange;//UnityEngine.Random.Range(1, maxConeAttackRange /2);
@@ -84,7 +84,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
     }
     void Update()
     {
-        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxConeAttackRange, playerLayer);
+        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxConeAttackRange - 1, playerLayer);
 
         if (playerObjInRange != null)
         {
@@ -98,13 +98,13 @@ public class FisherEnemyBehaviour : MonoBehaviour
         hookTimer += Time.deltaTime;
         if(hookTimer >= hookCooldown)
         {
-            // if(!coneAttack.attacking)
-            // {
-            //     SpawnHook();
-            //     hookTimer = 0;
-            // }
-            SpawnHook();
-            hookTimer = 0;
+            if(!coneAttack.attacking)
+            {
+                SpawnHook();
+                hookTimer = 0;
+            }
+            // SpawnHook();
+            // hookTimer = 0;
         }
 
     }
