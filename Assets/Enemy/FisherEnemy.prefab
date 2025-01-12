@@ -1417,7 +1417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8648eab8b6f873e4dae4f2ba86d5d732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 450
+  maxHealth: 500
   maxOuterLightRad: 1.5
   minOuterLightRad: 0.6
   healthLight: {fileID: 624097810962276802}
@@ -1454,7 +1454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9c2548288d91b4b824b8e6e68c9ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
+  id: 3
   soulColor: {r: 1, g: 0.97355634, b: 0.4764151, a: 1}
   soulLightColor: {r: 1, g: 0.9607843, b: 0.22352941, a: 1}
 --- !u!114 &624097810962276802

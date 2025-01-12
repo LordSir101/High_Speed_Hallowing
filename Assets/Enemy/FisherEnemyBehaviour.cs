@@ -99,7 +99,8 @@ public class FisherEnemyBehaviour : MonoBehaviour
         hookTimer += Time.deltaTime;
         if(hookTimer >= hookCooldown)
         {
-            if(!coneAttack.attacking)
+            float diff = (player.transform.position - transform.position).magnitude;
+            if(!coneAttack.attacking && diff > maxConeAttackRange)
             {
                 AnimateCast();
                 SpawnHook();
@@ -150,9 +151,13 @@ public class FisherEnemyBehaviour : MonoBehaviour
         // }
 
         currHook = Instantiate(projectilePrefab, hookStartingPos.position, transform.rotation);
-        currHook.GetComponent<Projectile>().Init(hookDamage, hookDamageMod, hookSprite, 0.7f, 1f, 1, ReelHook);
+        currHook.GetComponent<Projectile>().Init(hookDamage, hookDamageMod, hookSprite, 0.7f, 1.2f, 1, ReelHook);
         currHook.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
-        currHook.GetComponent<TrailRenderer>().enabled = false;
+
+        AnimationCurve curve = new AnimationCurve();
+        curve.AddKey(0.0f, 0.1f);
+        curve.AddKey(0.8f, 0f);
+        currHook.GetComponent<TrailRenderer>().widthCurve = curve;
         hookStartingPos.GetComponent<LineRenderer>().enabled = true;
 
         StartCoroutine(AnimateReel());
@@ -160,6 +165,11 @@ public class FisherEnemyBehaviour : MonoBehaviour
         //hookAudioParent.GetComponent<AudioSource>().Play();
     }
 
+    // If the fisher ghosts somehow dies while the player attack is disabled, we need to re enable to prevent player from permenantly being unable to attack
+    public void OnDisable()
+    {
+        player.GetComponentInChildren<PlayerAttack>().enabled = true;
+    }
     private void ReelHook(Collision2D other)
     {
 
@@ -203,7 +213,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
         while(touchingPlayer == null)
         {
             Vector3 diff = transform.position - player.transform.position;
-            player.transform.position += diff.normalized * 0.1f;
+            player.GetComponent<Rigidbody2D>().MovePosition(player.transform.position + diff.normalized * 0.7f);
             yield return null;
 
             touchingPlayer = Physics2D.OverlapCircle(transform.position, 1f, playerLayer);
