@@ -29,6 +29,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
     [SerializeField] Transform hookStartingPos;
     [SerializeField] SpriteRenderer hookRenderer;
     [SerializeField] SpriteRenderer fishLineRenderer;
+    [SerializeField] Animator animator;
     GameObject currHook;
     private float hookTimer;
     private float hookDamageMod;
@@ -100,6 +101,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
         {
             if(!coneAttack.attacking)
             {
+                AnimateCast();
                 SpawnHook();
                 hookTimer = 0;
             }
@@ -128,6 +130,10 @@ public class FisherEnemyBehaviour : MonoBehaviour
 
     }
 
+    private void AnimateCast()
+    {
+        animator.SetTrigger("Cast");
+    }
     private void SpawnHook()
     {
         isFishing = true;

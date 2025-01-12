@@ -15,7 +15,8 @@ public class FisherEnemyAttack : MonoBehaviour
     [SerializeField]
     private GameObject attackType;
 
-    public Animator animator;
+    [SerializeField] Animator animator;
+    [SerializeField] Animator bodyAnimator;
     private EnemySounds audioController;
 
     [Header("attack Sounds")]
@@ -28,13 +29,14 @@ public class FisherEnemyAttack : MonoBehaviour
     public bool attacking = false;
     GameObject attack;
     GameObject player;
+    [SerializeField] GameObject hands;
 
     
 
     void Start()
     {
         attackStats = gameObject.GetComponent<EnemyTelegraphAttack>();
-        animator = gameObject.GetComponentInChildren<Animator>();
+        //animator = gameObject.GetComponentInChildren<Animator>();
         behaviourScript = gameObject.GetComponent<FisherEnemyBehaviour>();
         audioController = gameObject.GetComponentInChildren<EnemySounds>();
 
@@ -69,34 +71,47 @@ public class FisherEnemyAttack : MonoBehaviour
             float angle= radvalue * (180/Mathf.PI);
             attack.transform.localRotation = Quaternion.Euler(0,0,angle -90);
 
-            attacking = true;
+            
             attackScript.StartAttack();
             //audioController.SetCurrAttackAudio(snowconeAudioParent);
             //ToggleAttackReady(false);
         }
 
         // start animation slightly before active frames
-        // if(attackScript.windupProgress >= attackStats.animationStartPercent && !animationComplete)
-        // {
-        //     // windupTimer += Time.deltaTime;
+        if(attackScript.windupProgress >= attackStats.animationStartPercent && !animationComplete)
+        {
+            attacking = true;
+            // windupTimer += Time.deltaTime;
 
-        //     // if(windupTimer / attackStats.windupTime >= 0.8)
-        //     // {
-        //         // set chain attack audio as the audio to be played
-        //         // the audio will be played later by an animation event
-        //         audioController.SetCurrAttackAudio(attackAudioParent);
-        //         animator.SetTrigger("Attack");
-        //         animationComplete = true;
-        //         //attackScript.startAnimation = false;
-        //         //windupTimer = 0;
-        //         //attackScript.startAnimation = false;
-        //     //}
+            // if(windupTimer / attackStats.windupTime >= 0.8)
+            // {
+                // set chain attack audio as the audio to be played
+                // the audio will be played later by an animation event
+                //audioController.SetCurrAttackAudio(attackAudioParent);
             
-        // }
+
+            bodyAnimator.enabled = false;
+
+            Vector2 dir = player.transform.position - transform.position;
+            float radvalue = Mathf.Atan2(dir.y, dir.x);
+            float angle= radvalue * (180/Mathf.PI);
+            hands.transform.localRotation = Quaternion.Euler(0,0,angle -90);
+
+            animator.SetTrigger("Swing");
+            //animator.Play("RodSwing2");
+            animationComplete = true;
+                //attackScript.startAnimation = false;
+                //windupTimer = 0;
+                //attackScript.startAnimation = false;
+            //}
+            
+        }
         if(attackScript.attackEnded)
         {
             //behaviourScript.ChangeState("kiting");
             animationComplete = false;
+            hands.transform.localRotation = transform.localRotation;
+            bodyAnimator.enabled = true;
             attacking = false;
             //StartCoroutine(attackScript.StartCooldown());
             //attackScript.attackEnded = false;
