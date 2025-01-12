@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
@@ -10,7 +11,9 @@ public class SpawnEnemy : MonoBehaviour
     // [Header("Possible Enemy Prefabs")]
     // [SerializeField] private List<GameObject> enemyPrefabs;
     [Header("Possible Waves")]
-    [SerializeField] List<WaveInfo> waveInfos;
+    [SerializeField] List<WaveInfo> normalModeWaveInfos;
+    [SerializeField] List<WaveInfo> hardModeWaveInfos;
+    private List<WaveInfo> waveInfos;
     private WaveInfo currWave;
     private float waveTimer = 0;
     private float waveTime;
@@ -33,6 +36,7 @@ public class SpawnEnemy : MonoBehaviour
     void Start()
     {
         SetStatsBasedOnDifficulty();
+        waveInfos = SetWaveInfoBasedOnDifficulty();
         
         currWave = waveInfos[0];
         waveTime = waveInfos[0].time;
@@ -178,28 +182,51 @@ public class SpawnEnemy : MonoBehaviour
         GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
         float totalEnemies = allEnemies.Length;
 
+        List<GameObject> validEnemies = new List<GameObject>();
+
         // if no enemies exist or there is only 1 possible enemy, just return the possible enemies list
         if(totalEnemies == 0 || wave.possibleEnemies.Count == 1)
         {
             return wave.possibleEnemies;
         }
 
-        int[] currDistribution = new int[wave.distribution.Count];
-
-        List<GameObject> validEnemies = new List<GameObject>();
+        Dictionary<int, int> currDistribution = new Dictionary<int, int>();
+        // int[] currDistribution = new int[wave.distribution.Length];
 
         foreach(GameObject enemy in allEnemies)
         {
-            currDistribution[enemy.GetComponent<EnemyInfo>().id] += 1;
+            if (currDistribution.ContainsKey(enemy.GetComponent<EnemyInfo>().id))
+            {
+                currDistribution[enemy.GetComponent<EnemyInfo>().id] += 1;
+            }
+            else
+            {
+                currDistribution.Add(enemy.GetComponent<EnemyInfo>().id, 1);
+            }
+            
         }
 
-        for(int index = 0; index < currDistribution.Length; index++)
+        for(int i = 0; i < wave.possibleEnemies.Count; i++)
         {
-            if(currDistribution[index] / totalEnemies * 100 < wave.distribution[index])
+            int id = wave.possibleEnemies[i].GetComponent<EnemyInfo>().id;
+
+            if (!currDistribution.ContainsKey(id))
             {
-                validEnemies.Add(wave.possibleEnemies[index]);
+                currDistribution.Add(id, 0);
+            }
+            if(currDistribution[id] / totalEnemies * 100 < wave.distribution[i])
+            {
+                validEnemies.Add(wave.possibleEnemies[i]);
             }
         }
+
+        // for(int index = 0; index < currDistribution.Length; index++)
+        // {
+        //     if(currDistribution[index] / totalEnemies * 100 < wave.distribution[index])
+        //     {
+        //         validEnemies.Add(wave.possibleEnemies[index]);
+        //     }
+        // }
         return validEnemies;
     }
     private List<GameObject> GetValidSpawnPoints()
@@ -242,6 +269,21 @@ public class SpawnEnemy : MonoBehaviour
         {
             enemy.GetComponent<EnemyInfo>().isFrenzy = true;
         }
+    }
+
+    private List<WaveInfo> SetWaveInfoBasedOnDifficulty()
+    {
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        {
+            return normalModeWaveInfos;
+        }
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        {
+            return hardModeWaveInfos;
+        }
+
+        // use normal mode waves by default
+        return normalModeWaveInfos;
     }
 
     private void SetStatsBasedOnDifficulty()

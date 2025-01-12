@@ -82,6 +82,7 @@
     <Compile Include="Assets\Shrines\DamageShrine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Enemy\RingEnemyBehaviour.cs" />
+    <Compile Include="Assets\Enemy\FisherEnemyAttack.cs" />
     <Compile Include="Assets\UI\LevelSelect\LevelSelectInfo.cs" />
     <Compile Include="Assets\Enemy\EnemyInfo.cs" />
     <Compile Include="Assets\UI\StartMenu.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Animations\SnowConeAttack\SnowCone.cs" />
+    <Compile Include="Assets\Enemy\FisherEnemyBehaviour.cs" />
     <Compile Include="Assets\SaveData\FileDataHandler.cs" />
     <Compile Include="Assets\PlayerResourceManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\PlayerDamageEffects.cs" />
     <Compile Include="Assets\SaveData\DataPersistenceManager.cs" />
+    <Compile Include="Assets\AttackHitboxes\FishRodAttack.cs" />
     <Compile Include="Assets\UI\AnimateReflectDashArrow.cs" />
     <Compile Include="Assets\Enemy\EnemyIntangibility.cs" />
     <Compile Include="Assets\Enemy\EnemyTelegraphAttack.cs" />

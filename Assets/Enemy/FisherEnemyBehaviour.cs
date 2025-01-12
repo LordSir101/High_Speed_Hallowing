@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class IceEnemyBehaviour : MonoBehaviour
+public class FisherEnemyBehaviour : MonoBehaviour
 {
     private float speed;
     [SerializeField] private float minSpeed, maxSpeed;
@@ -20,18 +20,23 @@ public class IceEnemyBehaviour : MonoBehaviour
 
     private EnemySounds audioController;
 
-    [Header("snowball")]
-    [SerializeField] Sprite snowballSprite;
-    [SerializeField] float attackRange, projSpeed, kiteDistance, snowballCooldown;
-    [SerializeField] int snowballDamage;
+    [Header("Fishing Hook")]
+    [SerializeField] Sprite hookSprite;
+    [SerializeField] float attackRange, projSpeed, hookCooldown;
+    [SerializeField] int hookDamage;
     [SerializeField] GameObject projectilePrefab;
-    [SerializeField] GameObject snowballAudioParent;
-    private float snowballTimer;
-    private float snowballDamageMod;
+    [SerializeField] GameObject hookAudioParent;
+    [SerializeField] Transform hookStartingPos;
+    [SerializeField] SpriteRenderer hookRenderer;
+    [SerializeField] SpriteRenderer fishLineRenderer;
+    [SerializeField] Animator animator;
+    GameObject currHook;
+    private float hookTimer;
+    private float hookDamageMod;
 
 
     EnemyTelegraphAttack attackInfo;
-    private IceEnemyConeAttack coneAttack;
+    private FisherEnemyAttack coneAttack;
 
     GameObject player;
 
@@ -42,6 +47,7 @@ public class IceEnemyBehaviour : MonoBehaviour
     private float reactiontime = 0.5f;
 
     public bool playerInRange = false;
+    private bool isFishing = false;
 
     List<Vector3> possibleDirections;
     Vector2 targetDir;
@@ -50,21 +56,21 @@ public class IceEnemyBehaviour : MonoBehaviour
 
     void Start()
     {
-        snowballDamageMod = GetComponent<EnemyInfo>().damageMod;
+        hookDamageMod = GetComponent<EnemyInfo>().damageMod;
         speed = UnityEngine.Random.Range(minSpeed, maxSpeed);
 
         player = GameObject.FindGameObjectWithTag("Player");
 
         attackInfo = gameObject.GetComponent<EnemyTelegraphAttack>();
-        coneAttack = gameObject.GetComponent<IceEnemyConeAttack>();
-        audioController = gameObject.GetComponentInChildren<EnemySounds>();
+        coneAttack = gameObject.GetComponent<FisherEnemyAttack>();
+        //audioController = gameObject.GetComponentInChildren<EnemySounds>();
 
         // Size is the local scale
         maxConeAttackRange = attackInfo.Size;
         //minConeAttackRange = maxConeAttackRange * attackInfo.StartingTelegaphPercentSize;
 
-        minDis = maxConeAttackRange;//UnityEngine.Random.Range(1, maxConeAttackRange /2);
-        maxDis = UnityEngine.Random.Range(attackRange+1, attackRange + 3);
+        minDis = 0.5f;//maxConeAttackRange;//UnityEngine.Random.Range(1, maxConeAttackRange /2);
+        maxDis = 4;//maxConeAttackRange;//UnityEngine.Random.Range(attackRange+1, attackRange + 3);
         
         // get all directions around the enemy at 22.5 degree intervals
         possibleDirections = new List<Vector3>();
@@ -79,7 +85,7 @@ public class IceEnemyBehaviour : MonoBehaviour
     }
     void Update()
     {
-        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxConeAttackRange, playerLayer);
+        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxConeAttackRange - 1, playerLayer);
 
         if (playerObjInRange != null)
         {
@@ -90,21 +96,25 @@ public class IceEnemyBehaviour : MonoBehaviour
             playerInRange = false;
         }
 
-        snowballTimer += Time.deltaTime;
-        if(snowballTimer >= snowballCooldown)
+        hookTimer += Time.deltaTime;
+        if(hookTimer >= hookCooldown)
         {
-            if(!coneAttack.attacking)
+            float diff = (player.transform.position - transform.position).magnitude;
+            if(!coneAttack.attacking && diff > maxConeAttackRange)
             {
-                SpawnSnowball();
+                AnimateCast();
+                SpawnHook();
+                hookTimer = 0;
             }
-            snowballTimer = 0;
+            // SpawnHook();
+            // hookTimer = 0;
         }
 
     }
 
     void FixedUpdate()
     {
-        if(!coneAttack.attacking)
+        if(!isFishing)
         {
             Vector2 targetVel = targetDir * speed;
             Vector2 diff = targetVel - rb.velocity;
@@ -121,25 +131,130 @@ public class IceEnemyBehaviour : MonoBehaviour
 
     }
 
-    private void SpawnSnowball()
+    private void AnimateCast()
     {
-        Transform throwingHand;
-        Vector3 distanceToPlayer =  player.transform.position - transform.position;
-        if(distanceToPlayer.x > 0)
+        animator.SetTrigger("Cast");
+    }
+    private void SpawnHook()
+    {
+        isFishing = true;
+        //Transform throwingHand;
+        Vector3 distanceToPlayer =  player.transform.position - hookStartingPos.position;
+        // if(distanceToPlayer.x > 0)
+        // {
+        //     // right hand
+        //     throwingHand = transform.GetChild(0).GetChild(1).GetChild(1);
+        // }
+        // else{
+        //     // left hand
+        //     throwingHand = transform.GetChild(0).GetChild(1).GetChild(0);
+        // }
+
+        currHook = Instantiate(projectilePrefab, hookStartingPos.position, transform.rotation);
+        currHook.GetComponent<Projectile>().Init(hookDamage, hookDamageMod, hookSprite, 0.7f, 1.2f, 1, ReelHook);
+        currHook.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
+
+        AnimationCurve curve = new AnimationCurve();
+        curve.AddKey(0.0f, 0.1f);
+        curve.AddKey(0.8f, 0f);
+        currHook.GetComponent<TrailRenderer>().widthCurve = curve;
+        hookStartingPos.GetComponent<LineRenderer>().enabled = true;
+
+        StartCoroutine(AnimateReel());
+
+        //hookAudioParent.GetComponent<AudioSource>().Play();
+    }
+
+    // If the fisher ghosts somehow dies while the player attack is disabled, we need to re enable to prevent player from permenantly being unable to attack
+    public void OnDisable()
+    {
+        player.GetComponentInChildren<PlayerAttack>().enabled = true;
+    }
+    private void ReelHook(Collision2D other)
+    {
+
+        // check if the hook hit something.
+        if(other != null)
         {
-            // right hand
-            throwingHand = transform.GetChild(0).GetChild(1).GetChild(1);
+            if(other.gameObject.tag == "Player")
+            {
+                Rigidbody2D playerRb = other.gameObject.GetComponent<Rigidbody2D>();
+
+                // cancel grapple and movement
+                playerRb.GetComponent<PlayerGrapple>().EndGrapple();
+                player.GetComponent<PlayerMovement>().CanMove = false;
+                player.GetComponentInChildren<PlayerAttack>().enabled = false;
+
+                StartCoroutine(Reel());
+            }
+            else
+            {
+                isFishing = false;
+            }
         }
-        else{
-            // left hand
-            throwingHand = transform.GetChild(0).GetChild(1).GetChild(0);
+        else
+        {
+            isFishing = false;
+        }
+       
+    }
+
+    private IEnumerator Reel()
+    {
+        // Vector3 posDiff = player.transform.position - transform.position;
+        // Vector3 target = transform.position + posDiff.normalized;
+
+        // float frames = 0;
+        // float totalFrames = 45f;
+
+        //Vector3 start = gameObject.transform.position;
+        Collider2D touchingPlayer = Physics2D.OverlapCircle(transform.position, 0.05f, playerLayer);
+
+        while(touchingPlayer == null)
+        {
+            Vector3 diff = transform.position - player.transform.position;
+            player.GetComponent<Rigidbody2D>().MovePosition(player.transform.position + diff.normalized * 0.7f);
+            yield return null;
+
+            touchingPlayer = Physics2D.OverlapCircle(transform.position, 1f, playerLayer);
         }
 
-        GameObject proj = Instantiate(projectilePrefab, throwingHand.transform.position, transform.rotation);
-        proj.GetComponent<Projectile>().Init(snowballDamage, snowballDamageMod, snowballSprite, 0.5f);
-        proj.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
+        player.GetComponent<PlayerMovement>().CanMove = true;
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        isFishing = false;
+        player.GetComponentInChildren<PlayerAttack>().enabled = true;
+    }
 
-        snowballAudioParent.GetComponent<AudioSource>().Play();
+    IEnumerator AnimateReel()
+    {
+        LineRenderer lineRenderer = hookStartingPos.GetComponent<LineRenderer>();
+        hookRenderer.enabled = false;
+        fishLineRenderer.enabled = false;
+
+        while(isFishing)
+        {
+            // animate the grapple hook while actively grappling
+            //Vector3 start = new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,0);
+            Vector3 target;
+            //lineRenderer.enabled = true;
+            if(currHook != null)
+            {
+                target = currHook.transform.position;
+            }
+            else
+            {
+                target = player.transform.position;
+            }
+            lineRenderer.SetPosition(0, hookStartingPos.position);
+            lineRenderer.SetPosition(1, target);
+
+            yield return null;
+
+        }
+
+        lineRenderer.enabled = false;
+        hookRenderer.enabled = true;
+        fishLineRenderer.enabled = true;
     }
 
     Vector2 GetBestDirection()

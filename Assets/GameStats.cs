@@ -50,6 +50,7 @@ public class GameStats : MonoBehaviour
         completionTime = 0;
         gameWon = false;
         shrinesCleansed = 0;
+        rating = 0;
         //totalShrines = 0;
         enemiesKilled = 0;
         bonusDamage = 0;

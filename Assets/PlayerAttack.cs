@@ -24,10 +24,8 @@ public class PlayerAttack : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         
-        
-        if(other.gameObject.tag == "Enemy")
-        {
-            
+        if(other.gameObject.tag == "Enemy" && this.enabled)
+        {   
             //Deal damage
             Vector2 impact;
             //Reflect dashes teleport and freeze the enemy, so we need to get the velocity before the dash for damage

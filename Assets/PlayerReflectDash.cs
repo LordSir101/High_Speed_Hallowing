@@ -76,6 +76,7 @@ public class PlayerReflectDash : MonoBehaviour
         // {
         //     ReflectDashSetup();
         // }
+        Debug.Log("snapDash");
         ReflectDashSetup();
     }
 
@@ -148,6 +149,9 @@ public class PlayerReflectDash : MonoBehaviour
 
             float closestEnemyDistance = float.MaxValue;
 
+            List<Collider2D> colliders = new List<Collider2D>();
+            //Physics2D.OverlapCircle(transform.position, 1.6f, ContactFilter2D.NoFilter, colliders);
+
             foreach(GameObject col in currentCollisions)
             {
                 // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
@@ -198,7 +202,7 @@ public class PlayerReflectDash : MonoBehaviour
             //StartCoroutine(MoveToTarget());
             // Teleport the player to the enemy center
             Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
-            rb.position = teleportLocation;
+            rb.MovePosition(teleportLocation);
 
             reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
 
@@ -341,6 +345,7 @@ public class PlayerReflectDash : MonoBehaviour
         playerMovement.CanMove = true;
         playerMovement.dash.action.Enable();
         playerMovement.EnableBasicDash();
+        reflectDash.action.Enable();
         reflectDashing = false;
         rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
     }
