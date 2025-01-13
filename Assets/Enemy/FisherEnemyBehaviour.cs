@@ -168,7 +168,11 @@ public class FisherEnemyBehaviour : MonoBehaviour
     // If the fisher ghosts somehow dies while the player attack is disabled, we need to re enable to prevent player from permenantly being unable to attack
     public void OnDisable()
     {
-        player.GetComponentInChildren<PlayerAttack>().enabled = true;
+        if( player!= null)
+        {
+            player.GetComponentInChildren<PlayerAttack>().enabled = true;
+        }
+       
         reelAudioParent.GetComponent<AudioSource>().Stop();
     }
     private void ReelHook(Collision2D other)
