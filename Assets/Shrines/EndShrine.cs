@@ -56,7 +56,7 @@ public class EndShrine : MonoBehaviour
                 // ShowTrText();
                 // interact.action.performed += Upgrade;
                 interactText.enabled = true;
-                interactText.text = $"Tribute to cleanse the area ({cost})" ;
+                interactText.text = $"Tribute to cleanse the area ({shrineManager.interactKeybind}) ({cost})" ;
                 interact.action.performed += TributeBigShrine;
             }
             else
