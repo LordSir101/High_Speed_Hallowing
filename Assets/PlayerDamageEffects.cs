@@ -35,7 +35,7 @@ public class PlayerDamageEffects : MonoBehaviour
 
    public void StartDamageFlash()
    {
-        StartCoroutine(DamageFlash());
+        StartCoroutine(DamageFlash(flashColor));
    }
 
    public void StartCameraShake()
@@ -45,9 +45,9 @@ public class PlayerDamageEffects : MonoBehaviour
         cameraShake.StartShake(duration);
    }
 
-   private IEnumerator DamageFlash()
+   public IEnumerator DamageFlash(Color flashColor)
    {
-        SetFlashColor();
+        SetFlashColor(flashColor);
 
         float currentFlashAmount = 0f;
         float elapsedTime = 0f;
@@ -64,7 +64,7 @@ public class PlayerDamageEffects : MonoBehaviour
         }
    }
 
-    private void SetFlashAmount(float amount)
+    public void SetFlashAmount(float amount)
     {
         for(int i = 0; i< materials.Count; i++)
         {
@@ -72,11 +72,11 @@ public class PlayerDamageEffects : MonoBehaviour
         }
     }
 
-    private void SetFlashColor()
-   {
-        for(int i = 0; i < materials.Count; i++)
-        {
-            materials[i].SetColor("_FlashColor", flashColor);
-        }
-   }
+    public void SetFlashColor(Color flashColor)
+    {
+            for(int i = 0; i < materials.Count; i++)
+            {
+                materials[i].SetColor("_FlashColor", flashColor);
+            }
+    }
 }

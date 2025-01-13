@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public float dashSpeed {get; set;}= 14f;
     [SerializeField] private float dashTime = 0.3f, dashPause = 0.05f;
     [SerializeField] private TrailRenderer leftWing, rightWing;
+    [SerializeField] private Color flashColor;
+    [SerializeField] private PlayerDamageEffects playerDamageEffects;
     
 
     Rigidbody2D rb;
@@ -357,6 +359,7 @@ public class PlayerMovement : MonoBehaviour
         float startTime = Time.time;
         rb.drag = 0;
 
+        StartCoroutine(playerDamageEffects.DamageFlash(flashColor));
         playerAudio.PlayDashSound();
 
         //leftWing.enabled = true;

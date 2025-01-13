@@ -11,6 +11,8 @@ public class PlayerReflectDash : MonoBehaviour
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
     [SerializeField] private LayerMask bufferLayer;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private Color flashColor;
+    [SerializeField] private PlayerDamageEffects playerDamageEffects;
     private GameObject reflectDashArrow = null;
     private GameObject relfectDashtarget = null;
     private float reflectDashSpeed= 12f;
@@ -204,7 +206,10 @@ public class PlayerReflectDash : MonoBehaviour
             Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
             rb.MovePosition(teleportLocation);
 
-            reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
+            reflectDashArrow = Instantiate(arrowPrefab, teleportLocation, transform.rotation);
+
+            playerDamageEffects.SetFlashColor(flashColor);
+            playerDamageEffects.SetFlashAmount(1);
 
         }
             
@@ -253,6 +258,7 @@ public class PlayerReflectDash : MonoBehaviour
     private void ReflectDash(InputAction.CallbackContext context)
     {
         playerAudio.PlayDashSound();
+        playerDamageEffects.SetFlashAmount(0);
         // Once the dash has started, conditional dashes are allowed, but not basic dashes
         playerMovement.dash.action.Enable();
         //playerMovement.DisableBasicDash();
@@ -404,4 +410,6 @@ public class PlayerReflectDash : MonoBehaviour
         ResetDashStatus();
        
     }
+
+   
 }

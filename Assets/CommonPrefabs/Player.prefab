@@ -11923,6 +11923,8 @@ MonoBehaviour:
   dashPause: 0.05
   leftWing: {fileID: 326984628025275295}
   rightWing: {fileID: 4941432326712138691}
+  flashColor: {r: 0.29236382, g: 0.8237524, b: 0.8490566, a: 1}
+  playerDamageEffects: {fileID: 1935047497463920560}
   baseMoveSpeed: 7
   accel: 5.5
   deaccel: 5.5
@@ -11942,6 +11944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grapple: {fileID: -7356559233500480823, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
   pointerPos: {fileID: 7556248317398578439, guid: 7f058bc622586ab48b31cd058e88cf2b, type: 3}
+  playerInput: {fileID: 0}
   grappling: 0
 --- !u!114 &1713751455423799607
 MonoBehaviour:
@@ -11981,6 +11984,9 @@ MonoBehaviour:
   bufferLayer:
     serializedVersion: 2
     m_Bits: 1024
+  playerInput: {fileID: 0}
+  flashColor: {r: 0.7104397, g: 0.9675512, b: 0.9716981, a: 1}
+  playerDamageEffects: {fileID: 1935047497463920560}
   reflectDashing: 0
   prevVelocity: {x: 0, y: 0}
 --- !u!114 &8484552389020510568
