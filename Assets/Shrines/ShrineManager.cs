@@ -17,6 +17,9 @@ public class ShrineManager : MonoBehaviour
     [SerializeField] private AudioSource shrineCleanseSound, shrineUpgradePurchaseSound;
     [SerializeField] public GameObject paymentText;
     private GameObject bigShrine;
+    private PlayerInput playerInput;
+    public string interactKeybind;
+    private InputAction interact;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +37,23 @@ public class ShrineManager : MonoBehaviour
             }
         }
         GameStats.totalShrines = shrines.Count + 1;
+
+        playerInput = GameObject.FindGameObjectWithTag("Input").GetComponent<PlayerInput>();
+        interact = playerInput.currentActionMap.FindAction("Interact");
+    }
+
+    void Update()
+    {
+         
+        if(playerInput.currentControlScheme == "Controller")
+        {
+            interactKeybind = interact.GetBindingDisplayString(InputBinding.MaskByGroup("Controller"));
+        }
+        else
+        {
+            interactKeybind = interact.GetBindingDisplayString(InputBinding.MaskByGroup("M_Keyboard"));
+        }
+    
     }
 
     public void CleanseShrine()
