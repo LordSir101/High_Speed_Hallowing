@@ -25,7 +25,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
     [SerializeField] float attackRange, projSpeed, hookCooldown;
     [SerializeField] int hookDamage;
     [SerializeField] GameObject projectilePrefab;
-    [SerializeField] GameObject hookAudioParent;
+    [SerializeField] GameObject hookAudioParent, reelAudioParent;
     [SerializeField] Transform hookStartingPos;
     [SerializeField] SpriteRenderer hookRenderer;
     [SerializeField] SpriteRenderer fishLineRenderer;
@@ -162,13 +162,14 @@ public class FisherEnemyBehaviour : MonoBehaviour
 
         StartCoroutine(AnimateReel());
 
-        //hookAudioParent.GetComponent<AudioSource>().Play();
+        reelAudioParent.GetComponent<AudioSource>().Play();
     }
 
     // If the fisher ghosts somehow dies while the player attack is disabled, we need to re enable to prevent player from permenantly being unable to attack
     public void OnDisable()
     {
         player.GetComponentInChildren<PlayerAttack>().enabled = true;
+        reelAudioParent.GetComponent<AudioSource>().Stop();
     }
     private void ReelHook(Collision2D other)
     {
@@ -190,11 +191,13 @@ public class FisherEnemyBehaviour : MonoBehaviour
             else
             {
                 isFishing = false;
+                reelAudioParent.GetComponent<AudioSource>().Stop();
             }
         }
         else
         {
             isFishing = false;
+            reelAudioParent.GetComponent<AudioSource>().Stop();
         }
        
     }
@@ -223,6 +226,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         isFishing = false;
         player.GetComponentInChildren<PlayerAttack>().enabled = true;
+        reelAudioParent.GetComponent<AudioSource>().Stop();
     }
 
     IEnumerator AnimateReel()

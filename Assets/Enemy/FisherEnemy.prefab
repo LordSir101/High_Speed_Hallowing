@@ -86,6 +86,135 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1047185867539009998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6989971726719886842}
+  - component: {fileID: 982430689817398618}
+  m_Layer: 7
+  m_Name: CastAudio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6989971726719886842
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047185867539009998}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8527355, y: -0.04091263, z: 0.014034085}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3213977474171286605}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &982430689817398618
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047185867539009998}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 21731db9c880fda4887dfff509031c90, type: 3}
+  m_Resource: {fileID: 8300000, guid: 21731db9c880fda4887dfff509031c90, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 0.8
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1100978520487092418
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +314,7 @@ GameObject:
   - component: {fileID: 2159993905782407427}
   - component: {fileID: 418734018288391161}
   m_Layer: 7
-  m_Name: SnowconeAttackAudio
+  m_Name: ReelAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,8 +345,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 734001f65342bc842bbc9cf2370c06e2, type: 3}
-  m_Resource: {fileID: 8300000, guid: 734001f65342bc842bbc9cf2370c06e2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 60894df457376ea4e92eed0dbb44acf9, type: 3}
+  m_Resource: {fileID: 8300000, guid: 60894df457376ea4e92eed0dbb44acf9, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 0.8
@@ -486,7 +615,7 @@ GameObject:
   - component: {fileID: 8002388629467678719}
   - component: {fileID: 1208063224125703466}
   m_Layer: 7
-  m_Name: SnowballAttackAudio
+  m_Name: RodSwing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -517,8 +646,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2b50163ae8379964d949fcb7cc2d5e7e, type: 3}
-  m_Resource: {fileID: 8300000, guid: 2b50163ae8379964d949fcb7cc2d5e7e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7b7b499f94ea613469f3d7aafb1489fb, type: 3}
+  m_Resource: {fileID: 8300000, guid: 7b7b499f94ea613469f3d7aafb1489fb, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.8
   m_Pitch: 1
@@ -635,6 +764,7 @@ Transform:
   m_Children:
   - {fileID: 8002388629467678719}
   - {fileID: 2159993905782407427}
+  - {fileID: 6989971726719886842}
   m_Father: {fileID: 1741979528345683941}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3197840352870886669
@@ -776,7 +906,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4345180001185018302}
   - component: {fileID: 130381591318809730}
-  - component: {fileID: 479427089888664398}
   m_Layer: 7
   m_Name: SpriteParent
   m_TagString: Untagged
@@ -823,18 +952,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &479427089888664398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4591745736592415324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3844a23c0845347898f1786da89483, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4731383041615785551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,6 +1218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9169769579385086487}
   - component: {fileID: 456852196285197809}
+  - component: {fileID: 4144321382626426608}
   m_Layer: 0
   m_Name: Hands
   m_TagString: Untagged
@@ -1147,6 +1265,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4144321382626426608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7150469820168627234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3844a23c0845347898f1786da89483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7374357238364551305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,7 +1740,7 @@ MonoBehaviour:
   attackType: {fileID: 5164034569600164820, guid: 95c8a1ce7c43a6041b54aa86d2a44ff8, type: 3}
   animator: {fileID: 456852196285197809}
   bodyAnimator: {fileID: 130381591318809730}
-  attackAudioParent: {fileID: 0}
+  attackAudioParent: {fileID: 1849542976000341742}
   windupTimer: 0
   playerInRange: 0
   attacking: 0
@@ -1643,7 +1773,8 @@ MonoBehaviour:
   hookCooldown: 5
   hookDamage: 15
   projectilePrefab: {fileID: 8906220813581016635, guid: fb681e82f570e0143b8724eb97617dfa, type: 3}
-  hookAudioParent: {fileID: 2198008074754108273}
+  hookAudioParent: {fileID: 1047185867539009998}
+  reelAudioParent: {fileID: 1313099357423995247}
   hookStartingPos: {fileID: 6318824844021659842}
   hookRenderer: {fileID: 5436290928502060252}
   fishLineRenderer: {fileID: 7145638877341412779}
