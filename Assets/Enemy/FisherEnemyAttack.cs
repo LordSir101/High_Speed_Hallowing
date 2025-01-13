@@ -73,7 +73,7 @@ public class FisherEnemyAttack : MonoBehaviour
 
             
             attackScript.StartAttack();
-            //audioController.SetCurrAttackAudio(snowconeAudioParent);
+            
             //ToggleAttackReady(false);
         }
 
@@ -81,6 +81,7 @@ public class FisherEnemyAttack : MonoBehaviour
         if(attackScript.windupProgress >= attackStats.animationStartPercent && !animationComplete)
         {
             attacking = true;
+            audioController.SetCurrAttackAudio(attackAudioParent);
             // windupTimer += Time.deltaTime;
 
             // if(windupTimer / attackStats.windupTime >= 0.8)
