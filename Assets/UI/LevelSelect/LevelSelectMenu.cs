@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelSelectMenu : MonoBehaviour, IDataPersistence
 {
     GameData data;
     Dictionary<string, float> highScores;
     Dictionary<string, int> ratings;
+    Dictionary<string, bool> unlocks;
     [SerializeField] GameObject levelsParent;
     [SerializeField] GameObject levelSelectParent;
     [SerializeField] GameObject difficultySlectButtons;
@@ -15,7 +17,6 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.data = data;
-        
         
     }
 
@@ -30,11 +31,13 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
         {
             highScores = data.highScores;
             ratings = data.ratings;
+            unlocks = data.levelUnlocks;
         }
         else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
         {
             highScores = data.highScoresHard;
             ratings = data.ratingsHard;
+            unlocks = data.levelUnlocksHard;
         }
     }
     public void ShowLevelSelect()
@@ -50,6 +53,12 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
             int rating = ratings[info.levelName];
             info.DisplayHighScore(time);
             info.DisplayRating(rating);
+
+            if(unlocks[info.levelName] != true)
+            {
+                transform.gameObject.GetComponent<Button>().enabled = false;
+                info.lockParent.SetActive(true);
+            }
         }
     }
 

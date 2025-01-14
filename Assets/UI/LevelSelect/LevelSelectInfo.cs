@@ -10,6 +10,7 @@ public class LevelSelectInfo : MonoBehaviour
     [SerializeField] public string levelName;
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] GameObject starParent;
+    [SerializeField] public GameObject lockParent;
     [SerializeField] TargetTimes targetTimes;
 
     public void DisplayHighScore(float time)

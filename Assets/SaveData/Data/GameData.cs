@@ -9,6 +9,10 @@ public class GameData
    public Dictionary<string, int> ratings;
    public Dictionary<string, int> ratingsHard;
 
+   public Dictionary<string, bool> levelUnlocks;
+   public Dictionary<string, bool> levelUnlocksHard;
+   public int version = 1;
+
     public GameData()
     {
         highScores = new Dictionary<string, float>()
@@ -27,6 +31,14 @@ public class GameData
             { "CastleMap4", 0 }
         };
 
+        levelUnlocks = new Dictionary<string, bool>()
+        {
+            { "CastleMap1", true },
+            { "CastleMap2", false },
+            { "CastleMap3", false },
+            { "CastleMap4", false }
+        };
+
         highScoresHard = new Dictionary<string, float>()
         {
             { "CastleMap1", 0 },
@@ -41,6 +53,14 @@ public class GameData
             { "CastleMap2", 0 },
             { "CastleMap3", 0 },
             { "CastleMap4", 0 }
+        };
+
+        levelUnlocksHard = new Dictionary<string, bool>()
+        {
+            { "CastleMap1", false },
+            { "CastleMap2", false },
+            { "CastleMap3", false },
+            { "CastleMap4", false }
         };
     }
 
