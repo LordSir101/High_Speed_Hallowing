@@ -13,6 +13,8 @@ public class SpawnEnemy : MonoBehaviour
     [Header("Possible Waves")]
     [SerializeField] List<WaveInfo> normalModeWaveInfos;
     [SerializeField] List<WaveInfo> hardModeWaveInfos;
+    [SerializeField] private int repeatFromNormalIndex;
+    [SerializeField] private int repeatFromHardIndex;
     private List<WaveInfo> waveInfos;
     private WaveInfo currWave;
     private float waveTimer = 0;
@@ -65,10 +67,22 @@ public class SpawnEnemy : MonoBehaviour
             {
                 // don't change the waves anymore if we have reached the last wave in the list
                 int waveIndex = waveInfos.IndexOf(currWave) + 1;
-                
-                if(waveIndex > waveInfos.Count - 1)
+
+                 // when we reach the last wave, start repeating waves from a specific wave
+                if(waveIndex >= waveInfos.Count)
                 {
-                    lastWaveTypeSpawned  = true;
+                    int repeatIndex;
+                    if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+                    {
+                        repeatIndex = repeatFromNormalIndex;
+                    }
+                    else
+                    {
+                        repeatIndex = repeatFromHardIndex;
+                    }
+                    currWave = waveInfos[repeatIndex];
+                    waveTimer = 0;
+                    waveTime = waveInfos[repeatIndex].time;
                 }
                 else
                 {
@@ -77,6 +91,18 @@ public class SpawnEnemy : MonoBehaviour
                     waveTime = waveInfos[waveIndex].time;
 
                 }
+                
+                // if(waveIndex > waveInfos.Count - 1)
+                // {
+                //     lastWaveTypeSpawned  = true;
+                // }
+                // else
+                // {
+                //     currWave = waveInfos[waveIndex];
+                //     waveTimer = 0;
+                //     waveTime = waveInfos[waveIndex].time;
+
+                // }
             }
         }
 
