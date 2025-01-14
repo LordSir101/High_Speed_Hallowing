@@ -23,6 +23,8 @@ public class Castle1Tut : MonoBehaviour
     [SerializeField] ShrineManager shrineManager;
     [SerializeField] Shrine shrine;
     [SerializeField] ParticleSystem cooldownRefreshEffect;
+    [SerializeField] GameObject startingEnemy;
+  
 
     //[SerializeField] 
     int tutTextIndex = 0;
@@ -36,7 +38,7 @@ public class Castle1Tut : MonoBehaviour
     PlayerReflectDash playerReflectDash;
     PlayerResourceManager playerResources;
     PlayerImpact playerImpact;
-    GameObject startingEnemy;
+    
     // Start is called before the first frame update
 
     // TODO: remove if this gets set by a menu later
@@ -44,7 +46,6 @@ public class Castle1Tut : MonoBehaviour
     {
         //GameStats.gameDifficulty = GameStats.GameDifficulty.tutorial;
         Time.timeScale = 1;
-        startingEnemy = GameObject.FindGameObjectWithTag("Enemy");
     }
 
     // private void OnEnable()
@@ -59,31 +60,39 @@ public class Castle1Tut : MonoBehaviour
 
     void Start()
     {
-        //playerInput.actions.FindActionMap("Tutorial").Enable();
-        playerInput.actions.FindActionMap("PlayerInput").Disable();
-        playerInput.actions["Interact"].Enable();
-        playerInput.actions["Movement"].Enable();
-        playerInput.actions["PointerPosition"].Enable();
+        // only play tutorial on normal mode
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        {
+            //playerInput.actions.FindActionMap("Tutorial").Enable();
+            playerInput.actions.FindActionMap("PlayerInput").Disable();
+            playerInput.actions["Interact"].Enable();
+            playerInput.actions["Movement"].Enable();
+            playerInput.actions["PointerPosition"].Enable();
 
-        player = GameObject.FindGameObjectWithTag("Player");
-        //player.GetComponent<PlayerResourceManager>().Essence = 400;
+            player = GameObject.FindGameObjectWithTag("Player");
+            //player.GetComponent<PlayerResourceManager>().Essence = 400;
 
-        currTextDisplay.text = tutText.text[tutTextIndex];
+            currTextDisplay.text = tutText.text[tutTextIndex];
 
-        playerMovement = player.GetComponent<PlayerMovement>();
-        playerReflectDash = player.GetComponent<PlayerReflectDash>();
-        playerResources = player.GetComponent<PlayerResourceManager>();
-        playerImpact = player.GetComponent<PlayerImpact>();
+            playerMovement = player.GetComponent<PlayerMovement>();
+            playerReflectDash = player.GetComponent<PlayerReflectDash>();
+            playerResources = player.GetComponent<PlayerResourceManager>();
+            playerImpact = player.GetComponent<PlayerImpact>();
 
-        cooldownUIParent.transform.GetChild(0).gameObject.SetActive(false);
-        cooldownUIParent.transform.GetChild(1).gameObject.SetActive(false);
+            cooldownUIParent.transform.GetChild(0).gameObject.SetActive(false);
+            cooldownUIParent.transform.GetChild(1).gameObject.SetActive(false);
 
-        currTextDisplay.enabled = true;
-        enemySpawner.SetActive(false);
+            currTextDisplay.enabled = true;
+            enemySpawner.SetActive(false);
 
-        shrine.numEnemiesToSpawn = 2;
+            shrine.numEnemiesToSpawn = 2;
 
-        maxTextFontSize = currTextDisplay.fontSize;
+            maxTextFontSize = currTextDisplay.fontSize;
+
+            startingEnemy.SetActive(true);
+
+        }
+        
 
         //playerInput.actions["ReflectDash"].Enable();
 

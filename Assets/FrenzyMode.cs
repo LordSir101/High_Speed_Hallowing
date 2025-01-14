@@ -49,6 +49,11 @@ public class FrenzyMode : MonoBehaviour
         }
     }
 
+    void OnDisable()
+    {
+        frenzyEffect.SetActive(false);
+    }
+
     public void StartFrenzyMode()
     {
         frenzy = true;
