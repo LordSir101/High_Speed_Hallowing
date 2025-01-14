@@ -22,6 +22,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
     PauseControl pauseControl;
     [SerializeField] AnimateGameOverText gameOverTextAnimateScript;
     [SerializeField] TargetTimes targetTimes;
+    [SerializeField] List<LevelUnlockInfo> levelsToUnlock;
+    [SerializeField] List<LevelUnlockInfo> levelsToUnlockHard;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,8 +68,6 @@ public class GameControl : MonoBehaviour, IDataPersistence
                 currHighScore = GameStats.completionTime;
                 bestRating = GameStats.rating;
             }
-
-           
         }
 
         string text = win ? "Level Complete" : "Game Over";
@@ -87,6 +87,39 @@ public class GameControl : MonoBehaviour, IDataPersistence
         // hud.SetActive(false);
         // gameObject.SetActive(true);
         // PauseControl.PauseGame(true);
+    }
+
+    private void UnlockLevels(ref GameData data)
+    {
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        {
+            foreach(LevelUnlockInfo levelToUnlock in levelsToUnlock)
+            {
+                if(levelToUnlock.difficulty == GameStats.GameDifficulty.normal)
+                {
+                    data.levelUnlocks[levelToUnlock.levelName] = true;
+                }
+                else
+                {
+                    data.levelUnlocksHard[levelToUnlock.levelName] = true;
+                }
+            }
+        }
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        {
+            foreach(LevelUnlockInfo levelToUnlock in levelsToUnlockHard)
+            {
+                if(levelToUnlock.difficulty == GameStats.GameDifficulty.normal)
+                {
+                    data.levelUnlocks[levelToUnlock.levelName] = true;
+                }
+                else
+                {
+                    data.levelUnlocksHard[levelToUnlock.levelName] = true;
+                }
+            }
+        }
+        
     }
 
     private int CalulateRating()
@@ -134,7 +167,6 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        Debug.Log("saved");
         if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
         {
             data.highScores[SceneManager.GetActiveScene().name] = currHighScore;
@@ -145,5 +177,11 @@ public class GameControl : MonoBehaviour, IDataPersistence
             data.highScoresHard[SceneManager.GetActiveScene().name] = currHighScore;
             data.ratingsHard[SceneManager.GetActiveScene().name] = bestRating;
         }
+
+        if(GameStats.gameWon)
+        {
+            UnlockLevels(ref data);
+        }
+        
     }
 }
