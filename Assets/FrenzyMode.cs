@@ -49,12 +49,17 @@ public class FrenzyMode : MonoBehaviour
         }
     }
 
+    void OnDisable()
+    {
+        frenzyEffect.SetActive(false);
+    }
+
     public void StartFrenzyMode()
     {
         frenzy = true;
         enemySpawner.SpawnFrenzyWave();
         frenzyEffect.SetActive(true);
-        frenzyText.SetActive(true);
+        frenzyText.GetComponent<TextMeshProUGUI>().enabled = true;
         frenzyText.GetComponent<TextMeshProUGUI>().text = "Defeat the remaining enemies quickly!";
     }
 }
