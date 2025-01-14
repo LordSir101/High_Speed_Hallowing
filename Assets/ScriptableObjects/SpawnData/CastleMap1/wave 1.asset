@@ -17,4 +17,4 @@ MonoBehaviour:
   distribution:
   - 100
   time: 60
-  maxEnemies: 2
+  maxEnemies: 1
