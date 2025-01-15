@@ -43,7 +43,18 @@ public class Castle2Tut : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             //player.GetComponent<PlayerResourceManager>().Essence = 400;
 
-            currTextDisplay.text = tutText.text[tutTextIndex];
+            InputAction snapDashInput = playerInput.currentActionMap.FindAction("ReflectDash");
+            string keybind;
+            if(Gamepad.all.Count > 0)
+            {
+                keybind = snapDashInput.GetBindingDisplayString(InputBinding.MaskByGroup("Controller"));
+            }
+            else
+            {
+                keybind = snapDashInput.GetBindingDisplayString(InputBinding.MaskByGroup("M_keyboard"));
+            }
+
+            currTextDisplay.text = InsertKeybindIntoText(tutText.text[tutTextIndex], keybind);
 
             //playerMovement = player.GetComponent<PlayerMovement>();
             playerReflectDash = player.GetComponent<PlayerReflectDash>();
@@ -106,9 +117,9 @@ public class Castle2Tut : MonoBehaviour
 
             yield return null;
         }
-        NextText();
+        NextText("Grapple");
         playerInput.actions["Grapple"].Enable();
-        playerInput.actions["Grapple"].performed += FirstGrapple;
+        //playerInput.actions["Grapple"].performed += FirstGrapple;
         cooldownUIParent.transform.GetChild(1).gameObject.SetActive(true);
     }
 
@@ -117,16 +128,57 @@ public class Castle2Tut : MonoBehaviour
         if(!firstGrapple)
         {
             firstGrapple = true;
-            NextText();
+            currTextDisplay.enabled = false;
+            //NextText("Grapple");
             playerInput.actions["Grapple"].performed -= FirstGrapple;
         }
     }
 
-    public void NextText()
+    string InsertKeybindIntoText(string text, string keybind)
+    {
+        string[] splitText = text.Split("-");
+        splitText[1] = keybind;
+        return String.Join(" ", splitText);
+    }
+
+    string GetKeybind(string action)
+    {
+        InputAction input = playerInput.currentActionMap.FindAction(action);
+        string keybind;
+
+        if(playerInput.currentControlScheme == "Controller")
+        {
+            keybind = input.GetBindingDisplayString(InputBinding.MaskByGroup("Controller"));
+            //tutText.movementKeybind = "LS";
+        }
+        else
+        {
+            keybind = input.GetBindingDisplayString(InputBinding.MaskByGroup("M_Keyboard"));
+            //tutText.movementKeybind = "WASD";
+        }
+
+        return keybind;
+    }
+
+    public void NextText(string action=null)
     {       
+        // currTextDisplay.enabled = false;
+        // tutTextIndex += 1;
+        // currTextDisplay.text = tutText.text[tutTextIndex];
+        // StartCoroutine(AnimateText(currTextDisplay));
         currTextDisplay.enabled = false;
         tutTextIndex += 1;
-        currTextDisplay.text = tutText.text[tutTextIndex];
+        //currTextDisplay.text = tutText.text[tutTextIndex];
+        if(action != null)
+        {
+            string keybind = GetKeybind(action);
+            currTextDisplay.text = InsertKeybindIntoText(tutText.text[tutTextIndex], keybind);
+        }
+        else
+        {
+            currTextDisplay.text = tutText.text[tutTextIndex];
+        }
+        
         StartCoroutine(AnimateText(currTextDisplay));
     }
      private IEnumerator AnimateText(TextMeshProUGUI text)
