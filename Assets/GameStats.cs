@@ -10,6 +10,7 @@ public class GameStats : MonoBehaviour
    public static List<float> completionTargets {get;set;}
 
    public static string levelName {get;set;}
+   public static GameMode currGameMode {get;set;}
    public static int rating {get;set;} = 0;
    public static bool gameWon {get;set;} = false;
    public static int shrinesCleansed {get;set;} = 0;
@@ -27,6 +28,13 @@ public class GameStats : MonoBehaviour
         tutorial,
         normal,
         hard
+   }
+
+   public enum GameMode
+   {
+        TimeAttack,
+        Survival,
+        Endless
    }
 
    public static GameDifficulty gameDifficulty {get;set;} = GameDifficulty.normal;

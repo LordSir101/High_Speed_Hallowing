@@ -24,13 +24,24 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] TargetTimes targetTimes;
     [SerializeField] List<LevelUnlockInfo> levelsToUnlock;
     [SerializeField] List<LevelUnlockInfo> levelsToUnlockHard;
+    [SerializeField] GameStats.GameMode gameMode;
+
+    [Header("SurvivalMode")]
+    [SerializeField] FrenzyMode frenzyModeScript;
+    [SerializeField] TargetTimes survivalTargetTimes;
     // Start is called before the first frame update
     void Start()
     {
         GameStats.completionTargets = targetTimes.timesInSeconds;
         GameStats.levelName = SceneManager.GetActiveScene().name;
+        GameStats.currGameMode = gameMode;
         GameStats.ResetDefaults();
         PlayMusic();
+
+        if(gameMode == GameStats.GameMode.Survival)
+        {
+            StartCoroutine(StartFrenzyMode());
+        }
         
     }
 
@@ -48,12 +59,25 @@ public class GameControl : MonoBehaviour, IDataPersistence
         if(!gameEnded)
         {
             gameTime += Time.deltaTime;
+
+            if(gameMode == GameStats.GameMode.Survival && gameTime >= survivalTargetTimes.timesInSeconds[0])
+            {
+                SetWin(true);
+            }
         }
         
     }
 
+    IEnumerator StartFrenzyMode()
+    {
+        yield return new WaitForSeconds(5);
+        frenzyModeScript.StartFrenzyMode();
+
+    }
+
     public void SetWin(bool win)
     {
+        gameEnded = true;
         //pauseControl.PauseGame(true);
         GameStats.gameWon = win;
         GameStats.completionTime = gameTime;
@@ -61,13 +85,11 @@ public class GameControl : MonoBehaviour, IDataPersistence
         //int rating = 0;
         if(win)
         {
-            GameStats.rating = CalulateRating();
 
-            if(GameStats.completionTime < prevHighScore || prevHighScore == 0)
-            {
-                currHighScore = GameStats.completionTime;
-                bestRating = GameStats.rating;
-            }
+            GameStats.rating = CalulateRating();
+            CheckHighScores();
+
+            
         }
 
         string text = win ? "Level Complete" : "Game Over";
@@ -124,17 +146,55 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
     private int CalulateRating()
     {
-        int rating = 1;
-
-        foreach(float time in targetTimes.timesInSeconds)
+        int rating = 0;
+        if(gameMode == GameStats.GameMode.TimeAttack)
         {
-            if(GameStats.completionTime < time)
+            rating = 1;
+            foreach(float time in targetTimes.timesInSeconds)
             {
-                rating += 1;
+                if(GameStats.completionTime < time)
+                {
+                    rating += 1;
+                }
+            }
+        }
+        else if(gameMode == GameStats.GameMode.Survival)
+        {
+            foreach(float time in survivalTargetTimes.timesInSeconds)
+            {
+                if(GameStats.completionTime >= time)
+                {
+                    rating += 1;
+                }
             }
         }
 
+        Debug.Log(rating);
+
         return rating;
+    }
+
+    private void CheckHighScores()
+    {
+        if(gameMode == GameStats.GameMode.TimeAttack)
+        {
+            if(GameStats.completionTime < prevHighScore || prevHighScore == 0)
+            {
+                currHighScore = GameStats.completionTime;
+                bestRating = GameStats.rating;
+            }
+        }
+        else if(gameMode == GameStats.GameMode.Survival)
+        {
+            if(GameStats.completionTime > prevHighScore || prevHighScore == 0)
+            {
+                currHighScore = GameStats.completionTime > survivalTargetTimes.timesInSeconds[0] ? survivalTargetTimes.timesInSeconds[0] : GameStats.completionTime;
+                bestRating = GameStats.rating;
+            }
+        }
+
+        Debug.Log(currHighScore);
+        
     }
 
     private void LoadEndScreen()

@@ -28,12 +28,15 @@ public class FrenzyMode : MonoBehaviour
     {
         if(frenzy)
         {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            if(enemies.Length == 0)
+            if(GameStats.currGameMode == GameStats.GameMode.TimeAttack)
             {
-                frenzyEffect.SetActive(false);
-                gameController.SetWin(true);
-                frenzy = false;
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                if(enemies.Length == 0)
+                {
+                    StopFrenzyMode();
+                    gameController.SetWin(true);
+
+                }
             }
             else
             {
@@ -57,9 +60,20 @@ public class FrenzyMode : MonoBehaviour
     public void StartFrenzyMode()
     {
         frenzy = true;
-        enemySpawner.SpawnFrenzyWave();
         frenzyEffect.SetActive(true);
-        frenzyText.GetComponent<TextMeshProUGUI>().enabled = true;
-        frenzyText.GetComponent<TextMeshProUGUI>().text = "Defeat the remaining enemies quickly!";
+
+        if(GameStats.currGameMode == GameStats.GameMode.TimeAttack)
+        {
+            enemySpawner.SpawnFrenzyWave();
+            frenzyText.GetComponent<TextMeshProUGUI>().enabled = true;
+            frenzyText.GetComponent<TextMeshProUGUI>().text = "Defeat the remaining enemies quickly!";
+        }
+       
+    }
+
+    public void StopFrenzyMode()
+    {
+        frenzyEffect.SetActive(false);    
+        frenzy = false;
     }
 }

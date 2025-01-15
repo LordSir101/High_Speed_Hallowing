@@ -31,12 +31,18 @@ public class LevelSelectInfo : MonoBehaviour
             starParent.transform.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().enabled = true;
         }
 
+        if(targetTimes.timesInSeconds.Count == 3)
+        {
+            starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+            starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(targetTimes.timesInSeconds[2]).ToString(@"mm\:ss");
+        }
+       
 
         starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
-        starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(targetTimes.timesInSeconds[0]).ToString(@"mm\:ss");
+        starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(targetTimes.timesInSeconds[1]).ToString(@"mm\:ss");
 
         starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
-        starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(targetTimes.timesInSeconds[1]).ToString(@"mm\:ss");
+        starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(targetTimes.timesInSeconds[0]).ToString(@"mm\:ss");
     }
 
     public void DisplayUnlockStatus(bool unlocked)

@@ -60,15 +60,20 @@ public class ShrineManager : MonoBehaviour
     {
         shrinesActivated += 1;
         GameStats.IncreaseShrinesCleansed();
+
+        if(bigShrine != null)
+        {
+            if(GameStats.gameDifficulty == GameStats.GameDifficulty.tutorial)
+            {
+                bigShrine.GetComponent<TutEndShrine>().TurnOnGem();
+            }
+            else
+            {
+                bigShrine.GetComponent<EndShrine>().TurnOnGem();
+            }
+        }
         
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.tutorial)
-        {
-            bigShrine.GetComponent<TutEndShrine>().TurnOnGem();
-        }
-        else
-        {
-            bigShrine.GetComponent<EndShrine>().TurnOnGem();
-        }
+       
         
         IncreaseShrineCleanseCost();
 
