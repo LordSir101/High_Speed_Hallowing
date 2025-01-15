@@ -10,7 +10,7 @@ public class LevelSelectInfo : MonoBehaviour
     [SerializeField] public string levelName;
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] GameObject starParent;
-    [SerializeField] public GameObject lockParent;
+    [SerializeField] GameObject lockParent;
     [SerializeField] TargetTimes targetTimes;
 
     public void DisplayHighScore(float time)
@@ -37,5 +37,18 @@ public class LevelSelectInfo : MonoBehaviour
 
         starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
         starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(targetTimes.timesInSeconds[1]).ToString(@"mm\:ss");
+    }
+
+    public void DisplayUnlockStatus(bool unlocked)
+    {
+        // clear previous unlock status
+        lockParent.SetActive(false);
+        gameObject.GetComponent<Button>().enabled = true;
+
+        if(!unlocked)
+        {
+            gameObject.GetComponent<Button>().enabled = false;
+            lockParent.SetActive(true);
+        }
     }
 }

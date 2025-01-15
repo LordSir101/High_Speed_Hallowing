@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CastleMap3
   m_EditorClassIdentifier: 
   timesInSeconds:
-  - 300
-  - 240
+  - 270
+  - 180

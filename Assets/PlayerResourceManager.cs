@@ -3,6 +3,6 @@ using UnityEngine;
 
 public class PlayerResourceManager : MonoBehaviour
 {
-    public int Essence {get; set;} = 50000;
+    public int Essence {get; set;} = 0;
 
 }

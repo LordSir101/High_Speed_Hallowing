@@ -194,16 +194,23 @@ public class FisherEnemyBehaviour : MonoBehaviour
             }
             else
             {
-                isFishing = false;
-                reelAudioParent.GetComponent<AudioSource>().Stop();
+                StopReel();
             }
         }
         else
         {
+            StopReel();
+        }
+       
+    }
+
+    private void StopReel()
+    {
+        if(reelAudioParent != null)
+        {
             isFishing = false;
             reelAudioParent.GetComponent<AudioSource>().Stop();
         }
-       
     }
 
     private IEnumerator Reel()
