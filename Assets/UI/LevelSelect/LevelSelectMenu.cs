@@ -49,16 +49,14 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
         foreach(Transform transform in levelsParent.transform)
         {
             LevelSelectInfo info = transform.gameObject.GetComponent<LevelSelectInfo>();
+            
             float time = highScores[info.levelName];
             int rating = ratings[info.levelName];
+            bool unlocked = unlocks[info.levelName];
+
             info.DisplayHighScore(time);
             info.DisplayRating(rating);
-
-            if(unlocks[info.levelName] != true)
-            {
-                transform.gameObject.GetComponent<Button>().enabled = false;
-                info.lockParent.SetActive(true);
-            }
+            info.DisplayUnlockStatus(unlocked);
         }
     }
 
