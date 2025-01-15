@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Castle 2 tut text
   m_EditorClassIdentifier: 
   text:
-  - Hold Right click on \na ghost to snap-dash
+  - Hold -Right click- on \na ghost and release to snap-dash
   - Perform a quick snap-dash \nwhen your abilities are on cooldown \nto reset them
-  - Left-Click to grapple \nto walls and enemies
+  - -Left Click- to grapple \nto walls and enemies

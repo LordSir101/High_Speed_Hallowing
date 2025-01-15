@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -63,6 +65,19 @@ public class Castle1Tut : MonoBehaviour
         // only play tutorial on normal mode
         if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
         {
+            //InputAction moveInput = playerInput.currentActionMap.FindAction("Movement");
+            string keybind;
+
+            // just use default bindings for movement since the binding string is long/messy
+            if(Gamepad.all.Count > 0)
+            {
+                keybind = "LS";
+            }
+            else
+            {
+                keybind = "WASD";
+            }
+            
             //playerInput.actions.FindActionMap("Tutorial").Enable();
             playerInput.actions.FindActionMap("PlayerInput").Disable();
             playerInput.actions["Interact"].Enable();
@@ -71,8 +86,8 @@ public class Castle1Tut : MonoBehaviour
 
             player = GameObject.FindGameObjectWithTag("Player");
             //player.GetComponent<PlayerResourceManager>().Essence = 400;
-
-            currTextDisplay.text = tutText.text[tutTextIndex];
+            
+            currTextDisplay.text = InsertKeybindIntoText(tutText.text[tutTextIndex], keybind);
 
             playerMovement = player.GetComponent<PlayerMovement>();
             playerReflectDash = player.GetComponent<PlayerReflectDash>();
@@ -99,6 +114,32 @@ public class Castle1Tut : MonoBehaviour
 
         // disable prev button at the start
         //buttons.transform.GetChild(1).gameObject.SetActive(false);
+    }
+
+    string InsertKeybindIntoText(string text, string keybind)
+    {
+        string[] splitText = text.Split("-");
+        splitText[1] = keybind;
+        return String.Join(" ", splitText);
+    }
+
+    string GetKeybind(string action)
+    {
+        InputAction input = playerInput.currentActionMap.FindAction(action);
+        string keybind;
+
+        if(playerInput.currentControlScheme == "Controller")
+        {
+            keybind = input.GetBindingDisplayString(InputBinding.MaskByGroup("Controller"));
+            //tutText.movementKeybind = "LS";
+        }
+        else
+        {
+            keybind = input.GetBindingDisplayString(InputBinding.MaskByGroup("M_Keyboard"));
+            //tutText.movementKeybind = "WASD";
+        }
+
+        return keybind;
     }
 
     public void CheckFirstEnemyAttacked()
@@ -131,7 +172,7 @@ public class Castle1Tut : MonoBehaviour
     private void UnlockDash()
     {
         //NextWave();
-        NextText();
+        NextText("Dash");
         playerInput.actions["Dash"].Enable();
         playerInput.actions["Dash"].performed += DashComplete;
         cooldownUIParent.transform.GetChild(0).gameObject.SetActive(true);
@@ -157,7 +198,7 @@ public class Castle1Tut : MonoBehaviour
 
     private void DashComplete(InputAction.CallbackContext context)
     {
-        NextText();
+        NextText("Dash");
         playerInput.actions["Dash"].performed -= DashComplete;
         StartCoroutine(CheckForWallDash());
     }
@@ -354,11 +395,21 @@ public class Castle1Tut : MonoBehaviour
     //     }
     // }
 
-    public void NextText()
+    public void NextText(string action = null)
     {       
         currTextDisplay.enabled = false;
         tutTextIndex += 1;
-        currTextDisplay.text = tutText.text[tutTextIndex];
+        //currTextDisplay.text = tutText.text[tutTextIndex];
+        if(action != null)
+        {
+            string keybind = GetKeybind(action);
+            currTextDisplay.text = InsertKeybindIntoText(tutText.text[tutTextIndex], keybind);
+        }
+        else
+        {
+            currTextDisplay.text = tutText.text[tutTextIndex];
+        }
+        
         StartCoroutine(AnimateText(currTextDisplay));
     }
 
