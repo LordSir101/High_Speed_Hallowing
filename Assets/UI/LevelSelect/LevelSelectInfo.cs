@@ -33,8 +33,8 @@ public class LevelSelectInfo : MonoBehaviour
 
         if(targetTimes.timesInSeconds.Count == 3)
         {
-            starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
-            starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(targetTimes.timesInSeconds[2]).ToString(@"mm\:ss");
+            starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+            starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(targetTimes.timesInSeconds[2]).ToString(@"mm\:ss");
         }
        
 

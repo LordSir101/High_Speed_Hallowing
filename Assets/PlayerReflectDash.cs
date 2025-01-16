@@ -78,7 +78,6 @@ public class PlayerReflectDash : MonoBehaviour
         // {
         //     ReflectDashSetup();
         // }
-        Debug.Log("snapDash");
         ReflectDashSetup();
     }
 

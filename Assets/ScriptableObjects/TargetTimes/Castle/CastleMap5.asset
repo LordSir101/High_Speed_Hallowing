@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CastleMap5
   m_EditorClassIdentifier: 
   timesInSeconds:
-  - 60
-  - 40
-  - 30
+  - 300
+  - 240
+  - 150

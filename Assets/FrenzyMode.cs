@@ -38,15 +38,13 @@ public class FrenzyMode : MonoBehaviour
 
                 }
             }
-            else
-            {
-                damageTimer += Time.deltaTime;
+           
+            damageTimer += Time.deltaTime;
 
-                if(damageTimer >= damageRate)
-                {
-                    playerhealthScript.TakeDamage(damage);
-                    damageTimer = 0;
-                }
+            if(damageTimer >= damageRate)
+            {
+                playerhealthScript.TakeDamage(damage);
+                damageTimer = 0;
             }
             
         }

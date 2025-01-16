@@ -186,9 +186,10 @@ public class GameControl : MonoBehaviour, IDataPersistence
         }
         else if(gameMode == GameStats.GameMode.Survival)
         {
-            if(GameStats.completionTime > prevHighScore || prevHighScore == 0)
+            float score =  GameStats.completionTime > survivalTargetTimes.timesInSeconds[0] ? survivalTargetTimes.timesInSeconds[0] : GameStats.completionTime;
+            if(score > prevHighScore || prevHighScore == 0)
             {
-                currHighScore = GameStats.completionTime > survivalTargetTimes.timesInSeconds[0] ? survivalTargetTimes.timesInSeconds[0] : GameStats.completionTime;
+                currHighScore = score;
                 bestRating = GameStats.rating;
             }
         }
