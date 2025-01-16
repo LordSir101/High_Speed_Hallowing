@@ -32,7 +32,6 @@ public class GameControl : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
-        GameStats.completionTargets = targetTimes.timesInSeconds;
         GameStats.levelName = SceneManager.GetActiveScene().name;
         GameStats.currGameMode = gameMode;
         GameStats.ResetDefaults();
@@ -40,7 +39,12 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
         if(gameMode == GameStats.GameMode.Survival)
         {
+            GameStats.completionTargets = survivalTargetTimes.timesInSeconds;
             StartCoroutine(StartFrenzyMode());
+        }
+        else if(gameMode == GameStats.GameMode.TimeAttack)
+        {
+            GameStats.completionTargets = targetTimes.timesInSeconds;
         }
         
     }
