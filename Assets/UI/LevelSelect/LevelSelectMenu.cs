@@ -30,13 +30,13 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
 
     private void LoadDataBasedOnDifficulty()
     {
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
         {
             highScores = data.highScores;
             ratings = data.ratings;
             unlocks = data.levelUnlocks;
         }
-        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
         {
             highScores = data.highScoresHard;
             ratings = data.ratingsHard;

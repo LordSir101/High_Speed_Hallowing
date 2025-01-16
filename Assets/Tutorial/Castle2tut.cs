@@ -36,7 +36,7 @@ public class Castle2Tut : MonoBehaviour
     void Start()
     {
         //playerInput.actions.FindActionMap("Tutorial").Enable();
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
         {
             playerInput.actions["Grapple"].Disable();
 

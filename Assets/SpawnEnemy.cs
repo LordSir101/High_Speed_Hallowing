@@ -72,7 +72,7 @@ public class SpawnEnemy : MonoBehaviour
                 if(waveIndex >= waveInfos.Count)
                 {
                     int repeatIndex;
-                    if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+                    if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
                     {
                         repeatIndex = repeatFromNormalIndex;
                     }
@@ -299,11 +299,11 @@ public class SpawnEnemy : MonoBehaviour
 
     private List<WaveInfo> SetWaveInfoBasedOnDifficulty()
     {
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
         {
             return normalModeWaveInfos;
         }
-        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
         {
             return hardModeWaveInfos;
         }
@@ -314,17 +314,17 @@ public class SpawnEnemy : MonoBehaviour
 
     private void SetStatsBasedOnDifficulty()
     {
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
         {
             damageMod = 0.7f;
             healthMod = 0.8f;
         }
-        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
         {
             damageMod = 1;
             healthMod = 1;
         }
-        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.tutorial)
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Tutorial)
         {
             damageMod = 0.5f;
             healthMod = 0.8f;

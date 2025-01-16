@@ -32,7 +32,6 @@ public class GameControl : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
-        GameStats.completionTargets = targetTimes.timesInSeconds;
         GameStats.levelName = SceneManager.GetActiveScene().name;
         GameStats.currGameMode = gameMode;
         GameStats.ResetDefaults();
@@ -40,7 +39,12 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
         if(gameMode == GameStats.GameMode.Survival)
         {
+            GameStats.completionTargets = survivalTargetTimes.timesInSeconds;
             StartCoroutine(StartFrenzyMode());
+        }
+        else if(gameMode == GameStats.GameMode.TimeAttack)
+        {
+            GameStats.completionTargets = targetTimes.timesInSeconds;
         }
         
     }
@@ -113,11 +117,11 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
     private void UnlockLevels(ref GameData data)
     {
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
         {
             foreach(LevelUnlockInfo levelToUnlock in levelsToUnlock)
             {
-                if(levelToUnlock.difficulty == GameStats.GameDifficulty.normal)
+                if(levelToUnlock.difficulty == GameStats.GameDifficulty.Normal)
                 {
                     data.levelUnlocks[levelToUnlock.levelName] = true;
                 }
@@ -127,11 +131,11 @@ public class GameControl : MonoBehaviour, IDataPersistence
                 }
             }
         }
-        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
         {
             foreach(LevelUnlockInfo levelToUnlock in levelsToUnlockHard)
             {
-                if(levelToUnlock.difficulty == GameStats.GameDifficulty.normal)
+                if(levelToUnlock.difficulty == GameStats.GameDifficulty.Normal)
                 {
                     data.levelUnlocks[levelToUnlock.levelName] = true;
                 }
@@ -211,13 +215,13 @@ public class GameControl : MonoBehaviour, IDataPersistence
     // These get called when scene is loaded, by dataPersitenceManager
     public void LoadData(GameData data)
     {
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
         {
             prevHighScore = data.highScores[SceneManager.GetActiveScene().name];
             currHighScore = prevHighScore;
             bestRating = data.ratings[SceneManager.GetActiveScene().name];
         }
-        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
         {
             prevHighScore = data.highScoresHard[SceneManager.GetActiveScene().name];
             currHighScore = prevHighScore;
@@ -228,12 +232,12 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
         {
             data.highScores[SceneManager.GetActiveScene().name] = currHighScore;
             data.ratings[SceneManager.GetActiveScene().name] = bestRating;
         }
-        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
         {
             data.highScoresHard[SceneManager.GetActiveScene().name] = currHighScore;
             data.ratingsHard[SceneManager.GetActiveScene().name] = bestRating;

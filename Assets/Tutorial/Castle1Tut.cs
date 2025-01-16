@@ -63,7 +63,7 @@ public class Castle1Tut : MonoBehaviour
     void Start()
     {
         // only play tutorial on normal mode
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
         {
             //InputAction moveInput = playerInput.currentActionMap.FindAction("Movement");
             string keybind;

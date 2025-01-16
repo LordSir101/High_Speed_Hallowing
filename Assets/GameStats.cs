@@ -25,9 +25,9 @@ public class GameStats : MonoBehaviour
 
    public enum GameDifficulty
    {
-        tutorial,
-        normal,
-        hard
+        Tutorial,
+        Normal,
+        Hard
    }
 
    public enum GameMode
@@ -37,7 +37,7 @@ public class GameStats : MonoBehaviour
         Endless
    }
 
-   public static GameDifficulty gameDifficulty {get;set;} = GameDifficulty.normal;
+   public static GameDifficulty gameDifficulty {get;set;} = GameDifficulty.Normal;
 
    public static void IncreaseEnemiesKilled()
    {

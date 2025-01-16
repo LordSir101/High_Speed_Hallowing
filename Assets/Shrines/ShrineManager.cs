@@ -63,7 +63,7 @@ public class ShrineManager : MonoBehaviour
 
         if(bigShrine != null)
         {
-            if(GameStats.gameDifficulty == GameStats.GameDifficulty.tutorial)
+            if(GameStats.gameDifficulty == GameStats.GameDifficulty.Tutorial)
             {
                 bigShrine.GetComponent<TutEndShrine>().TurnOnGem();
             }
