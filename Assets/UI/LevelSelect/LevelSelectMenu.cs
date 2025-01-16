@@ -12,6 +12,9 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
     [SerializeField] GameObject levelsParent;
     [SerializeField] GameObject levelSelectParent;
     [SerializeField] GameObject difficultySlectButtons;
+    List<GameObject> pages;
+    int pageNum = 0;
+    [SerializeField] GameObject nextBtn, prevBtn;
 
 
     public void LoadData(GameData data)
@@ -46,10 +49,24 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
         levelSelectParent.SetActive(true);
         LoadDataBasedOnDifficulty();
 
+        pages = new List<GameObject>();
+
         foreach(Transform transform in levelsParent.transform)
         {
+            pages.Add(transform.gameObject);   
+        }
+
+        DisplayPage(0);
+    }
+
+    private void DisplayPage(int num)
+    {
+        pages[num].SetActive(true);
+
+        foreach(Transform transform in pages[num].transform)
+        {
             LevelSelectInfo info = transform.gameObject.GetComponent<LevelSelectInfo>();
-            
+                
             float time = highScores[info.levelName];
             int rating = ratings[info.levelName];
             bool unlocked = unlocks[info.levelName];
@@ -64,5 +81,55 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
     {
         difficultySlectButtons.SetActive(true);
         levelSelectParent.SetActive(false);
+    }
+
+    public void NextPage()
+    {
+        // if(tutTextIndex < tutText.text.Count - 1)
+        // {
+        //     tutTextIndex += 1;
+        //     currTextDisplay.text = tutText.text[tutTextIndex];
+        // }
+        pages[pageNum].SetActive(false);
+
+        pageNum += 1;
+        //currTextDisplay.text = tutText.text[tutTextIndex];
+
+        if(pageNum == pages.Count - 1)
+        {
+            // disable next button when at last instruction
+            nextBtn.SetActive(false);
+        }
+        
+        // enable the "prev" button whenever we hit the "next" button
+        prevBtn.SetActive(true);
+
+        DisplayPage(pageNum);
+        
+        
+    }
+
+    public void PrevPage()
+    {
+        // if(tutTextIndex > 0)
+        // {
+        //     tutTextIndex -= 1;
+        //     currTextDisplay.text = tutText.text[tutTextIndex];
+        // }
+        pages[pageNum].SetActive(false);
+
+        pageNum -= 1;
+        //currTextDisplay.text = tutText.text[tutTextIndex];
+        if(pageNum == 0)
+        {
+            // disable next button when at last instruction
+            prevBtn.SetActive(false);
+        }
+      
+        // enable "next" button when "prev" button is pressed
+        nextBtn.SetActive(true);
+
+        DisplayPage(pageNum);
+        
     }
 }
