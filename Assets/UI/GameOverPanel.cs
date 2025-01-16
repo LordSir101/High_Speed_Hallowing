@@ -57,12 +57,25 @@ public class GameOverPanel : MonoBehaviour
             
         }
 
+        if(GameStats.completionTargets.Count == 3)
+        {
+            starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+            starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[2]).ToString(@"mm\:ss");
+        }
+       
 
         starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
-        starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[0]).ToString(@"mm\:ss");
+        starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[1]).ToString(@"mm\:ss");
 
         starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
-        starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[1]).ToString(@"mm\:ss");
+        starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[0]).ToString(@"mm\:ss");
+
+
+        // starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+        // starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[0]).ToString(@"mm\:ss");
+
+        // starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+        // starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[1]).ToString(@"mm\:ss");
 
     }
 

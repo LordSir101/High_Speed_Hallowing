@@ -98,7 +98,7 @@ public class TutEndShrine : MonoBehaviour
             interact.action.performed -= TributeBigShrine;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
-            GameStats.gameDifficulty = GameStats.GameDifficulty.normal;
+            GameStats.gameDifficulty = GameStats.GameDifficulty.Normal;
             //tutorialScript.FinishTutorial();
             shrineManager.StartFrenzyMode();
             //gameObject.GetComponent<SpriteRenderer>().sprite = cleanseSprite;

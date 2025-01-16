@@ -41,7 +41,7 @@ public class Tutorial : MonoBehaviour
     // TODO: remove if this gets set by a menu later
     void Awake()
     {
-        GameStats.gameDifficulty = GameStats.GameDifficulty.tutorial;
+        GameStats.gameDifficulty = GameStats.GameDifficulty.Tutorial;
         Time.timeScale = 1;
         startingEnemy = GameObject.FindGameObjectWithTag("Enemy");
     }
