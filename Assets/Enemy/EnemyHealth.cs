@@ -124,6 +124,6 @@ public class EnemyHealth : MonoBehaviour
 
     private void HealPlayer()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().Heal(150);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().Heal(50);
     }
 }
