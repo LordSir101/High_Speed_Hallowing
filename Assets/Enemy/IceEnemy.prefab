@@ -438,7 +438,7 @@ Transform:
   m_GameObject: {fileID: 2184953705427618756}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.856, y: 0.013, z: 0.029722959}
+  m_LocalPosition: {x: 0.856, y: 0.013, z: 0.02972296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -609,7 +609,7 @@ Transform:
   m_GameObject: {fileID: 2873848945060860517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.029722959}
+  m_LocalPosition: {x: 0, y: 0, z: -0.02972296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -628,6 +628,7 @@ GameObject:
   - component: {fileID: 1835580299750473664}
   - component: {fileID: 7699706621321263318}
   - component: {fileID: 8545969373416857611}
+  - component: {fileID: 8076842733365263891}
   m_Layer: 7
   m_Name: SpriteParent
   m_TagString: Untagged
@@ -686,6 +687,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3844a23c0845347898f1786da89483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8076842733365263891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032411463250234109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b30d3e2f5f9c244928dbdc76c0d3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6279438701711090031
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +725,7 @@ Transform:
   m_GameObject: {fileID: 6279438701711090031}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.834, y: 0.016, z: 0.029722959}
+  m_LocalPosition: {x: -0.834, y: 0.016, z: 0.02972296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1073,6 +1086,7 @@ MonoBehaviour:
   attacking: 0
   snowConePrefab: {fileID: 4418786200107531403, guid: 2c1162f5887b5f44f9ce359b2b141ad0, type: 3}
   snowconeAudioParent: {fileID: 2144005489843334698}
+  animator: {fileID: 7699706621321263318}
 --- !u!114 &5876194444742420994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1103,6 +1117,7 @@ MonoBehaviour:
   snowballDamage: 30
   projectilePrefab: {fileID: 8906220813581016635, guid: fb681e82f570e0143b8724eb97617dfa, type: 3}
   snowballAudioParent: {fileID: 1124433262941386889}
+  animator: {fileID: 7699706621321263318}
   playerInRange: 0
 --- !u!114 &1873032066976856824
 MonoBehaviour:

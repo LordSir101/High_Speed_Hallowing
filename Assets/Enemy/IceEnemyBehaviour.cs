@@ -26,6 +26,7 @@ public class IceEnemyBehaviour : MonoBehaviour
     [SerializeField] int snowballDamage;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject snowballAudioParent;
+    [SerializeField] Animator animator;
     private float snowballTimer;
     private float snowballDamageMod;
 
@@ -79,7 +80,7 @@ public class IceEnemyBehaviour : MonoBehaviour
     }
     void Update()
     {
-        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxConeAttackRange, playerLayer);
+        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxConeAttackRange - 0.5f, playerLayer);
 
         if (playerObjInRange != null)
         {
@@ -93,7 +94,7 @@ public class IceEnemyBehaviour : MonoBehaviour
         snowballTimer += Time.deltaTime;
         if(snowballTimer >= snowballCooldown)
         {
-            if(!coneAttack.attacking)
+            if(!coneAttack.attacking && !playerInRange)
             {
                 SpawnSnowball();
             }
@@ -123,19 +124,20 @@ public class IceEnemyBehaviour : MonoBehaviour
 
     private void SpawnSnowball()
     {
-        Transform throwingHand;
+        animator.SetTrigger("Throw");
+        // Transform throwingHand;
         Vector3 distanceToPlayer =  player.transform.position - transform.position;
-        if(distanceToPlayer.x > 0)
-        {
-            // right hand
-            throwingHand = transform.GetChild(0).GetChild(1).GetChild(1);
-        }
-        else{
-            // left hand
-            throwingHand = transform.GetChild(0).GetChild(1).GetChild(0);
-        }
+        // if(distanceToPlayer.x > 0)
+        // {
+        //     // right hand
+        //     throwingHand = transform.GetChild(0).GetChild(1).GetChild(1);
+        // }
+        // else{
+        //     // left hand
+        //     throwingHand = transform.GetChild(0).GetChild(1).GetChild(0);
+        // }
 
-        GameObject proj = Instantiate(projectilePrefab, throwingHand.transform.position, transform.rotation);
+        GameObject proj = Instantiate(projectilePrefab, transform.position, transform.rotation);
         proj.GetComponent<Projectile>().Init(snowballDamage, snowballDamageMod, snowballSprite, 0.5f);
         proj.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
 

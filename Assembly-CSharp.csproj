@@ -71,6 +71,7 @@
     <Compile Include="Assets\FrenzyMode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Utils.cs" />
+    <Compile Include="Assets\PickIdleState.cs" />
     <Compile Include="Assets\AttackHitboxes\TH_Cone.cs" />
     <Compile Include="Assets\ScriptableObjects\TargetTimes\TargetTimes.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
