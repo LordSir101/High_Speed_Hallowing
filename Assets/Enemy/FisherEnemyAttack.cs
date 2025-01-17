@@ -63,7 +63,7 @@ public class FisherEnemyAttack : MonoBehaviour
     void Update()
     {
         
-         if(attackScript.attackReady && behaviourScript.playerInRange)
+         if(attackScript.attackReady && behaviourScript.playerInRange && !behaviourScript.isFishing)
         {
             // rotate cone
             Vector2 dir = player.transform.position - transform.position;

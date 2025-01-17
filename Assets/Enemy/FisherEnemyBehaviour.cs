@@ -47,7 +47,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
     private float reactiontime = 0.5f;
 
     public bool playerInRange = false;
-    private bool isFishing = false;
+    public bool isFishing = false;
 
     List<Vector3> possibleDirections;
     Vector2 targetDir;
@@ -100,7 +100,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
         if(hookTimer >= hookCooldown)
         {
             float diff = (player.transform.position - transform.position).magnitude;
-            if(!coneAttack.attacking && diff > maxConeAttackRange)
+            if(!coneAttack.attacking && diff > maxConeAttackRange + 1)
             {
                 AnimateCast();
                 SpawnHook();
@@ -151,7 +151,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
         // }
 
         currHook = Instantiate(projectilePrefab, hookStartingPos.position, transform.rotation);
-        currHook.GetComponent<Projectile>().Init(hookDamage, hookDamageMod, hookSprite, 0.7f, 1.2f, 1, ReelHook);
+        currHook.GetComponent<Projectile>().Init(hookDamage, hookDamageMod, hookSprite, 0.6f, 1.2f, 1, ReelHook);
         currHook.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
 
         AnimationCurve curve = new AnimationCurve();

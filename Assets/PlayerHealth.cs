@@ -105,10 +105,10 @@ public class PlayerHealth: MonoBehaviour
 
     void PlayHealingEffect(float time)
     {
-        ParticleSystem particleSystem = healingEffect;
+        // ParticleSystem particleSystem = healingEffect;
 
-        ParticleSystem.MainModule settings = particleSystem.main;
-        settings.duration = time;
+        // ParticleSystem.MainModule settings = particleSystem.main;
+        // settings.duration = time;
 
         healingEffect.Play();
 
