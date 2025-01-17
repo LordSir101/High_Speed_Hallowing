@@ -1235,7 +1235,7 @@ Transform:
   m_GameObject: {fileID: 7150469820168627234}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.029722959}
+  m_LocalPosition: {x: 0, y: 0, z: -0.02972296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1780,6 +1780,7 @@ MonoBehaviour:
   fishLineRenderer: {fileID: 7145638877341412779}
   animator: {fileID: 130381591318809730}
   playerInRange: 0
+  isFishing: 0
 --- !u!1 &8916248418607730577
 GameObject:
   m_ObjectHideFlags: 0
