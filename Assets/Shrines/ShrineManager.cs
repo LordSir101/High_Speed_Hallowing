@@ -18,9 +18,13 @@ public class ShrineManager : MonoBehaviour
     [SerializeField] public GameObject paymentText;
 
     [Header("Shrine Cost Modification")]
-    [SerializeField] public int startingCost = 500;
-
-    [SerializeField] public int[] upgradeCosts = new int[] {500, 700, 900};
+    [SerializeField] private int startingCostNormal = 500;
+    [SerializeField] private int startingCostHard = 500;
+    [SerializeField] public int[] upgradeCostsNormal = new int[] {500, 700, 900};
+    [SerializeField] public int[] upgradeCostsHard = new int[] {500, 700, 900};
+    [HideInInspector] public int startingCost;
+    public int[] upgradeCosts;
+    
     private GameObject bigShrine;
     private PlayerInput playerInput;
     public string interactKeybind;
@@ -29,6 +33,7 @@ public class ShrineManager : MonoBehaviour
     void Start()
     {
         
+        SetShrineCostsByDifficulty();
         bigShrine = GameObject.FindGameObjectWithTag("EndGoal");
 
         shrines = new List<GameObject>();
@@ -45,6 +50,20 @@ public class ShrineManager : MonoBehaviour
 
         playerInput = GameObject.FindGameObjectWithTag("Input").GetComponent<PlayerInput>();
         interact = playerInput.currentActionMap.FindAction("Interact");
+    }
+
+    private void SetShrineCostsByDifficulty()
+    {
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
+        {
+            startingCost = startingCostNormal;
+            upgradeCosts = upgradeCostsNormal;
+        }
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
+        {
+            startingCost = startingCostHard;
+            upgradeCosts = upgradeCostsHard;
+        }
     }
 
     void Update()
