@@ -16,8 +16,10 @@ public class Shrine : MonoBehaviour
     Sprite cleanseSprite;
     
 
-    public int Cost {get; set;}= 500;
+    //public int Cost {get; set;}= 500;
+    public int Cost;
 
+    // [SerializeField] protected int[] upgradeCosts;
     protected int[] upgradeCosts;
     protected int maxUpgrades = 3;
     protected int numUpgrades = 0;
@@ -48,7 +50,9 @@ public class Shrine : MonoBehaviour
     {
         
         player = GameObject.FindGameObjectWithTag("Player");
-        upgradeCosts = new int[] {500, 700, 900};
+        //upgradeCosts = new int[] {500, 700, 900};
+        upgradeCosts = shrineManager.upgradeCosts;
+        Cost = shrineManager.startingCost;
         interactText = Utils.FindGameObjectInChildWithTag(gameObject.GetComponentInChildren<Canvas>().gameObject, "InteractText").GetComponent<TextMeshProUGUI>();
         this.interact = interact;
         this.shrineManager = shrineManager;
