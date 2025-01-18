@@ -16,7 +16,15 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
     int pageNum = 0;
     [SerializeField] GameObject nextBtn, prevBtn;
 
+    void Start()
+    {
+        pages = new List<GameObject>();
 
+        foreach(Transform transform in levelsParent.transform)
+        {
+            pages.Add(transform.gameObject);   
+        }
+    }
     public void LoadData(GameData data)
     {
         this.data = data;
@@ -49,12 +57,12 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
         levelSelectParent.SetActive(true);
         LoadDataBasedOnDifficulty();
 
-        pages = new List<GameObject>();
+        // pages = new List<GameObject>();
 
-        foreach(Transform transform in levelsParent.transform)
-        {
-            pages.Add(transform.gameObject);   
-        }
+        // foreach(Transform transform in levelsParent.transform)
+        // {
+        //     pages.Add(transform.gameObject);   
+        // }
 
         DisplayPage(0);
     }
@@ -81,6 +89,9 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
     {
         difficultySlectButtons.SetActive(true);
         levelSelectParent.SetActive(false);
+
+        SetDefaults();
+        
     }
 
     public void NextPage()
@@ -131,5 +142,13 @@ public class LevelSelectMenu : MonoBehaviour, IDataPersistence
 
         DisplayPage(pageNum);
         
+    }
+
+    private void SetDefaults()
+    {
+        pages[pageNum].SetActive(false);
+        pageNum = 0;
+        prevBtn.SetActive(false);
+        nextBtn.SetActive(true);
     }
 }
