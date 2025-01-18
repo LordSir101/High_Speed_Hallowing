@@ -66,6 +66,8 @@ public class PlayerHealth: MonoBehaviour
             health += healing;
         }
 
+        Debug.Log(health);
+
         
         healthBar.SetHealth(health);
         PlayHealingEffect(3);

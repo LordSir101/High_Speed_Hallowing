@@ -52,6 +52,11 @@ public class EnemyHealth : MonoBehaviour
 
         ModifyLightHealthBar();
 
+        enemyAnimator.StartDamageFlash();
+        GameObject damageTextParent = Instantiate(damageText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
+        damageTextParent.GetComponentInChildren<TextMeshPro>().text = damage.ToString();
+        enemyAnimator.StartDamageFlinch();
+
         if(currHealth <= 0)
         {
             enemyAnimator.StartDeathAnimation(impact);
@@ -65,10 +70,7 @@ public class EnemyHealth : MonoBehaviour
             Destroy(gameObject);   
         }
 
-        enemyAnimator.StartDamageFlash();
-        GameObject damageTextParent = Instantiate(damageText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
-        damageTextParent.GetComponentInChildren<TextMeshPro>().text = damage.ToString();
-        enemyAnimator.StartDamageFlinch();
+       
         
     }
 
@@ -124,6 +126,6 @@ public class EnemyHealth : MonoBehaviour
 
     private void HealPlayer()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().Heal(50);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().Heal(60);
     }
 }

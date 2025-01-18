@@ -64,10 +64,10 @@ public class GameControl : MonoBehaviour, IDataPersistence
         {
             gameTime += Time.deltaTime;
 
-            if(gameMode == GameStats.GameMode.Survival && gameTime >= survivalTargetTimes.timesInSeconds[0])
-            {
-                SetWin(true);
-            }
+            // if(gameMode == GameStats.GameMode.Survival && gameTime >= survivalTargetTimes.timesInSeconds[0])
+            // {
+            //     SetWin(true);
+            // }
         }
         
     }
@@ -81,10 +81,18 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
     public void SetWin(bool win)
     {
+        frenzyModeScript.StopFrenzyMode();
         gameEnded = true;
         //pauseControl.PauseGame(true);
-        GameStats.gameWon = win;
         GameStats.completionTime = gameTime;
+
+        // if the player survived for the minimum time in survival mode, change gamestae to win
+        if(gameMode == GameStats.GameMode.Survival && gameTime >= survivalTargetTimes.timesInSeconds[2])
+        {
+            win = true;
+        }
+
+        GameStats.gameWon = win;
 
         //int rating = 0;
         if(win)

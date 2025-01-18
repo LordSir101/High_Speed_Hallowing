@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -33,7 +34,7 @@ public class FrenzyMode : MonoBehaviour
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
                 if(enemies.Length == 0)
                 {
-                    StopFrenzyMode();
+                    //StopFrenzyMode();
                     gameController.SetWin(true);
 
                 }
@@ -66,6 +67,10 @@ public class FrenzyMode : MonoBehaviour
             frenzyText.GetComponent<TextMeshProUGUI>().enabled = true;
             frenzyText.GetComponent<TextMeshProUGUI>().text = "Defeat the remaining enemies quickly!";
         }
+        else if(GameStats.currGameMode == GameStats.GameMode.Survival)
+        {
+            StartCoroutine(FrenzyDamageRampUp());
+        }
        
     }
 
@@ -73,5 +78,15 @@ public class FrenzyMode : MonoBehaviour
     {
         frenzyEffect.SetActive(false);    
         frenzy = false;
+    }
+
+    IEnumerator FrenzyDamageRampUp()
+    {
+        while(frenzy)
+        {
+            yield return new WaitForSeconds(30);
+            damage += 10;
+        }
+        
     }
 }

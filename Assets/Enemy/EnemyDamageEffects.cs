@@ -29,7 +29,9 @@ public class EnemyDamageEffects : MonoBehaviour
         //particleSystem = deathAnimator.GetComponent<ParticleSystem>();
         enemyInfo = GetComponent<EnemyInfo>();
         deathAnimation = Instantiate(deathAnimator);
+        //deathAnimation.transform.parent = transform;
         hitAnimation = Instantiate(hitAnimator);
+        hitAnimation.transform.parent = transform; // parent it so it disapears when enemy dies. deathanimation destroys itself automatically
         hitColor = enemyInfo.soulColor;
 
         Init();
@@ -51,7 +53,6 @@ public class EnemyDamageEffects : MonoBehaviour
 
    public void StartDeathAnimation(Vector3 impact)
    {    
-        
         ParticleSystem particleSystem = deathAnimation.GetComponent<ParticleSystem>();
 
         ParticleSystem.MainModule settings = particleSystem.main;

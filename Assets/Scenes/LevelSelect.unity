@@ -227,6 +227,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: CastleMap5
       objectReference: {fileID: 0}
+    - target: {fileID: 4756871126245430174, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8889986081663016884, guid: a1ba965ae331dc64892119337d2e19c6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5898,7 +5902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2003216582
 RectTransform:
   m_ObjectHideFlags: 0
