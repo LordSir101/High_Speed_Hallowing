@@ -1778,7 +1778,7 @@ MonoBehaviour:
   hookStartingPos: {fileID: 6318824844021659842}
   hookRenderer: {fileID: 5436290928502060252}
   fishLineRenderer: {fileID: 7145638877341412779}
-  animator: {fileID: 130381591318809730}
+  animator: {fileID: 456852196285197809}
   playerInRange: 0
   isFishing: 0
 --- !u!1 &8916248418607730577

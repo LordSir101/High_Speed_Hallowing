@@ -16,6 +16,11 @@ public class ShrineManager : MonoBehaviour
     [SerializeField] private SpawnEnemy enemySpawner;
     [SerializeField] private AudioSource shrineCleanseSound, shrineUpgradePurchaseSound;
     [SerializeField] public GameObject paymentText;
+
+    [Header("Shrine Cost Modification")]
+    [SerializeField] public int startingCost = 500;
+
+    [SerializeField] public int[] upgradeCosts = new int[] {500, 700, 900};
     private GameObject bigShrine;
     private PlayerInput playerInput;
     public string interactKeybind;
