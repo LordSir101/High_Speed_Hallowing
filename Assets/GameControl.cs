@@ -21,14 +21,23 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] AudioSource backgroundMusic;
     PauseControl pauseControl;
     [SerializeField] AnimateGameOverText gameOverTextAnimateScript;
-    [SerializeField] TargetTimes targetTimes;
+    
     [SerializeField] List<LevelUnlockInfo> levelsToUnlock;
     [SerializeField] List<LevelUnlockInfo> levelsToUnlockHard;
     [SerializeField] GameStats.GameMode gameMode;
 
+    [Header("Time Attack")]
+    [SerializeField] TargetTimes targetTimesNormal;
+    [SerializeField] TargetTimes targetTimesHard;
+    TargetTimes targetTimes;
+    
+
     [Header("SurvivalMode")]
     [SerializeField] FrenzyMode frenzyModeScript;
-    [SerializeField] TargetTimes survivalTargetTimes;
+    [SerializeField] TargetTimes survivalTargetTimesNormal;
+    [SerializeField] TargetTimes survivalTargetTimesHard;
+    TargetTimes survivalTargetTimes;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -37,16 +46,39 @@ public class GameControl : MonoBehaviour, IDataPersistence
         GameStats.ResetDefaults();
         PlayMusic();
 
+        StartupBasedOnGamemode();
+        
+    }
+
+    private void StartupBasedOnGamemode()
+    {
         if(gameMode == GameStats.GameMode.Survival)
         {
+            if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
+            {
+                survivalTargetTimes = survivalTargetTimesNormal;
+            }
+            else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
+            {
+                survivalTargetTimes = survivalTargetTimesHard;
+            }
+
             GameStats.completionTargets = survivalTargetTimes.timesInSeconds;
             StartCoroutine(StartFrenzyMode());
         }
         else if(gameMode == GameStats.GameMode.TimeAttack)
         {
+            if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
+            {
+                targetTimes = targetTimesNormal;
+            }
+            else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
+            {
+                targetTimes = targetTimesHard;
+            }
+
             GameStats.completionTargets = targetTimes.timesInSeconds;
         }
-        
     }
 
     void Awake()
