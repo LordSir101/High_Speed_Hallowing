@@ -25,6 +25,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] List<LevelUnlockInfo> levelsToUnlock;
     [SerializeField] List<LevelUnlockInfo> levelsToUnlockHard;
     [SerializeField] GameStats.GameMode gameMode;
+    
+    
 
     [Header("Time Attack")]
     [SerializeField] TargetTimes targetTimesNormal;
@@ -36,6 +38,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] FrenzyMode frenzyModeScript;
     [SerializeField] TargetTimes survivalTargetTimesNormal;
     [SerializeField] TargetTimes survivalTargetTimesHard;
+    [SerializeField] SpawnEnemy enemySpawnerScript;
+    [SerializeField] float rampUpTime = 60;
     TargetTimes survivalTargetTimes;
     
     // Start is called before the first frame update
@@ -65,6 +69,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
             GameStats.completionTargets = survivalTargetTimes.timesInSeconds;
             StartCoroutine(StartFrenzyMode());
+            StartCoroutine(RampUpDifficulty());
+            StartCoroutine(DecreaseRampUpTimeOverTime());
         }
         else if(gameMode == GameStats.GameMode.TimeAttack)
         {
@@ -78,6 +84,27 @@ public class GameControl : MonoBehaviour, IDataPersistence
             }
 
             GameStats.completionTargets = targetTimes.timesInSeconds;
+        }
+    }
+
+    IEnumerator RampUpDifficulty()
+    {
+        while(!gameEnded)
+        {
+            yield return new WaitForSeconds(rampUpTime);
+            frenzyModeScript.IncreaseFrenzyDamage(10);
+            enemySpawnerScript.IncreaseGhostStats(0.05f);
+
+        }
+    }
+
+    IEnumerator DecreaseRampUpTimeOverTime()
+    {
+        while(!gameEnded || rampUpTime > 10)
+        {
+            yield return new WaitForSeconds(180);
+            rampUpTime -= 15;
+
         }
     }
 

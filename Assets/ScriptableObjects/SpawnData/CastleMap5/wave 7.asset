@@ -10,15 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e1f117bedae0384e949df3aba2ffe39, type: 3}
-  m_Name: wave 5
+  m_Name: wave 7
   m_EditorClassIdentifier: 
   possibleEnemies:
   - {fileID: 260122417904728783, guid: 5dfbc30e22264064e9d8fba385637264, type: 3}
-  - {fileID: 7206340883337965828, guid: 196dea5c6ca66cb419576678257d4d3c, type: 3}
-  - {fileID: 4412457126975459472, guid: e349399f831298443b102ceace4bd7c3, type: 3}
   distribution:
-  - 50
-  - 30
-  - 20
-  time: 60
-  maxEnemies: 8
+  - 60
+  time: 100
+  maxEnemies: 6

@@ -46,7 +46,8 @@ public class ShrineManager : MonoBehaviour
                 shrines.Add(shrine);
             }
         }
-        GameStats.totalShrines = shrines.Count + 1;
+        
+        GameStats.totalShrines = GameStats.currGameMode == GameStats.GameMode.TimeAttack ? shrines.Count + 1 : shrines.Count;
 
         playerInput = GameObject.FindGameObjectWithTag("Input").GetComponent<PlayerInput>();
         interact = playerInput.currentActionMap.FindAction("Interact");
