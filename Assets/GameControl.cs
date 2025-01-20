@@ -39,7 +39,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] TargetTimes survivalTargetTimesNormal;
     [SerializeField] TargetTimes survivalTargetTimesHard;
     [SerializeField] SpawnEnemy enemySpawnerScript;
-    [SerializeField] float rampUpTime = 40;
+    [SerializeField] float rampUpTime = 60;
     TargetTimes survivalTargetTimes;
     
     // Start is called before the first frame update
@@ -93,8 +93,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
         {
             yield return new WaitForSeconds(rampUpTime);
             frenzyModeScript.IncreaseFrenzyDamage(10);
-            enemySpawnerScript.IncreaseGhostStats(0.1f);
-            Debug.Log("stats increased");
+            enemySpawnerScript.IncreaseGhostStats(0.05f);
 
         }
     }
@@ -103,9 +102,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
     {
         while(!gameEnded || rampUpTime > 10)
         {
-            yield return new WaitForSeconds(90);
-            Debug.Log("ramp up time decreased");
-            rampUpTime -= 5;
+            yield return new WaitForSeconds(180);
+            rampUpTime -= 15;
 
         }
     }

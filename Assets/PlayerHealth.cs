@@ -19,6 +19,7 @@ public class PlayerHealth: MonoBehaviour
     private int health;
     public int MaxHealth { get; set; } = 1000;//1000;
     public int Armor {get; set;} = 0;
+    private int damageMin = 10;
     private bool isDead = false;
 
     void Start()
@@ -29,7 +30,7 @@ public class PlayerHealth: MonoBehaviour
     }
     public void TakeDamage(int damageTaken)
     {
-        int damageDealt = damageTaken - Armor > 0 ? damageTaken - Armor : 0;
+        int damageDealt = damageTaken - Armor > 0 ? damageTaken - Armor : damageMin;
         health -= damageDealt;
         healthBar.SetHealth(health);
 
