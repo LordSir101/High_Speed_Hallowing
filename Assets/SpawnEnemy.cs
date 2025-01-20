@@ -1,7 +1,6 @@
 
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
@@ -51,6 +50,11 @@ public class SpawnEnemy : MonoBehaviour
             GameObject spawnPoint = childTransform.gameObject;
             spawnPoints.Add(spawnPoint);
         }
+
+        // if(GameStats.currGameMode == GameStats.GameMode.Survival)
+        // {
+        //     StartCoroutine(GhostRampUp());
+        // }
 
         // currWave = waveInfos[3];
         // SpawnFrenzyWave();
@@ -331,6 +335,12 @@ public class SpawnEnemy : MonoBehaviour
         }
     }
 
+    public void IncreaseGhostStats(float amount)
+    {
+        damageMod += amount;
+        healthMod += amount;
+    }
+
     // for stuff like the tutorial where the wave changes based on factors that are not time
     public void SetWave(int waveNum)
     {
@@ -338,4 +348,6 @@ public class SpawnEnemy : MonoBehaviour
         waveTimer = 0;
         waveTime = waveInfos[waveNum].time;
     }
+
+    
 }

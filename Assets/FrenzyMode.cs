@@ -80,6 +80,11 @@ public class FrenzyMode : MonoBehaviour
         frenzy = false;
     }
 
+    public void IncreaseFrenzyDamage(int damageIncrease)
+    {
+        damage += damageIncrease;
+    }
+
     IEnumerator FrenzyDamageRampUp()
     {
         while(frenzy)
