@@ -19,11 +19,11 @@ public class ShrineManager : MonoBehaviour
 
     [Header("Shrine Cost Modification")]
     [SerializeField] private int startingCostNormal = 500;
-    [SerializeField] private int startingCostHard = 500;
-    [SerializeField] public int[] upgradeCostsNormal = new int[] {500, 700, 900};
-    [SerializeField] public int[] upgradeCostsHard = new int[] {500, 700, 900};
+    [SerializeField] private int startingCostHard = 600;
+    [SerializeField] public int[] upgradeCostsNormal = new int[] {500, 800, 1100};
+    [SerializeField] public int[] upgradeCostsHard = new int[] {900, 1200, 1400};
     [HideInInspector] public int startingCost;
-    public int[] upgradeCosts;
+    [HideInInspector] public int[] upgradeCosts;
     
     private GameObject bigShrine;
     private PlayerInput playerInput;

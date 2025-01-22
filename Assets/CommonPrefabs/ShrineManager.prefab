@@ -52,3 +52,10 @@ MonoBehaviour:
   shrineCleanseSound: {fileID: 0}
   shrineUpgradePurchaseSound: {fileID: 0}
   paymentText: {fileID: 144933026977808247, guid: ca4f6ed07ac709b42bb62f58c3cdf706, type: 3}
+  startingCostNormal: 500
+  startingCostHard: 600
+  upgradeCostsNormal: f4010000bc02000084030000
+  upgradeCostsHard: 84030000b004000078050000
+  startingCost: 0
+  upgradeCosts: 
+  interactKeybind: 

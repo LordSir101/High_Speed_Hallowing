@@ -119,7 +119,7 @@ public class Castle2Tut : MonoBehaviour
         }
         NextText("Grapple");
         playerInput.actions["Grapple"].Enable();
-        //playerInput.actions["Grapple"].performed += FirstGrapple;
+        playerInput.actions["Grapple"].performed += FirstGrapple;
         cooldownUIParent.transform.GetChild(1).gameObject.SetActive(true);
     }
 
