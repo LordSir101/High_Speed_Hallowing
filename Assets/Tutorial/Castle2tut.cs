@@ -118,8 +118,22 @@ public class Castle2Tut : MonoBehaviour
             yield return null;
         }
         NextText("Grapple");
+        string keybind;
+        
+        if(playerInput.currentControlScheme == "Controller")
+        {
+            keybind = GetKeybind("GrappleDirection");
+        }
+        else
+        {
+            keybind = "Mouse";
+        }
+
+        currTextDisplay.text += InsertKeybindIntoText(tutText.text[tutTextIndex + 1], keybind);
+        currTextDisplay.fontSize = 60;
+        
         playerInput.actions["Grapple"].Enable();
-        playerInput.actions["Grapple"].performed += FirstGrapple;
+        playerInput.actions["Grapple"].canceled += FirstGrapple;
         cooldownUIParent.transform.GetChild(1).gameObject.SetActive(true);
     }
 
@@ -131,6 +145,7 @@ public class Castle2Tut : MonoBehaviour
             currTextDisplay.enabled = false;
             //NextText("Grapple");
             playerInput.actions["Grapple"].performed -= FirstGrapple;
+            currTextDisplay.fontSize = 70;
         }
     }
 
@@ -171,8 +186,10 @@ public class Castle2Tut : MonoBehaviour
         //currTextDisplay.text = tutText.text[tutTextIndex];
         if(action != null)
         {
+            
             string keybind = GetKeybind(action);
             currTextDisplay.text = InsertKeybindIntoText(tutText.text[tutTextIndex], keybind);
+            
         }
         else
         {

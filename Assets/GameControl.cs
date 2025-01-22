@@ -56,7 +56,12 @@ public class GameControl : MonoBehaviour, IDataPersistence
         GameStats.levelName = SceneManager.GetActiveScene().name;
         GameStats.currGameMode = gameMode;
         GameStats.ResetDefaults();
-        GameStats.nextLevel = nextLevel.levelName;
+
+        if(nextLevel != null)
+        {
+            GameStats.nextLevel = nextLevel.levelName;
+        }
+        
     }
 
     private void StartupBasedOnGamemode()

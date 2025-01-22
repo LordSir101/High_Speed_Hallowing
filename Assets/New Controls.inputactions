@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GrappleDirection",
+                    "type": "Value",
+                    "id": "582f459b-109e-454c-9211-8a9d13dba267",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -77,7 +86,7 @@
                     "id": "e2317998-90b6-41be-9298-ae4b3353d21f",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2",
                     "groups": "Controller",
                     "action": "PointerPosition",
                     "isComposite": false,
@@ -278,6 +287,17 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "ReflectDash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d6678b5-a7ff-4cf5-8047-43ebb72acf1c",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "GrappleDirection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
