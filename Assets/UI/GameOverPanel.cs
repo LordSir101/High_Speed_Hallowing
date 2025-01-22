@@ -16,11 +16,19 @@ public class GameOverPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI shrinesCleansedText;
     [SerializeField] TextMeshProUGUI difficultyText;
     [SerializeField] GameObject starParent;
+    [SerializeField] GameObject continueBtn;
     void Start()
     {
         SetWin(GameStats.gameWon);
         SetStats();
         SetStars();
+
+        continueBtn.SetActive(false);
+        
+        if(GameStats.nextLevel != null && GameStats.gameWon)
+        {
+            continueBtn.SetActive(true);
+        }
     }
 
     private void SetWin(bool win)
@@ -85,5 +93,10 @@ public class GameOverPanel : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(GameStats.levelName); 
+    }
+
+    public void Continue()
+    {
+        SceneManager.LoadScene(GameStats.nextLevel);
     }
 }
