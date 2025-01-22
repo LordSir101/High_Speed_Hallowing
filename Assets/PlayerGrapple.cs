@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 //using Unity.VisualScripting;
 using UnityEngine;
@@ -6,8 +7,9 @@ using UnityEngine.InputSystem;
 public class PlayerGrapple : MonoBehaviour
 {
     [SerializeField]
-    private InputActionReference grapple, pointerPos;//, movement;
+    private InputActionReference grapple, pointerPos, controllerGrappleAim;//, movement;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] LineRenderer grappleGuide;
 
     private LineRenderer lineRenderer;
     Rigidbody2D rb;
@@ -23,6 +25,7 @@ public class PlayerGrapple : MonoBehaviour
     public bool grappling = false;
     public float initialDrag {get; set;}
     public bool canGrapple {get;set;} = true;
+    private bool holdingGrapple = false;
 
     private PlayerAudio playerAudio;
     private PlayerCooldowns playerCooldowns;
@@ -59,32 +62,98 @@ public class PlayerGrapple : MonoBehaviour
         {
 
             canGrapple = false;
-            Vector2 grappleDirection = GetGrappleDirection();
+            
+            grapple.action.canceled += GrappleSetUp;
+            StartCoroutine(ShowGrappleGuide());
 
-            grapple.action.Disable();
-            grappling = true;
-            rb.drag = 0;
+            // grapple.action.Disable();
+            // grappling = true;
+            // rb.drag = 0;
 
-            // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
-            RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance + 0.2f);
+            // // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
+            // RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance + 0.2f);
 
-            playerCooldowns.StartGrappleCooldown();
+            // playerCooldowns.StartGrappleCooldown();
 
-            if(hitTarget)
-            {
-                grappleLocation = hitTarget.point;
-                StartCoroutine(PerformGrapple(hitTarget.collider.gameObject));
-            }
-            else 
-            {
-                grappleLocation = rb.position + grappleDirection.normalized * maxGrappleDistance;
-                StartCoroutine(PerformMissedGrapple());
-            }
+            // if(hitTarget)
+            // {
+            //     grappleLocation = hitTarget.point;
+            //     StartCoroutine(PerformGrapple(hitTarget.collider.gameObject));
+            // }
+            // else 
+            // {
+            //     grappleLocation = rb.position + grappleDirection.normalized * maxGrappleDistance;
+            //     StartCoroutine(PerformMissedGrapple());
+            // }
 
             //GetComponent<PlayerCooldowns>().StartCooldown(grappleCooldown, EndGrappleCooldown);
 
         }
         
+    }
+
+    IEnumerator ShowGrappleGuide()
+    {
+        holdingGrapple = true;
+        grappleGuide.enabled = true;
+
+        while(holdingGrapple)
+        {
+            Vector2 grappleDir = GetGrappleDirection();
+            RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDir, distance: maxGrappleDistance + 0.2f);
+            Vector2 endPoint;
+
+            if(hitTarget)
+            {
+                // the grapple indicator will stop at enemy buffer, so manually set indicator to snap to enemy position instead
+                if(hitTarget.transform.gameObject.tag == "Enemy")
+                {
+                    endPoint = hitTarget.transform.position;
+                }
+                else
+                {
+                    endPoint = hitTarget.point;
+                }
+                   
+            }
+            else 
+            {
+                endPoint = new Vector2(transform.position.x, transform.position.y) + grappleDir.normalized * maxGrappleDistance;
+            }
+            grappleGuide.SetPosition(0, transform.position);
+            grappleGuide.SetPosition(1, endPoint);
+            yield return null;
+        }
+        
+    }
+
+    void GrappleSetUp(InputAction.CallbackContext context)
+    {
+        grapple.action.canceled -= GrappleSetUp;
+        holdingGrapple = false;
+        grappleGuide.enabled = false;
+
+        Vector2 grappleDirection = GetGrappleDirection();
+        grapple.action.Disable();
+        grappling = true;
+        rb.drag = 0;
+
+        // project settings -> physics2D -> quries start in colliders unchecked so raycast does not detect origin
+        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, grappleDirection, distance: maxGrappleDistance + 0.2f);
+
+        playerCooldowns.StartGrappleCooldown();
+
+        if(hitTarget)
+        {
+            grappleLocation = hitTarget.point;
+            StartCoroutine(PerformGrapple(hitTarget.collider.gameObject));
+        }
+        else 
+        {
+            grappleLocation = rb.position + grappleDirection.normalized * maxGrappleDistance;
+            StartCoroutine(PerformMissedGrapple());
+        }
+
     }
 
     void Update()
@@ -121,6 +190,10 @@ public class PlayerGrapple : MonoBehaviour
         // controller will give us the direction the left stick is pointing
         if(playerInput.currentControlScheme == "Controller")
         {
+            if(controllerGrappleAim.action.ReadValue<Vector2>() != Vector2.zero)
+            {
+                return controllerGrappleAim.action.ReadValue<Vector2>();
+            }
             return mousePos;
         }
 
