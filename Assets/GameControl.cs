@@ -25,7 +25,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] List<LevelUnlockInfo> levelsToUnlock;
     [SerializeField] List<LevelUnlockInfo> levelsToUnlockHard;
     [SerializeField] GameStats.GameMode gameMode;
-    
+    [SerializeField] FrenzyMode frenzyModeScript;
     
 
     [Header("Time Attack")]
@@ -35,7 +35,6 @@ public class GameControl : MonoBehaviour, IDataPersistence
     
 
     [Header("SurvivalMode")]
-    [SerializeField] FrenzyMode frenzyModeScript;
     [SerializeField] TargetTimes survivalTargetTimesNormal;
     [SerializeField] TargetTimes survivalTargetTimesHard;
     [SerializeField] SpawnEnemy enemySpawnerScript;
@@ -45,13 +44,17 @@ public class GameControl : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
-        GameStats.levelName = SceneManager.GetActiveScene().name;
-        GameStats.currGameMode = gameMode;
-        GameStats.ResetDefaults();
         PlayMusic();
 
         StartupBasedOnGamemode();
         
+    }
+
+    void OnEnable()
+    {
+        GameStats.levelName = SceneManager.GetActiveScene().name;
+        GameStats.currGameMode = gameMode;
+        GameStats.ResetDefaults();
     }
 
     private void StartupBasedOnGamemode()
@@ -160,7 +163,6 @@ public class GameControl : MonoBehaviour, IDataPersistence
             GameStats.rating = CalulateRating();
             CheckHighScores();
 
-            
         }
 
         string text = win ? "Level Complete" : "Game Over";
@@ -240,8 +242,6 @@ public class GameControl : MonoBehaviour, IDataPersistence
             }
         }
 
-        Debug.Log(rating);
-
         return rating;
     }
 
@@ -257,15 +257,13 @@ public class GameControl : MonoBehaviour, IDataPersistence
         }
         else if(gameMode == GameStats.GameMode.Survival)
         {
-            float score =  GameStats.completionTime > survivalTargetTimes.timesInSeconds[0] ? survivalTargetTimes.timesInSeconds[0] : GameStats.completionTime;
-            if(score > prevHighScore || prevHighScore == 0)
+            //float score =  GameStats.completionTime > survivalTargetTimes.timesInSeconds[0] ? survivalTargetTimes.timesInSeconds[0] : GameStats.completionTime;
+            if(GameStats.completionTime > prevHighScore || prevHighScore == 0)
             {
-                currHighScore = score;
+                currHighScore = GameStats.completionTime;
                 bestRating = GameStats.rating;
             }
         }
-
-        Debug.Log(currHighScore);
         
     }
 

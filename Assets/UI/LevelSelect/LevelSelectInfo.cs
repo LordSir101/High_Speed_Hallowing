@@ -31,6 +31,9 @@ public class LevelSelectInfo : MonoBehaviour
             starParent.transform.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().enabled = true;
         }
 
+        // hide time required reminder text for the 1 star rating by default
+        starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = false;
+
         if(targetTimes.timesInSeconds.Count == 3)
         {
             starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;

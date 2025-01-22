@@ -57,6 +57,8 @@ public class GameOverPanel : MonoBehaviour
             
         }
 
+        starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = false;
+
         if(GameStats.completionTargets.Count == 3)
         {
             starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;

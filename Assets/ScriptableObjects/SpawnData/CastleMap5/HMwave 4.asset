@@ -19,4 +19,4 @@ MonoBehaviour:
   - 20
   - 80
   time: 20
-  maxEnemies: 10
+  maxEnemies: 6
