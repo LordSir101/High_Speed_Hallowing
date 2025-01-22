@@ -15,4 +15,5 @@ MonoBehaviour:
   text:
   - Hold -Right click- on \na ghost and release to snap-dash
   - Perform a quick snap-dash \nwhen your abilities are on cooldown \nto reset them
-  - -Left Click- to grapple \nto walls and enemies
+  - Hold -Left Click-,  then release to grapple \nto walls and enemies.
+  - ' Aim with -mouse-'
