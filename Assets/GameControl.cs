@@ -23,6 +23,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] AnimateGameOverText gameOverTextAnimateScript;
     
     [SerializeField] List<LevelUnlockInfo> levelsToUnlock;
+    [SerializeField] LevelUnlockInfo nextLevel;
     [SerializeField] List<LevelUnlockInfo> levelsToUnlockHard;
     [SerializeField] GameStats.GameMode gameMode;
     [SerializeField] FrenzyMode frenzyModeScript;
@@ -55,6 +56,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
         GameStats.levelName = SceneManager.GetActiveScene().name;
         GameStats.currGameMode = gameMode;
         GameStats.ResetDefaults();
+        GameStats.nextLevel = nextLevel.levelName;
     }
 
     private void StartupBasedOnGamemode()

@@ -11,6 +11,7 @@ public class GameStats : MonoBehaviour
 
    public static string levelName {get;set;}
    public static GameMode currGameMode {get;set;}
+   public static string nextLevel;
    public static int rating {get;set;} = 0;
    public static bool gameWon {get;set;} = false;
    public static int shrinesCleansed {get;set;} = 0;
@@ -67,6 +68,7 @@ public class GameStats : MonoBehaviour
         armor = 0;
         soulPowerCollected = 0;
         soulPowerSpent = 0;
+        nextLevel = null;
 
     }
 
