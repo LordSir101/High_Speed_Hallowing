@@ -171,7 +171,7 @@ public class Castle1Tut : MonoBehaviour
 
     private void UnlockDash()
     {
-        //NextWave();
+        NextWave();
         NextText("Dash");
         playerInput.actions["Dash"].Enable();
         playerInput.actions["Dash"].performed += DashComplete;
@@ -248,6 +248,7 @@ public class Castle1Tut : MonoBehaviour
 
         StartCoroutine(CheckShrineCleansed());
         NextText();
+        NextWave();
         //UnlockSnapDash();
 
         // if(playerMovement.GetWallJumpCombo() > 0 && cooldownRefreshEffect.isEmitting)
@@ -359,6 +360,7 @@ public class Castle1Tut : MonoBehaviour
         }
 
         NextText();
+        NextWave();
         StartCoroutine(CheckUpgradeMade());
     }
 
@@ -413,11 +415,11 @@ public class Castle1Tut : MonoBehaviour
         StartCoroutine(AnimateText(currTextDisplay));
     }
 
-    // private void NextWave()
-    // {
-    //     tutWaveNum += 1;
-    //     enemySpawner.SetWave(tutWaveNum);
-    // }
+    private void NextWave()
+    {
+        tutWaveNum += 1;
+        enemySpawner.GetComponent<SpawnEnemy>().SetWave(tutWaveNum);
+    }
 
      private IEnumerator AnimateText(TextMeshProUGUI text)
     {
