@@ -168,7 +168,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
     // If the fisher ghosts somehow dies while the player attack is disabled, we need to re enable to prevent player from permenantly being unable to attack
     public void OnDisable()
     {
-        if( player!= null)
+        if(player != null)
         {
             player.GetComponentInChildren<PlayerAttack>().enabled = true;
         }
@@ -230,7 +230,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
             player.GetComponent<Rigidbody2D>().MovePosition(player.transform.position + diff.normalized * 0.7f);
             yield return null;
 
-            touchingPlayer = Physics2D.OverlapCircle(transform.position, 1f, playerLayer);
+            touchingPlayer = Physics2D.OverlapCircle(transform.position, 0.05f, playerLayer);
         }
 
         player.GetComponent<PlayerMovement>().CanMove = true;
