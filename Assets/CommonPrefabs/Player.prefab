@@ -16959,6 +16959,9 @@ MonoBehaviour:
   bufferLayer:
     serializedVersion: 2
     m_Bits: 1024
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   playerInput: {fileID: 0}
   flashColor: {r: 0.7104397, g: 0.9675512, b: 0.9716981, a: 1}
   playerDamageEffects: {fileID: 1935047497463920560}

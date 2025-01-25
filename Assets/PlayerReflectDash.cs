@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,13 +10,14 @@ public class PlayerReflectDash : MonoBehaviour
     [Header("Reflect Dash")]
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
-    [SerializeField] private LayerMask bufferLayer;
+    [SerializeField] private LayerMask bufferLayer, enemyLayer;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private Color flashColor;
     [SerializeField] private PlayerDamageEffects playerDamageEffects;
     private GameObject reflectDashArrow = null;
     private GameObject relfectDashtarget = null;
     private float reflectDashSpeed= 12f;
+    private float reflectDashDistance = 2f;
     public bool reflectDashing = false;
     public Vector2 prevVelocity;
     private Vector2 reflectDashDirection;
@@ -47,7 +49,7 @@ public class PlayerReflectDash : MonoBehaviour
 
     void Update()
     {
-        RemoveNullCollisions();
+        //RemoveNullCollisions();
 
         if(reflectDashing)
         {
@@ -113,7 +115,7 @@ public class PlayerReflectDash : MonoBehaviour
         // if(closestEnemy != null)
         // {
         Vector2 dir = GetDashDirection();
-        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: 2f, layerMask: bufferLayer);
+        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: reflectDashDistance, layerMask: bufferLayer);
         if(hitTarget)
         {
             validTarget = true;
@@ -151,26 +153,45 @@ public class PlayerReflectDash : MonoBehaviour
             float closestEnemyDistance = float.MaxValue;
 
             List<Collider2D> colliders = new List<Collider2D>();
-            //Physics2D.OverlapCircle(transform.position, 1.6f, ContactFilter2D.NoFilter, colliders);
+            Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, reflectDashDistance, enemyLayer);
 
-            foreach(GameObject col in currentCollisions)
+            foreach(Collider2D col in nearbyEnemies)
             {
                 // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
-                if(col.gameObject != null)
+                if(col.gameObject != null && col.gameObject.tag == "Enemy")
                 {
                     float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
                     if(distance < closestEnemyDistance)
                     {
                         closestEnemyDistance = distance;
-                        closestEnemy = col;
+                        closestEnemy = col.gameObject;
                     }
                 }
-                else
-                {
-                    // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
-                    removalQueue.Add(col);
-                }
+                // else
+                // {
+                //     // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
+                //     removalQueue.Add(col);
+                // }
             };
+
+            // foreach(GameObject col in currentCollisions)
+            // {
+            //     // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
+            //     if(col.gameObject != null)
+            //     {
+            //         float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
+            //         if(distance < closestEnemyDistance)
+            //         {
+            //             closestEnemyDistance = distance;
+            //             closestEnemy = col;
+            //         }
+            //     }
+            //     else
+            //     {
+            //         // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
+            //         removalQueue.Add(col);
+            //     }
+            // };
 
             if(closestEnemy != null)
             {
@@ -181,6 +202,17 @@ public class PlayerReflectDash : MonoBehaviour
 
         if(validTarget)
         {
+            // check if there is a wall between enemy and player
+            RaycastHit2D target = Physics2D.Raycast(gameObject.transform.position, (gameObject.transform.position + relfectDashtarget.transform.position).normalized, distance: reflectDashDistance);
+            if(target)
+            {   
+                if(target.collider.gameObject.tag != "Enemy" && target.collider.gameObject.tag != "Buffer")
+                {
+                    return;
+                }
+
+            }
+
             CancelOtherMovement();
             reflectDashing = true;
             prevVelocity = rb.velocity;
@@ -318,23 +350,23 @@ public class PlayerReflectDash : MonoBehaviour
         removalQueue.Clear();
     }
 
-    void OnTriggerEnter2D (Collider2D col) 
-    {
-		// You can only reflect dash off of enemies
-        if(col.gameObject.tag == "Buffer")
-        {
-            currentCollisions.Add(col.gameObject.transform.parent.gameObject);
-        }
-	}
+    // void OnTriggerEnter2D (Collider2D col) 
+    // {
+	// 	// You can only reflect dash off of enemies
+    //     if(col.gameObject.tag == "Buffer")
+    //     {
+    //         currentCollisions.Add(col.gameObject.transform.parent.gameObject);
+    //     }
+	// }
 
-	void OnTriggerExit2D (Collider2D col) 
-    {
-        if(col.gameObject.tag == "Buffer")
-        {
-            currentCollisions.Remove(col.gameObject.transform.parent.gameObject);
-        }
+	// void OnTriggerExit2D (Collider2D col) 
+    // {
+    //     if(col.gameObject.tag == "Buffer")
+    //     {
+    //         currentCollisions.Remove(col.gameObject.transform.parent.gameObject);
+    //     }
 		
-	}
+	// }
 
     public void EndReflectDash()
     {

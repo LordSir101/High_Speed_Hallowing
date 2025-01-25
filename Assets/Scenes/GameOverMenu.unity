@@ -2760,6 +2760,7 @@ MonoBehaviour:
   shrinesCleansedText: {fileID: 96568000}
   difficultyText: {fileID: 1090200885}
   starParent: {fileID: 651740330}
+  continueBtn: {fileID: 1288843400}
 --- !u!1 &1288843400
 GameObject:
   m_ObjectHideFlags: 0

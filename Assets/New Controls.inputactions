@@ -295,7 +295,7 @@
                     "id": "2d6678b5-a7ff-4cf5-8047-43ebb72acf1c",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "groups": "Controller",
                     "action": "GrappleDirection",
                     "isComposite": false,
