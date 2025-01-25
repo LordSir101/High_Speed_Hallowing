@@ -190,6 +190,7 @@ public class PlayerGrapple : MonoBehaviour
         // controller will give us the direction the left stick is pointing
         if(playerInput.currentControlScheme == "Controller")
         {
+            Debug.Log(controllerGrappleAim.action.ReadValue<Vector2>());
             if(controllerGrappleAim.action.ReadValue<Vector2>() != Vector2.zero)
             {
                 return controllerGrappleAim.action.ReadValue<Vector2>();
