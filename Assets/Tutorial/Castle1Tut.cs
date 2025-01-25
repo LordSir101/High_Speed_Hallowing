@@ -171,7 +171,7 @@ public class Castle1Tut : MonoBehaviour
 
     private void UnlockDash()
     {
-        NextWave();
+        //NextWave();
         NextText("Dash");
         playerInput.actions["Dash"].Enable();
         playerInput.actions["Dash"].performed += DashComplete;
