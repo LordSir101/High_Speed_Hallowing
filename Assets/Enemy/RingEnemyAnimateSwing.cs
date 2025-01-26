@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayFisherGhostSwing : MonoBehaviour
+public class RingEnemyAnimateSwing : MonoBehaviour
 {
-    [SerializeField] GameObject swingObject;
+    [SerializeField] GameObject left;
+    [SerializeField] GameObject right;
 
-    public float animationTime = 0.5f;
+
+    public float animationTime = 0.1f;
     public float minAlpha = 0f;
     public float maxAlpha = 1f;
     public float animationTimer = 0f;
@@ -14,10 +16,10 @@ public class PlayFisherGhostSwing : MonoBehaviour
     // Start is called before the first frame update
     public void PlaySwing()
     {
-        tmp = swingObject.GetComponent<SpriteRenderer>().color;
+        tmp = left.GetComponent<SpriteRenderer>().color;
         tmp.a = 1f;
-        swingObject.GetComponent<SpriteRenderer>().color = tmp;
-        swingObject.SetActive(true);
+        left.GetComponent<SpriteRenderer>().color = tmp;
+        right.GetComponent<SpriteRenderer>().color = tmp;
     }
 
     public void EndSwing()
@@ -27,9 +29,7 @@ public class PlayFisherGhostSwing : MonoBehaviour
 
     IEnumerator FadeSwing()
     {
-        //tmp = swingObject.GetComponent<SpriteRenderer>().color;
         animationTimer = 0f;
-        //tmp.a = 0f;
         while(animationTimer <= animationTime)
         {
             animationTimer += Time.deltaTime;
@@ -38,12 +38,14 @@ public class PlayFisherGhostSwing : MonoBehaviour
             float alpha = Mathf.Lerp(maxAlpha, minAlpha, ratio);
             tmp.a = alpha;
 
-            swingObject.GetComponent<SpriteRenderer>().color = tmp;
+            left.GetComponent<SpriteRenderer>().color = tmp;
+            right.GetComponent<SpriteRenderer>().color = tmp;
 
            yield return null;
         }
 
-        swingObject.SetActive(false);
+        left.SetActive(false);
+        right.SetActive(false);
         
     }
     

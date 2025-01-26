@@ -69,7 +69,6 @@
     <Compile Include="Assets\UI\AnimateGameOverText.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\FrenzyMode.cs" />
-    <Compile Include="Assets\Enemy\PlayFisherGhostSwing.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Utils.cs" />
     <Compile Include="Assets\PickIdleState.cs" />
@@ -96,6 +95,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\Enemy\FisherEnemyAnimateSwing.cs" />
     <Compile Include="Assets\Animations\SnowConeAttack\SnowCone.cs" />
     <Compile Include="Assets\Enemy\FisherEnemyBehaviour.cs" />
     <Compile Include="Assets\SaveData\FileDataHandler.cs" />
@@ -139,6 +139,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\Enemy\RingEnemyAnimateSwing.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />

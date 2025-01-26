@@ -1217,6 +1217,7 @@ GameObject:
   - component: {fileID: 8619786151751913677}
   - component: {fileID: 8388049532482470074}
   - component: {fileID: 5349180662352186897}
+  - component: {fileID: 6771376657120349433}
   m_Layer: 7
   m_Name: BodySprites
   m_TagString: Untagged
@@ -1275,6 +1276,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3844a23c0845347898f1786da89483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6771376657120349433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6856574717887202537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f38b3e927788764cab0c06c3719eb06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left: {fileID: 5957014153128548402}
+  right: {fileID: 2341389464308608661}
+  animationTime: 0.5
+  minAlpha: 0
+  maxAlpha: 1
+  animationTimer: 0
 --- !u!1 &7530007326701861633
 GameObject:
   m_ObjectHideFlags: 0
