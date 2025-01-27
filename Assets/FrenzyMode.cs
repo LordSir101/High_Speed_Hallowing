@@ -29,16 +29,30 @@ public class FrenzyMode : MonoBehaviour
     {
         if(frenzy)
         {
-            if(GameStats.currGameMode == GameStats.GameMode.TimeAttack)
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            if(enemies.Length == 0)
             {
-                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-                if(enemies.Length == 0)
+                if(GameStats.currGameMode == GameStats.GameMode.TimeAttack)
                 {
                     //StopFrenzyMode();
                     gameController.SetWin(true);
-
                 }
+                else if(GameStats.currGameMode == GameStats.GameMode.Endless)
+                {
+                    gameController.ResetMap();
+                }
+
             }
+            // if(GameStats.currGameMode == GameStats.GameMode.TimeAttack)
+            // {
+            //     GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            //     if(enemies.Length == 0)
+            //     {
+            //         //StopFrenzyMode();
+            //         gameController.SetWin(true);
+
+            //     }
+            // }
            
             damageTimer += Time.deltaTime;
 
@@ -61,16 +75,16 @@ public class FrenzyMode : MonoBehaviour
         frenzy = true;
         frenzyEffect.SetActive(true);
 
-        if(GameStats.currGameMode == GameStats.GameMode.TimeAttack)
+        if(GameStats.currGameMode == GameStats.GameMode.TimeAttack || GameStats.currGameMode == GameStats.GameMode.Endless)
         {
             enemySpawner.SpawnFrenzyWave();
             frenzyText.GetComponent<TextMeshProUGUI>().enabled = true;
             frenzyText.GetComponent<TextMeshProUGUI>().text = "Defeat the remaining enemies quickly!";
         }
-        else if(GameStats.currGameMode == GameStats.GameMode.Survival)
-        {
-            StartCoroutine(FrenzyDamageRampUp());
-        }
+        // else if(GameStats.currGameMode == GameStats.GameMode.Survival)
+        // {
+        //     StartCoroutine(FrenzyDamageRampUp());
+        // }
        
     }
 
@@ -78,6 +92,7 @@ public class FrenzyMode : MonoBehaviour
     {
         frenzyEffect.SetActive(false);    
         frenzy = false;
+        frenzyText.GetComponent<TextMeshProUGUI>().enabled = false;
     }
 
     public void IncreaseFrenzyDamage(int damageIncrease)
@@ -85,13 +100,13 @@ public class FrenzyMode : MonoBehaviour
         damage += damageIncrease;
     }
 
-    IEnumerator FrenzyDamageRampUp()
-    {
-        while(frenzy)
-        {
-            yield return new WaitForSeconds(30);
-            damage += 10;
-        }
+    // IEnumerator FrenzyDamageRampUp()
+    // {
+    //     while(frenzy)
+    //     {
+    //         yield return new WaitForSeconds(30);
+    //         damage += 10;
+    //     }
         
-    }
+    // }
 }

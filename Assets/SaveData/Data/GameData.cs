@@ -21,7 +21,8 @@ public class GameData
             { "CastleMap2", 0 },
             { "CastleMap3", 0 },
             { "CastleMap4", 0 },
-            { "CastleMap5", 0 }
+            { "CastleMap5", 0 },
+            { "CastleMap6", 0 }
         };
 
         ratings = new Dictionary<string, int>()
@@ -30,7 +31,8 @@ public class GameData
             { "CastleMap2", 0 },
             { "CastleMap3", 0 },
             { "CastleMap4", 0 },
-            { "CastleMap5", 0 }
+            { "CastleMap5", 0 },
+            { "CastleMap6", 0 }
         };
 
         levelUnlocks = new Dictionary<string, bool>()
@@ -39,7 +41,8 @@ public class GameData
             { "CastleMap2", false },
             { "CastleMap3", false },
             { "CastleMap4", false },
-            { "CastleMap5", false }
+            { "CastleMap5", false },
+            { "CastleMap6", false }
         };
 
         highScoresHard = new Dictionary<string, float>()
@@ -48,7 +51,8 @@ public class GameData
             { "CastleMap2", 0 },
             { "CastleMap3", 0 },
             { "CastleMap4", 0 },
-            { "CastleMap5", 0 }
+            { "CastleMap5", 0 },
+            { "CastleMap6", 0 }
         };
 
         ratingsHard = new Dictionary<string, int>()
@@ -57,7 +61,8 @@ public class GameData
             { "CastleMap2", 0 },
             { "CastleMap3", 0 },
             { "CastleMap4", 0 },
-            { "CastleMap5", 0 }
+            { "CastleMap5", 0 },
+            { "CastleMap6", 0 }
         };
 
         levelUnlocksHard = new Dictionary<string, bool>()
@@ -66,7 +71,8 @@ public class GameData
             { "CastleMap2", false },
             { "CastleMap3", false },
             { "CastleMap4", false },
-            { "CastleMap5", false }
+            { "CastleMap5", false },
+            { "CastleMap6", false }
         };
     }
 

@@ -76,6 +76,7 @@
     <Compile Include="Assets\ScriptableObjects\TargetTimes\TargetTimes.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Tutorial\Castle2tut.cs" />
+    <Compile Include="Assets\Tutorial\Castle5tut.cs" />
     <Compile Include="Assets\PlayerReflectDash.cs" />
     <Compile Include="Assets\SceneControl.cs" />
     <Compile Include="Assets\AttackHitboxes\SlowingCircle.cs" />

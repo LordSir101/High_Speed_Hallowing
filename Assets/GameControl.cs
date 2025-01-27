@@ -41,6 +41,13 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] SpawnEnemy enemySpawnerScript;
     [SerializeField] float rampUpTime = 60;
     TargetTimes survivalTargetTimes;
+
+    [Header("EndlessMode")]
+    [SerializeField] TargetTimes endlessTargetTimesNormal;
+    [SerializeField] TargetTimes endlessTargetTimesHard;
+    [SerializeField] SpawnEnemy enemySpawnerScriptEndless;
+    [SerializeField] ShrineManager shrineManager;
+    TargetTimes endlessTargetTimes;
     
     // Start is called before the first frame update
     void Start()
@@ -79,8 +86,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
             GameStats.completionTargets = survivalTargetTimes.timesInSeconds;
             StartCoroutine(StartFrenzyMode());
-            StartCoroutine(RampUpDifficulty());
-            StartCoroutine(DecreaseRampUpTimeOverTime());
+            StartCoroutine(RampUpDifficulty(rampUpTime, 10, 0.05f));
+            StartCoroutine(DecreaseRampUpTimeOverTime(10, 180, 15));
         }
         else if(gameMode == GameStats.GameMode.TimeAttack)
         {
@@ -95,25 +102,41 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
             GameStats.completionTargets = targetTimes.timesInSeconds;
         }
+        else if(gameMode == GameStats.GameMode.Endless)
+        {
+            if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
+            {
+                endlessTargetTimes = endlessTargetTimesNormal;
+            }
+            else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
+            {
+                endlessTargetTimes = endlessTargetTimesHard;
+            }
+
+            GameStats.completionTargets = endlessTargetTimes.timesInSeconds;
+
+            StartCoroutine(RampUpDifficulty(150, 15, 0.1f));
+            StartCoroutine(DecreaseRampUpTimeOverTime(60, 300, 10));
+        }
     }
 
-    IEnumerator RampUpDifficulty()
+    IEnumerator RampUpDifficulty(float rampTime, int frenzyDamageInc, float ghostStatsInc)
     {
         while(!gameEnded)
         {
-            yield return new WaitForSeconds(rampUpTime);
-            frenzyModeScript.IncreaseFrenzyDamage(10);
-            enemySpawnerScript.IncreaseGhostStats(0.05f);
+            yield return new WaitForSeconds(rampTime);
+            frenzyModeScript.IncreaseFrenzyDamage(frenzyDamageInc);
+            enemySpawnerScriptEndless.IncreaseGhostStats(ghostStatsInc);
 
         }
     }
 
-    IEnumerator DecreaseRampUpTimeOverTime()
+    IEnumerator DecreaseRampUpTimeOverTime(int minTime, int waitTime, int decreaseInterval)
     {
-        while(!gameEnded || rampUpTime > 10)
+        while(!gameEnded && rampUpTime > minTime)
         {
-            yield return new WaitForSeconds(180);
-            rampUpTime -= 15;
+            yield return new WaitForSeconds(waitTime);
+            rampUpTime -= decreaseInterval;
 
         }
     }
@@ -155,8 +178,12 @@ public class GameControl : MonoBehaviour, IDataPersistence
         //pauseControl.PauseGame(true);
         GameStats.completionTime = gameTime;
 
-        // if the player survived for the minimum time in survival mode, change gamestae to win
+        // if the player survived for the minimum time in survival/endless mode, change gamestate to win
         if(gameMode == GameStats.GameMode.Survival && gameTime >= survivalTargetTimes.timesInSeconds[2])
+        {
+            win = true;
+        }
+        else if(gameMode == GameStats.GameMode.Endless && gameTime >= endlessTargetTimes.timesInSeconds[2])
         {
             win = true;
         }
@@ -166,10 +193,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
         //int rating = 0;
         if(win)
         {
-
             GameStats.rating = CalulateRating();
             CheckHighScores();
-
         }
 
         string text = win ? "Level Complete" : "Game Over";
@@ -190,6 +215,19 @@ public class GameControl : MonoBehaviour, IDataPersistence
         // gameObject.SetActive(true);
         // PauseControl.PauseGame(true);
     }
+
+    public void ResetMap()
+    {
+        frenzyModeScript.StopFrenzyMode();
+        enemySpawnerScriptEndless.EnableSpawns();
+        enemySpawnerScriptEndless.SetWave(0);
+        shrineManager.ResetShrines();
+
+        PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        int healAmount = playerHealth.MaxHealth / 2;
+        playerHealth.Heal(healAmount);
+    }
+
 
     private void UnlockLevels(ref GameData data)
     {
@@ -248,6 +286,16 @@ public class GameControl : MonoBehaviour, IDataPersistence
                 }
             }
         }
+        else if(gameMode == GameStats.GameMode.Endless)
+        {
+            foreach(float time in endlessTargetTimes.timesInSeconds)
+            {
+                if(GameStats.completionTime >= time)
+                {
+                    rating += 1;
+                }
+            }
+        }
 
         return rating;
     }
@@ -262,7 +310,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
                 bestRating = GameStats.rating;
             }
         }
-        else if(gameMode == GameStats.GameMode.Survival)
+        else if(gameMode == GameStats.GameMode.Survival || gameMode == GameStats.GameMode.Endless)
         {
             //float score =  GameStats.completionTime > survivalTargetTimes.timesInSeconds[0] ? survivalTargetTimes.timesInSeconds[0] : GameStats.completionTime;
             if(GameStats.completionTime > prevHighScore || prevHighScore == 0)

@@ -10,6 +10,7 @@ public class HealthShrine : Shrine
 
     //[SerializeField] Sprite uncleanseIcon;
     [SerializeField] Sprite cleanseIcon;
+    //[SerializeField] Sprite unCleanseIcon;
     [SerializeField] Material cleanseIconMaterial;
     // Animator animator;
     // GameObject icon;
@@ -20,6 +21,7 @@ public class HealthShrine : Shrine
         playerHealthScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         CleanseIcon = cleanseIcon;
         CleanseIconMaterial = cleanseIconMaterial;
+        //UncleanseIcon = unCleanseIcon;
         // animator = GetComponentInChildren<Animator>();
         // icon = Utils.FindGameObjectInChildWithTag(gameObject, "Icon");
 
