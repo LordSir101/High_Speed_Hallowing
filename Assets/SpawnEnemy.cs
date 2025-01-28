@@ -349,5 +349,10 @@ public class SpawnEnemy : MonoBehaviour
         waveTime = waveInfos[waveNum].time;
     }
 
+    public void EnableSpawns()
+    {
+        spawnEnemies = true;
+    }
+
     
 }

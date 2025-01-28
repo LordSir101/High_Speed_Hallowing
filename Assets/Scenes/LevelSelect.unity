@@ -1255,11 +1255,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2791408091010588526, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 959.9793
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 2791408091010588526, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -249.99998
+      value: -250
       objectReference: {fileID: 0}
     - target: {fileID: 2791408091010588526, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2669,7 +2669,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 112784551639403811, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: levelName
-      value: CastleMap2
+      value: CastleMap6
       objectReference: {fileID: 0}
     - target: {fileID: 112784551639403811, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: targetTimes
@@ -2681,7 +2681,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 024eef74f55e83247beed8551910a3c6, type: 3}
     - target: {fileID: 1157473110990332926, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_text
-      value: Level 2
+      value: Level 6
       objectReference: {fileID: 0}
     - target: {fileID: 2791408091010588526, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_Pivot.x
@@ -2769,12 +2769,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3007094961857903996, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3936589103826733167, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: CastleMap2
+      value: CastleMap6
       objectReference: {fileID: 0}
+    - target: {fileID: 4756871126245430174, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 9094426020027835056, guid: a1ba965ae331dc64892119337d2e19c6, type: 3}
     - target: {fileID: 8419782263304377185, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: CastleMap2
@@ -2782,7 +2786,7 @@ PrefabInstance:
     - target: {fileID: 8681576333144867977, guid: 44e6abca6a251974ea196c1ac47b33bb, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 024eef74f55e83247beed8551910a3c6, type: 3}
+      objectReference: {fileID: 8349509213173848612, guid: af7db1a0076f871419bdb49532a74422, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -14,6 +14,7 @@ public class Shrine : MonoBehaviour
 
     //[SerializeField] Sprite angrySprite;
     Sprite cleanseSprite;
+    Sprite defaultSprite;
     
 
     //public int Cost {get; set;}= 500;
@@ -28,10 +29,14 @@ public class Shrine : MonoBehaviour
     protected virtual GameObject icon {get;set;}
     protected virtual Animator animator {get;set;}
     protected Sprite CleanseIcon {get;set;}
+    protected Sprite UncleanseIcon {get;set;}
     protected Material CleanseIconMaterial {get;set;}
+    protected Material UncleanseIconMaterial {get;set;}
     protected List<GameObject> candles;
 
     protected PlayerInput playerInput;
+
+    
     // protected string interactKeybind;
 
     public int numEnemiesToSpawn = 3;
@@ -46,7 +51,7 @@ public class Shrine : MonoBehaviour
         
     // }
 
-    public void Init(InputActionReference interact, ShrineManager shrineManager, Sprite cleanseSprite)
+    public void Init(InputActionReference interact, ShrineManager shrineManager, Sprite cleanseSprite, Sprite defaultSprite)
     {
         
         player = GameObject.FindGameObjectWithTag("Player");
@@ -57,6 +62,7 @@ public class Shrine : MonoBehaviour
         this.interact = interact;
         this.shrineManager = shrineManager;
         this.cleanseSprite = cleanseSprite;
+        this.defaultSprite = defaultSprite;
         animator = GetComponentInChildren<Animator>();
         icon = Utils.FindGameObjectInChildWithTag(gameObject, "Icon");
 
@@ -66,6 +72,9 @@ public class Shrine : MonoBehaviour
         {
             candles.Add(candle.gameObject);
         }
+
+        UncleanseIcon = icon.GetComponent<SpriteRenderer>().sprite;
+        UncleanseIconMaterial = icon.GetComponent<SpriteRenderer>().material;
     }
 
     private void Tribute(InputAction.CallbackContext context)
@@ -188,5 +197,25 @@ public class Shrine : MonoBehaviour
     public int GetNumUpgrades()
     {
         return numUpgrades;
+    }
+
+    public void ResetShrine()
+    {
+        numUpgrades = 0;
+        cleansed = false;
+        gameObject.GetComponent<SpriteRenderer>().sprite = defaultSprite;
+        icon.GetComponent<SpriteRenderer>().material = UncleanseIconMaterial;
+        icon.GetComponent<SpriteRenderer>().sprite = UncleanseIcon;
+
+        gameObject.GetComponent<CircleCollider2D>().enabled = true;
+
+        Cost = shrineManager.startingCost;
+
+        animator.SetTrigger("deactivated");
+
+        foreach(GameObject candle in candles)
+        {
+            candle.transform.GetChild(0).gameObject.SetActive(false);
+        }
     }
 }

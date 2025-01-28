@@ -12,6 +12,9 @@ public class EndShrine : MonoBehaviour
     [SerializeField] Sprite cleansedGemOutlineSprite;
     [SerializeField] private InputActionReference interact;
     [SerializeField] private ShrineManager shrineManager;
+    Sprite uncleansedOutlineSprite;
+    Color32 defaultGemLightColor;
+    Color32 defaultGemColor;
     TextMeshProUGUI interactText;
     private GameObject player;
     private int cost = 0;
@@ -30,6 +33,10 @@ public class EndShrine : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         cost  = 1500 * gems.Count;
+
+        uncleansedOutlineSprite = gems[0].GetComponent<SpriteRenderer>().sprite;
+        defaultGemLightColor = gems[0].GetComponentInChildren<Light2D>().color;
+        defaultGemColor = gems[0].transform.GetChild(0).GetComponent<SpriteRenderer>().color;
     }
 
     // // Update is called once per frame
@@ -110,5 +117,18 @@ public class EndShrine : MonoBehaviour
 
             //shrineManager.SpawnEnemiesAtShrine(transform.position, 3);
         }   
+    }
+
+    public void ResetShrine()
+    {
+        shrinesCleansed = 0;
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
+        foreach(GameObject gem in gems)
+        {
+            gem.GetComponent<SpriteRenderer>().sprite = uncleansedOutlineSprite;
+            gem.GetComponentInChildren<Light2D>().color = defaultGemLightColor;
+            gem.transform.GetChild(0).GetComponent<SpriteRenderer>().color = defaultGemColor;
+        }
     }
 }

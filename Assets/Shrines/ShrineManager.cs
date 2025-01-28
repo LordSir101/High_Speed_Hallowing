@@ -17,6 +17,9 @@ public class ShrineManager : MonoBehaviour
     [SerializeField] private AudioSource shrineCleanseSound, shrineUpgradePurchaseSound;
     [SerializeField] public GameObject paymentText;
 
+    [Header("defaults")]
+    [SerializeField] protected Sprite defaultSprite;
+
     [Header("Shrine Cost Modification")]
     [SerializeField] private int startingCostNormal = 500;
     [SerializeField] private int startingCostHard = 600;
@@ -42,12 +45,12 @@ public class ShrineManager : MonoBehaviour
             GameObject shrine = childTransform.gameObject;
             if(shrine.tag != "EndGoal")
             {
-                shrine.GetComponent<Shrine>().Init(inputActionRef, this, happySprite);
+                shrine.GetComponent<Shrine>().Init(inputActionRef, this, happySprite, defaultSprite);
                 shrines.Add(shrine);
             }
         }
         
-        GameStats.totalShrines = GameStats.currGameMode == GameStats.GameMode.TimeAttack ? shrines.Count + 1 : shrines.Count;
+        GameStats.totalShrines = bigShrine != null ? shrines.Count + 1 : shrines.Count;
 
         playerInput = GameObject.FindGameObjectWithTag("Input").GetComponent<PlayerInput>();
         interact = playerInput.currentActionMap.FindAction("Interact");
@@ -158,5 +161,16 @@ public class ShrineManager : MonoBehaviour
     public void StartFrenzyMode()
     {
         frenzyModeScript.StartFrenzyMode();
+    }
+
+    public void ResetShrines()
+    {
+        foreach(GameObject shrine in shrines)
+        {
+            shrine.GetComponent<Shrine>().ResetShrine();
+        }
+
+        bigShrine.GetComponent<EndShrine>().ResetShrine();
+        shrinesActivated = 0;
     }
 }

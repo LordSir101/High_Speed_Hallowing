@@ -27,11 +27,14 @@ EditorBuildSettings:
     path: Assets/Scenes/CastleMap3.unity
     guid: 02766b99122bf8049be16414763f34f1
   - enabled: 1
+    path: Assets/Scenes/CastleMap5.unity
+    guid: 2d5673790898c2e428a3e4df81f5ee43
+  - enabled: 1
     path: Assets/Scenes/CastleMap4.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/CastleMap5.unity
-    guid: 2d5673790898c2e428a3e4df81f5ee43
+    path: Assets/Scenes/CastleMap6.unity
+    guid: db20267657ecb2049ae6a353f8190783
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: eefef7351f9213942b620fe61e70be7f, type: 2}
   m_UseUCBPForAssetBundles: 0
