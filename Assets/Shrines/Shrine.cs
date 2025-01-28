@@ -7,17 +7,19 @@ using UnityEngine.InputSystem;
 
 public class Shrine : MonoBehaviour
 {
-    private InputActionReference interact;
+    protected InputActionReference interact;
     protected TextMeshProUGUI interactText;
-    private ShrineManager shrineManager;
+    protected ShrineManager shrineManager;
     protected GameObject player;
 
     //[SerializeField] Sprite angrySprite;
     Sprite cleanseSprite;
     
 
-    public int Cost {get; set;}= 500;
+    //public int Cost {get; set;}= 500;
+    public int Cost;
 
+    // [SerializeField] protected int[] upgradeCosts;
     protected int[] upgradeCosts;
     protected int maxUpgrades = 3;
     protected int numUpgrades = 0;
@@ -29,6 +31,9 @@ public class Shrine : MonoBehaviour
     protected Material CleanseIconMaterial {get;set;}
     protected List<GameObject> candles;
 
+    protected PlayerInput playerInput;
+    // protected string interactKeybind;
+
     public int numEnemiesToSpawn = 3;
 
     // Start is called before the first frame update
@@ -37,12 +42,17 @@ public class Shrine : MonoBehaviour
     //     // GameObject textObj = FindGameObjectInChildWithTag(gameObject., "InteractText");
     //     // interactText = textObj.GetComponent<TextMeshProUGUI>();
         
+        
+        
     // }
 
     public void Init(InputActionReference interact, ShrineManager shrineManager, Sprite cleanseSprite)
     {
+        
         player = GameObject.FindGameObjectWithTag("Player");
-        upgradeCosts = new int[] {500, 700, 900};
+        //upgradeCosts = new int[] {500, 700, 900};
+        upgradeCosts = shrineManager.upgradeCosts;
+        Cost = shrineManager.startingCost;
         interactText = Utils.FindGameObjectInChildWithTag(gameObject.GetComponentInChildren<Canvas>().gameObject, "InteractText").GetComponent<TextMeshProUGUI>();
         this.interact = interact;
         this.shrineManager = shrineManager;
@@ -102,7 +112,7 @@ public class Shrine : MonoBehaviour
             else
             {
                 interactText.enabled = true;
-                interactText.text = $"Tribute to cleanse (E) ({Cost})" ;
+                interactText.text = $"Tribute to cleanse ({shrineManager.interactKeybind}) ({Cost})" ;
                 interact.action.performed += Tribute;
             }
         }

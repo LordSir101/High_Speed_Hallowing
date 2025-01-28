@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,10 +10,14 @@ public class PlayerReflectDash : MonoBehaviour
     [Header("Reflect Dash")]
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject actionWindowIndicatorPrefab;
-    [SerializeField] private LayerMask bufferLayer;
+    [SerializeField] private LayerMask bufferLayer, enemyLayer;
+    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private Color flashColor;
+    [SerializeField] private PlayerDamageEffects playerDamageEffects;
     private GameObject reflectDashArrow = null;
     private GameObject relfectDashtarget = null;
     private float reflectDashSpeed= 12f;
+    private float reflectDashDistance = 2f;
     public bool reflectDashing = false;
     public Vector2 prevVelocity;
     private Vector2 reflectDashDirection;
@@ -44,7 +49,7 @@ public class PlayerReflectDash : MonoBehaviour
 
     void Update()
     {
-        RemoveNullCollisions();
+        //RemoveNullCollisions();
 
         if(reflectDashing)
         {
@@ -110,7 +115,7 @@ public class PlayerReflectDash : MonoBehaviour
         // if(closestEnemy != null)
         // {
         Vector2 dir = GetDashDirection();
-        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: 2f, layerMask: bufferLayer);
+        RaycastHit2D hitTarget = Physics2D.Raycast(gameObject.transform.position, dir, distance: reflectDashDistance, layerMask: bufferLayer);
         if(hitTarget)
         {
             validTarget = true;
@@ -147,24 +152,46 @@ public class PlayerReflectDash : MonoBehaviour
 
             float closestEnemyDistance = float.MaxValue;
 
-            foreach(GameObject col in currentCollisions)
+            List<Collider2D> colliders = new List<Collider2D>();
+            Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, reflectDashDistance, enemyLayer);
+
+            foreach(Collider2D col in nearbyEnemies)
             {
                 // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
-                if(col.gameObject != null)
+                if(col.gameObject != null && col.gameObject.tag == "Enemy")
                 {
                     float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
                     if(distance < closestEnemyDistance)
                     {
                         closestEnemyDistance = distance;
-                        closestEnemy = col;
+                        closestEnemy = col.gameObject;
                     }
                 }
-                else
-                {
-                    // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
-                    removalQueue.Add(col);
-                }
+                // else
+                // {
+                //     // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
+                //     removalQueue.Add(col);
+                // }
             };
+
+            // foreach(GameObject col in currentCollisions)
+            // {
+            //     // must check if gameobject is null to check if destroyed. (ActiveInHierarchy does not do this)
+            //     if(col.gameObject != null)
+            //     {
+            //         float distance = (col.GetComponent<Rigidbody2D>().position - rb.position).magnitude;
+            //         if(distance < closestEnemyDistance)
+            //         {
+            //             closestEnemyDistance = distance;
+            //             closestEnemy = col;
+            //         }
+            //     }
+            //     else
+            //     {
+            //         // When an enemy dies on impact, the trigger exit does not happen, so need to remove the collision here
+            //         removalQueue.Add(col);
+            //     }
+            // };
 
             if(closestEnemy != null)
             {
@@ -175,6 +202,17 @@ public class PlayerReflectDash : MonoBehaviour
 
         if(validTarget)
         {
+            // check if there is a wall between enemy and player
+            RaycastHit2D target = Physics2D.Raycast(gameObject.transform.position, (gameObject.transform.position + relfectDashtarget.transform.position).normalized, distance: reflectDashDistance);
+            if(target)
+            {   
+                if(target.collider.gameObject.tag != "Enemy" && target.collider.gameObject.tag != "Buffer")
+                {
+                    return;
+                }
+
+            }
+
             CancelOtherMovement();
             reflectDashing = true;
             prevVelocity = rb.velocity;
@@ -197,9 +235,12 @@ public class PlayerReflectDash : MonoBehaviour
             //StartCoroutine(MoveToTarget());
             // Teleport the player to the enemy center
             Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
-            rb.position = teleportLocation;
+            rb.MovePosition(teleportLocation);
 
-            reflectDashArrow = Instantiate(arrowPrefab, new Vector3(rb.position.x, rb.position.y, 0), transform.rotation);
+            reflectDashArrow = Instantiate(arrowPrefab, teleportLocation, transform.rotation);
+
+            playerDamageEffects.SetFlashColor(flashColor);
+            playerDamageEffects.SetFlashAmount(1);
 
         }
             
@@ -235,6 +276,11 @@ public class PlayerReflectDash : MonoBehaviour
         Vector2 mousePos = pointerPos.action.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
+        if(playerInput.currentControlScheme == "Controller")
+        {
+            return mousePos;
+        }
+
         Vector2 direction = mousePos - rb.position;
 
         return direction.normalized;
@@ -242,6 +288,8 @@ public class PlayerReflectDash : MonoBehaviour
 
     private void ReflectDash(InputAction.CallbackContext context)
     {
+        playerAudio.PlayDashSound();
+        playerDamageEffects.SetFlashAmount(0);
         // Once the dash has started, conditional dashes are allowed, but not basic dashes
         playerMovement.dash.action.Enable();
         //playerMovement.DisableBasicDash();
@@ -302,23 +350,23 @@ public class PlayerReflectDash : MonoBehaviour
         removalQueue.Clear();
     }
 
-    void OnTriggerEnter2D (Collider2D col) 
-    {
-		// You can only reflect dash off of enemies
-        if(col.gameObject.tag == "Buffer")
-        {
-            currentCollisions.Add(col.gameObject.transform.parent.gameObject);
-        }
-	}
+    // void OnTriggerEnter2D (Collider2D col) 
+    // {
+	// 	// You can only reflect dash off of enemies
+    //     if(col.gameObject.tag == "Buffer")
+    //     {
+    //         currentCollisions.Add(col.gameObject.transform.parent.gameObject);
+    //     }
+	// }
 
-	void OnTriggerExit2D (Collider2D col) 
-    {
-        if(col.gameObject.tag == "Buffer")
-        {
-            currentCollisions.Remove(col.gameObject.transform.parent.gameObject);
-        }
+	// void OnTriggerExit2D (Collider2D col) 
+    // {
+    //     if(col.gameObject.tag == "Buffer")
+    //     {
+    //         currentCollisions.Remove(col.gameObject.transform.parent.gameObject);
+    //     }
 		
-	}
+	// }
 
     public void EndReflectDash()
     {
@@ -334,13 +382,14 @@ public class PlayerReflectDash : MonoBehaviour
         playerMovement.CanMove = true;
         playerMovement.dash.action.Enable();
         playerMovement.EnableBasicDash();
+        reflectDash.action.Enable();
         reflectDashing = false;
         rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
     }
 
     IEnumerator PerformDash(Vector2 force, float time)
     {
-
+        
         //rb.AddForce(force, ForceMode2D.Impulse);
         float startTime = Time.time;
         rb.drag = 0;
@@ -392,4 +441,6 @@ public class PlayerReflectDash : MonoBehaviour
         ResetDashStatus();
        
     }
+
+   
 }

@@ -12,11 +12,26 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: 0740392200fb42541ba49fd54b968935
   - enabled: 1
-    path: Assets/Scenes/CastleMap.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
     path: Assets/Scenes/GameOverMenu.unity
     guid: c068e8239366a134f8f679b1f97ad772
+  - enabled: 1
+    path: Assets/Scenes/LevelSelect.unity
+    guid: a2ed34a4953d34149a5733376f0c01c4
+  - enabled: 1
+    path: Assets/Scenes/CastleMap1.unity
+    guid: 663bd00515c349c48a421636d1952304
+  - enabled: 1
+    path: Assets/Scenes/CastleMap2.unity
+    guid: c94069c0c5c78ce4983624b0b7408150
+  - enabled: 1
+    path: Assets/Scenes/CastleMap3.unity
+    guid: 02766b99122bf8049be16414763f34f1
+  - enabled: 1
+    path: Assets/Scenes/CastleMap4.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/CastleMap5.unity
+    guid: 2d5673790898c2e428a3e4df81f5ee43
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: eefef7351f9213942b620fe61e70be7f, type: 2}
   m_UseUCBPForAssetBundles: 0

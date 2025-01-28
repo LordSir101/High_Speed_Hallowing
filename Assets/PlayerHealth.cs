@@ -12,12 +12,14 @@ public class PlayerHealth: MonoBehaviour
     [SerializeField] public GameControl gameController;
     [SerializeField] PauseControl pauseControl;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private ParticleSystem healingEffect;
     public HealthBar healthBar;
     private PlayerDamageEffects damageEffects;
     private PlayerAudio playerAudio;
     private int health;
-    public int MaxHealth { get; set; } = 1000;
+    public int MaxHealth { get; set; } = 1000;//1000;
     public int Armor {get; set;} = 0;
+    private int damageMin = 10;
     private bool isDead = false;
 
     void Start()
@@ -28,7 +30,7 @@ public class PlayerHealth: MonoBehaviour
     }
     public void TakeDamage(int damageTaken)
     {
-        int damageDealt = damageTaken - Armor > 0 ? damageTaken - Armor : 0;
+        int damageDealt = damageTaken - Armor > 0 ? damageTaken - Armor : damageMin;
         health -= damageDealt;
         healthBar.SetHealth(health);
 
@@ -56,8 +58,19 @@ public class PlayerHealth: MonoBehaviour
 
     public void Heal(int healing)
     {
-        health += healing;
+        if(health + healing > MaxHealth)
+        {
+            health = MaxHealth;
+        }
+        else
+        {
+            health += healing;
+        }
+        
         healthBar.SetHealth(health);
+        PlayHealingEffect(3);
+        DisplayHealingNumbers(healing);
+        
     }
 
     // public void HealToFull()
@@ -72,6 +85,12 @@ public class PlayerHealth: MonoBehaviour
 
     IEnumerator StartHOT(float percent, int time)
     {
+        // ParticleSystem particleSystem = healingEffect;
+
+        // ParticleSystem.MainModule settings = particleSystem.main;
+        // settings.duration = time;
+        // PlayHealingEffect(time);
+
         float startTime = Time.time;
 
         float totalhealing = MaxHealth *  percent;
@@ -82,6 +101,24 @@ public class PlayerHealth: MonoBehaviour
             Heal(healingIncrement);
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    void PlayHealingEffect(float time)
+    {
+        // ParticleSystem particleSystem = healingEffect;
+
+        // ParticleSystem.MainModule settings = particleSystem.main;
+        // settings.duration = time;
+
+        healingEffect.Play();
+
+    }
+
+    void DisplayHealingNumbers(int amount)
+    {
+        GameObject healingTextParent = Instantiate(damageText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
+        healingTextParent.GetComponentInChildren<TextMeshPro>().text = $"+{amount}";
+        healingTextParent.GetComponentInChildren<TextMeshPro>().color = Color.green;
     }
     
 }

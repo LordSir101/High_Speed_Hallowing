@@ -52,17 +52,25 @@ public class EnemyHealth : MonoBehaviour
 
         ModifyLightHealthBar();
 
-        if(currHealth <= 0)
-        {
-            enemyAnimator.StartDeathAnimation(impact);
-            Destroy(gameObject);
-            DropEssence(impact);
-        }
-
         enemyAnimator.StartDamageFlash();
         GameObject damageTextParent = Instantiate(damageText, new Vector2 (transform.position.x, transform.position.y + 1), Quaternion.identity);
         damageTextParent.GetComponentInChildren<TextMeshPro>().text = damage.ToString();
         enemyAnimator.StartDamageFlinch();
+
+        if(currHealth <= 0)
+        {
+            enemyAnimator.StartDeathAnimation(impact);
+            DropEssence(impact);
+
+            if(GameStats.currGameMode == GameStats.GameMode.Survival)
+            {
+                HealPlayer();
+            }
+
+            Destroy(gameObject);   
+        }
+
+       
         
     }
 
@@ -114,5 +122,10 @@ public class EnemyHealth : MonoBehaviour
         // Decrease the light radius based on the missing health.
         healthLight.pointLightOuterRadius = healthRatio * diff + minOuterLightRad;
         healthLight.pointLightInnerRadius = healthLight.pointLightOuterRadius * 0.75f;
+    }
+
+    private void HealPlayer()
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().Heal(110);
     }
 }

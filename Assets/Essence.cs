@@ -4,6 +4,7 @@ using UnityEngine;
 public class Essence : MonoBehaviour
 {
     private int value, minMultiplier = 2, maxMultiplier = 4, baseValue = 50;
+    bool collected = false;
 
 
     // Start is called before the first frame update
@@ -26,13 +27,15 @@ public class Essence : MonoBehaviour
     // }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player" && !collected)
         {
             other.gameObject.GetComponent<PlayerResourceManager>().Essence += value;
+            collected = true;
             StartCoroutine(MoveToPlayer(other.gameObject));
         }
         else
         {
+            // stops the soul from going through walls
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }

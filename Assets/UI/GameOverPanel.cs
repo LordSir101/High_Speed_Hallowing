@@ -16,11 +16,19 @@ public class GameOverPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI shrinesCleansedText;
     [SerializeField] TextMeshProUGUI difficultyText;
     [SerializeField] GameObject starParent;
+    [SerializeField] GameObject continueBtn;
     void Start()
     {
         SetWin(GameStats.gameWon);
         SetStats();
         SetStars();
+
+        continueBtn.SetActive(false);
+        
+        if(GameStats.nextLevel != null && GameStats.gameWon)
+        {
+            continueBtn.SetActive(true);
+        }
     }
 
     private void SetWin(bool win)
@@ -57,12 +65,27 @@ public class GameOverPanel : MonoBehaviour
             
         }
 
+        starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = false;
+
+        if(GameStats.completionTargets.Count == 3)
+        {
+            starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+            starParent.transform.GetChild(0).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[2]).ToString(@"mm\:ss");
+        }
+       
 
         starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
-        starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[0]).ToString(@"mm\:ss");
+        starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[1]).ToString(@"mm\:ss");
 
         starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
-        starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[1]).ToString(@"mm\:ss");
+        starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[0]).ToString(@"mm\:ss");
+
+
+        // starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+        // starParent.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[0]).ToString(@"mm\:ss");
+
+        // starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().enabled = true;
+        // starParent.transform.GetChild(2).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = TimeSpan.FromSeconds(GameStats.completionTargets[1]).ToString(@"mm\:ss");
 
     }
 
@@ -70,5 +93,10 @@ public class GameOverPanel : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(GameStats.levelName); 
+    }
+
+    public void Continue()
+    {
+        SceneManager.LoadScene(GameStats.nextLevel);
     }
 }

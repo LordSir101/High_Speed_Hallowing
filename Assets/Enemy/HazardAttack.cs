@@ -12,6 +12,8 @@ public class HazardAttack : MonoBehaviour
     [SerializeField]
     private GameObject attackType;
     [SerializeField] GameObject acidPrefab;
+    [SerializeField] Animator animator;
+    private bool animationComplete = false;
     GameObject attackVisuals;
     GameObject attack;
     Vector2 attackPos;
@@ -84,8 +86,19 @@ public class HazardAttack : MonoBehaviour
             // attackScript.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
             //attackScript.transform.GetChild(1).gameObject.SetActive(false);
             attackVisuals.SetActive(false);
+            animationComplete = false;
             // attackPos = GetAttackPosition();
             // attack.transform.position = attackPos;
+        }
+        if(attackScript.windupProgress >= attackStats.animationStartPercent && !animationComplete)
+        {
+            animator.SetTrigger("Throw");
+            animationComplete = true;
+                //attackScript.startAnimation = false;
+                //windupTimer = 0;
+                //attackScript.startAnimation = false;
+            //}
+            
         }
 
         if(attackScript.windupProgress >= 1)

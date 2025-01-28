@@ -10,6 +10,8 @@ public class GameStats : MonoBehaviour
    public static List<float> completionTargets {get;set;}
 
    public static string levelName {get;set;}
+   public static GameMode currGameMode {get;set;}
+   public static string nextLevel;
    public static int rating {get;set;} = 0;
    public static bool gameWon {get;set;} = false;
    public static int shrinesCleansed {get;set;} = 0;
@@ -24,12 +26,19 @@ public class GameStats : MonoBehaviour
 
    public enum GameDifficulty
    {
-        tutorial,
-        normal,
-        hard
+        Tutorial,
+        Normal,
+        Hard
    }
 
-   public static GameDifficulty gameDifficulty {get;set;} = GameDifficulty.normal;
+   public enum GameMode
+   {
+        TimeAttack,
+        Survival,
+        Endless
+   }
+
+   public static GameDifficulty gameDifficulty {get;set;} = GameDifficulty.Normal;
 
    public static void IncreaseEnemiesKilled()
    {
@@ -50,7 +59,8 @@ public class GameStats : MonoBehaviour
         completionTime = 0;
         gameWon = false;
         shrinesCleansed = 0;
-        totalShrines =0;
+        rating = 0;
+        //totalShrines = 0;
         enemiesKilled = 0;
         bonusDamage = 0;
         totalHealth = 0;
@@ -58,6 +68,7 @@ public class GameStats : MonoBehaviour
         armor = 0;
         soulPowerCollected = 0;
         soulPowerSpent = 0;
+        nextLevel = null;
 
     }
 

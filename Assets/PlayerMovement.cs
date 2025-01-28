@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     public InputActionReference movement, dash;
-
     public AnimationCurve animCurve;
     private PlayerAudio playerAudio;
     private PlayerCooldowns playerCooldowns;
@@ -37,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash")]
     [SerializeField] public float dashSpeed {get; set;}= 14f;
     [SerializeField] private float dashTime = 0.3f, dashPause = 0.05f;
+    [SerializeField] private TrailRenderer leftWing, rightWing;
+    [SerializeField] private Color flashColor;
+    [SerializeField] private PlayerDamageEffects playerDamageEffects;
     
 
     Rigidbody2D rb;
@@ -321,6 +323,8 @@ public class PlayerMovement : MonoBehaviour
         dash.action.Enable();
         isDashing = false;
         rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
+        // leftWing.enabled = false;
+        // rightWing.emitting = false;
     }
 
 
@@ -355,7 +359,11 @@ public class PlayerMovement : MonoBehaviour
         float startTime = Time.time;
         rb.drag = 0;
 
+        StartCoroutine(playerDamageEffects.DamageFlash(flashColor));
         playerAudio.PlayDashSound();
+
+        //leftWing.enabled = true;
+        //rightWing.emitting = true;
 
         while (Time.time - startTime <= dashTime)
 		{
@@ -387,6 +395,13 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator PerformWalljump(Vector2 force, float time)
     {
         wallJumpCombo += 1;
+
+        // when the combo is more than 1, increase the speed (and therefore Damage) of the dash
+        float currWallJumpSpeed = wallJumpForce;
+        if(wallJumpCombo > 1)
+        {
+            currWallJumpSpeed = wallJumpForce + 2.5f;
+        }
         if(wallJumpCombo == 1)
         {
             StartCoroutine(StartWallJumpComboTimer());
@@ -422,7 +437,7 @@ public class PlayerMovement : MonoBehaviour
 
         while (Time.time - startTime <= dashTime)
 		{
-			rb.velocity = force.normalized * wallJumpForce;
+			rb.velocity = force.normalized * currWallJumpSpeed;
             prevDashVelocity = rb.velocity;
 			//Pauses the loop until the next frame, creating something of a Update loop. 
 			//This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D
@@ -433,7 +448,7 @@ public class PlayerMovement : MonoBehaviour
 
 		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
 
-		rb.velocity = wallJumpForce * 0.7f * force.normalized;
+		rb.velocity = currWallJumpSpeed * 0.7f * force.normalized;
         //rb.drag = gameObject.GetComponent<PlayerGrapple>().initialDrag;
 
         // rotate player

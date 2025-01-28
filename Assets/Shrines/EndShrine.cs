@@ -14,7 +14,7 @@ public class EndShrine : MonoBehaviour
     [SerializeField] private ShrineManager shrineManager;
     TextMeshProUGUI interactText;
     private GameObject player;
-    private int cost = 8000;
+    private int cost = 0;
 
     int shrinesCleansed = 0;
     // Start is called before the first frame update
@@ -28,6 +28,8 @@ public class EndShrine : MonoBehaviour
 
         interactText = Utils.FindGameObjectInChildWithTag(gameObject.GetComponentInChildren<Canvas>().gameObject, "InteractText").GetComponent<TextMeshProUGUI>();
         player = GameObject.FindGameObjectWithTag("Player");
+
+        cost  = 1500 * gems.Count;
     }
 
     // // Update is called once per frame
@@ -54,7 +56,7 @@ public class EndShrine : MonoBehaviour
                 // ShowTrText();
                 // interact.action.performed += Upgrade;
                 interactText.enabled = true;
-                interactText.text = $"Tribute to cleanse the area ({cost})" ;
+                interactText.text = $"Tribute to cleanse the area ({shrineManager.interactKeybind}) ({cost})" ;
                 interact.action.performed += TributeBigShrine;
             }
             else

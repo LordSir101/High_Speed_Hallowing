@@ -18,6 +18,7 @@ public class IceEnemyConeAttack : MonoBehaviour
     private bool animationComplete = false;
     [SerializeField] private GameObject snowConePrefab;
     [SerializeField] GameObject snowconeAudioParent;
+    [SerializeField] Animator animator;
     GameObject currAttack;
 
 
@@ -75,6 +76,7 @@ public class IceEnemyConeAttack : MonoBehaviour
 
             // if(windupTimer / attackStats.windupTime >= 0.8)
             // {
+                animator.SetTrigger("Attack");
                 currAttack = Instantiate(snowConePrefab, gameObject.transform.position, attackObj.transform.localRotation);
                 currAttack.transform.parent = transform;
                 currAttack.GetComponent<AudioSource>().Play();

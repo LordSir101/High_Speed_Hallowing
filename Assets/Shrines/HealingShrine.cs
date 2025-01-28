@@ -18,7 +18,7 @@ public class HealingShrine : Shrine
     protected override void ShowUpgradeText()
     {
         interactText.enabled = true;
-        interactText.text = $"Light Candle: Regain health ({upgradeCosts[numUpgrades]})";
+        interactText.text = $"Light Candle ({shrineManager.interactKeybind}): Regain health ({upgradeCosts[numUpgrades]})";
     }
 
     protected override void Upgrade(InputAction.CallbackContext context)

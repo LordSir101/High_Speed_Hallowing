@@ -10,7 +10,11 @@ public class SpawnEnemy : MonoBehaviour
     // [Header("Possible Enemy Prefabs")]
     // [SerializeField] private List<GameObject> enemyPrefabs;
     [Header("Possible Waves")]
-    [SerializeField] List<WaveInfo> waveInfos;
+    [SerializeField] List<WaveInfo> normalModeWaveInfos;
+    [SerializeField] List<WaveInfo> hardModeWaveInfos;
+    [SerializeField] private int repeatFromNormalIndex;
+    [SerializeField] private int repeatFromHardIndex;
+    private List<WaveInfo> waveInfos;
     private WaveInfo currWave;
     private float waveTimer = 0;
     private float waveTime;
@@ -33,6 +37,7 @@ public class SpawnEnemy : MonoBehaviour
     void Start()
     {
         SetStatsBasedOnDifficulty();
+        waveInfos = SetWaveInfoBasedOnDifficulty();
         
         currWave = waveInfos[0];
         waveTime = waveInfos[0].time;
@@ -45,6 +50,11 @@ public class SpawnEnemy : MonoBehaviour
             GameObject spawnPoint = childTransform.gameObject;
             spawnPoints.Add(spawnPoint);
         }
+
+        // if(GameStats.currGameMode == GameStats.GameMode.Survival)
+        // {
+        //     StartCoroutine(GhostRampUp());
+        // }
 
         // currWave = waveInfos[3];
         // SpawnFrenzyWave();
@@ -61,10 +71,22 @@ public class SpawnEnemy : MonoBehaviour
             {
                 // don't change the waves anymore if we have reached the last wave in the list
                 int waveIndex = waveInfos.IndexOf(currWave) + 1;
-                
-                if(waveIndex > waveInfos.Count - 1)
+
+                 // when we reach the last wave, start repeating waves from a specific wave
+                if(waveIndex >= waveInfos.Count)
                 {
-                    lastWaveTypeSpawned  = true;
+                    int repeatIndex;
+                    if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
+                    {
+                        repeatIndex = repeatFromNormalIndex;
+                    }
+                    else
+                    {
+                        repeatIndex = repeatFromHardIndex;
+                    }
+                    currWave = waveInfos[repeatIndex];
+                    waveTimer = 0;
+                    waveTime = waveInfos[repeatIndex].time;
                 }
                 else
                 {
@@ -73,6 +95,18 @@ public class SpawnEnemy : MonoBehaviour
                     waveTime = waveInfos[waveIndex].time;
 
                 }
+                
+                // if(waveIndex > waveInfos.Count - 1)
+                // {
+                //     lastWaveTypeSpawned  = true;
+                // }
+                // else
+                // {
+                //     currWave = waveInfos[waveIndex];
+                //     waveTimer = 0;
+                //     waveTime = waveInfos[waveIndex].time;
+
+                // }
             }
         }
 
@@ -178,28 +212,51 @@ public class SpawnEnemy : MonoBehaviour
         GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
         float totalEnemies = allEnemies.Length;
 
+        List<GameObject> validEnemies = new List<GameObject>();
+
         // if no enemies exist or there is only 1 possible enemy, just return the possible enemies list
         if(totalEnemies == 0 || wave.possibleEnemies.Count == 1)
         {
             return wave.possibleEnemies;
         }
 
-        int[] currDistribution = new int[wave.distribution.Count];
-
-        List<GameObject> validEnemies = new List<GameObject>();
+        Dictionary<int, int> currDistribution = new Dictionary<int, int>();
+        // int[] currDistribution = new int[wave.distribution.Length];
 
         foreach(GameObject enemy in allEnemies)
         {
-            currDistribution[enemy.GetComponent<EnemyInfo>().id] += 1;
+            if (currDistribution.ContainsKey(enemy.GetComponent<EnemyInfo>().id))
+            {
+                currDistribution[enemy.GetComponent<EnemyInfo>().id] += 1;
+            }
+            else
+            {
+                currDistribution.Add(enemy.GetComponent<EnemyInfo>().id, 1);
+            }
+            
         }
 
-        for(int index = 0; index < currDistribution.Length; index++)
+        for(int i = 0; i < wave.possibleEnemies.Count; i++)
         {
-            if(currDistribution[index] / totalEnemies * 100 < wave.distribution[index])
+            int id = wave.possibleEnemies[i].GetComponent<EnemyInfo>().id;
+
+            if (!currDistribution.ContainsKey(id))
             {
-                validEnemies.Add(wave.possibleEnemies[index]);
+                currDistribution.Add(id, 0);
+            }
+            if(currDistribution[id] / totalEnemies * 100 < wave.distribution[i])
+            {
+                validEnemies.Add(wave.possibleEnemies[i]);
             }
         }
+
+        // for(int index = 0; index < currDistribution.Length; index++)
+        // {
+        //     if(currDistribution[index] / totalEnemies * 100 < wave.distribution[index])
+        //     {
+        //         validEnemies.Add(wave.possibleEnemies[index]);
+        //     }
+        // }
         return validEnemies;
     }
     private List<GameObject> GetValidSpawnPoints()
@@ -244,23 +301,44 @@ public class SpawnEnemy : MonoBehaviour
         }
     }
 
+    private List<WaveInfo> SetWaveInfoBasedOnDifficulty()
+    {
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
+        {
+            return normalModeWaveInfos;
+        }
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
+        {
+            return hardModeWaveInfos;
+        }
+
+        // use normal mode waves by default
+        return normalModeWaveInfos;
+    }
+
     private void SetStatsBasedOnDifficulty()
     {
-        if(GameStats.gameDifficulty == GameStats.GameDifficulty.normal)
+        if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
         {
             damageMod = 0.7f;
             healthMod = 0.8f;
         }
-        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.hard)
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Hard)
         {
             damageMod = 1;
             healthMod = 1;
         }
-        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.tutorial)
+        else if(GameStats.gameDifficulty == GameStats.GameDifficulty.Tutorial)
         {
             damageMod = 0.5f;
             healthMod = 0.8f;
         }
+    }
+
+    public void IncreaseGhostStats(float amount)
+    {
+        damageMod += amount;
+        healthMod += amount;
     }
 
     // for stuff like the tutorial where the wave changes based on factors that are not time
@@ -270,4 +348,6 @@ public class SpawnEnemy : MonoBehaviour
         waveTimer = 0;
         waveTime = waveInfos[waveNum].time;
     }
+
+    
 }

@@ -8,6 +8,7 @@ public class IceEnemyBehaviour : MonoBehaviour
 {
     private float speed;
     [SerializeField] private float minSpeed, maxSpeed;
+    [SerializeField] private LayerMask enemyLayer;
 
     [SerializeField]
     Rigidbody2D rb;
@@ -25,6 +26,7 @@ public class IceEnemyBehaviour : MonoBehaviour
     [SerializeField] int snowballDamage;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject snowballAudioParent;
+    [SerializeField] Animator animator;
     private float snowballTimer;
     private float snowballDamageMod;
 
@@ -78,7 +80,7 @@ public class IceEnemyBehaviour : MonoBehaviour
     }
     void Update()
     {
-        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxConeAttackRange, playerLayer);
+        Collider2D playerObjInRange = Physics2D.OverlapCircle(transform.position, maxConeAttackRange - 0.5f, playerLayer);
 
         if (playerObjInRange != null)
         {
@@ -92,7 +94,7 @@ public class IceEnemyBehaviour : MonoBehaviour
         snowballTimer += Time.deltaTime;
         if(snowballTimer >= snowballCooldown)
         {
-            if(!coneAttack.attacking)
+            if(!coneAttack.attacking && !playerInRange)
             {
                 SpawnSnowball();
             }
@@ -122,20 +124,21 @@ public class IceEnemyBehaviour : MonoBehaviour
 
     private void SpawnSnowball()
     {
-        Transform throwingHand;
+        animator.SetTrigger("Throw");
+        // Transform throwingHand;
         Vector3 distanceToPlayer =  player.transform.position - transform.position;
-        if(distanceToPlayer.x > 0)
-        {
-            // right hand
-            throwingHand = transform.GetChild(0).GetChild(1).GetChild(1);
-        }
-        else{
-            // left hand
-            throwingHand = transform.GetChild(0).GetChild(1).GetChild(0);
-        }
+        // if(distanceToPlayer.x > 0)
+        // {
+        //     // right hand
+        //     throwingHand = transform.GetChild(0).GetChild(1).GetChild(1);
+        // }
+        // else{
+        //     // left hand
+        //     throwingHand = transform.GetChild(0).GetChild(1).GetChild(0);
+        // }
 
-        GameObject proj = Instantiate(projectilePrefab, throwingHand.transform.position, transform.rotation);
-        proj.GetComponent<Projectile>().Init(snowballDamage, snowballDamageMod, snowballSprite);
+        GameObject proj = Instantiate(projectilePrefab, transform.position, transform.rotation);
+        proj.GetComponent<Projectile>().Init(snowballDamage, snowballDamageMod, snowballSprite, 0.5f);
         proj.GetComponent<Rigidbody2D>().velocity = distanceToPlayer.normalized * projSpeed;
 
         snowballAudioParent.GetComponent<AudioSource>().Play();
@@ -165,7 +168,7 @@ public class IceEnemyBehaviour : MonoBehaviour
             offset = Mathf.Clamp(offset, 0, 1);
         }
        
-       
+        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, 2f, enemyLayer);
         foreach(Vector2 dir in possibleDirections)
         {
             // subract offset from normalized dot product so enemies start moving to the side the close they get to the player
@@ -173,6 +176,10 @@ public class IceEnemyBehaviour : MonoBehaviour
             float dot = Vector2.Dot(dirToPlayer.normalized, dir.normalized);
             float normalized = (dot + 1) / 2; // normalize between 0 and 1
             float weight = 1 - Math.Abs(normalized - offset);
+
+            float weightTowardsEnemies = GetHighestWeightOfVectorTowardsEnemies(dir, nearbyEnemies);
+            // if a dir brings us closer to an enemy, weigh it less to avoid clumping of enemies
+            weight -= weightTowardsEnemies;
             
             
             // Favor moving in the general direction we are already moving over slightly better weight in the opposite direction.
@@ -197,6 +204,34 @@ public class IceEnemyBehaviour : MonoBehaviour
         
         }
         return bestDir;
+    }
+
+    float GetHighestWeightOfVectorTowardsEnemies(Vector2 dir, Collider2D[] nearbyEnemies)
+    {
+        float highest = -2f;
+        foreach(Collider2D col in nearbyEnemies)
+        {
+            Vector3 dirToEnemy = col.transform.position - transform.position;
+            // float offset = (dirToEnemy.magnitude - minDis) / (maxDis - minDis);
+            // offset = Mathf.Clamp(offset, 0, 1);
+            // offset = 1-offset; // 0 when close 1 when far
+
+            float dot = Vector2.Dot(dirToEnemy.normalized, dir.normalized);
+            float normalized = (dot + 1) / 2; // normalize between 0 and 1
+            float weight = normalized;
+
+            if(weight > highest)
+            {
+                highest = weight;
+            }
+
+        }
+
+        // the highest weight tells us the closest this vector will move us towards another enemy
+        // we only care about the highest weight for each direction
+        // the weight towards enemies is higher for ice ghosts since they clump up alot
+        return highest * 1.5f;
+       
     }
 
     // void OnDrawGizmos()

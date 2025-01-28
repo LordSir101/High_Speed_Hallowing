@@ -1,12 +1,21 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CooldownUI : MonoBehaviour
 {
     [SerializeField] GameObject grappleCooldownIcon;
     [SerializeField] GameObject dashCooldownIcon;
+
+
+    [SerializeField] TextMeshProUGUI dashKeybindReminder;
+    [SerializeField] TextMeshProUGUI grappleKeybindReminder;
+    PlayerInput playerInput;
+    InputAction dashInput;
+    InputAction grappleInput;
 
     Image dashIcon;
     RectTransform dashTimerIcon;
@@ -25,13 +34,27 @@ public class CooldownUI : MonoBehaviour
 
         origionalCooldownUIHeight = dashTimerIcon.sizeDelta.y;
         origionalCooldownUIWidth = dashTimerIcon.sizeDelta.x;
+
+        playerInput = GameObject.FindGameObjectWithTag("Input").GetComponent<PlayerInput>();
+        dashInput = playerInput.currentActionMap.FindAction("Dash");
+        grappleInput = playerInput.currentActionMap.FindAction("Grapple");
     }
 
     // Update is called once per frame
-    // void Update()
-    // {
+    void Update()
+    {
+        if(playerInput.currentControlScheme == "Controller")
+        {
+            dashKeybindReminder.text = dashInput.GetBindingDisplayString(InputBinding.MaskByGroup("Controller"));
+            grappleKeybindReminder.text = grappleInput.GetBindingDisplayString(InputBinding.MaskByGroup("Controller"));
+        }
+        else
+        {
+            dashKeybindReminder.text = dashInput.GetBindingDisplayString(InputBinding.MaskByGroup("M_Keyboard"));
+            grappleKeybindReminder.text = grappleInput.GetBindingDisplayString(InputBinding.MaskByGroup("M_Keyboard"));
+        }
         
-    // }
+    }
 
     public void StartDashCooldown(float time)
     {

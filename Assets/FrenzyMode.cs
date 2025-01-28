@@ -1,10 +1,11 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class FrenzyMode : MonoBehaviour
 {
-    private int damage = 60;
+    private int damage = 50;
     private float damageTimer = 0;
     private float damageRate = 1;
     private bool frenzy = false;
@@ -28,33 +29,69 @@ public class FrenzyMode : MonoBehaviour
     {
         if(frenzy)
         {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            if(enemies.Length == 0)
+            if(GameStats.currGameMode == GameStats.GameMode.TimeAttack)
             {
-                frenzyEffect.SetActive(false);
-                gameController.SetWin(true);
-                frenzy = false;
-            }
-            else
-            {
-                damageTimer += Time.deltaTime;
-
-                if(damageTimer >= damageRate)
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                if(enemies.Length == 0)
                 {
-                    playerhealthScript.TakeDamage(damage);
-                    damageTimer = 0;
+                    //StopFrenzyMode();
+                    gameController.SetWin(true);
+
                 }
+            }
+           
+            damageTimer += Time.deltaTime;
+
+            if(damageTimer >= damageRate)
+            {
+                playerhealthScript.TakeDamage(damage);
+                damageTimer = 0;
             }
             
         }
     }
 
+    void OnDisable()
+    {
+        frenzyEffect.SetActive(false);
+    }
+
     public void StartFrenzyMode()
     {
         frenzy = true;
-        enemySpawner.SpawnFrenzyWave();
         frenzyEffect.SetActive(true);
-        frenzyText.SetActive(true);
-        frenzyText.GetComponent<TextMeshProUGUI>().text = "Defeat the remaining enemies quickly!";
+
+        if(GameStats.currGameMode == GameStats.GameMode.TimeAttack)
+        {
+            enemySpawner.SpawnFrenzyWave();
+            frenzyText.GetComponent<TextMeshProUGUI>().enabled = true;
+            frenzyText.GetComponent<TextMeshProUGUI>().text = "Defeat the remaining enemies quickly!";
+        }
+        else if(GameStats.currGameMode == GameStats.GameMode.Survival)
+        {
+            StartCoroutine(FrenzyDamageRampUp());
+        }
+       
+    }
+
+    public void StopFrenzyMode()
+    {
+        frenzyEffect.SetActive(false);    
+        frenzy = false;
+    }
+
+    public void IncreaseFrenzyDamage(int damageIncrease)
+    {
+        damage += damageIncrease;
+    }
+
+    IEnumerator FrenzyDamageRampUp()
+    {
+        while(frenzy)
+        {
+            yield return new WaitForSeconds(30);
+            damage += 10;
+        }
+        
     }
 }
