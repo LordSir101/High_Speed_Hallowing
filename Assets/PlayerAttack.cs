@@ -39,7 +39,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 impact = rb.velocity;
                 playerAnimation.AttackAnimation(impact);
-                playerGrapple.EndGrapple();
+                //playerGrapple.EndGrapple();
             }
             else{
                 impact = rb.velocity;
