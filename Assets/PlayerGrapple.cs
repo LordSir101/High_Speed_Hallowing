@@ -225,9 +225,13 @@ public class PlayerGrapple : MonoBehaviour
         {
 
             // prevents player from flying off the screen if they grapple past thier target
-            if(target.gameObject.tag == "Enemy" || target.gameObject.tag == "Buffer")
+            if(target != null)
             {
-                grappleLocation = target.transform.position;
+                if(target.gameObject.tag == "Enemy" || target.gameObject.tag == "Buffer")
+                {
+                    grappleLocation = target.transform.position;
+                }
+
             }
 
             // Temp fix for bug where movement does not get disabled if a move input is pressed while being disabled
@@ -239,6 +243,12 @@ public class PlayerGrapple : MonoBehaviour
 
             float speed = Mathf.Clamp(rb.velocity.magnitude * grappleAcceleration, initialGrappleSpeed, maxGrappleSpeed);
             rb.velocity =  speed * (grappleLocation - rb.position).normalized;
+
+            float diff = (grappleLocation - rb.position).magnitude;
+            if(diff < 1f)
+            {
+                EndGrapple();
+            }
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -286,14 +296,14 @@ public class PlayerGrapple : MonoBehaviour
 
     // end grapple when a collision occurs
     // collisions with enemy handled in player impact so damage can be assigned before the player velocity is set    
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if(grappling)
-        {
-            EndGrapple();
-        }
+    // private void OnCollisionEnter2D(Collision2D col)
+    // {
+    //     if(grappling)
+    //     {
+    //         EndGrapple();
+    //     }
         
-    }
+    // }
 
     IEnumerator AnimateGrapple()
     {

@@ -27,6 +27,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] List<LevelUnlockInfo> levelsToUnlockHard;
     [SerializeField] GameStats.GameMode gameMode;
     [SerializeField] FrenzyMode frenzyModeScript;
+    [SerializeField] SpawnEnemy enemySpawnerScript;
     
 
     [Header("Time Attack")]
@@ -38,14 +39,13 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [Header("SurvivalMode")]
     [SerializeField] TargetTimes survivalTargetTimesNormal;
     [SerializeField] TargetTimes survivalTargetTimesHard;
-    [SerializeField] SpawnEnemy enemySpawnerScript;
     [SerializeField] float rampUpTime = 60;
     TargetTimes survivalTargetTimes;
 
     [Header("EndlessMode")]
     [SerializeField] TargetTimes endlessTargetTimesNormal;
     [SerializeField] TargetTimes endlessTargetTimesHard;
-    [SerializeField] SpawnEnemy enemySpawnerScriptEndless;
+    //[SerializeField] SpawnEnemy enemySpawnerScriptEndless;
     [SerializeField] ShrineManager shrineManager;
     TargetTimes endlessTargetTimes;
     
@@ -87,7 +87,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
             GameStats.completionTargets = survivalTargetTimes.timesInSeconds;
             StartCoroutine(StartFrenzyMode());
             StartCoroutine(RampUpDifficulty(rampUpTime, 10, 0.05f));
-            StartCoroutine(DecreaseRampUpTimeOverTime(10, 180, 15));
+            StartCoroutine(DecreaseRampUpTimeOverTime(10, 120, 10));
         }
         else if(gameMode == GameStats.GameMode.TimeAttack)
         {
@@ -126,7 +126,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
         {
             yield return new WaitForSeconds(rampTime);
             frenzyModeScript.IncreaseFrenzyDamage(frenzyDamageInc);
-            enemySpawnerScriptEndless.IncreaseGhostStats(ghostStatsInc);
+            enemySpawnerScript.IncreaseGhostStats(ghostStatsInc);
 
         }
     }
@@ -219,8 +219,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
     public void ResetMap()
     {
         frenzyModeScript.StopFrenzyMode();
-        enemySpawnerScriptEndless.EnableSpawns();
-        enemySpawnerScriptEndless.SetWave(0);
+        enemySpawnerScript.EnableSpawns();
+        enemySpawnerScript.SetWave(0);
         shrineManager.ResetShrines();
 
         PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
