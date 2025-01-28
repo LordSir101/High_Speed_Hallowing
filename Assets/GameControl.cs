@@ -27,7 +27,6 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [SerializeField] List<LevelUnlockInfo> levelsToUnlockHard;
     [SerializeField] GameStats.GameMode gameMode;
     [SerializeField] FrenzyMode frenzyModeScript;
-    [SerializeField] SpawnEnemy enemySpawnerScript;
     
 
     [Header("Time Attack")]
@@ -39,18 +38,9 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [Header("SurvivalMode")]
     [SerializeField] TargetTimes survivalTargetTimesNormal;
     [SerializeField] TargetTimes survivalTargetTimesHard;
+    [SerializeField] SpawnEnemy enemySpawnerScript;
     [SerializeField] float rampUpTime = 60;
     TargetTimes survivalTargetTimes;
-<<<<<<< Updated upstream
-=======
-
-    [Header("EndlessMode")]
-    [SerializeField] TargetTimes endlessTargetTimesNormal;
-    [SerializeField] TargetTimes endlessTargetTimesHard;
-    //[SerializeField] SpawnEnemy enemySpawnerScriptEndless;
-    [SerializeField] ShrineManager shrineManager;
-    TargetTimes endlessTargetTimes;
->>>>>>> Stashed changes
     
     // Start is called before the first frame update
     void Start()
@@ -89,13 +79,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
 
             GameStats.completionTargets = survivalTargetTimes.timesInSeconds;
             StartCoroutine(StartFrenzyMode());
-<<<<<<< Updated upstream
             StartCoroutine(RampUpDifficulty());
             StartCoroutine(DecreaseRampUpTimeOverTime());
-=======
-            StartCoroutine(RampUpDifficulty(rampUpTime, 10, 0.05f));
-            StartCoroutine(DecreaseRampUpTimeOverTime(10, 120, 10));
->>>>>>> Stashed changes
         }
         else if(gameMode == GameStats.GameMode.TimeAttack)
         {
@@ -116,15 +101,9 @@ public class GameControl : MonoBehaviour, IDataPersistence
     {
         while(!gameEnded)
         {
-<<<<<<< Updated upstream
             yield return new WaitForSeconds(rampUpTime);
             frenzyModeScript.IncreaseFrenzyDamage(10);
             enemySpawnerScript.IncreaseGhostStats(0.05f);
-=======
-            yield return new WaitForSeconds(rampTime);
-            frenzyModeScript.IncreaseFrenzyDamage(frenzyDamageInc);
-            enemySpawnerScript.IncreaseGhostStats(ghostStatsInc);
->>>>>>> Stashed changes
 
         }
     }
@@ -212,22 +191,6 @@ public class GameControl : MonoBehaviour, IDataPersistence
         // PauseControl.PauseGame(true);
     }
 
-<<<<<<< Updated upstream
-=======
-    public void ResetMap()
-    {
-        frenzyModeScript.StopFrenzyMode();
-        enemySpawnerScript.EnableSpawns();
-        enemySpawnerScript.SetWave(0);
-        shrineManager.ResetShrines();
-
-        PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
-        int healAmount = playerHealth.MaxHealth / 2;
-        playerHealth.Heal(healAmount);
-    }
-
-
->>>>>>> Stashed changes
     private void UnlockLevels(ref GameData data)
     {
         if(GameStats.gameDifficulty == GameStats.GameDifficulty.Normal)
