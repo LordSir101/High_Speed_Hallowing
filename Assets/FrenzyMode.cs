@@ -44,7 +44,6 @@ public class FrenzyMode : MonoBehaviour
 
             if(damageTimer >= damageRate)
             {
-                Debug.Log(damage);
                 playerhealthScript.TakeDamage(damage);
                 damageTimer = 0;
             }
