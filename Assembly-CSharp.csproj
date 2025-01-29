@@ -99,6 +99,7 @@
     <Compile Include="Assets\Enemy\FisherEnemyAnimateSwing.cs" />
     <Compile Include="Assets\Animations\SnowConeAttack\SnowCone.cs" />
     <Compile Include="Assets\Enemy\FisherEnemyBehaviour.cs" />
+    <Compile Include="Assets\Tutorial\EndlessTut.cs" />
     <Compile Include="Assets\SaveData\FileDataHandler.cs" />
     <Compile Include="Assets\PlayerResourceManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />

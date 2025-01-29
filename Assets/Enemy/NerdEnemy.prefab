@@ -531,7 +531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windupTime: 1.2
   activeTime: 3
-  cooldownTime: 2.5
+  cooldownTime: 2
   Size: 5
   StartingTelegaphPercentSize: 0
   animationStartPercent: 0.45
