@@ -1114,7 +1114,7 @@ MonoBehaviour:
   projSpeed: 5
   kiteDistance: 4
   snowballCooldown: 3
-  snowballDamage: 30
+  snowballDamage: 75
   projectilePrefab: {fileID: 8906220813581016635, guid: fb681e82f570e0143b8724eb97617dfa, type: 3}
   snowballAudioParent: {fileID: 1124433262941386889}
   animator: {fileID: 7699706621321263318}

@@ -19,6 +19,7 @@ public class SpawnEnemy : MonoBehaviour
     private float waveTimer = 0;
     private float waveTime;
     private bool lastWaveTypeSpawned = false;
+    private int additionalEnemies = 0;
     
 
     private float spawntimer = 0f;
@@ -118,12 +119,12 @@ public class SpawnEnemy : MonoBehaviour
             {
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-                if(enemies.Length < currWave.maxEnemies)
+                if(enemies.Length < currWave.maxEnemies + additionalEnemies)
                 {
                     //SpawnEnemies(1);
                     // List<GameObject> validSpawnPoints = GetValidSpawnPoints();
 
-                    int numEnemiesAvailableToSpawn = currWave.maxEnemies - enemies.Length;
+                    int numEnemiesAvailableToSpawn = currWave.maxEnemies + additionalEnemies - enemies.Length;
                     SpawnEnemies(Mathf.Clamp(numEnemiesAvailableToSpawn, 0, 5));
                     
                 }
@@ -142,6 +143,12 @@ public class SpawnEnemy : MonoBehaviour
         //     strengthTimer = 0;
         // }
         
+    }
+
+    public void IncreaseMaxEnemies(int num)
+    {
+        additionalEnemies += num;
+        Debug.Log("Max Enemies: " + additionalEnemies);
     }
 
     private void SpawnEnemies(int num)

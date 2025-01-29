@@ -253,6 +253,10 @@ public class PlayerMovement : MonoBehaviour
         // GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().ActionPause(wallJumpPause, WallJump());
         //GameObject.FindGameObjectWithTag("PauseControl").GetComponent<PauseControl>().Sleep(wallJumpPause);
         Vector2 direction = movement.action.ReadValue<Vector2>();
+        if(touchingWall == null)
+        {
+            return;
+        }
         BoxCollider2D wall = touchingWall.gameObject.GetComponent<BoxCollider2D>();
             
         Vector3 wallSize = wall.bounds.size;

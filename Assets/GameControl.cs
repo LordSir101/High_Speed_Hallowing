@@ -39,15 +39,18 @@ public class GameControl : MonoBehaviour, IDataPersistence
     [Header("SurvivalMode")]
     [SerializeField] TargetTimes survivalTargetTimesNormal;
     [SerializeField] TargetTimes survivalTargetTimesHard;
-    [SerializeField] float rampUpTime = 60;
+    [SerializeField] float rampUpTimeSurvival;
     TargetTimes survivalTargetTimes;
 
     [Header("EndlessMode")]
     [SerializeField] TargetTimes endlessTargetTimesNormal;
     [SerializeField] TargetTimes endlessTargetTimesHard;
+    [SerializeField] float rampUpTimeEndless;
     //[SerializeField] SpawnEnemy enemySpawnerScriptEndless;
     [SerializeField] ShrineManager shrineManager;
     TargetTimes endlessTargetTimes;
+    private float rampUpTime;
+
     
     // Start is called before the first frame update
     void Start()
@@ -85,8 +88,10 @@ public class GameControl : MonoBehaviour, IDataPersistence
             }
 
             GameStats.completionTargets = survivalTargetTimes.timesInSeconds;
+            rampUpTime = rampUpTimeSurvival;
+
             StartCoroutine(StartFrenzyMode());
-            StartCoroutine(RampUpDifficulty(rampUpTime, 10, 0.05f));
+            StartCoroutine(RampUpDifficulty(10, 0.05f));
             StartCoroutine(DecreaseRampUpTimeOverTime(10, 120, 10));
         }
         else if(gameMode == GameStats.GameMode.TimeAttack)
@@ -114,20 +119,23 @@ public class GameControl : MonoBehaviour, IDataPersistence
             }
 
             GameStats.completionTargets = endlessTargetTimes.timesInSeconds;
+            rampUpTime = rampUpTimeEndless;
 
-            StartCoroutine(RampUpDifficulty(150, 15, 0.1f));
-            StartCoroutine(DecreaseRampUpTimeOverTime(60, 300, 10));
+            StartCoroutine(RampUpDifficulty(30, 0.30f));
+            StartCoroutine(DecreaseRampUpTimeOverTime(60, 180, 10));
+            StartCoroutine(IncreaseMaxEnemies(300, 2));
         }
     }
 
-    IEnumerator RampUpDifficulty(float rampTime, int frenzyDamageInc, float ghostStatsInc)
+    IEnumerator RampUpDifficulty(int frenzyDamageInc, float ghostStatsInc)
     {
         while(!gameEnded)
         {
-            yield return new WaitForSeconds(rampTime);
+            yield return new WaitForSeconds(rampUpTime);
+
             frenzyModeScript.IncreaseFrenzyDamage(frenzyDamageInc);
             enemySpawnerScript.IncreaseGhostStats(ghostStatsInc);
-
+            Debug.Log("Difficulty Increased ");
         }
     }
 
@@ -138,6 +146,16 @@ public class GameControl : MonoBehaviour, IDataPersistence
             yield return new WaitForSeconds(waitTime);
             rampUpTime -= decreaseInterval;
 
+        }
+    }
+
+    IEnumerator IncreaseMaxEnemies(float time, int numEnemies)
+    {
+        while(!gameEnded)
+        {
+            yield return new WaitForSeconds(time);
+
+            enemySpawnerScript.IncreaseMaxEnemies(numEnemies);
         }
     }
 
@@ -220,7 +238,7 @@ public class GameControl : MonoBehaviour, IDataPersistence
     {
         frenzyModeScript.StopFrenzyMode();
         enemySpawnerScript.EnableSpawns();
-        enemySpawnerScript.SetWave(0);
+        //enemySpawnerScript.SetWave(0);
         shrineManager.ResetShrines();
 
         PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
