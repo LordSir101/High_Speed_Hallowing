@@ -1378,6 +1378,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swingObject: {fileID: 4434543107905143581}
+  animationTime: 0.5
+  minAlpha: 0
+  maxAlpha: 1
+  animationTimer: 0
 --- !u!1 &7374357238364551305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,7 +1676,7 @@ MonoBehaviour:
   Size: 3
   StartingTelegaphPercentSize: 0
   animationStartPercent: 0.1
-  Damage: 40
+  Damage: 60
 --- !u!114 &2756437173833000015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1872,7 +1876,7 @@ MonoBehaviour:
   attackRange: 5
   projSpeed: 15
   hookCooldown: 5
-  hookDamage: 15
+  hookDamage: 20
   projectilePrefab: {fileID: 8906220813581016635, guid: fb681e82f570e0143b8724eb97617dfa, type: 3}
   hookAudioParent: {fileID: 1047185867539009998}
   reelAudioParent: {fileID: 1313099357423995247}

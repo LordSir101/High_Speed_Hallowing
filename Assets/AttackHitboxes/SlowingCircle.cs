@@ -9,12 +9,20 @@ public class SlowingCircle : TelegraphedHitbox
     private float timer = 0;
     private bool doDamageEffect = false;
     private float damageMod;
+    [SerializeField] GameObject attackVisuals;
+
+    public event EventHandler attackDestroyed;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(Tick());
         damageMod = transform.parent.GetComponent<EnemyInfo>().damageMod;
     }
+
+//    void OnDestroyEvent()
+//    {
+
+//    }
 
     // Update is called once per frame
     // void Update()
@@ -71,6 +79,7 @@ public class SlowingCircle : TelegraphedHitbox
     {
         if(other.gameObject.tag == "Player")
         {
+            Debug.Log("exit");
             PlayerMovement playerMovement = other.gameObject.GetComponent<PlayerMovement>();
             PlayerGrapple playerGrapple = other.gameObject.GetComponent<PlayerGrapple>();
             other.gameObject.GetComponent<Rigidbody2D>().drag = playerGrapple.initialDrag;

@@ -76,7 +76,7 @@ public class PlayerCooldowns : MonoBehaviour
     }
     public void EndAllCooldowns()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines(); // TODO: confirm that this does nothing
         PlayCooldownRefeshAnimations();
         playerMovement.canDash = true;
         dashCooldownTimer = 0;

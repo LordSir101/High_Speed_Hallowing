@@ -121,8 +121,8 @@ public class GameControl : MonoBehaviour, IDataPersistence
             GameStats.completionTargets = endlessTargetTimes.timesInSeconds;
             rampUpTime = rampUpTimeEndless;
 
-            StartCoroutine(RampUpDifficulty(30, 0.15f));
-            StartCoroutine(DecreaseRampUpTimeOverTime(60, 300, 10));
+            StartCoroutine(RampUpDifficulty(30, 0.30f));
+            StartCoroutine(DecreaseRampUpTimeOverTime(60, 180, 10));
             StartCoroutine(IncreaseMaxEnemies(300, 2));
         }
     }
