@@ -198,7 +198,7 @@ public class Castle2Tut : MonoBehaviour
         
         StartCoroutine(AnimateText(currTextDisplay));
     }
-     private IEnumerator AnimateText(TextMeshProUGUI text)
+    private IEnumerator AnimateText(TextMeshProUGUI text)
     {
         float animationTime = 0.3f;
         float startTime = Time.time;
