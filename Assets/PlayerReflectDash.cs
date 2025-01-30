@@ -152,7 +152,7 @@ public class PlayerReflectDash : MonoBehaviour
 
             float closestEnemyDistance = float.MaxValue;
 
-            List<Collider2D> colliders = new List<Collider2D>();
+            //List<Collider2D> colliders = new List<Collider2D>();
             Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, reflectDashDistance, enemyLayer);
 
             foreach(Collider2D col in nearbyEnemies)

@@ -31,7 +31,7 @@ public class Castle1Tut : MonoBehaviour
     //[SerializeField] 
     int tutTextIndex = 0;
     public bool firstEnemyAttacked = false;
-    private bool firstDash = false;
+    // private bool firstDash = false;
     //private bool firstGrapple = false;
     private int tutWaveNum = 0;
     float maxTextFontSize;

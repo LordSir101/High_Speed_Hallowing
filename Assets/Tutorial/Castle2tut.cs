@@ -21,7 +21,7 @@ public class Castle2Tut : MonoBehaviour
     int tutTextIndex = 0;
     public bool firstEnemyAttacked = false;
     private bool firstGrapple = false;
-    private int tutWaveNum = 0;
+    // private int tutWaveNum = 0;
     float maxTextFontSize;
 
     PlayerReflectDash playerReflectDash;

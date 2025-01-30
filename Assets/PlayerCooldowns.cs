@@ -16,8 +16,8 @@ public class PlayerCooldowns : MonoBehaviour
     float grappleCooldownTimer = 0;
     //[SerializeField] GameObject grappleCooldownIcon;
 
-    bool dashCooldownStarted = false;
-    bool grappleCooldownStarted = false;
+    // bool dashCooldownStarted = false;
+    // bool grappleCooldownStarted = false;
 
     void Update()
     {
