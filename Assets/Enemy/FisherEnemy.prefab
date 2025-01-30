@@ -1378,6 +1378,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swingObject: {fileID: 4434543107905143581}
+  bodyIdle: {fileID: 130381591318809730}
+  ghostParent: {fileID: 8449083161894472925}
   animationTime: 0.5
   minAlpha: 0
   maxAlpha: 1

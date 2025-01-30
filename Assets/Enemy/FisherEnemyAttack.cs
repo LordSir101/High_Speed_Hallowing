@@ -111,8 +111,8 @@ public class FisherEnemyAttack : MonoBehaviour
         {
             //behaviourScript.ChangeState("kiting");
             animationComplete = false;
-            hands.transform.localRotation = transform.localRotation;
-            bodyAnimator.enabled = true;
+            //hands.transform.localRotation = transform.localRotation;
+            //bodyAnimator.enabled = true;
             attacking = false;
             //StartCoroutine(attackScript.StartCooldown());
             //attackScript.attackEnded = false;

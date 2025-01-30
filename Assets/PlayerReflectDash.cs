@@ -19,8 +19,10 @@ public class PlayerReflectDash : MonoBehaviour
     private float reflectDashSpeed= 12f;
     private float reflectDashDistance = 2f;
     public bool reflectDashing = false;
+    private bool snapToTarget = false;
     public Vector2 prevVelocity;
     private Vector2 reflectDashDirection;
+    private Vector2 teleportLocation;
     //private float reflectDashSpeed = 4f;
     private float reflectDashTime = 0.2f;
     Vector3 enemyPos;
@@ -59,6 +61,15 @@ public class PlayerReflectDash : MonoBehaviour
             }
             
         }
+    }
+
+    void FixedUpdate()
+    {
+        if(snapToTarget)
+        {
+            rb.MovePosition(teleportLocation);
+        }
+        
     }
 
 
@@ -213,6 +224,8 @@ public class PlayerReflectDash : MonoBehaviour
 
             }
 
+            snapToTarget = true;
+
             CancelOtherMovement();
             reflectDashing = true;
             prevVelocity = rb.velocity;
@@ -234,8 +247,8 @@ public class PlayerReflectDash : MonoBehaviour
 
             //StartCoroutine(MoveToTarget());
             // Teleport the player to the enemy center
-            Vector2 teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
-            rb.MovePosition(teleportLocation);
+            teleportLocation = new Vector2(enemyPos.x, enemyPos.y);
+            //rb.MovePosition(teleportLocation);
 
             reflectDashArrow = Instantiate(arrowPrefab, teleportLocation, transform.rotation);
 
@@ -288,6 +301,7 @@ public class PlayerReflectDash : MonoBehaviour
 
     private void ReflectDash(InputAction.CallbackContext context)
     {
+        snapToTarget = false;
         playerAudio.PlayDashSound();
         playerDamageEffects.SetFlashAmount(0);
         // Once the dash has started, conditional dashes are allowed, but not basic dashes

@@ -48,9 +48,11 @@ public class FisherEnemyBehaviour : MonoBehaviour
 
     public bool playerInRange = false;
     public bool isFishing = false;
+    private bool isReeling = false;
 
     List<Vector3> possibleDirections;
     Vector2 targetDir;
+    Vector3 nextPullPosition;
     private float maxDis;
     private float minDis;
 
@@ -127,6 +129,12 @@ public class FisherEnemyBehaviour : MonoBehaviour
         else
         {
             rb.velocity = Vector3.zero;
+
+            if(isReeling)
+            {
+                player.GetComponent<Rigidbody2D>().MovePosition(nextPullPosition);
+            }
+            
         }
 
     }
@@ -209,7 +217,9 @@ public class FisherEnemyBehaviour : MonoBehaviour
         if(reelAudioParent != null)
         {
             isFishing = false;
+            isReeling = false;
             reelAudioParent.GetComponent<AudioSource>().Stop();
+            //idleAnimator.SetTrigger("Idle");
         }
     }
 
@@ -222,12 +232,15 @@ public class FisherEnemyBehaviour : MonoBehaviour
         // float totalFrames = 45f;
 
         //Vector3 start = gameObject.transform.position;
+        isReeling = true;
         Collider2D touchingPlayer = Physics2D.OverlapCircle(transform.position, 0.05f, playerLayer);
 
         while(touchingPlayer == null)
         {
             Vector3 diff = transform.position - player.transform.position;
-            player.GetComponent<Rigidbody2D>().MovePosition(player.transform.position + diff.normalized * 0.7f);
+            nextPullPosition = player.transform.position + diff.normalized * 0.7f;
+
+            //player.GetComponent<Rigidbody2D>().MovePosition(player.transform.position + diff.normalized * 0.7f);
             yield return null;
 
             touchingPlayer = Physics2D.OverlapCircle(transform.position, 0.05f, playerLayer);
@@ -236,6 +249,7 @@ public class FisherEnemyBehaviour : MonoBehaviour
         player.GetComponent<PlayerMovement>().CanMove = true;
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         isFishing = false;
+        isReeling = false;
         player.GetComponentInChildren<PlayerAttack>().enabled = true;
         reelAudioParent.GetComponent<AudioSource>().Stop();
     }

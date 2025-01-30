@@ -5,6 +5,8 @@ using UnityEngine;
 public class FisherEnemyAnimateSwing : MonoBehaviour
 {
     [SerializeField] GameObject swingObject;
+    [SerializeField] Animator bodyIdle;
+    [SerializeField] GameObject ghostParent;
 
     public float animationTime = 0.5f;
     public float minAlpha = 0f;
@@ -45,6 +47,12 @@ public class FisherEnemyAnimateSwing : MonoBehaviour
 
         swingObject.SetActive(false);
         
+    }
+
+    public void ActivateIdle()
+    {
+        bodyIdle.enabled = true;
+        transform.parent.localRotation = ghostParent.transform.localRotation;
     }
     
 }
